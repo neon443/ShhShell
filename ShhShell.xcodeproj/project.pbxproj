@@ -6,6 +6,16 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		A92538C82DEE0742007E0A18 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538C52DEE0742007E0A18 /* ContentView.swift */; };
+		A92538C92DEE0742007E0A18 /* ShhShellApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538C62DEE0742007E0A18 /* ShhShellApp.swift */; };
+		A92538CA2DEE0742007E0A18 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A92538C42DEE0742007E0A18 /* Assets.xcassets */; };
+		A92538CD2DEE0744007E0A18 /* ShhShellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538CB2DEE0744007E0A18 /* ShhShellTests.swift */; };
+		A92538D12DEE0745007E0A18 /* ShhShellUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538CE2DEE0745007E0A18 /* ShhShellUITests.swift */; };
+		A92538D22DEE0745007E0A18 /* ShhShellUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538CF2DEE0745007E0A18 /* ShhShellUITestsLaunchTests.swift */; };
+		A9C897612DF0E49F00EF9A5F /* NIOSSH in Frameworks */ = {isa = PBXBuildFile; productRef = A9C897602DF0E49F00EF9A5F /* NIOSSH */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		A92538A82DEE06DE007E0A18 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,31 +37,20 @@
 		A925389A2DEE06DC007E0A18 /* ShhShell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShhShell.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A92538A72DEE06DE007E0A18 /* ShhShellTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShhShellTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A92538B12DEE06DE007E0A18 /* ShhShellUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShhShellUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A92538C42DEE0742007E0A18 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A92538C52DEE0742007E0A18 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A92538C62DEE0742007E0A18 /* ShhShellApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShhShellApp.swift; sourceTree = "<group>"; };
+		A92538CB2DEE0744007E0A18 /* ShhShellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShhShellTests.swift; sourceTree = "<group>"; };
+		A92538CE2DEE0745007E0A18 /* ShhShellUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShhShellUITests.swift; sourceTree = "<group>"; };
+		A92538CF2DEE0745007E0A18 /* ShhShellUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShhShellUITestsLaunchTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		A925389C2DEE06DC007E0A18 /* ShhShell */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = ShhShell;
-			sourceTree = "<group>";
-		};
-		A92538AA2DEE06DE007E0A18 /* ShhShellTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = ShhShellTests;
-			sourceTree = "<group>";
-		};
-		A92538B42DEE06DE007E0A18 /* ShhShellUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = ShhShellUITests;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		A92538972DEE06DC007E0A18 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9C897612DF0E49F00EF9A5F /* NIOSSH in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,9 +74,10 @@
 		A92538912DEE06DC007E0A18 = {
 			isa = PBXGroup;
 			children = (
-				A925389C2DEE06DC007E0A18 /* ShhShell */,
-				A92538AA2DEE06DE007E0A18 /* ShhShellTests */,
-				A92538B42DEE06DE007E0A18 /* ShhShellUITests */,
+				A92538C72DEE0742007E0A18 /* ShhShell */,
+				A92538D42DEE0756007E0A18 /* Resources */,
+				A92538CC2DEE0744007E0A18 /* ShhShellTests */,
+				A92538D02DEE0745007E0A18 /* ShhShellUITests */,
 				A925389B2DEE06DC007E0A18 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,6 +90,48 @@
 				A92538B12DEE06DE007E0A18 /* ShhShellUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		A92538C72DEE0742007E0A18 /* ShhShell */ = {
+			isa = PBXGroup;
+			children = (
+				A92538C62DEE0742007E0A18 /* ShhShellApp.swift */,
+				A92538D32DEE0749007E0A18 /* Views */,
+			);
+			path = ShhShell;
+			sourceTree = "<group>";
+		};
+		A92538CC2DEE0744007E0A18 /* ShhShellTests */ = {
+			isa = PBXGroup;
+			children = (
+				A92538CB2DEE0744007E0A18 /* ShhShellTests.swift */,
+			);
+			path = ShhShellTests;
+			sourceTree = "<group>";
+		};
+		A92538D02DEE0745007E0A18 /* ShhShellUITests */ = {
+			isa = PBXGroup;
+			children = (
+				A92538CE2DEE0745007E0A18 /* ShhShellUITests.swift */,
+				A92538CF2DEE0745007E0A18 /* ShhShellUITestsLaunchTests.swift */,
+			);
+			path = ShhShellUITests;
+			sourceTree = "<group>";
+		};
+		A92538D32DEE0749007E0A18 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A92538C52DEE0742007E0A18 /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A92538D42DEE0756007E0A18 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A92538C42DEE0742007E0A18 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -107,11 +149,9 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				A925389C2DEE06DC007E0A18 /* ShhShell */,
-			);
 			name = ShhShell;
 			packageProductDependencies = (
+				A9C897602DF0E49F00EF9A5F /* NIOSSH */,
 			);
 			productName = ShhShell;
 			productReference = A925389A2DEE06DC007E0A18 /* ShhShell.app */;
@@ -129,9 +169,6 @@
 			);
 			dependencies = (
 				A92538A92DEE06DE007E0A18 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				A92538AA2DEE06DE007E0A18 /* ShhShellTests */,
 			);
 			name = ShhShellTests;
 			packageProductDependencies = (
@@ -152,9 +189,6 @@
 			);
 			dependencies = (
 				A92538B32DEE06DE007E0A18 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				A92538B42DEE06DE007E0A18 /* ShhShellUITests */,
 			);
 			name = ShhShellUITests;
 			packageProductDependencies = (
@@ -195,6 +229,9 @@
 			);
 			mainGroup = A92538912DEE06DC007E0A18;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				A9C8975F2DF0E49F00EF9A5F /* XCRemoteSwiftPackageReference "swift-nio-ssh" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A925389B2DEE06DC007E0A18 /* Products */;
 			projectDirPath = "";
@@ -212,6 +249,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A92538CA2DEE0742007E0A18 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +274,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A92538C82DEE0742007E0A18 /* ContentView.swift in Sources */,
+				A92538C92DEE0742007E0A18 /* ShhShellApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,6 +283,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A92538CD2DEE0744007E0A18 /* ShhShellTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,6 +291,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A92538D12DEE0745007E0A18 /* ShhShellUITests.swift in Sources */,
+				A92538D22DEE0745007E0A18 /* ShhShellUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -558,6 +601,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A9C8975F2DF0E49F00EF9A5F /* XCRemoteSwiftPackageReference "swift-nio-ssh" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-nio-ssh";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.10.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A9C897602DF0E49F00EF9A5F /* NIOSSH */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A9C8975F2DF0E49F00EF9A5F /* XCRemoteSwiftPackageReference "swift-nio-ssh" */;
+			productName = NIOSSH;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A92538922DEE06DC007E0A18 /* Project object */;
 }
