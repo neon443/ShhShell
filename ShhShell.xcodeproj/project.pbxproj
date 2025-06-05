@@ -7,13 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A9083DE22DF1F5D80042906E /* SSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92D6A102DF1BC590031755A /* SSH.framework */; };
+		A9083DE32DF1F5D80042906E /* SSH.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A92D6A102DF1BC590031755A /* SSH.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A9083DF72DF1F61F0042906E /* openssl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9083DF62DF1F61F0042906E /* openssl.xcframework */; };
+		A9083DF82DF1F61F0042906E /* openssl.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9083DF62DF1F61F0042906E /* openssl.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A92538C82DEE0742007E0A18 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538C52DEE0742007E0A18 /* ContentView.swift */; };
 		A92538C92DEE0742007E0A18 /* ShhShellApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538C62DEE0742007E0A18 /* ShhShellApp.swift */; };
 		A92538CA2DEE0742007E0A18 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A92538C42DEE0742007E0A18 /* Assets.xcassets */; };
 		A92538CD2DEE0744007E0A18 /* ShhShellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538CB2DEE0744007E0A18 /* ShhShellTests.swift */; };
 		A92538D12DEE0745007E0A18 /* ShhShellUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538CE2DEE0745007E0A18 /* ShhShellUITests.swift */; };
 		A92538D22DEE0745007E0A18 /* ShhShellUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538CF2DEE0745007E0A18 /* ShhShellUITestsLaunchTests.swift */; };
-		A92D6A2F2DF1BC720031755A /* SSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92D6A102DF1BC590031755A /* SSH.framework */; };
 		A9C897DF2DF1A1C900EF9A5F /* NMSSH.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9C897DC2DF1A1C200EF9A5F /* NMSSH.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A9C897EB2DF1A95F00EF9A5F /* NMSSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9C897E92DF1A53B00EF9A5F /* NMSSH.framework */; };
 		A9C897EF2DF1A9A400EF9A5F /* SSHHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */; };
@@ -59,6 +62,8 @@
 			dstSubfolderSpec = 10;
 			files = (
 				A9C897DF2DF1A1C900EF9A5F /* NMSSH.framework in Embed Frameworks */,
+				A9083DE32DF1F5D80042906E /* SSH.framework in Embed Frameworks */,
+				A9083DF82DF1F61F0042906E /* openssl.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -66,6 +71,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A9083DF62DF1F61F0042906E /* openssl.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = openssl.xcframework; path = ../blink/xcfs/.build/artifacts/xcfs/openssl/openssl.xcframework; sourceTree = "<group>"; };
 		A925389A2DEE06DC007E0A18 /* ShhShell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShhShell.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A92538A72DEE06DE007E0A18 /* ShhShellTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShhShellTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A92538B12DEE06DE007E0A18 /* ShhShellUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShhShellUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,8 +93,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A92D6A2F2DF1BC720031755A /* SSH.framework in Frameworks */,
 				A9C897EB2DF1A95F00EF9A5F /* NMSSH.framework in Frameworks */,
+				A9083DE22DF1F5D80042906E /* SSH.framework in Frameworks */,
+				A9083DF72DF1F61F0042906E /* openssl.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -188,6 +195,7 @@
 		A9C8976F2DF1980900EF9A5F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A9083DF62DF1F61F0042906E /* openssl.xcframework */,
 				A9C897DC2DF1A1C200EF9A5F /* NMSSH.framework */,
 			);
 			name = Frameworks;
@@ -538,6 +546,7 @@
 				DEVELOPMENT_TEAM = 8JGND254B7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = _;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -567,6 +576,7 @@
 				DEVELOPMENT_TEAM = 8JGND254B7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = _;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

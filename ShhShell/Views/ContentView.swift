@@ -17,7 +17,6 @@ struct ContentView: View {
                 .foregroundStyle(.tint)
             Text("Hello, world!")
 			Button("go") {
-				sshHandler.connect()
 				sshHandler.testExec()
 			}
         }
