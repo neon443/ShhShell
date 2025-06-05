@@ -17,8 +17,6 @@
 		A92538CD2DEE0744007E0A18 /* ShhShellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538CB2DEE0744007E0A18 /* ShhShellTests.swift */; };
 		A92538D12DEE0745007E0A18 /* ShhShellUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538CE2DEE0745007E0A18 /* ShhShellUITests.swift */; };
 		A92538D22DEE0745007E0A18 /* ShhShellUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538CF2DEE0745007E0A18 /* ShhShellUITestsLaunchTests.swift */; };
-		A9C897DF2DF1A1C900EF9A5F /* NMSSH.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9C897DC2DF1A1C200EF9A5F /* NMSSH.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		A9C897EB2DF1A95F00EF9A5F /* NMSSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9C897E92DF1A53B00EF9A5F /* NMSSH.framework */; };
 		A9C897EF2DF1A9A400EF9A5F /* SSHHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */; };
 		A9C897F12DF1AB5700EF9A5F /* ShellHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C897F02DF1AB5700EF9A5F /* ShellHandler.swift */; };
 /* End PBXBuildFile section */
@@ -45,13 +43,6 @@
 			remoteGlobalIDString = 07FABB8425C9AEC000E1CC2C;
 			remoteInfo = SSH;
 		};
-		A9C897E82DF1A53B00EF9A5F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A9C897D22DF1A18C00EF9A5F /* NMSSH-iOS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 186CC9581B69110500F674C4;
-			remoteInfo = NMSSH;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -61,7 +52,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A9C897DF2DF1A1C900EF9A5F /* NMSSH.framework in Embed Frameworks */,
 				A9083DE32DF1F5D80042906E /* SSH.framework in Embed Frameworks */,
 				A9083DF82DF1F61F0042906E /* openssl.xcframework in Embed Frameworks */,
 			);
@@ -82,8 +72,6 @@
 		A92538CE2DEE0745007E0A18 /* ShhShellUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShhShellUITests.swift; sourceTree = "<group>"; };
 		A92538CF2DEE0745007E0A18 /* ShhShellUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShhShellUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		A92D69F42DF1BC590031755A /* Blink.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Blink.xcodeproj; path = ../blink/Blink.xcodeproj; sourceTree = SOURCE_ROOT; };
-		A9C897D22DF1A18C00EF9A5F /* NMSSH-iOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "NMSSH-iOS.xcodeproj"; path = "Carthage/Checkouts/NMSSH/NMSSH-iOS.xcodeproj"; sourceTree = "<group>"; };
-		A9C897DC2DF1A1C200EF9A5F /* NMSSH.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NMSSH.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHHandler.swift; sourceTree = "<group>"; };
 		A9C897F02DF1AB5700EF9A5F /* ShellHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -93,7 +81,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9C897EB2DF1A95F00EF9A5F /* NMSSH.framework in Frameworks */,
 				A9083DE22DF1F5D80042906E /* SSH.framework in Frameworks */,
 				A9083DF72DF1F61F0042906E /* openssl.xcframework in Frameworks */,
 			);
@@ -123,7 +110,6 @@
 				A92538D42DEE0756007E0A18 /* Resources */,
 				A92538CC2DEE0744007E0A18 /* ShhShellTests */,
 				A92538D02DEE0745007E0A18 /* ShhShellUITests */,
-				A9C897D22DF1A18C00EF9A5F /* NMSSH-iOS.xcodeproj */,
 				A9C8976F2DF1980900EF9A5F /* Frameworks */,
 				A925389B2DEE06DC007E0A18 /* Products */,
 				A92D69F42DF1BC590031755A /* Blink.xcodeproj */,
@@ -196,17 +182,8 @@
 			isa = PBXGroup;
 			children = (
 				A9083DF62DF1F61F0042906E /* openssl.xcframework */,
-				A9C897DC2DF1A1C200EF9A5F /* NMSSH.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		A9C897E12DF1A53B00EF9A5F /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				A9C897E92DF1A53B00EF9A5F /* NMSSH.framework */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -314,10 +291,6 @@
 					ProductGroup = A92D69F82DF1BC590031755A /* Products */;
 					ProjectRef = A92D69F42DF1BC590031755A /* Blink.xcodeproj */;
 				},
-				{
-					ProductGroup = A9C897E12DF1A53B00EF9A5F /* Products */;
-					ProjectRef = A9C897D22DF1A18C00EF9A5F /* NMSSH-iOS.xcodeproj */;
-				},
 			);
 			projectRoot = "";
 			targets = (
@@ -334,13 +307,6 @@
 			fileType = wrapper.framework;
 			path = SSH.framework;
 			remoteRef = A92D6A0F2DF1BC590031755A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		A9C897E92DF1A53B00EF9A5F /* NMSSH.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = NMSSH.framework;
-			remoteRef = A9C897E82DF1A53B00EF9A5F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

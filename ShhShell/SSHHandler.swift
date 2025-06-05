@@ -6,7 +6,6 @@
 //
 
 import Foundation
-//import NMSSH
 import LibSSH
 
 class SSHHandler: ObservableObject {
@@ -19,7 +18,7 @@ class SSHHandler: ObservableObject {
 	}
 	
 	func connect() {
-		var verbosity: Int = SSH_LOG_PROTOCOL
+		var verbosity: Int = 0
 		var port: Int = 2222
 		
 		session = ssh_new()
@@ -43,9 +42,9 @@ class SSHHandler: ObservableObject {
 	func hardcodedAuth() {
 		var hostkey: ssh_key?
 		ssh_get_server_publickey(session, &hostkey)
-		print(hostkey)
+		print("hostkey \(hostkey)")
 		
-		var password = "root"
+		let password = "root"
 		
 		let rc = ssh_userauth_password(session, "root", password)
 		if rc != SSH_AUTH_SUCCESS.rawValue {
@@ -57,7 +56,56 @@ class SSHHandler: ObservableObject {
 	
 	func testExec() {
 		connect()
+		defer { disconnect();ssh_free(session) }
+		
 		hardcodedAuth()
-		disconnect()
+		
+		var channel: ssh_channel?
+		var rc: Int32
+		var buffer: [CChar] = Array(repeating: 0, count: 256)
+		var nbytes: Int32
+		
+		channel = ssh_channel_new(session)
+		if channel == nil {
+			fatalError("couldnt create channel \(SSH_ERROR)")
+		}
+		
+		rc = ssh_channel_open_session(channel)
+		if rc != SSH_OK {
+			ssh_channel_free(channel)
+			print("channel opened \(rc)")
+		}
+		
+		rc = ssh_channel_request_exec(channel, "uptime")
+		if rc != SSH_OK {
+			ssh_channel_close(channel)
+			ssh_channel_free(channel)
+			print("exec request worked \(rc)")
+		}
+		
+		nbytes = ssh_channel_read(channel, &buffer, UInt32(buffer.count), 0)
+		while nbytes > 0 {
+			let written = write(1, buffer, Int(nbytes))
+			if written != Int(nbytes) {
+				ssh_channel_close(channel)
+				ssh_channel_free(channel)
+				fatalError("buffer write error \(SSH_ERROR)")
+			}
+			buffer = [CChar](repeating: 0, count: 256) //clear buffer
+			nbytes = ssh_channel_read(channel, &buffer, UInt32(buffer.count), 0)
+		}
+		
+		if nbytes < 0 {
+			ssh_channel_close(channel)
+			ssh_channel_free(channel)
+			fatalError("\(SSH_ERROR)")
+		}
+		
+		ssh_channel_send_eof(channel)
+		ssh_channel_close(channel)
+		ssh_channel_free(channel)
+		
+		print(SSH_OK)
+		print()
 	}
 }
