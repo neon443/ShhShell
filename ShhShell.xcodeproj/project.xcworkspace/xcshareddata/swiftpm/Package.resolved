@@ -11,30 +11,12 @@
         }
       },
       {
-        "package": "RevenueCat",
-        "repositoryURL": "https://github.com/RevenueCat/purchases-ios.git",
-        "state": {
-          "branch": null,
-          "revision": "ae6b639cacd045c06ee92ca80b49e34255375ee3",
-          "version": "4.43.6"
-        }
-      },
-      {
         "package": "Runestone",
         "repositoryURL": "https://github.com/simonbs/Runestone",
         "state": {
           "branch": null,
           "revision": "1fad339aab99cf2136ce6bf8c32da3265b2e85e5",
           "version": "0.5.1"
-        }
-      },
-      {
-        "package": "SQLite.swift",
-        "repositoryURL": "https://github.com/stephencelis/SQLite.swift",
-        "state": {
-          "branch": null,
-          "revision": "a95fc6df17d108bd99210db5e8a9bac90fe984b8",
-          "version": "0.15.3"
         }
       },
       {
@@ -62,24 +44,6 @@
           "branch": null,
           "revision": "98be227227af10cc7a269cb3ffb23686c0610b17",
           "version": "0.20.9"
-        }
-      },
-      {
-        "package": "TreeSitterLanguages",
-        "repositoryURL": "https://github.com/simonbs/treesitterlanguages",
-        "state": {
-          "branch": null,
-          "revision": "15cf3a9ec3ab95e0d058b7df9f35619123c9e02d",
-          "version": "0.1.10"
-        }
-      },
-      {
-        "package": "ZIPFoundation",
-        "repositoryURL": "https://github.com/weichsel/ZIPFoundation.git",
-        "state": {
-          "branch": null,
-          "revision": "02b6abe5f6eef7e3cbd5f247c5cc24e246efcfe0",
-          "version": "0.9.19"
         }
       }
     ]
