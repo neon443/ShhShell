@@ -13,6 +13,8 @@
 		A92538CD2DEE0744007E0A18 /* ShhShellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538CB2DEE0744007E0A18 /* ShhShellTests.swift */; };
 		A92538D12DEE0745007E0A18 /* ShhShellUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538CE2DEE0745007E0A18 /* ShhShellUITests.swift */; };
 		A92538D22DEE0745007E0A18 /* ShhShellUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538CF2DEE0745007E0A18 /* ShhShellUITestsLaunchTests.swift */; };
+		A9C897DE2DF1A1C900EF9A5F /* NMSSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9C897DC2DF1A1C200EF9A5F /* NMSSH.framework */; };
+		A9C897DF2DF1A1C900EF9A5F /* NMSSH.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9C897DC2DF1A1C200EF9A5F /* NMSSH.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +34,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		A9C897E02DF1A1C900EF9A5F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A9C897DF2DF1A1C900EF9A5F /* NMSSH.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		A925389A2DEE06DC007E0A18 /* ShhShell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShhShell.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A92538A72DEE06DE007E0A18 /* ShhShellTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShhShellTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -42,6 +58,8 @@
 		A92538CB2DEE0744007E0A18 /* ShhShellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShhShellTests.swift; sourceTree = "<group>"; };
 		A92538CE2DEE0745007E0A18 /* ShhShellUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShhShellUITests.swift; sourceTree = "<group>"; };
 		A92538CF2DEE0745007E0A18 /* ShhShellUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShhShellUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		A9C897D22DF1A18C00EF9A5F /* NMSSH-iOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "NMSSH-iOS.xcodeproj"; path = "Carthage/Checkouts/NMSSH/NMSSH-iOS.xcodeproj"; sourceTree = "<group>"; };
+		A9C897DC2DF1A1C200EF9A5F /* NMSSH.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NMSSH.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9C897DE2DF1A1C900EF9A5F /* NMSSH.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +95,7 @@
 				A92538D42DEE0756007E0A18 /* Resources */,
 				A92538CC2DEE0744007E0A18 /* ShhShellTests */,
 				A92538D02DEE0745007E0A18 /* ShhShellUITests */,
+				A9C897D22DF1A18C00EF9A5F /* NMSSH-iOS.xcodeproj */,
 				A9C8976F2DF1980900EF9A5F /* Frameworks */,
 				A925389B2DEE06DC007E0A18 /* Products */,
 			);
@@ -136,8 +156,16 @@
 		A9C8976F2DF1980900EF9A5F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A9C897DC2DF1A1C200EF9A5F /* NMSSH.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A9C897E12DF1A53B00EF9A5F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,6 +178,7 @@
 				A92538962DEE06DC007E0A18 /* Sources */,
 				A92538972DEE06DC007E0A18 /* Frameworks */,
 				A92538982DEE06DC007E0A18 /* Resources */,
+				A9C897E02DF1A1C900EF9A5F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -239,6 +268,12 @@
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A925389B2DEE06DC007E0A18 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = A9C897E12DF1A53B00EF9A5F /* Products */;
+					ProjectRef = A9C897D22DF1A18C00EF9A5F /* NMSSH-iOS.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				A92538992DEE06DC007E0A18 /* ShhShell */,
@@ -452,6 +487,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -480,6 +516,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

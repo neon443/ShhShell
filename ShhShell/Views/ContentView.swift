@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import NMSSH
 
 struct ContentView: View {
     var body: some View {
