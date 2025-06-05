@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A9083DE22DF1F5D80042906E /* SSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92D6A102DF1BC590031755A /* SSH.framework */; };
-		A9083DE32DF1F5D80042906E /* SSH.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A92D6A102DF1BC590031755A /* SSH.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		A9083DF72DF1F61F0042906E /* openssl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9083DF62DF1F61F0042906E /* openssl.xcframework */; };
-		A9083DF82DF1F61F0042906E /* openssl.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9083DF62DF1F61F0042906E /* openssl.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A9083E322DF2214A0042906E /* LibSSH.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9083E312DF2214A0042906E /* LibSSH.xcframework */; };
+		A9083E332DF2214A0042906E /* LibSSH.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9083E312DF2214A0042906E /* LibSSH.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A9083E372DF221AE0042906E /* LibSSH.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9083E312DF2214A0042906E /* LibSSH.xcframework */; };
+		A9083E402DF2226F0042906E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A9083E3F2DF2225A0042906E /* libz.tbd */; };
+		A9083E412DF222920042906E /* openssl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9083E342DF2218D0042906E /* openssl.xcframework */; };
+		A9083E422DF222920042906E /* openssl.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9083E342DF2218D0042906E /* openssl.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A92538C82DEE0742007E0A18 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538C52DEE0742007E0A18 /* ContentView.swift */; };
 		A92538C92DEE0742007E0A18 /* ShhShellApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538C62DEE0742007E0A18 /* ShhShellApp.swift */; };
 		A92538CA2DEE0742007E0A18 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A92538C42DEE0742007E0A18 /* Assets.xcassets */; };
@@ -36,24 +38,17 @@
 			remoteGlobalIDString = A92538992DEE06DC007E0A18;
 			remoteInfo = ShhShell;
 		};
-		A92D6A0F2DF1BC590031755A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A92D69F42DF1BC590031755A /* Blink.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 07FABB8425C9AEC000E1CC2C;
-			remoteInfo = SSH;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		A9C897E02DF1A1C900EF9A5F /* Embed Frameworks */ = {
+		A9083DFB2DF21DAE0042906E /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A9083DE32DF1F5D80042906E /* SSH.framework in Embed Frameworks */,
-				A9083DF82DF1F61F0042906E /* openssl.xcframework in Embed Frameworks */,
+				A9083E422DF222920042906E /* openssl.xcframework in Embed Frameworks */,
+				A9083E332DF2214A0042906E /* LibSSH.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -61,7 +56,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		A9083DF62DF1F61F0042906E /* openssl.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = openssl.xcframework; path = ../blink/xcfs/.build/artifacts/xcfs/openssl/openssl.xcframework; sourceTree = "<group>"; };
+		A9083E312DF2214A0042906E /* LibSSH.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = LibSSH.xcframework; path = ../blink/xcfs/.build/artifacts/xcfs/LibSSH/LibSSH.xcframework; sourceTree = "<group>"; };
+		A9083E342DF2218D0042906E /* openssl.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = openssl.xcframework; path = ../blink/xcfs/.build/artifacts/xcfs/openssl/openssl.xcframework; sourceTree = "<group>"; };
+		A9083E3F2DF2225A0042906E /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		A925389A2DEE06DC007E0A18 /* ShhShell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShhShell.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A92538A72DEE06DE007E0A18 /* ShhShellTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShhShellTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A92538B12DEE06DE007E0A18 /* ShhShellUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShhShellUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -71,7 +68,6 @@
 		A92538CB2DEE0744007E0A18 /* ShhShellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShhShellTests.swift; sourceTree = "<group>"; };
 		A92538CE2DEE0745007E0A18 /* ShhShellUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShhShellUITests.swift; sourceTree = "<group>"; };
 		A92538CF2DEE0745007E0A18 /* ShhShellUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShhShellUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		A92D69F42DF1BC590031755A /* Blink.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Blink.xcodeproj; path = ../blink/Blink.xcodeproj; sourceTree = SOURCE_ROOT; };
 		A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHHandler.swift; sourceTree = "<group>"; };
 		A9C897F02DF1AB5700EF9A5F /* ShellHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -81,8 +77,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9083DE22DF1F5D80042906E /* SSH.framework in Frameworks */,
-				A9083DF72DF1F61F0042906E /* openssl.xcframework in Frameworks */,
+				A9083E372DF221AE0042906E /* LibSSH.xcframework in Frameworks */,
+				A9083E402DF2226F0042906E /* libz.tbd in Frameworks */,
+				A9083E412DF222920042906E /* openssl.xcframework in Frameworks */,
+				A9083E322DF2214A0042906E /* LibSSH.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,7 +110,6 @@
 				A92538D02DEE0745007E0A18 /* ShhShellUITests */,
 				A9C8976F2DF1980900EF9A5F /* Frameworks */,
 				A925389B2DEE06DC007E0A18 /* Products */,
-				A92D69F42DF1BC590031755A /* Blink.xcodeproj */,
 			);
 			sourceTree = "<group>";
 		};
@@ -170,18 +167,12 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		A92D69F82DF1BC590031755A /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				A92D6A102DF1BC590031755A /* SSH.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		A9C8976F2DF1980900EF9A5F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A9083DF62DF1F61F0042906E /* openssl.xcframework */,
+				A9083E3F2DF2225A0042906E /* libz.tbd */,
+				A9083E342DF2218D0042906E /* openssl.xcframework */,
+				A9083E312DF2214A0042906E /* LibSSH.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -196,7 +187,7 @@
 				A92538962DEE06DC007E0A18 /* Sources */,
 				A92538972DEE06DC007E0A18 /* Frameworks */,
 				A92538982DEE06DC007E0A18 /* Resources */,
-				A9C897E02DF1A1C900EF9A5F /* Embed Frameworks */,
+				A9083DFB2DF21DAE0042906E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -286,12 +277,6 @@
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A925389B2DEE06DC007E0A18 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = A92D69F82DF1BC590031755A /* Products */;
-					ProjectRef = A92D69F42DF1BC590031755A /* Blink.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				A92538992DEE06DC007E0A18 /* ShhShell */,
@@ -300,16 +285,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		A92D6A102DF1BC590031755A /* SSH.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SSH.framework;
-			remoteRef = A92D6A0F2DF1BC590031755A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		A92538982DEE06DC007E0A18 /* Resources */ = {

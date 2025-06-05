@@ -10,7 +10,6 @@ import LibSSH
 
 class SSHHandler: ObservableObject {
 	var session: ssh_session?
-	var shellHandlerDelegate = ShellHandler()
 	
 	init() {
 //		session = ssh_new()
@@ -105,7 +104,6 @@ class SSHHandler: ObservableObject {
 		ssh_channel_close(channel)
 		ssh_channel_free(channel)
 		
-		print(SSH_OK)
-		print()
+		print("sshNoOk? \(SSH_OK)")
 	}
 }
