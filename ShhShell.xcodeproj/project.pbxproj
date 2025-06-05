@@ -13,8 +13,7 @@
 		A92538CD2DEE0744007E0A18 /* ShhShellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538CB2DEE0744007E0A18 /* ShhShellTests.swift */; };
 		A92538D12DEE0745007E0A18 /* ShhShellUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538CE2DEE0745007E0A18 /* ShhShellUITests.swift */; };
 		A92538D22DEE0745007E0A18 /* ShhShellUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538CF2DEE0745007E0A18 /* ShhShellUITestsLaunchTests.swift */; };
-		A92D69E82DF1B9ED0031755A /* SSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92D69C92DF1B9B00031755A /* SSH.framework */; };
-		A92D69E92DF1B9ED0031755A /* SSH.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A92D69C92DF1B9B00031755A /* SSH.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A92D6A2F2DF1BC720031755A /* SSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92D6A102DF1BC590031755A /* SSH.framework */; };
 		A9C897DF2DF1A1C900EF9A5F /* NMSSH.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9C897DC2DF1A1C200EF9A5F /* NMSSH.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A9C897EB2DF1A95F00EF9A5F /* NMSSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9C897E92DF1A53B00EF9A5F /* NMSSH.framework */; };
 		A9C897EF2DF1A9A400EF9A5F /* SSHHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */; };
@@ -36,9 +35,9 @@
 			remoteGlobalIDString = A92538992DEE06DC007E0A18;
 			remoteInfo = ShhShell;
 		};
-		A92D69C82DF1B9B00031755A /* PBXContainerItemProxy */ = {
+		A92D6A0F2DF1BC590031755A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = A92D69AD2DF1B9AF0031755A /* Blink.xcodeproj */;
+			containerPortal = A92D69F42DF1BC590031755A /* Blink.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 07FABB8425C9AEC000E1CC2C;
 			remoteInfo = SSH;
@@ -60,7 +59,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				A9C897DF2DF1A1C900EF9A5F /* NMSSH.framework in Embed Frameworks */,
-				A92D69E92DF1B9ED0031755A /* SSH.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -77,7 +75,7 @@
 		A92538CB2DEE0744007E0A18 /* ShhShellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShhShellTests.swift; sourceTree = "<group>"; };
 		A92538CE2DEE0745007E0A18 /* ShhShellUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShhShellUITests.swift; sourceTree = "<group>"; };
 		A92538CF2DEE0745007E0A18 /* ShhShellUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShhShellUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		A92D69AD2DF1B9AF0031755A /* Blink.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Blink.xcodeproj; path = /Users/neon443/Downloads/blink/Blink.xcodeproj; sourceTree = "<absolute>"; };
+		A92D69F42DF1BC590031755A /* Blink.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Blink.xcodeproj; path = ../blink/Blink.xcodeproj; sourceTree = SOURCE_ROOT; };
 		A9C897D22DF1A18C00EF9A5F /* NMSSH-iOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "NMSSH-iOS.xcodeproj"; path = "Carthage/Checkouts/NMSSH/NMSSH-iOS.xcodeproj"; sourceTree = "<group>"; };
 		A9C897DC2DF1A1C200EF9A5F /* NMSSH.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NMSSH.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHHandler.swift; sourceTree = "<group>"; };
@@ -89,8 +87,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A92D6A2F2DF1BC720031755A /* SSH.framework in Frameworks */,
 				A9C897EB2DF1A95F00EF9A5F /* NMSSH.framework in Frameworks */,
-				A92D69E82DF1B9ED0031755A /* SSH.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,7 +119,7 @@
 				A9C897D22DF1A18C00EF9A5F /* NMSSH-iOS.xcodeproj */,
 				A9C8976F2DF1980900EF9A5F /* Frameworks */,
 				A925389B2DEE06DC007E0A18 /* Products */,
-				A92D69AD2DF1B9AF0031755A /* Blink.xcodeproj */,
+				A92D69F42DF1BC590031755A /* Blink.xcodeproj */,
 			);
 			sourceTree = "<group>";
 		};
@@ -179,10 +177,10 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		A92D69B12DF1B9B00031755A /* Products */ = {
+		A92D69F82DF1BC590031755A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A92D69C92DF1B9B00031755A /* SSH.framework */,
+				A92D6A102DF1BC590031755A /* SSH.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -305,8 +303,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = A92D69B12DF1B9B00031755A /* Products */;
-					ProjectRef = A92D69AD2DF1B9AF0031755A /* Blink.xcodeproj */;
+					ProductGroup = A92D69F82DF1BC590031755A /* Products */;
+					ProjectRef = A92D69F42DF1BC590031755A /* Blink.xcodeproj */;
 				},
 				{
 					ProductGroup = A9C897E12DF1A53B00EF9A5F /* Products */;
@@ -323,11 +321,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		A92D69C92DF1B9B00031755A /* SSH.framework */ = {
+		A92D6A102DF1BC590031755A /* SSH.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = SSH.framework;
-			remoteRef = A92D69C82DF1B9B00031755A /* PBXContainerItemProxy */;
+			remoteRef = A92D6A0F2DF1BC590031755A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		A9C897E92DF1A53B00EF9A5F /* NMSSH.framework */ = {

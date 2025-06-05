@@ -1,87 +1,88 @@
 {
-  "originHash" : "3c0aff882bcb0d68be09455d4b0d93dfcf0115ebcb0b9f3c8150da7d6ca8b6c0",
-  "pins" : [
-    {
-      "identity" : "base32kit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/jenslauterbach/Base32Kit.git",
-      "state" : {
-        "revision" : "34e7e2796cb8d791df6f9a275a858048fcf52700",
-        "version" : "0.2.1"
+  "object": {
+    "pins": [
+      {
+        "package": "Base32Kit",
+        "repositoryURL": "https://github.com/jenslauterbach/Base32Kit.git",
+        "state": {
+          "branch": null,
+          "revision": "34e7e2796cb8d791df6f9a275a858048fcf52700",
+          "version": "0.2.1"
+        }
+      },
+      {
+        "package": "RevenueCat",
+        "repositoryURL": "https://github.com/RevenueCat/purchases-ios.git",
+        "state": {
+          "branch": null,
+          "revision": "ae6b639cacd045c06ee92ca80b49e34255375ee3",
+          "version": "4.43.6"
+        }
+      },
+      {
+        "package": "Runestone",
+        "repositoryURL": "https://github.com/simonbs/Runestone",
+        "state": {
+          "branch": null,
+          "revision": "1fad339aab99cf2136ce6bf8c32da3265b2e85e5",
+          "version": "0.5.1"
+        }
+      },
+      {
+        "package": "SQLite.swift",
+        "repositoryURL": "https://github.com/stephencelis/SQLite.swift",
+        "state": {
+          "branch": null,
+          "revision": "a95fc6df17d108bd99210db5e8a9bac90fe984b8",
+          "version": "0.15.3"
+        }
+      },
+      {
+        "package": "SwiftCBOR",
+        "repositoryURL": "https://github.com/unrelentingtech/SwiftCBOR",
+        "state": {
+          "branch": "master",
+          "revision": "ea5ece79b0efde241495bfaa74eccceeffc382bc",
+          "version": null
+        }
+      },
+      {
+        "package": "swiftui-cached-async-image",
+        "repositoryURL": "https://github.com/lorenzofiamingo/swiftui-cached-async-image",
+        "state": {
+          "branch": "main",
+          "revision": "4f111f2b7aab7ec52a60716cedb673df5203743c",
+          "version": null
+        }
+      },
+      {
+        "package": "TreeSitter",
+        "repositoryURL": "https://github.com/tree-sitter/tree-sitter",
+        "state": {
+          "branch": null,
+          "revision": "98be227227af10cc7a269cb3ffb23686c0610b17",
+          "version": "0.20.9"
+        }
+      },
+      {
+        "package": "TreeSitterLanguages",
+        "repositoryURL": "https://github.com/simonbs/treesitterlanguages",
+        "state": {
+          "branch": null,
+          "revision": "15cf3a9ec3ab95e0d058b7df9f35619123c9e02d",
+          "version": "0.1.10"
+        }
+      },
+      {
+        "package": "ZIPFoundation",
+        "repositoryURL": "https://github.com/weichsel/ZIPFoundation.git",
+        "state": {
+          "branch": null,
+          "revision": "02b6abe5f6eef7e3cbd5f247c5cc24e246efcfe0",
+          "version": "0.9.19"
+        }
       }
-    },
-    {
-      "identity" : "purchases-ios",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/RevenueCat/purchases-ios.git",
-      "state" : {
-        "revision" : "ae6b639cacd045c06ee92ca80b49e34255375ee3",
-        "version" : "4.43.6"
-      }
-    },
-    {
-      "identity" : "runestone",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/simonbs/Runestone",
-      "state" : {
-        "revision" : "1fad339aab99cf2136ce6bf8c32da3265b2e85e5",
-        "version" : "0.5.1"
-      }
-    },
-    {
-      "identity" : "sqlite.swift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/stephencelis/SQLite.swift",
-      "state" : {
-        "revision" : "a95fc6df17d108bd99210db5e8a9bac90fe984b8",
-        "version" : "0.15.3"
-      }
-    },
-    {
-      "identity" : "swiftcbor",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/unrelentingtech/SwiftCBOR",
-      "state" : {
-        "branch" : "master",
-        "revision" : "ea5ece79b0efde241495bfaa74eccceeffc382bc"
-      }
-    },
-    {
-      "identity" : "swiftui-cached-async-image",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/lorenzofiamingo/swiftui-cached-async-image",
-      "state" : {
-        "branch" : "main",
-        "revision" : "4f111f2b7aab7ec52a60716cedb673df5203743c"
-      }
-    },
-    {
-      "identity" : "tree-sitter",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/tree-sitter/tree-sitter",
-      "state" : {
-        "revision" : "98be227227af10cc7a269cb3ffb23686c0610b17",
-        "version" : "0.20.9"
-      }
-    },
-    {
-      "identity" : "treesitterlanguages",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/simonbs/treesitterlanguages",
-      "state" : {
-        "revision" : "15cf3a9ec3ab95e0d058b7df9f35619123c9e02d",
-        "version" : "0.1.10"
-      }
-    },
-    {
-      "identity" : "zipfoundation",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/weichsel/ZIPFoundation.git",
-      "state" : {
-        "revision" : "02b6abe5f6eef7e3cbd5f247c5cc24e246efcfe0",
-        "version" : "0.9.19"
-      }
-    }
-  ],
-  "version" : 3
+    ]
+  },
+  "version": 1
 }
