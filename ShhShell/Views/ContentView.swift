@@ -6,15 +6,20 @@
 //
 
 import SwiftUI
-import NMSSH
 
 struct ContentView: View {
+	var sshHandler = SSHHandler()
+	
     var body: some View {
         VStack {
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundStyle(.tint)
             Text("Hello, world!")
+			Button("go") {
+				sshHandler.connect()
+				sshHandler.testExec()
+			}
         }
         .padding()
     }
