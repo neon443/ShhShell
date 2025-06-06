@@ -12,6 +12,7 @@ import OSLog
 class SSHHandler: ObservableObject {
 	var session: ssh_session?
 	
+	@Published var authorized: Bool = false
 	@Published var username: String
 	@Published var password: String
 	@Published var address: String
@@ -25,16 +26,16 @@ class SSHHandler: ObservableObject {
 		address: String = "",
 		port: Int = 22
 	) {
-		#if DEBUG
-		self.username = "root"
-		self.password = "root"
-		self.address = "localhost"
-		self.port = 2222
-		#endif
 		self.username = username
 		self.password = password
 		self.address = address
 		self.port = port
+#if DEBUG
+		self.username = "root"
+		self.password = "root"
+		self.address = "localhost"
+		self.port = 2222
+#endif
 	}
 	
 	func getHostkey() {
@@ -82,6 +83,8 @@ class SSHHandler: ObservableObject {
 		}
 		ssh_disconnect(session)
 		ssh_free(session)
+		session = nil
+		authorized = false
 	}
 
 	func testExec() -> Bool {
@@ -91,7 +94,7 @@ class SSHHandler: ObservableObject {
 			}
 		}
 		
-		guard authWithPw() else { return false }
+		guard authorized else { return false }
 
 		var status: CInt
 		var buffer: [Int] = Array(repeating: 0, count: 256)
@@ -158,18 +161,20 @@ class SSHHandler: ObservableObject {
 			logSshGetError()
 			return false
 		}
+		authorized = true
 		return true
 	}
 	
 	func authWithPw() -> Bool {
 		var status: CInt
 		status = ssh_userauth_password(session, username, password)
-		guard status != SSH_AUTH_SUCCESS.rawValue else {
+		guard status == SSH_AUTH_SUCCESS.rawValue else {
 			print("ssh pw auth error")
 			logSshGetError()
 			return false
 		}
 		print("auth success")
+		authorized = true
 		return true
 	}
 	
@@ -222,17 +227,17 @@ class SSHHandler: ObservableObject {
 			}
 			status = ssh_userauth_kbdint(session, nil, nil)
 		}
+		authorized = true
 		return true
 	}
 	
 	func authWithNone() -> Bool {
 		let status = ssh_userauth_none(session, nil)
-		if status == SSH_AUTH_SUCCESS.rawValue {
-			print("no security moment lol")
-			return true
-		} else {
-			return false
-		}
+		guard status == SSH_AUTH_SUCCESS.rawValue else { return false }
+		
+		print("no security moment lol")
+		authorized = true
+		return true
 	}
 	
 	func getAuthMethods() {

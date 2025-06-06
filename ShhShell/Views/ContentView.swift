@@ -31,7 +31,7 @@ struct ContentView: View {
 				handler.connect()
 				handler.authWithPw()
 			}
-			Button("disconnect & free") {
+			Button("disconnect") {
 				handler.disconnect()
 			}
 			Button("testExec") {

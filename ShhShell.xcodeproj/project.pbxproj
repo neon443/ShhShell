@@ -19,6 +19,7 @@
 		A92538CD2DEE0744007E0A18 /* ShhShellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538CB2DEE0744007E0A18 /* ShhShellTests.swift */; };
 		A92538D12DEE0745007E0A18 /* ShhShellUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538CE2DEE0745007E0A18 /* ShhShellUITests.swift */; };
 		A92538D22DEE0745007E0A18 /* ShhShellUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538CF2DEE0745007E0A18 /* ShhShellUITestsLaunchTests.swift */; };
+		A95FAA452DF3870B00DE2F5A /* libssh2.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A95FAA442DF3870A00DE2F5A /* libssh2.xcframework */; };
 		A9C897EF2DF1A9A400EF9A5F /* SSHHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */; };
 		A9C897F12DF1AB5700EF9A5F /* ShellHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C897F02DF1AB5700EF9A5F /* ShellHandler.swift */; };
 /* End PBXBuildFile section */
@@ -68,6 +69,7 @@
 		A92538CB2DEE0744007E0A18 /* ShhShellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShhShellTests.swift; sourceTree = "<group>"; };
 		A92538CE2DEE0745007E0A18 /* ShhShellUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShhShellUITests.swift; sourceTree = "<group>"; };
 		A92538CF2DEE0745007E0A18 /* ShhShellUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShhShellUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		A95FAA442DF3870A00DE2F5A /* libssh2.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libssh2.xcframework; path = ../blink/xcfs/.build/artifacts/xcfs/libssh2/libssh2.xcframework; sourceTree = SOURCE_ROOT; };
 		A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHHandler.swift; sourceTree = "<group>"; };
 		A9C897F02DF1AB5700EF9A5F /* ShellHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -79,6 +81,7 @@
 			files = (
 				A9083E372DF221AE0042906E /* LibSSH.xcframework in Frameworks */,
 				A9083E402DF2226F0042906E /* libz.tbd in Frameworks */,
+				A95FAA452DF3870B00DE2F5A /* libssh2.xcframework in Frameworks */,
 				A9083E412DF222920042906E /* openssl.xcframework in Frameworks */,
 				A9083E322DF2214A0042906E /* LibSSH.xcframework in Frameworks */,
 			);
@@ -173,6 +176,7 @@
 				A9083E3F2DF2225A0042906E /* libz.tbd */,
 				A9083E342DF2218D0042906E /* openssl.xcframework */,
 				A9083E312DF2214A0042906E /* LibSSH.xcframework */,
+				A95FAA442DF3870A00DE2F5A /* libssh2.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
