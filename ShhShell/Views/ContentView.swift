@@ -8,21 +8,41 @@
 import SwiftUI
 
 struct ContentView: View {
-	var sshHandler = SSHHandler()
+	@ObservedObject var handler: SSHHandler
 	
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-			Button("go") {
-				sshHandler.testExec()
+			TextField("address", text: $handler.address)
+				.textFieldStyle(.roundedBorder)
+			TextField(
+				"port",
+				text: Binding(
+					get: { String(handler.port) },
+					set: { handler.port = Int($0) ?? 22} )
+			)
+				.keyboardType(.numberPad)
+				.textFieldStyle(.roundedBorder)
+			TextField("username", text: $handler.username)
+				.textFieldStyle(.roundedBorder)
+			TextField("password", text: $handler.password)
+				.textFieldStyle(.roundedBorder)
+
+			Button("connect & auth") {
+				handler.connect()
+				handler.authWithPw()
+			}
+			Button("disconnect & free") {
+				handler.disconnect()
+			}
+			Button("testExec") {
+				handler.testExec()
 			}
         }
     }
 }
 
 #Preview {
-    ContentView()
+    ContentView(
+		handler: SSHHandler(username: "root", password: "root")
+	)
 }
