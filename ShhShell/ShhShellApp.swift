@@ -13,5 +13,6 @@ struct ShhShellApp: App {
         WindowGroup {
             ContentView()
         }
+		.windowResizability(.contentMinSize)
     }
 }

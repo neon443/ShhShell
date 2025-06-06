@@ -20,7 +20,6 @@ struct ContentView: View {
 				sshHandler.testExec()
 			}
         }
-        .padding()
     }
 }
 
