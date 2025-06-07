@@ -11,6 +11,7 @@ import OSLog
 
 class SSHHandler: ObservableObject {
 	private var session: ssh_session?
+	private var channel: ssh_channel?
 	
 	@Published var authorized: Bool = false
 	@Published var username: String
@@ -250,7 +251,7 @@ class SSHHandler: ObservableObject {
 	func openShell() {
 		var status: CInt
 		
-		let channel = ssh_channel_new(session)
+		channel = ssh_channel_new(session)
 		guard let channel = channel else { return }
 		
 		status = ssh_channel_open_session(channel)
@@ -259,19 +260,15 @@ class SSHHandler: ObservableObject {
 			return
 		}
 		
-		interactiveShellSession(channel: channel)
+		interactiveShellSession()
 		
 //		ssh_channel_close(channel)
 //		ssh_channel_send_eof(channel)
 //		ssh_channel_free(channel)
 	}
 	
-	private func interactiveShellSession(channel: ssh_channel) {
+	private func interactiveShellSession() {
 		var status: CInt
-		var buffer: [CChar] = Array(repeating: 0, count: 256)
-		var nbytes: CInt = 0
-		
-		let timer: Timer?
 		
 		status = ssh_channel_request_pty(channel)
 		guard status == SSH_OK else { return }
@@ -282,29 +279,30 @@ class SSHHandler: ObservableObject {
 		status = ssh_channel_request_shell(channel)
 		guard status == SSH_OK else { return }
 		
-		timer = Timer(timeInterval: 0.01, repeats: true) { _ in
-//			guard let self = self else {
-//				timer?.invalidate()
-//				return
-//			}
-			guard ssh_channel_is_open(channel) != 0 else { return }
-			guard ssh_channel_is_eof(channel) == 0 else { return }
+		while ssh_channel_is_open(channel) != 0 && ssh_channel_is_eof(channel) == 0 {
+			var buffer: [CChar] = Array(repeating: 0, count: 256)
+			let nbytes = ssh_channel_read_nonblocking(channel, &buffer, UInt32(buffer.count), 0)
 			
-			nbytes = ssh_channel_read(channel, &buffer, UInt32(buffer.count), 0)
 			guard nbytes > 0 else { return }
+			write(1, buffer, Int(nbytes))
 			
-			if nbytes > 0 {
-				write(1, buffer, Int(nbytes))
-			}
-			print(String(cString: buffer))
+			let data = Data(bytes: buffer, count: buffer.count)
+			print(String(data: data, encoding: .utf8))
 		}
+	}
+	
+	func readFromChannel() -> String? {
+		guard ssh_channel_is_open(channel) != 0 else { return nil }
+		guard ssh_channel_is_eof(channel) == 0 else { return nil }
 		
-		DispatchQueue.global().async {
-			RunLoop.current.add(timer!, forMode: .common)
-		}
+		var buffer: [CChar] = Array(repeating: 0, count: 256)
+		let nbytes = ssh_channel_read_nonblocking(channel, &buffer, UInt32(buffer.count), 0)
 		
-//		ssh_channel_close(channel)
-//		ssh_channel_free(channel)
+		guard nbytes > 0 else { return nil }
+		write(1, buffer, Int(nbytes))
+		
+		let data = Data(bytes: buffer, count: buffer.count)
+		return String(data: data, encoding: .utf8)!
 	}
 	
 	private func logSshGetError() {
