@@ -268,6 +268,8 @@ class SSHHandler: ObservableObject {
 	
 	private func interactiveShellSession(channel: ssh_channel) {
 		var status: CInt
+		var buffer: [CChar] = Array(repeating: 0, count: 256)
+		var nbytes: CInt = 0
 		
 		status = ssh_channel_request_pty(channel)
 		guard status == SSH_OK else { return }
@@ -277,9 +279,23 @@ class SSHHandler: ObservableObject {
 		
 		status = ssh_channel_request_shell(channel)
 		guard status == SSH_OK else { return }
+		
+//		Task {
+			while (ssh_channel_is_open(channel) != 0) && (ssh_channel_is_eof(channel) == 0) {
+				nbytes = ssh_channel_read(channel, &buffer, UInt32(MemoryLayout.size(ofValue: buffer)), 0)
+				if nbytes < 0 {
+					return
+				}
+				if nbytes > 0 {
+					write(1, buffer, Int(nbytes))
+				}
+				sleep(1)
+			}
+//		}
+		print(String(utf8String: buffer))
 	}
 	
-	func logSshGetError() {
+	private func logSshGetError() {
 		logger.critical("\(String(cString: ssh_get_error(&self.session)))")
 	}
 }

@@ -11,10 +11,9 @@ import SwiftUI
 struct ShhShellApp: App {
 	@StateObject var sshHandler: SSHHandler = SSHHandler(username: "", password: "")
 	
-    var body: some Scene {
-        WindowGroup {
-            ContentView(handler: sshHandler)
-        }
-		.windowResizability(.contentMinSize)
-    }
+	var body: some Scene {
+		WindowGroup {
+			ContentView(handler: sshHandler)
+		}
+	}
 }
