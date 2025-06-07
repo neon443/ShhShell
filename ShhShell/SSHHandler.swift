@@ -52,8 +52,8 @@ class SSHHandler: ObservableObject {
 	
 	func connect() -> Bool {
 		defer {
-			getHostkey()
 			getAuthMethods()
+			getHostkey()
 		}
 		
 		var verbosity: Int = 0
@@ -89,9 +89,7 @@ class SSHHandler: ObservableObject {
 
 	func testExec() -> Bool {
 		if ssh_is_connected(session) == 0 {
-			if !connect() {
 				return false
-			}
 		}
 		
 		guard authorized else { return false }
@@ -178,58 +176,58 @@ class SSHHandler: ObservableObject {
 		return true
 	}
 	
-	func authWithKbInt() -> Bool {
-		var status: CInt
-		status = ssh_userauth_kbdint(session, nil, nil)
-		while status == SSH_AUTH_INFO.rawValue {
-			let name, instruction: String
-			var nprompts: CInt
-			
-			if let namePtr = ssh_userauth_kbdint_getname(session) {
-				name = String(cString: namePtr)
-			} else {
-				return false
-			}
-			if let instrPtr = ssh_userauth_kbdint_getinstruction(session) {
-				instruction = String(cString: instrPtr)
-			} else {
-				return false
-			}
-			nprompts = ssh_userauth_kbdint_getnprompts(session)
-			
-			if name.count > 0 {
-				print(name)
-			}
-			if instruction.count > 0 {
-				print(instruction)
-			}
-			for promptI in 0..<nprompts {
-				let prompt: UnsafePointer<CChar>
-				var echo: CChar = 0
-				prompt = ssh_userauth_kbdint_getprompt(session, UInt32(promptI), &echo)
-				if echo != 0 {
-					var buffer: [CChar] = Array(repeating: 0, count: 128)
-					let ptr: UnsafeMutablePointer<CChar> = .init(mutating: buffer)
-					print(prompt)
-					if fgets(&buffer, Int32(MemoryLayout.size(ofValue: buffer)), stdin) == nil {
-						return false
-					}
-					ptr.pointee = 0//prob fucked
-					if ssh_userauth_kbdint_setanswer(session, UInt32(promptI), buffer) < 0 {
-						return false
-					}
-					memset(&buffer, 0, buffer.count)
-				} else {
-					if (ssh_userauth_kbdint_setanswer(session, UInt32(promptI), &password) != 0) {
-						return false
-					}
-				}
-			}
-			status = ssh_userauth_kbdint(session, nil, nil)
-		}
-		authorized = true
-		return true
-	}
+//	func authWithKbInt() -> Bool {
+//		var status: CInt
+//		status = ssh_userauth_kbdint(session, nil, nil)
+//		while status == SSH_AUTH_INFO.rawValue {
+//			let name, instruction: String
+//			var nprompts: CInt
+//			
+//			if let namePtr = ssh_userauth_kbdint_getname(session) {
+//				name = String(cString: namePtr)
+//			} else {
+//				return false
+//			}
+//			if let instrPtr = ssh_userauth_kbdint_getinstruction(session) {
+//				instruction = String(cString: instrPtr)
+//			} else {
+//				return false
+//			}
+//			nprompts = ssh_userauth_kbdint_getnprompts(session)
+//			
+//			if name.count > 0 {
+//				print(name)
+//			}
+//			if instruction.count > 0 {
+//				print(instruction)
+//			}
+//			for promptI in 0..<nprompts {
+//				let prompt: UnsafePointer<CChar>
+//				var echo: CChar = 0
+//				prompt = ssh_userauth_kbdint_getprompt(session, UInt32(promptI), &echo)
+//				if echo != 0 {
+//					var buffer: [CChar] = Array(repeating: 0, count: 128)
+//					let ptr: UnsafeMutablePointer<CChar> = .init(mutating: buffer)
+//					print(prompt)
+//					if fgets(&buffer, Int32(MemoryLayout.size(ofValue: buffer)), stdin) == nil {
+//						return false
+//					}
+//					ptr.pointee = 0//prob fucked
+//					if ssh_userauth_kbdint_setanswer(session, UInt32(promptI), buffer) < 0 {
+//						return false
+//					}
+//					memset(&buffer, 0, buffer.count)
+//				} else {
+//					if (ssh_userauth_kbdint_setanswer(session, UInt32(promptI), &password) != 0) {
+//						return false
+//					}
+//				}
+//			}
+//			status = ssh_userauth_kbdint(session, nil, nil)
+//		}
+//		authorized = true
+//		return true
+//	}
 	
 	func authWithNone() -> Bool {
 		let status = ssh_userauth_none(session, nil)
@@ -243,6 +241,38 @@ class SSHHandler: ObservableObject {
 	func getAuthMethods() {
 		var method: CInt
 		method = ssh_userauth_list(session, username)
+	}
+	
+	func openShell() {
+		var status: CInt
+		
+		let channel = ssh_channel_new(session)
+		guard let channel = channel else { return }
+		
+		status = ssh_channel_open_session(channel)
+		guard status == SSH_OK else {
+			ssh_channel_free(channel)
+			return
+		}
+		
+		interactiveShellSession(channel: channel)
+		
+		ssh_channel_close(channel)
+		ssh_channel_send_eof(channel)
+		ssh_channel_free(channel)
+	}
+	
+	func interactiveShellSession(channel: ssh_channel) {
+		var status: CInt
+		
+		status = ssh_channel_request_pty(channel)
+		guard status == SSH_OK else { return }
+		
+		status = ssh_channel_change_pty_size(channel, 80, 24)
+		guard status == SSH_OK else { return }
+		
+		status = ssh_channel_request_shell(channel)
+		guard status == SSH_OK else { return }
 	}
 	
 	func logSshGetError() {

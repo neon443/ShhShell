@@ -9,9 +9,18 @@ import SwiftUI
 
 struct ContentView: View {
 	@ObservedObject var handler: SSHHandler
+	@State var connected: Bool = false
+	@State var testSucceded: Bool = false
 	
     var body: some View {
         VStack {
+			Text(connected ? "connected" : "not connected")
+				.foregroundStyle(connected ? .green : .red)
+			Text(handler.authorized ? "authorized" : "unauthorized")
+				.foregroundStyle(handler.authorized ? .green : .red)
+			if testSucceded {
+				Image(systemName: "checkmark.circle")
+			}
 			TextField("address", text: $handler.address)
 				.textFieldStyle(.roundedBorder)
 			TextField(
@@ -27,15 +36,25 @@ struct ContentView: View {
 			TextField("password", text: $handler.password)
 				.textFieldStyle(.roundedBorder)
 
-			Button("connect & auth") {
-				handler.connect()
+			Button("connect") {
+				if handler.connect() {
+					withAnimation { connected = true }
+				}
 				handler.authWithPw()
 			}
 			Button("disconnect") {
 				handler.disconnect()
+				withAnimation { testSucceded = false }
+				withAnimation { connected = false}
 			}
-			Button("testExec") {
-				handler.testExec()
+			Button("run a test command") {
+				withAnimation {
+					if handler.testExec() {
+						testSucceded = true
+					} else {
+						testSucceded = false
+					}
+				}
 			}
         }
     }
