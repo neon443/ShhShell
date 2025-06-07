@@ -107,8 +107,8 @@
 		A92538912DEE06DC007E0A18 = {
 			isa = PBXGroup;
 			children = (
-				A95FAA582DF4B71F00DE2F5A /* ci_scripts */,
 				A95FAA462DF3884B00DE2F5A /* Config.xcconfig */,
+				A95FAA582DF4B71F00DE2F5A /* ci_scripts */,
 				A92538C72DEE0742007E0A18 /* ShhShell */,
 				A92538D42DEE0756007E0A18 /* Resources */,
 				A92538CC2DEE0744007E0A18 /* ShhShellTests */,

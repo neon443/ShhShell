@@ -71,10 +71,10 @@ struct ContentView: View {
 				}
 			}
 			.disabled(!(connected && handler.authorized))
-//			
-//			Button("request a shell") {
-//				handler.openShell()
-//			}
+			
+			Button("request a shell") {
+				handler.openShell()
+			}
         }
     }
 }
