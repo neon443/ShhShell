@@ -10,13 +10,15 @@ import LibSSH
 import OSLog
 
 class SSHHandler: ObservableObject {
-	var session: ssh_session?
+	private var session: ssh_session?
 	
 	@Published var authorized: Bool = false
 	@Published var username: String
 	@Published var password: String
 	@Published var address: String
 	@Published var port: Int
+	
+	@Published var hostkey: Data?
 
 	private let logger = Logger(subsystem: "xy", category: "sshHandler")
 
@@ -38,22 +40,23 @@ class SSHHandler: ObservableObject {
 #endif
 	}
 	
-	func getHostkey() {
+	func getHostkey() -> Data? {
 		var hostkey: ssh_key?
 		ssh_get_server_publickey(session, &hostkey)
 		
 		var hostkeyB64: UnsafeMutablePointer<CChar>? = nil
-		if ssh_pki_export_pubkey_base64(hostkey, &hostkeyB64) == SSH_OK {
-			if let hostkeyB64 = hostkeyB64 {
-				print(String(cString: hostkeyB64))
-			}
-		}
+		
+		let status = ssh_pki_export_pubkey_base64(hostkey, &hostkeyB64)
+		guard status == SSH_OK else { return nil }
+		guard let data = hostkeyB64 else { return nil }
+		
+		return Data(base64Encoded: String(cString: data))
 	}
 	
 	func connect() -> Bool {
 		defer {
 			getAuthMethods()
-			getHostkey()
+			self.hostkey = getHostkey()
 		}
 		
 		var verbosity: Int = 0
@@ -85,6 +88,7 @@ class SSHHandler: ObservableObject {
 		ssh_free(session)
 		session = nil
 		authorized = false
+		hostkey = nil
 	}
 
 	func testExec() -> Bool {
@@ -262,7 +266,7 @@ class SSHHandler: ObservableObject {
 		ssh_channel_free(channel)
 	}
 	
-	func interactiveShellSession(channel: ssh_channel) {
+	private func interactiveShellSession(channel: ssh_channel) {
 		var status: CInt
 		
 		status = ssh_channel_request_pty(channel)
