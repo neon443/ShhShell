@@ -44,7 +44,7 @@ class SSHHandler: ObservableObject {
 	
 	func connect() -> Bool {
 		defer {
-			getAuthMethods()
+//			getAuthMethods()
 			self.host.key = getHostkey()
 		}
 		
@@ -231,6 +231,7 @@ class SSHHandler: ObservableObject {
 		return true
 	}
 	
+	//always unknown idk why
 	func getAuthMethods() {
 		var recievedMethod: CInt
 		recievedMethod = ssh_userauth_list(session, host.username)
