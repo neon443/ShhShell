@@ -232,8 +232,35 @@ class SSHHandler: ObservableObject {
 	}
 	
 	func getAuthMethods() {
-		var method: CInt
-		method = ssh_userauth_list(session, host.username)
+		var recievedMethod: CInt
+		recievedMethod = ssh_userauth_list(session, host.username)
+		
+		let allAuthDescriptions: [String] = [
+			"none",
+			"unknown",
+			"password",
+			"hostbased",
+			"publickey",
+			"interactive",
+			"gssapi_mic"
+		]
+		let allAuthRaws: [UInt32] = [
+			SSH_AUTH_METHOD_NONE,
+			SSH_AUTH_METHOD_UNKNOWN,
+			SSH_AUTH_METHOD_PASSWORD,
+			SSH_AUTH_METHOD_HOSTBASED,
+			SSH_AUTH_METHOD_PUBLICKEY,
+			SSH_AUTH_METHOD_INTERACTIVE,
+			SSH_AUTH_METHOD_GSSAPI_MIC
+		]
+		let allAuths = zip(allAuthDescriptions, allAuthRaws)
+		
+		for authMethod in allAuths {
+			if authMethod.1 == recievedMethod {
+				print(authMethod.0)
+			}
+		}
+		print(recievedMethod)
 	}
 	
 	func openShell() {

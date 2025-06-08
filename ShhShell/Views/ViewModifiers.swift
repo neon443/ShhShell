@@ -19,8 +19,9 @@ struct foregroundColorStyle: ViewModifier {
 		if #available(iOS 17.0, *) {
 			if let color = color {
 				content.foregroundStyle(color)
+			} else {
+				content
 			}
-			content
 		} else {
 			content.foregroundColor(color)
 		}
