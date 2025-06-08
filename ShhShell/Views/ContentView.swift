@@ -17,36 +17,36 @@ struct ContentView: View {
     var body: some View {
         VStack {
 			Text(connected ? "connected" : "not connected")
-				.foregroundStyle(connected ? .green : .red)
+				.modifier(foregroundColorStyle(connected ? .green : .red))
 			
 			Text(handler.authorized ? "authorized" : "unauthorized")
-				.foregroundStyle(handler.authorized ? .green : .red)
+				.modifier(foregroundColorStyle(handler.authorized ? .green : .red))
 			
 			if let testSucceded = testSucceded {
 				Image(systemName: testSucceded ? "checkmark.circle" : "xmark.circle")
-					.foregroundStyle(testSucceded ? .green : .red)
+					.modifier(foregroundColorStyle(testSucceded ? .green : .red))
 			}
 			
-			if handler.hostkey != nil {
-				Text("Hostkey: \(handler.hostkey!.base64EncodedString())")
+			if handler.host.key != nil {
+				Text("Hostkey: \(handler.host.key!.base64EncodedString())")
 			}
 			
-			TextField("address", text: $handler.address)
+			TextField("address", text: $handler.host.address)
 				.textFieldStyle(.roundedBorder)
 			
 			TextField(
 				"port",
 				text: Binding(
-					get: { String(handler.port) },
-					set: { handler.port = Int($0) ?? 22} )
+					get: { String(handler.host.port) },
+					set: { handler.host.port = Int($0) ?? 22} )
 			)
 				.keyboardType(.numberPad)
 				.textFieldStyle(.roundedBorder)
 			
-			TextField("username", text: $handler.username)
+			TextField("username", text: $handler.host.username)
 				.textFieldStyle(.roundedBorder)
 			
-			TextField("password", text: $handler.password)
+			TextField("password", text: $handler.host.password)
 				.textFieldStyle(.roundedBorder)
 
 			Button("connect") {
@@ -90,6 +90,6 @@ struct ContentView: View {
 
 #Preview {
     ContentView(
-		handler: SSHHandler(username: "root", password: "root")
+		handler: SSHHandler(host: debugHost())
 	)
 }

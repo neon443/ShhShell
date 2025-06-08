@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct ShhShellApp: App {
-	@StateObject var sshHandler: SSHHandler = SSHHandler(username: "", password: "")
+	@StateObject var sshHandler: SSHHandler = SSHHandler(host: blankHost())
 	
 	var body: some Scene {
 		WindowGroup {

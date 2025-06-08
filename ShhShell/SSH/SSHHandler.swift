@@ -14,30 +14,18 @@ class SSHHandler: ObservableObject {
 	private var channel: ssh_channel?
 	
 	@Published var authorized: Bool = false
-	@Published var username: String
-	@Published var password: String
-	@Published var address: String
-	@Published var port: Int
 	
-	@Published var hostkey: Data?
-
+	@Published var host: HostPr
+	
+	private let userDefaults = NSUbiquitousKeyValueStore.default
 	private let logger = Logger(subsystem: "xy", category: "sshHandler")
 
 	init(
-		username: String = "",
-		password: String = "",
-		address: String = "",
-		port: Int = 22
+		host: HostPr
 	) {
-		self.username = username
-		self.password = password
-		self.address = address
-		self.port = port
+		self.host = host
 #if DEBUG
-		self.username = "root"
-		self.password = "root"
-		self.address = "localhost"
-		self.port = 2222
+		self.host = debugHost()
 #endif
 	}
 	
@@ -57,7 +45,7 @@ class SSHHandler: ObservableObject {
 	func connect() -> Bool {
 		defer {
 			getAuthMethods()
-			self.hostkey = getHostkey()
+			self.host.key = getHostkey()
 		}
 		
 		var verbosity: Int = 0
@@ -67,9 +55,9 @@ class SSHHandler: ObservableObject {
 			return false
 		}
 
-		ssh_options_set(session, SSH_OPTIONS_HOST, address)
+		ssh_options_set(session, SSH_OPTIONS_HOST, host.address)
 		ssh_options_set(session, SSH_OPTIONS_LOG_VERBOSITY, &verbosity)
-		ssh_options_set(session, SSH_OPTIONS_PORT, &port)
+		ssh_options_set(session, SSH_OPTIONS_PORT, &host.port)
 
 		let status = ssh_connect(session)
 		if status != SSH_OK {
@@ -89,7 +77,7 @@ class SSHHandler: ObservableObject {
 		ssh_free(session)
 		session = nil
 		authorized = false
-		hostkey = nil
+		host.key = nil
 	}
 
 	func testExec() -> Bool {
@@ -170,7 +158,7 @@ class SSHHandler: ObservableObject {
 	
 	func authWithPw() -> Bool {
 		var status: CInt
-		status = ssh_userauth_password(session, username, password)
+		status = ssh_userauth_password(session, host.username, host.password)
 		guard status == SSH_AUTH_SUCCESS.rawValue else {
 			print("ssh pw auth error")
 			logSshGetError()
@@ -245,7 +233,7 @@ class SSHHandler: ObservableObject {
 	
 	func getAuthMethods() {
 		var method: CInt
-		method = ssh_userauth_list(session, username)
+		method = ssh_userauth_list(session, host.username)
 	}
 	
 	func openShell() {
@@ -287,7 +275,7 @@ class SSHHandler: ObservableObject {
 			write(1, buffer, Int(nbytes))
 			
 			let data = Data(bytes: buffer, count: buffer.count)
-			print(String(data: data, encoding: .utf8))
+			print(String(data: data, encoding: .utf8)!)
 		}
 	}
 	

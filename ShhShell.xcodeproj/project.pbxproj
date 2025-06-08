@@ -15,13 +15,14 @@
 		A92538D12DEE0745007E0A18 /* ShhShellUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538CE2DEE0745007E0A18 /* ShhShellUITests.swift */; };
 		A92538D22DEE0745007E0A18 /* ShhShellUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538CF2DEE0745007E0A18 /* ShhShellUITestsLaunchTests.swift */; };
 		A93143BE2DF4D0B300FCD5DB /* libpthread.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A93143BD2DF4D0A700FCD5DB /* libpthread.tbd */; };
+		A93143C02DF61B3200FCD5DB /* Host.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93143BF2DF61B3200FCD5DB /* Host.swift */; };
+		A93143C62DF61FE300FCD5DB /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93143C52DF61FE300FCD5DB /* ViewModifiers.swift */; };
 		A95FAA472DF3884B00DE2F5A /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A95FAA462DF3884B00DE2F5A /* Config.xcconfig */; };
 		A95FAA542DF4B62900DE2F5A /* LibSSH.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A95FAA502DF4B62100DE2F5A /* LibSSH.xcframework */; };
 		A95FAA552DF4B62900DE2F5A /* LibSSH.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A95FAA502DF4B62100DE2F5A /* LibSSH.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A95FAA562DF4B62A00DE2F5A /* openssl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A95FAA512DF4B62100DE2F5A /* openssl.xcframework */; };
 		A95FAA572DF4B62A00DE2F5A /* openssl.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A95FAA512DF4B62100DE2F5A /* openssl.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A9C897EF2DF1A9A400EF9A5F /* SSHHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */; };
-		A9C897F12DF1AB5700EF9A5F /* ShellHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C897F02DF1AB5700EF9A5F /* ShellHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,9 @@
 		A92538CE2DEE0745007E0A18 /* ShhShellUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShhShellUITests.swift; sourceTree = "<group>"; };
 		A92538CF2DEE0745007E0A18 /* ShhShellUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShhShellUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		A93143BD2DF4D0A700FCD5DB /* libpthread.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libpthread.tbd; path = usr/lib/libpthread.tbd; sourceTree = SDKROOT; };
+		A93143BF2DF61B3200FCD5DB /* Host.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Host.swift; sourceTree = "<group>"; };
+		A93143C22DF61F5700FCD5DB /* ShhShell.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShhShell.entitlements; sourceTree = "<group>"; };
+		A93143C52DF61FE300FCD5DB /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
 		A95FAA462DF3884B00DE2F5A /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = SOURCE_ROOT; };
 		A95FAA502DF4B62100DE2F5A /* LibSSH.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = LibSSH.xcframework; path = Frameworks/LibSSH.xcframework; sourceTree = "<group>"; };
 		A95FAA512DF4B62100DE2F5A /* openssl.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = openssl.xcframework; path = Frameworks/openssl.xcframework; sourceTree = "<group>"; };
@@ -75,7 +79,6 @@
 		A95FAA5B2DF4B7A000DE2F5A /* ci_pre_xcodebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_pre_xcodebuild.sh; sourceTree = "<group>"; };
 		A95FAA5C2DF4B7A300DE2F5A /* ci_prost_xcodebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_prost_xcodebuild.sh; sourceTree = "<group>"; };
 		A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHHandler.swift; sourceTree = "<group>"; };
-		A9C897F02DF1AB5700EF9A5F /* ShellHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,10 +137,10 @@
 		A92538C72DEE0742007E0A18 /* ShhShell */ = {
 			isa = PBXGroup;
 			children = (
+				A93143C22DF61F5700FCD5DB /* ShhShell.entitlements */,
 				A92538C62DEE0742007E0A18 /* ShhShellApp.swift */,
-				A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */,
-				A9C897F02DF1AB5700EF9A5F /* ShellHandler.swift */,
 				A92538D32DEE0749007E0A18 /* Views */,
+				A93143C12DF61E8500FCD5DB /* SSH */,
 			);
 			path = ShhShell;
 			sourceTree = "<group>";
@@ -163,6 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				A92538C52DEE0742007E0A18 /* ContentView.swift */,
+				A93143C52DF61FE300FCD5DB /* ViewModifiers.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -173,6 +177,15 @@
 				A92538C42DEE0742007E0A18 /* Assets.xcassets */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		A93143C12DF61E8500FCD5DB /* SSH */ = {
+			isa = PBXGroup;
+			children = (
+				A93143BF2DF61B3200FCD5DB /* Host.swift */,
+				A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */,
+			);
+			path = SSH;
 			sourceTree = "<group>";
 		};
 		A95FAA582DF4B71F00DE2F5A /* ci_scripts */ = {
@@ -336,10 +349,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A93143C62DF61FE300FCD5DB /* ViewModifiers.swift in Sources */,
 				A92538C82DEE0742007E0A18 /* ContentView.swift in Sources */,
+				A93143C02DF61B3200FCD5DB /* Host.swift in Sources */,
 				A92538C92DEE0742007E0A18 /* ShhShellApp.swift in Sources */,
 				A9C897EF2DF1A9A400EF9A5F /* SSHHandler.swift in Sources */,
-				A9C897F12DF1AB5700EF9A5F /* ShellHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -504,6 +518,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ShhShell/ShhShell.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(BUILD)";
 				DEVELOPMENT_TEAM = 8JGND254B7;
@@ -515,7 +530,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -534,6 +549,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ShhShell/ShhShell.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(BUILD)";
 				DEVELOPMENT_TEAM = 8JGND254B7;
@@ -545,7 +561,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
