@@ -44,7 +44,7 @@ class SSHHandler: ObservableObject {
 	
 	func connect() -> Bool {
 		defer {
-//			getAuthMethods()
+			getAuthMethods()
 			self.host.key = getHostkey()
 		}
 		
@@ -234,25 +234,19 @@ class SSHHandler: ObservableObject {
 	//always unknown idk why
 	func getAuthMethods() {
 		var recievedMethod: CInt
-		recievedMethod = ssh_userauth_list(session, host.username)
+		recievedMethod = ssh_userauth_list(session, nil)
 		
 		let allAuthDescriptions: [String] = [
-			"none",
-			"unknown",
 			"password",
-			"hostbased",
 			"publickey",
-			"interactive",
-			"gssapi_mic"
+			"hostbased",
+			"interactive"
 		]
 		let allAuthRaws: [UInt32] = [
-			SSH_AUTH_METHOD_NONE,
-			SSH_AUTH_METHOD_UNKNOWN,
 			SSH_AUTH_METHOD_PASSWORD,
-			SSH_AUTH_METHOD_HOSTBASED,
 			SSH_AUTH_METHOD_PUBLICKEY,
-			SSH_AUTH_METHOD_INTERACTIVE,
-			SSH_AUTH_METHOD_GSSAPI_MIC
+			SSH_AUTH_METHOD_HOSTBASED,
+			SSH_AUTH_METHOD_INTERACTIVE
 		]
 		let allAuths = zip(allAuthDescriptions, allAuthRaws)
 		
