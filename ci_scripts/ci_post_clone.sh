@@ -7,7 +7,7 @@
 #  
 
 #working dir starts at /Volumes/workspace/repository/ci_scripts
-cd CI_PRIMARY_REPOSITORY_PATH
+cd ..
 mkdir Frameworks; cd Frameworks
 curl -o frameworks.zip https://files.catbox.moe/8094yg.zip
 unzip frameworks.zip
