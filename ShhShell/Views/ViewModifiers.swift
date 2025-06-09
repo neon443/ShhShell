@@ -9,19 +9,15 @@ import Foundation
 import SwiftUI
 
 struct foregroundColorStyle: ViewModifier {
-	var color: Color?
+	var color: Color
 	
-	init(_ color: Color?) {
+	init(_ color: Color) {
 		self.color = color
 	}
 	
 	func body(content: Content) -> some View {
-		if #available(iOS 17.0, *) {
-			if let color = color {
-				content.foregroundStyle(color)
-			} else {
-				content
-			}
+		if #available(iOS 15.0, *) {
+			content.foregroundStyle(color)
 		} else {
 			content.foregroundColor(color)
 		}
