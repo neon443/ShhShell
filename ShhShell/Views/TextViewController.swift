@@ -14,7 +14,9 @@ struct TextViewController: UIViewRepresentable {
 	@Binding var text: String
 	
 	func makeUIView(context: Context) -> TextView {
-		var textView = TextView()
+		let textView = TextView()
+		textView.translatesAutoresizingMaskIntoConstraints = false
+		textView.backgroundColor = .systemBackground
 		return textView
 	}
 	

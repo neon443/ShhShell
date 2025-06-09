@@ -12,7 +12,7 @@ struct TerminalView: View {
 	@ObservedObject var handler: SSHHandler
 	
     var body: some View {
-		TextViewController(text: $handler.host.address)
+		TextViewController(text: $handler.terminal)
     }
 }
 
