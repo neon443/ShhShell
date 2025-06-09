@@ -16,6 +16,7 @@ class SSHHandler: ObservableObject {
 	@Published var authorized: Bool = false
 	
 	@Published var host: HostPr
+	@Published var terminal: String = ""
 	
 	private let userDefaults = NSUbiquitousKeyValueStore.default
 	private let logger = Logger(subsystem: "xy", category: "sshHandler")
@@ -301,18 +302,18 @@ class SSHHandler: ObservableObject {
 		}
 	}
 	
-	func readFromChannel() -> String? {
-		guard ssh_channel_is_open(channel) != 0 else { return nil }
-		guard ssh_channel_is_eof(channel) == 0 else { return nil }
+	func readFromChannel() {
+		guard ssh_channel_is_open(channel) != 0 else { return }
+		guard ssh_channel_is_eof(channel) == 0 else { return }
 		
 		var buffer: [CChar] = Array(repeating: 0, count: 256)
 		let nbytes = ssh_channel_read_nonblocking(channel, &buffer, UInt32(buffer.count), 0)
 		
-		guard nbytes > 0 else { return nil }
+		guard nbytes > 0 else { return }
 		write(1, buffer, Int(nbytes))
 		
 		let data = Data(bytes: buffer, count: buffer.count)
-		return String(data: data, encoding: .utf8)!
+		self.terminal.append(String(data: data, encoding: .utf8)!)
 	}
 	
 	private func logSshGetError() {

@@ -12,8 +12,6 @@ struct ContentView: View {
 	@State var connected: Bool = false
 	@State var testSucceded: Bool?
 	
-	@State var terminal: String = ""
-	
     var body: some View {
         VStack {
 			Text(connected ? "connected" : "not connected")
@@ -76,14 +74,13 @@ struct ContentView: View {
 			
 			Button("request a shell") {
 				handler.openShell()
-				terminal.append(handler.readFromChannel() ?? "")
 			}
 			
 			Button("read from server") {
-				terminal.append(handler.readFromChannel() ?? "")
+				handler.readFromChannel() 
 			}
 			
-			Text(terminal)
+			TerminalView(handler: handler)
         }
     }
 }
