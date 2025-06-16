@@ -13,6 +13,7 @@ import SwiftUI
 class SSHHandler: ObservableObject {
 	private var session: ssh_session?
 	private var channel: ssh_channel?
+	private var readTimer: Timer?
 	
 	@Published var authorized: Bool = false
 	@Published var connected: Bool = false
@@ -308,16 +309,31 @@ class SSHHandler: ObservableObject {
 		status = ssh_channel_request_shell(channel)
 		guard status == SSH_OK else { return }
 		
-		while ssh_channel_is_open(channel) != 0 && ssh_channel_is_eof(channel) == 0 {
-			var buffer: [CChar] = Array(repeating: 0, count: 256)
-			let nbytes = ssh_channel_read_nonblocking(channel, &buffer, UInt32(buffer.count), 0)
-			
-			guard nbytes > 0 else { return }
-			write(1, buffer, Int(nbytes))
-			
-			let data = Data(bytes: buffer, count: buffer.count)
-			print(String(data: data, encoding: .utf8)!)
+//		while ssh_channel_is_open(channel) != 0 && ssh_channel_is_eof(channel) == 0 {
+//			var buffer: [CChar] = Array(repeating: 0, count: 256)
+//			let nbytes = ssh_channel_read_nonblocking(channel, &buffer, UInt32(buffer.count), 0)
+//			
+//			guard nbytes > 0 else { return }
+//			write(1, buffer, Int(nbytes))
+//			
+//			let data = Data(bytes: buffer, count: buffer.count)
+//			print(String(data: data, encoding: .utf8)!)
+//		}
+		
+		readTimer = Timer(timeInterval: 0.1, repeats: true) { timer in
+			guard ssh_channel_is_open(self.channel) != 0 else {
+				timer.invalidate()
+				self.readTimer = nil
+				return
+			}
+			guard ssh_channel_is_eof(self.channel) == 0 else {
+				timer.invalidate()
+				self.readTimer = nil
+				return
+			}
+			self.readFromChannel()
 		}
+		RunLoop.main.add(readTimer!, forMode: .common)
 	}
 	
 	func readFromChannel() {
@@ -336,5 +352,26 @@ class SSHHandler: ObservableObject {
 	
 	private func logSshGetError() {
 		logger.critical("\(String(cString: ssh_get_error(&self.session)))")
+	}
+	
+	func writeToChannel() {
+		guard ssh_channel_is_open(channel) != 0 else { return }
+		guard ssh_channel_is_eof(channel) == 0 else { return }
+		
+		var buffer: [CChar] = Array(repeating: 65, count: 256)
+		var nbytes: Int
+		var nwritten: Int
+		
+//		readFromChannel()
+		nbytes = Int(read(0, &buffer, buffer.count))
+		nbytes = buffer.count
+		guard nbytes > 0 else {
+			return
+		}
+		if nbytes > 0 {
+			nwritten = Int(ssh_channel_write(channel, &buffer, UInt32(nbytes)))
+			guard nwritten == nbytes else { return }
+		}
+//		readFromChannel()
 	}
 }

@@ -13,6 +13,9 @@ struct TerminalView: View {
 	@Environment(\.dismiss) var dismiss
 	
     var body: some View {
+		Button("write") {
+			handler.writeToChannel()
+		}
 		TextViewController(text: $handler.terminal)
 			.toolbar {
 				ToolbarItem(placement: .cancellationAction) {
