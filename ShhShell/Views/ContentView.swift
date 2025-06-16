@@ -9,79 +9,75 @@ import SwiftUI
 
 struct ContentView: View {
 	@ObservedObject var handler: SSHHandler
-	@State var connected: Bool = false
-	@State var testSucceded: Bool?
+//	@State var connected: Bool = false
 	
     var body: some View {
-        VStack {
-			Text(connected ? "connected" : "not connected")
-				.modifier(foregroundColorStyle(connected ? .green : .red))
-			
-			Text(handler.authorized ? "authorized" : "unauthorized")
-				.modifier(foregroundColorStyle(handler.authorized ? .green : .red))
-			
-			if let testSucceded = testSucceded {
-				Image(systemName: testSucceded ? "checkmark.circle" : "xmark.circle")
-					.modifier(foregroundColorStyle(testSucceded ? .green : .red))
-			}
-			
-			if handler.host.key != nil {
-				Text("Hostkey: \(handler.host.key!.base64EncodedString())")
-			}
-			
-			TextField("address", text: $handler.host.address)
-				.textFieldStyle(.roundedBorder)
-			
-			TextField(
-				"port",
-				text: Binding(
-					get: { String(handler.host.port) },
-					set: { handler.host.port = Int($0) ?? 22} )
-			)
+		NavigationStack {
+			List {
+				HStack {
+					Text(handler.connected ? "connected" : "not connected")
+						.modifier(foregroundColorStyle(handler.connected ? .green : .red))
+					
+					Text(handler.authorized ? "authorized" : "unauthorized")
+						.modifier(foregroundColorStyle(handler.authorized ? .green : .red))
+				}
+				
+//				if let testSucceded = testSucceded {
+//					Image(systemName: testSucceded ? "checkmark.circle" : "xmark.circle")
+//						.modifier(foregroundColorStyle(testSucceded ? .green : .red))
+//				}
+				
+				if handler.host.key != nil {
+					Text("Hostkey: \(handler.host.key!.base64EncodedString())")
+				}
+				
+				TextField("address", text: $handler.host.address)
+					.textFieldStyle(.roundedBorder)
+				
+				TextField(
+					"port",
+					text: Binding(
+						get: { String(handler.host.port) },
+						set: { handler.host.port = Int($0) ?? 22} )
+				)
 				.keyboardType(.numberPad)
 				.textFieldStyle(.roundedBorder)
-			
-			TextField("username", text: $handler.host.username)
-				.textFieldStyle(.roundedBorder)
-			
-			TextField("password", text: $handler.host.password)
-				.textFieldStyle(.roundedBorder)
-
-			Button("connect") {
-				if handler.connect() {
-					withAnimation { connected = true }
+				
+				TextField("username", text: $handler.host.username)
+					.textFieldStyle(.roundedBorder)
+				
+				TextField("password", text: $handler.host.password)
+					.textFieldStyle(.roundedBorder)
+				
+				Button() {
+					handler.connect()
+					let _ = handler.authWithPw()
+					handler.openShell()
+				} label: {
+					Label("Connect", systemImage: "powerplug.portrait")
 				}
-				handler.authWithPw()
-			}
-			.disabled(connected)
-			
-			Button("disconnect") {
-				handler.disconnect()
-				withAnimation { testSucceded = false }
-				withAnimation { connected = false }
-				withAnimation { testSucceded = nil }
-			}
-			.disabled(!connected)
-			
-			Button("run a test command") {
-				if handler.testExec() {
-					withAnimation { testSucceded = true }
-				} else {
-					withAnimation { testSucceded = false }
+				.disabled(handler.connected)
+				
+				NavigationLink() {
+					TerminalView(handler: handler)
+				} label: {
+					Label("Open Terminal", systemImage: "apple.terminal")
 				}
+				.disabled(!(handler.connected && handler.authorized))
+				
+				Button() {
+					withAnimation { handler.testExec() }
+				} label: {
+					if handler.testSuceeded {
+						Image(systemName: handler.testSuceeded ? "checkmark.circle" : "xmark.circle")
+							.modifier(foregroundColorStyle(handler.testSuceeded ? .green : .red))
+					} else {
+						Label("Test Connection", systemImage: "checkmark")
+					}
+				}
+				.disabled(!(handler.connected && handler.authorized))
 			}
-			.disabled(!(connected && handler.authorized))
-			
-			Button("request a shell") {
-				handler.openShell()
-			}
-			
-			Button("read from server") {
-				handler.readFromChannel() 
-			}
-			
-			TerminalView(handler: handler)
-        }
+		}
     }
 }
 

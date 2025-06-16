@@ -14,6 +14,8 @@ class SSHHandler: ObservableObject {
 	private var channel: ssh_channel?
 	
 	@Published var authorized: Bool = false
+	@Published var connected: Bool = false
+	@Published var testSuceeded: Bool = false
 	
 	@Published var host: HostPr
 	@Published var terminal: String = ""
@@ -43,7 +45,7 @@ class SSHHandler: ObservableObject {
 		return Data(base64Encoded: String(cString: data))
 	}
 	
-	func connect() -> Bool {
+	func connect() {
 		defer {
 			getAuthMethods()
 			self.host.key = getHostkey()
@@ -53,7 +55,8 @@ class SSHHandler: ObservableObject {
 		
 		session = ssh_new()
 		guard session != nil else {
-			return false
+			connected = false
+			return
 		}
 
 		ssh_options_set(session, SSH_OPTIONS_HOST, host.address)
@@ -64,9 +67,11 @@ class SSHHandler: ObservableObject {
 		if status != SSH_OK {
 			logger.critical("connection not ok: \(status)")
 			logSshGetError()
-			return false
+			connected = false
+			return
 		}
-		return true
+		connected = true
+		return
 	}
 
 	func disconnect() {
@@ -81,26 +86,34 @@ class SSHHandler: ObservableObject {
 		host.key = nil
 	}
 
-	func testExec() -> Bool {
+	func testExec() {
 		if ssh_is_connected(session) == 0 {
-				return false
+			testSuceeded = false
+			return
 		}
 		
-		guard authorized else { return false }
+		guard authorized else {
+			testSuceeded = false
+			return
+		}
 
 		var status: CInt
 		var buffer: [Int] = Array(repeating: 0, count: 256)
 		var nbytes: CInt
 
 		let channel = ssh_channel_new(session)
-		guard channel != nil else { return false }
+		guard channel != nil else {
+			testSuceeded = false
+			return
+		}
 
 		status = ssh_channel_open_session(channel)
 		guard status == SSH_OK else {
 			ssh_channel_free(channel)
 			logger.critical("session opening error")
 			logSshGetError()
-			return false
+			testSuceeded = false
+			return
 		}
 
 		status = ssh_channel_request_exec(channel, "uptime")
@@ -109,7 +122,8 @@ class SSHHandler: ObservableObject {
 			ssh_channel_free(channel)
 			logger.critical("session opening error")
 			logSshGetError()
-			return false
+			testSuceeded = false
+			return
 		}
 		
 		nbytes = ssh_channel_read(
@@ -125,7 +139,8 @@ class SSHHandler: ObservableObject {
 				ssh_channel_free(channel)
 				logger.critical("write error")
 				logSshGetError()
-				return false
+				testSuceeded = false
+				return
 			}
 			nbytes = ssh_channel_read(channel, &buffer, UInt32(MemoryLayout.size(ofValue: Character.self)), 0)
 		}
@@ -135,14 +150,16 @@ class SSHHandler: ObservableObject {
 			ssh_channel_free(channel)
 			logger.critical("didnt read?")
 			logSshGetError()
-			return false
+			testSuceeded = false
+			return
 		}
 		
 		ssh_channel_send_eof(channel)
 		ssh_channel_close(channel)
 		ssh_channel_free(channel)
 		print("testExec succeeded")
-		return true
+		testSuceeded = true
+		return
 	}
 	
 	func authWithPubkey() -> Bool {
