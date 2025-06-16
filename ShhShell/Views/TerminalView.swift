@@ -10,22 +10,28 @@ import Runestone
 
 struct TerminalView: View {
 	@ObservedObject var handler: SSHHandler
+	@Environment(\.dismiss) var dismiss
 	
     var body: some View {
-		HStack {
-			Button("read from server") {
-				handler.readFromChannel()
-			}
-			.fixedSize()
-			Spacer()
-			Button("disconnect") {
-				handler.disconnect()
-				withAnimation { handler.testSuceeded = false }
-				withAnimation { handler.connected = false }
-			}
-			.disabled(!handler.connected)
-		}
 		TextViewController(text: $handler.terminal)
+			.toolbar {
+				ToolbarItem(placement: .cancellationAction) {
+					Button("reload") {
+						handler.readFromChannel()
+					}
+				}
+				ToolbarItem(placement: .confirmationAction) {
+					Button() {
+						handler.disconnect()
+						withAnimation { handler.testSuceeded = false }
+						withAnimation { handler.connected = false }
+						dismiss()
+					} label: {
+						Label("Exit", systemImage: "xmark.square.fill")
+					}
+					.disabled(!handler.connected)
+				}
+			}
     }
 }
 

@@ -77,6 +77,7 @@ struct ContentView: View {
 				}
 				.disabled(!(handler.connected && handler.authorized))
 			}
+			.transition(.opacity)
 		}
     }
 }

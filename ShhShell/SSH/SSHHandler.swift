@@ -8,6 +8,7 @@
 import Foundation
 import LibSSH
 import OSLog
+import SwiftUI
 
 class SSHHandler: ObservableObject {
 	private var session: ssh_session?
@@ -55,7 +56,7 @@ class SSHHandler: ObservableObject {
 		
 		session = ssh_new()
 		guard session != nil else {
-			connected = false
+			withAnimation { connected = false }
 			return
 		}
 
@@ -67,10 +68,10 @@ class SSHHandler: ObservableObject {
 		if status != SSH_OK {
 			logger.critical("connection not ok: \(status)")
 			logSshGetError()
-			connected = false
+			withAnimation { connected = false }
 			return
 		}
-		connected = true
+		withAnimation { connected = true }
 		return
 	}
 
@@ -82,18 +83,18 @@ class SSHHandler: ObservableObject {
 		ssh_disconnect(session)
 		ssh_free(session)
 		session = nil
-		authorized = false
+		withAnimation { authorized = false }
 		host.key = nil
 	}
 
 	func testExec() {
 		if ssh_is_connected(session) == 0 {
-			testSuceeded = false
+			withAnimation { testSuceeded = false }
 			return
 		}
 		
 		guard authorized else {
-			testSuceeded = false
+			withAnimation { testSuceeded = false }
 			return
 		}
 
@@ -103,7 +104,7 @@ class SSHHandler: ObservableObject {
 
 		let channel = ssh_channel_new(session)
 		guard channel != nil else {
-			testSuceeded = false
+			withAnimation { testSuceeded = false }
 			return
 		}
 
@@ -112,7 +113,7 @@ class SSHHandler: ObservableObject {
 			ssh_channel_free(channel)
 			logger.critical("session opening error")
 			logSshGetError()
-			testSuceeded = false
+			withAnimation { testSuceeded = false }
 			return
 		}
 
@@ -122,7 +123,7 @@ class SSHHandler: ObservableObject {
 			ssh_channel_free(channel)
 			logger.critical("session opening error")
 			logSshGetError()
-			testSuceeded = false
+			withAnimation { testSuceeded = false }
 			return
 		}
 		
@@ -139,7 +140,7 @@ class SSHHandler: ObservableObject {
 				ssh_channel_free(channel)
 				logger.critical("write error")
 				logSshGetError()
-				testSuceeded = false
+				withAnimation { testSuceeded = false }
 				return
 			}
 			nbytes = ssh_channel_read(channel, &buffer, UInt32(MemoryLayout.size(ofValue: Character.self)), 0)
@@ -150,7 +151,7 @@ class SSHHandler: ObservableObject {
 			ssh_channel_free(channel)
 			logger.critical("didnt read?")
 			logSshGetError()
-			testSuceeded = false
+			withAnimation { testSuceeded = false }
 			return
 		}
 		
@@ -158,7 +159,7 @@ class SSHHandler: ObservableObject {
 		ssh_channel_close(channel)
 		ssh_channel_free(channel)
 		print("testExec succeeded")
-		testSuceeded = true
+		withAnimation { testSuceeded = true }
 		return
 	}
 	
@@ -170,7 +171,7 @@ class SSHHandler: ObservableObject {
 			logSshGetError()
 			return false
 		}
-		authorized = true
+		withAnimation { authorized = true }
 		return true
 	}
 	
@@ -183,7 +184,7 @@ class SSHHandler: ObservableObject {
 			return false
 		}
 		print("auth success")
-		authorized = true
+		withAnimation { authorized = true }
 		return true
 	}
 	
@@ -245,7 +246,7 @@ class SSHHandler: ObservableObject {
 		guard status == SSH_AUTH_SUCCESS.rawValue else { return false }
 		
 		print("no security moment lol")
-		authorized = true
+		withAnimation { authorized = true }
 		return true
 	}
 	
