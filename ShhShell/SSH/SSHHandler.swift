@@ -169,7 +169,7 @@ class SSHHandler: ObservableObject {
 		return
 	}
 	
-	func authWithPubkey(pub: Data, priv: Data, pass: String) {
+	func authWithPubkey(pub: String, priv: String, pass: String) {
 		guard session != nil else {
 			withAnimation { authorized = false }
 			return
@@ -184,8 +184,8 @@ class SSHHandler: ObservableObject {
 		fileManager.createFile(atPath: tempPubkey.path(), contents: nil)
 		fileManager.createFile(atPath: tempKey.path(), contents: nil)
 		
-		try? pub.write(to: tempPubkey)
-		try? priv.write(to: tempKey)
+		try? Data(base64Encoded: pub)?.write(to: tempPubkey)
+		try? Data(base64Encoded: priv)?.write(to: tempKey)
 		
 		var pubkey: ssh_key?
 		ssh_pki_import_pubkey_file(tempPubkey.path(), &pubkey)

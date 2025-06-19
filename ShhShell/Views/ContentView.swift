@@ -12,8 +12,8 @@ struct ContentView: View {
 	
 	@State var passphrase: String = ""
 	
-	@State var pubkeyData: Data?
-	@State var privkeyData: Data?
+	@State var pubkey: String = ""
+	@State var privkey: String = ""
 	
 	@State var privPickerPresented: Bool = false
 	@State var pubPickerPresented: Bool = false
@@ -21,29 +21,43 @@ struct ContentView: View {
     var body: some View {
 		NavigationStack {
 			List {
-				Button("Choose Publickey") {
-					pubPickerPresented.toggle()
-				}
+				HStack {
+					TextField("", text: $pubkey, prompt: Text("Public Key"))
+					Button() {
+						pubPickerPresented.toggle()
+					} label: {
+						Image(systemName: "folder")
+					}
+					.buttonStyle(.plain)
 					.fileImporter(isPresented: $pubPickerPresented, allowedContentTypes: [.item, .content, .data]) { (Result) in
 						do {
 							let fileURL = try Result.get()
-							pubkeyData = try? Data(contentsOf: fileURL)
+							let data = try! Data(contentsOf: fileURL)
+							pubkey = data.base64EncodedString()
 							print(fileURL)
 						} catch {
 							print(error.localizedDescription)
 						}
 					}
-				
-				Button("Choose Privatekey") {
-					privPickerPresented.toggle()
 				}
-				.fileImporter(isPresented: $privPickerPresented, allowedContentTypes: [.item, .content, .data]) { (Result) in
-					do {
-						let fileURL = try Result.get()
-						privkeyData = try? Data(contentsOf: fileURL)
-						print(fileURL)
-					} catch {
-						print(error.localizedDescription)
+				
+				HStack {
+					TextField("", text: $pubkey, prompt: Text("Public Key"))
+					Button() {
+						privPickerPresented.toggle()
+					} label: {
+						Image(systemName: "folder")
+					}
+					.buttonStyle(.plain)
+					.fileImporter(isPresented: $privPickerPresented, allowedContentTypes: [.item, .content, .data]) { (Result) in
+						do {
+							let fileURL = try Result.get()
+							let data = try! Data(contentsOf: fileURL)
+							privkey = data.base64EncodedString()
+							print(fileURL)
+						} catch {
+							print(error.localizedDescription)
+						}
 					}
 				}
 				
@@ -92,8 +106,8 @@ struct ContentView: View {
 				} else {
 					Button() {
 						handler.connect()
-						if pubkeyData != nil && privkeyData != nil {
-							handler.authWithPubkey(pub: pubkeyData!, priv: privkeyData!, pass: passphrase)
+						if !pubkey.isEmpty && !privkey.isEmpty {
+							handler.authWithPubkey(pub: pubkey, priv: privkey, pass: passphrase)
 						} else {
 							let _ = handler.authWithPw()
 						}
@@ -102,8 +116,8 @@ struct ContentView: View {
 						Label("Connect", systemImage: "powerplug.portrait")
 					}
 					.disabled(
-						pubkeyData == nil && privkeyData == nil ||
-						handler.host.username.isEmpty  && handler.host.password.isEmpty
+						pubkey.isEmpty && privkey.isEmpty ||
+						handler.host.username.isEmpty && handler.host.password.isEmpty
 					)
 				}
 				
