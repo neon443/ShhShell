@@ -182,7 +182,11 @@ class SSHHandler: ObservableObject {
 		print(status)
 		
 		var privkey: ssh_key?
-		ssh_pki_import_privkey_file(tempKey.path(), pass, nil, nil, &privkey)
+		if ssh_pki_import_privkey_file(tempKey.path(), pass, nil, nil, &privkey) != 0 {
+			print("help?!?")
+		}
+		
+		
 	}
 	
 	func authWithPw() -> Bool {
