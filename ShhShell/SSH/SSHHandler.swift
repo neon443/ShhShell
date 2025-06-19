@@ -57,7 +57,7 @@ class SSHHandler: ObservableObject {
 			self.host.key = getHostkey()
 		}
 		
-		var verbosity: Int = 0
+		var verbosity: Int = SSH_LOG_FUNCTIONS
 		
 		session = ssh_new()
 		guard session != nil else {
@@ -228,59 +228,6 @@ class SSHHandler: ObservableObject {
 		return true
 	}
 	
-//	func authWithKbInt() -> Bool {
-//		var status: CInt
-//		status = ssh_userauth_kbdint(session, nil, nil)
-//		while status == SSH_AUTH_INFO.rawValue {
-//			let name, instruction: String
-//			var nprompts: CInt
-//			
-//			if let namePtr = ssh_userauth_kbdint_getname(session) {
-//				name = String(cString: namePtr)
-//			} else {
-//				return false
-//			}
-//			if let instrPtr = ssh_userauth_kbdint_getinstruction(session) {
-//				instruction = String(cString: instrPtr)
-//			} else {
-//				return false
-//			}
-//			nprompts = ssh_userauth_kbdint_getnprompts(session)
-//			
-//			if name.count > 0 {
-//				print(name)
-//			}
-//			if instruction.count > 0 {
-//				print(instruction)
-//			}
-//			for promptI in 0..<nprompts {
-//				let prompt: UnsafePointer<CChar>
-//				var echo: CChar = 0
-//				prompt = ssh_userauth_kbdint_getprompt(session, UInt32(promptI), &echo)
-//				if echo != 0 {
-//					var buffer: [CChar] = Array(repeating: 0, count: 128)
-//					let ptr: UnsafeMutablePointer<CChar> = .init(mutating: buffer)
-//					print(prompt)
-//					if fgets(&buffer, Int32(MemoryLayout.size(ofValue: buffer)), stdin) == nil {
-//						return false
-//					}
-//					ptr.pointee = 0//prob fucked
-//					if ssh_userauth_kbdint_setanswer(session, UInt32(promptI), buffer) < 0 {
-//						return false
-//					}
-//					memset(&buffer, 0, buffer.count)
-//				} else {
-//					if (ssh_userauth_kbdint_setanswer(session, UInt32(promptI), &password) != 0) {
-//						return false
-//					}
-//				}
-//			}
-//			status = ssh_userauth_kbdint(session, nil, nil)
-//		}
-//		authorized = true
-//		return true
-//	}
-	
 	func authWithNone() -> Bool {
 		let status = ssh_userauth_none(session, nil)
 		guard status == SSH_AUTH_SUCCESS.rawValue else { return false }
@@ -339,27 +286,16 @@ class SSHHandler: ObservableObject {
 	private func interactiveShellSession() {
 		var status: CInt
 		
-		status = ssh_channel_request_pty(channel)
+		status = ssh_channel_request_pty(self.channel)
 		guard status == SSH_OK else { return }
 		
-		status = ssh_channel_change_pty_size(channel, 80, 24)
+		status = ssh_channel_change_pty_size(self.channel, 80, 24)
 		guard status == SSH_OK else { return }
 		
-		status = ssh_channel_request_shell(channel)
+		status = ssh_channel_request_shell(self.channel)
 		guard status == SSH_OK else { return }
 		
-//		while ssh_channel_is_open(channel) != 0 && ssh_channel_is_eof(channel) == 0 {
-//			var buffer: [CChar] = Array(repeating: 0, count: 256)
-//			let nbytes = ssh_channel_read_nonblocking(channel, &buffer, UInt32(buffer.count), 0)
-//			
-//			guard nbytes > 0 else { return }
-//			write(1, buffer, Int(nbytes))
-//			
-//			let data = Data(bytes: buffer, count: buffer.count)
-//			print(String(data: data, encoding: .utf8)!)
-//		}
-		
-		readTimer = Timer(timeInterval: 0.1, repeats: true) { timer in
+		self.readTimer = Timer(timeInterval: 0.1, repeats: true) { timer in
 			guard ssh_channel_is_open(self.channel) != 0 else {
 				timer.invalidate()
 				self.readTimer = nil
@@ -372,7 +308,7 @@ class SSHHandler: ObservableObject {
 			}
 			self.readFromChannel()
 		}
-		RunLoop.main.add(readTimer!, forMode: .common)
+		RunLoop.main.add(self.readTimer!, forMode: .common)
 	}
 	
 	func readFromChannel() {

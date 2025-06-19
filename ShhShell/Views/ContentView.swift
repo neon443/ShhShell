@@ -97,9 +97,7 @@ struct ContentView: View {
 						} else {
 							let _ = handler.authWithPw()
 						}
-//						DispatchQueue.main.asyncAfter(deadline: .now()+10) {
-							handler.openShell()
-//						}
+						handler.openShell()
 					} label: {
 						Label("Connect", systemImage: "powerplug.portrait")
 					}
