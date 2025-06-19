@@ -10,8 +10,6 @@ import SwiftUI
 struct ContentView: View {
 	@ObservedObject var handler: SSHHandler
 	
-	@State var pubkey: String = ""
-	@State var privkey: String = ""
 	@State var passphrase: String = ""
 	
 	@State var pubkeyData: Data?
@@ -26,26 +24,29 @@ struct ContentView: View {
 				Button("Choose Publickey") {
 					pubPickerPresented.toggle()
 				}
-				Image(systemName: "globe")
-					.dropDestination(for: Data.self) { items, location in
-						pubkeyData = items.first
-						return true
-					}
 					.fileImporter(isPresented: $pubPickerPresented, allowedContentTypes: [.item, .content, .data]) { (Result) in
 						do {
 							let fileURL = try Result.get()
+							pubkeyData = try? Data(contentsOf: fileURL)
 							print(fileURL)
 						} catch {
 							print(error.localizedDescription)
 						}
 					}
 				
-//				TextField("", text: $privkey)
-				Image(systemName: "key.viewfinder")
-					.dropDestination(for: Data.self) { items, location in
-						privkeyData = items.first
-						return true
+				Button("Choose Privatekey") {
+					privPickerPresented.toggle()
+				}
+				.fileImporter(isPresented: $privPickerPresented, allowedContentTypes: [.item, .content, .data]) { (Result) in
+					do {
+						let fileURL = try Result.get()
+						privkeyData = try? Data(contentsOf: fileURL)
+						print(fileURL)
+					} catch {
+						print(error.localizedDescription)
 					}
+				}
+				
 				TextField("", text: $passphrase)
 				HStack {
 					Text(handler.connected ? "connected" : "not connected")
@@ -91,7 +92,7 @@ struct ContentView: View {
 				} else {
 					Button() {
 						handler.connect()
-						if !pubkey.isEmpty && !privkey.isEmpty {
+						if pubkeyData != nil && privkeyData != nil {
 							handler.authWithPubkey(pub: pubkeyData!, priv: privkeyData!, pass: passphrase)
 						} else {
 							let _ = handler.authWithPw()
