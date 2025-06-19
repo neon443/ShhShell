@@ -15,8 +15,8 @@ class SSHHandler: ObservableObject {
 	private var channel: ssh_channel?
 	private var readTimer: Timer?
 	
-	@Published var authorized: Bool = false
 	@Published var connected: Bool = false
+	@Published var authorized: Bool = false
 	@Published var testSuceeded: Bool = false
 	
 	@Published var host: HostPr
@@ -46,6 +46,10 @@ class SSHHandler: ObservableObject {
 		
 		return Data(base64Encoded: String(cString: data))
 	}
+	
+//	func connect(_: Host) {
+//		
+//	}
 	
 	func connect() {
 		defer {
@@ -85,6 +89,7 @@ class SSHHandler: ObservableObject {
 		ssh_free(session)
 		session = nil
 		withAnimation { authorized = false }
+		withAnimation { connected = false }
 		host.key = nil
 	}
 
@@ -164,7 +169,13 @@ class SSHHandler: ObservableObject {
 		return
 	}
 	
-	func authWithPubkey(pub: String, priv: String, pass: String) {
+	func authWithPubkey(pub: Data, priv: Data, pass: String) {
+		guard session != nil else {
+			withAnimation { authorized = false }
+			return
+		}
+		
+		var status: Int32
 		let fileManager = FileManager.default
 		let tempDir = fileManager.temporaryDirectory
 		let tempPubkey = tempDir.appendingPathComponent("key.pub")
@@ -173,20 +184,35 @@ class SSHHandler: ObservableObject {
 		fileManager.createFile(atPath: tempPubkey.path(), contents: nil)
 		fileManager.createFile(atPath: tempKey.path(), contents: nil)
 		
-		try? pub.data(using: .utf8)?.write(to: tempPubkey)
-		try? priv.data(using: .utf8)?.write(to: tempKey)
+		try? pub.write(to: tempPubkey)
+		try? priv.write(to: tempKey)
 		
 		var pubkey: ssh_key?
 		ssh_pki_import_pubkey_file(tempPubkey.path(), &pubkey)
-		let status = ssh_userauth_try_publickey(session, nil, pubkey)
+		status = ssh_userauth_try_publickey(session, nil, pubkey)
 		print(status)
 		
 		var privkey: ssh_key?
 		if ssh_pki_import_privkey_file(tempKey.path(), pass, nil, nil, &privkey) != 0 {
 			print("help?!?")
+			print("likeley password is incorrect")
 		}
 		
+		status = ssh_userauth_publickey(session, nil, privkey)
+		if status != 0 {
+			withAnimation { authorized = false }
+			print("auth failed lol")
+			return
+		}
 		
+		withAnimation { authorized = true }
+		return
+		//if u got this far, youre authed!
+		//cleanpu here:
+//		ssh_key_free(pubkey)
+//		ssh_key_free(privkey)
+//		try? fileManager.removeItem(at: tempPubkey)
+//		try? fileManager.removeItem(at: tempKey)
 	}
 	
 	func authWithPw() -> Bool {

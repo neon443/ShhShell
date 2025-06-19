@@ -14,11 +14,38 @@ struct ContentView: View {
 	@State var privkey: String = ""
 	@State var passphrase: String = ""
 	
+	@State var pubkeyData: Data?
+	@State var privkeyData: Data?
+	
+	@State var privPickerPresented: Bool = false
+	@State var pubPickerPresented: Bool = false
+	
     var body: some View {
 		NavigationStack {
 			List {
-				TextField("", text: $pubkey)
-				TextField("", text: $privkey)
+				Button("Choose Publickey") {
+					pubPickerPresented.toggle()
+				}
+				Image(systemName: "globe")
+					.dropDestination(for: Data.self) { items, location in
+						pubkeyData = items.first
+						return true
+					}
+					.fileImporter(isPresented: $pubPickerPresented, allowedContentTypes: [.item, .content, .data]) { (Result) in
+						do {
+							let fileURL = try Result.get()
+							print(fileURL)
+						} catch {
+							print(error.localizedDescription)
+						}
+					}
+				
+//				TextField("", text: $privkey)
+				Image(systemName: "key.viewfinder")
+					.dropDestination(for: Data.self) { items, location in
+						privkeyData = items.first
+						return true
+					}
 				TextField("", text: $passphrase)
 				HStack {
 					Text(handler.connected ? "connected" : "not connected")
@@ -55,18 +82,31 @@ struct ContentView: View {
 				SecureField("password", text: $handler.host.password)
 					.textFieldStyle(.roundedBorder)
 				
-				Button() {
-					handler.connect()
-					if !pubkey.isEmpty && !privkey.isEmpty {
-						handler.authWithPubkey(pub: pubkey, priv: privkey, pass: passphrase)
-					} else {
-						let _ = handler.authWithPw()
+				if handler.connected {
+					Button() {
+						handler.disconnect()
+					} label: {
+						Label("Disconnect", systemImage: "xmark.app.fill")
 					}
-					handler.openShell()
-				} label: {
-					Label("Connect", systemImage: "powerplug.portrait")
+				} else {
+					Button() {
+						handler.connect()
+						if !pubkey.isEmpty && !privkey.isEmpty {
+							handler.authWithPubkey(pub: pubkeyData!, priv: privkeyData!, pass: passphrase)
+						} else {
+							let _ = handler.authWithPw()
+						}
+//						DispatchQueue.main.asyncAfter(deadline: .now()+10) {
+							handler.openShell()
+//						}
+					} label: {
+						Label("Connect", systemImage: "powerplug.portrait")
+					}
+					.disabled(
+						pubkeyData == nil && privkeyData == nil ||
+						handler.host.username.isEmpty  && handler.host.password.isEmpty
+					)
 				}
-				.disabled(handler.connected)
 				
 				NavigationLink() {
 					TerminalView(handler: handler)

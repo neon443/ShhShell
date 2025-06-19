@@ -47,8 +47,8 @@ struct blankHost: HostPr {
 
 struct debugHost: HostPr {
 	var address: String = "localhost"
-	var port: Int = 2222
-	var username: String = "root"
-	var password: String = "root"
+	var port: Int = 32222
+	var username: String = "default"
+	var password: String = ""
 	var key: Data? = nil
 }
