@@ -164,16 +164,25 @@ class SSHHandler: ObservableObject {
 		return
 	}
 	
-	func authWithPubkey() -> Bool {
-		var status: CInt
-		status = ssh_userauth_publickey_auto(session, nil, nil)
-		if status == SSH_AUTH_ERROR.rawValue {
-			print("pubkey auth failed")
-			logSshGetError()
-			return false
-		}
-		withAnimation { authorized = true }
-		return true
+	func authWithPubkey(pub: String, priv: String, pass: String) {
+		let fileManager = FileManager.default
+		let tempDir = fileManager.temporaryDirectory
+		let tempPubkey = tempDir.appendingPathComponent("key.pub")
+		let tempKey = tempDir.appendingPathComponent("key")
+		
+		fileManager.createFile(atPath: tempPubkey.path(), contents: nil)
+		fileManager.createFile(atPath: tempKey.path(), contents: nil)
+		
+		try? pub.data(using: .utf8)?.write(to: tempPubkey)
+		try? priv.data(using: .utf8)?.write(to: tempKey)
+		
+		var pubkey: ssh_key?
+		ssh_pki_import_pubkey_file(tempPubkey.path(), &pubkey)
+		let status = ssh_userauth_try_publickey(session, nil, pubkey)
+		print(status)
+		
+		var privkey: ssh_key?
+		ssh_pki_import_privkey_file(tempKey.path(), pass, nil, nil, &privkey)
 	}
 	
 	func authWithPw() -> Bool {

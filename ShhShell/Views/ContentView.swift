@@ -9,11 +9,17 @@ import SwiftUI
 
 struct ContentView: View {
 	@ObservedObject var handler: SSHHandler
-//	@State var connected: Bool = false
+	
+	@State var pubkey: String = ""
+	@State var privkey: String = ""
+	@State var passphrase: String = ""
 	
     var body: some View {
 		NavigationStack {
 			List {
+				TextField("", text: $pubkey)
+				TextField("", text: $privkey)
+				TextField("", text: $passphrase)
 				HStack {
 					Text(handler.connected ? "connected" : "not connected")
 						.modifier(foregroundColorStyle(handler.connected ? .green : .red))
@@ -46,12 +52,16 @@ struct ContentView: View {
 				TextField("username", text: $handler.host.username)
 					.textFieldStyle(.roundedBorder)
 				
-				TextField("password", text: $handler.host.password)
+				SecureField("password", text: $handler.host.password)
 					.textFieldStyle(.roundedBorder)
 				
 				Button() {
 					handler.connect()
-					let _ = handler.authWithPw()
+					if !pubkey.isEmpty && !privkey.isEmpty {
+						handler.authWithPubkey(pub: pubkey, priv: privkey, pass: passphrase)
+					} else {
+						let _ = handler.authWithPw()
+					}
 					handler.openShell()
 				} label: {
 					Label("Connect", systemImage: "powerplug.portrait")
