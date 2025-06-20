@@ -10,10 +10,14 @@ import SwiftUI
 @main
 struct ShhShellApp: App {
 	@StateObject var sshHandler: SSHHandler = SSHHandler(host: blankHost())
+	@StateObject var keyManager: KeyManager = KeyManager()
 	
 	var body: some Scene {
 		WindowGroup {
-			ContentView(handler: sshHandler)
+			ContentView(
+				handler: sshHandler,
+				keyManager: keyManager
+			)
 		}
 	}
 }

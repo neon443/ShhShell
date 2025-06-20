@@ -29,6 +29,9 @@
 		A95FAA552DF4B62900DE2F5A /* LibSSH.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A95FAA502DF4B62100DE2F5A /* LibSSH.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A95FAA562DF4B62A00DE2F5A /* openssl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A95FAA512DF4B62100DE2F5A /* openssl.xcframework */; };
 		A95FAA572DF4B62A00DE2F5A /* openssl.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A95FAA512DF4B62100DE2F5A /* openssl.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A98554552E05535F009051BD /* KeyManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554542E05535F009051BD /* KeyManagerView.swift */; };
+		A98554592E0553AA009051BD /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554582E0553AA009051BD /* KeyManager.swift */; };
+		A985545D2E055D4D009051BD /* ConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A985545C2E055D4D009051BD /* ConnectionView.swift */; };
 		A9C897EF2DF1A9A400EF9A5F /* SSHHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +90,9 @@
 		A95FAA5A2DF4B79900DE2F5A /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
 		A95FAA5B2DF4B7A000DE2F5A /* ci_pre_xcodebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_pre_xcodebuild.sh; sourceTree = "<group>"; };
 		A95FAA5C2DF4B7A300DE2F5A /* ci_prost_xcodebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_prost_xcodebuild.sh; sourceTree = "<group>"; };
+		A98554542E05535F009051BD /* KeyManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyManagerView.swift; sourceTree = "<group>"; };
+		A98554582E0553AA009051BD /* KeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
+		A985545C2E055D4D009051BD /* ConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionView.swift; sourceTree = "<group>"; };
 		A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -153,8 +159,10 @@
 			children = (
 				A93143C22DF61F5700FCD5DB /* ShhShell.entitlements */,
 				A92538C62DEE0742007E0A18 /* ShhShellApp.swift */,
-				A92538D32DEE0749007E0A18 /* Views */,
+				A98554572E055398009051BD /* Keys */,
+				A98554562E055394009051BD /* Host */,
 				A93143C12DF61E8500FCD5DB /* SSH */,
+				A92538D32DEE0749007E0A18 /* Views */,
 			);
 			path = ShhShell;
 			sourceTree = "<group>";
@@ -179,9 +187,10 @@
 		A92538D32DEE0749007E0A18 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A98554532E05534F009051BD /* Keys */,
 				A92538C52DEE0742007E0A18 /* ContentView.swift */,
-				A91AE3B12DF73E0900FF3537 /* TerminalView.swift */,
-				A91AE3BC2DF7402100FF3537 /* TextViewController.swift */,
+				A985545C2E055D4D009051BD /* ConnectionView.swift */,
+				A98554522E055347009051BD /* Terminal */,
 				A93143C52DF61FE300FCD5DB /* ViewModifiers.swift */,
 			);
 			path = Views;
@@ -198,7 +207,6 @@
 		A93143C12DF61E8500FCD5DB /* SSH */ = {
 			isa = PBXGroup;
 			children = (
-				A93143BF2DF61B3200FCD5DB /* Host.swift */,
 				A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */,
 			);
 			path = SSH;
@@ -212,6 +220,39 @@
 				A95FAA5C2DF4B7A300DE2F5A /* ci_prost_xcodebuild.sh */,
 			);
 			path = ci_scripts;
+			sourceTree = "<group>";
+		};
+		A98554522E055347009051BD /* Terminal */ = {
+			isa = PBXGroup;
+			children = (
+				A91AE3B12DF73E0900FF3537 /* TerminalView.swift */,
+				A91AE3BC2DF7402100FF3537 /* TextViewController.swift */,
+			);
+			path = Terminal;
+			sourceTree = "<group>";
+		};
+		A98554532E05534F009051BD /* Keys */ = {
+			isa = PBXGroup;
+			children = (
+				A98554542E05535F009051BD /* KeyManagerView.swift */,
+			);
+			path = Keys;
+			sourceTree = "<group>";
+		};
+		A98554562E055394009051BD /* Host */ = {
+			isa = PBXGroup;
+			children = (
+				A93143BF2DF61B3200FCD5DB /* Host.swift */,
+			);
+			path = Host;
+			sourceTree = "<group>";
+		};
+		A98554572E055398009051BD /* Keys */ = {
+			isa = PBXGroup;
+			children = (
+				A98554582E0553AA009051BD /* KeyManager.swift */,
+			);
+			path = Keys;
 			sourceTree = "<group>";
 		};
 		A9C8976F2DF1980900EF9A5F /* Frameworks */ = {
@@ -376,9 +417,12 @@
 				A92538C82DEE0742007E0A18 /* ContentView.swift in Sources */,
 				A93143C02DF61B3200FCD5DB /* Host.swift in Sources */,
 				A92538C92DEE0742007E0A18 /* ShhShellApp.swift in Sources */,
+				A985545D2E055D4D009051BD /* ConnectionView.swift in Sources */,
 				A91AE3B22DF73E0900FF3537 /* TerminalView.swift in Sources */,
+				A98554592E0553AA009051BD /* KeyManager.swift in Sources */,
 				A91AE3BD2DF7402100FF3537 /* TextViewController.swift in Sources */,
 				A9C897EF2DF1A9A400EF9A5F /* SSHHandler.swift in Sources */,
+				A98554552E05535F009051BD /* KeyManagerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
