@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CryptoKit
 
 struct Key: Identifiable, Hashable {
 	var id = UUID()
@@ -16,6 +17,13 @@ struct Key: Identifiable, Hashable {
 }
 
 class KeyManager: ObservableObject {
+	func generateEd25519() {
+		let privateKey = Curve25519.Signing.PrivateKey()
+		let publicKeyData = privateKey.publicKey
+		dump(privateKey.rawRepresentation)
+		print(publicKeyData.rawRepresentation)
+	}
+	
 	func generateRSA() throws {
 		let type = kSecAttrKeyTypeRSA
 		let tag = "com.neon443.ShhSell.keys.\(Date().timeIntervalSince1970)".data(using: .utf8)!

@@ -10,6 +10,7 @@ import SwiftUI
 struct ConnectionView: View {
 	@StateObject var handler: SSHHandler
 	@StateObject var keyManager: KeyManager
+	@StateObject var hostsManager: HostsManager
 	
 	@State var passphrase: String = ""
 	
@@ -156,7 +157,8 @@ struct ConnectionView: View {
 
 #Preview {
 	ConnectionView(
-		handler: SSHHandler(host: debugHost()),
-		keyManager: KeyManager()
+		handler: SSHHandler(host: Host.debug),
+		keyManager: KeyManager(),
+		hostsManager: HostsManager()
 	)
 }

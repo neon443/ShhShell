@@ -30,7 +30,7 @@ class SSHHandler: ObservableObject {
 	) {
 		self.host = host
 #if DEBUG
-		self.host = debugHost()
+		self.host = Host.debug
 #endif
 	}
 	
@@ -87,9 +87,9 @@ class SSHHandler: ObservableObject {
 		}
 		ssh_disconnect(session)
 		ssh_free(session)
-		session = nil
 		withAnimation { authorized = false }
 		withAnimation { connected = false }
+		session = nil
 		host.key = nil
 	}
 
@@ -296,12 +296,12 @@ class SSHHandler: ObservableObject {
 		guard status == SSH_OK else { return }
 		
 		self.readTimer = Timer(timeInterval: 0.1, repeats: true) { timer in
-			guard ssh_channel_is_open(self.channel) != 0 else {
+			guard self.connected else {
 				timer.invalidate()
 				self.readTimer = nil
 				return
 			}
-			guard ssh_channel_is_eof(self.channel) == 0 else {
+			guard ssh_channel_is_open(self.channel) != 0 && ssh_channel_is_eof(self.channel) == 0 else {
 				timer.invalidate()
 				self.readTimer = nil
 				return

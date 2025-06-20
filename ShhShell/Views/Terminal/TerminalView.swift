@@ -39,5 +39,5 @@ struct TerminalView: View {
 }
 
 #Preview {
-    TerminalView(handler: SSHHandler(host: debugHost()))
+    TerminalView(handler: SSHHandler(host: Host.debug))
 }

@@ -32,6 +32,9 @@
 		A98554552E05535F009051BD /* KeyManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554542E05535F009051BD /* KeyManagerView.swift */; };
 		A98554592E0553AA009051BD /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554582E0553AA009051BD /* KeyManager.swift */; };
 		A985545D2E055D4D009051BD /* ConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A985545C2E055D4D009051BD /* ConnectionView.swift */; };
+		A985545F2E056EDD009051BD /* KeychainLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A985545E2E056EDD009051BD /* KeychainLayer.swift */; };
+		A98554612E058433009051BD /* HostsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554602E058433009051BD /* HostsManager.swift */; };
+		A98554632E0587DF009051BD /* HostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554622E0587DF009051BD /* HostsView.swift */; };
 		A9C897EF2DF1A9A400EF9A5F /* SSHHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */; };
 /* End PBXBuildFile section */
 
@@ -93,6 +96,9 @@
 		A98554542E05535F009051BD /* KeyManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyManagerView.swift; sourceTree = "<group>"; };
 		A98554582E0553AA009051BD /* KeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
 		A985545C2E055D4D009051BD /* ConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionView.swift; sourceTree = "<group>"; };
+		A985545E2E056EDD009051BD /* KeychainLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainLayer.swift; sourceTree = "<group>"; };
+		A98554602E058433009051BD /* HostsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostsManager.swift; sourceTree = "<group>"; };
+		A98554622E0587DF009051BD /* HostsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostsView.swift; sourceTree = "<group>"; };
 		A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -189,6 +195,7 @@
 			children = (
 				A98554532E05534F009051BD /* Keys */,
 				A92538C52DEE0742007E0A18 /* ContentView.swift */,
+				A98554622E0587DF009051BD /* HostsView.swift */,
 				A985545C2E055D4D009051BD /* ConnectionView.swift */,
 				A98554522E055347009051BD /* Terminal */,
 				A93143C52DF61FE300FCD5DB /* ViewModifiers.swift */,
@@ -243,6 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				A93143BF2DF61B3200FCD5DB /* Host.swift */,
+				A98554602E058433009051BD /* HostsManager.swift */,
 			);
 			path = Host;
 			sourceTree = "<group>";
@@ -251,6 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				A98554582E0553AA009051BD /* KeyManager.swift */,
+				A985545E2E056EDD009051BD /* KeychainLayer.swift */,
 			);
 			path = Keys;
 			sourceTree = "<group>";
@@ -413,10 +422,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A985545F2E056EDD009051BD /* KeychainLayer.swift in Sources */,
 				A93143C62DF61FE300FCD5DB /* ViewModifiers.swift in Sources */,
+				A98554632E0587DF009051BD /* HostsView.swift in Sources */,
 				A92538C82DEE0742007E0A18 /* ContentView.swift in Sources */,
 				A93143C02DF61B3200FCD5DB /* Host.swift in Sources */,
 				A92538C92DEE0742007E0A18 /* ShhShellApp.swift in Sources */,
+				A98554612E058433009051BD /* HostsManager.swift in Sources */,
 				A985545D2E055D4D009051BD /* ConnectionView.swift in Sources */,
 				A91AE3B22DF73E0900FF3537 /* TerminalView.swift in Sources */,
 				A98554592E0553AA009051BD /* KeyManager.swift in Sources */,

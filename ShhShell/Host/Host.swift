@@ -7,7 +7,8 @@
 
 import Foundation
 
-protocol HostPr: Codable {
+protocol HostPr: Codable, Identifiable {
+	var id: UUID { get set }
 	var address: String { get set }
 	var port: Int { get set }
 	var username: String { get set }
@@ -16,7 +17,8 @@ protocol HostPr: Codable {
 }
 
 struct Host: HostPr {
-	var address: String = "address"
+	var id = UUID()
+	var address: String = ""
 	var port: Int
 	var username: String
 	var password: String
@@ -37,18 +39,11 @@ struct Host: HostPr {
 	}
 }
 
-struct blankHost: HostPr {
-	var address: String = ""
-	var port: Int = 22
-	var username: String = ""
-	var password: String = ""
-	var key: Data? = nil
-}
-
-struct debugHost: HostPr {
-	var address: String = "localhost"
-	var port: Int = 22
-	var username: String = "default"
-	var password: String = ""
-	var key: Data? = nil
+extension Host {
+	static var blank: Host {
+		Host(address: "", port: 22, username: "", password: "")
+	}
+	static var debug: Host {
+		Host(address: "localhost", port: 22, username: "default", password: "")
+	}
 }

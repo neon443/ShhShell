@@ -10,15 +10,16 @@ import SwiftUI
 struct ContentView: View {
 	@ObservedObject var handler: SSHHandler
 	@ObservedObject var keyManager: KeyManager
+	@ObservedObject var hostsManager: HostsManager
 		
     var body: some View {
 		TabView {
-			ConnectionView(
-				handler: handler,
-				keyManager: keyManager
+			HostsView(
+				keyManager: keyManager,
+				hostsManager: hostsManager
 			)
 			.tabItem {
-				Label("Connection", systemImage: "powerplug.portrait")
+				Label("Hosts", systemImage: "server.rack")
 			}
 			KeyManagerView(keyManager: keyManager)
 				.tabItem {
@@ -30,7 +31,8 @@ struct ContentView: View {
 
 #Preview {
     ContentView(
-		handler: SSHHandler(host: debugHost()),
-		keyManager: KeyManager()
+		handler: SSHHandler(host: Host.debug),
+		keyManager: KeyManager(),
+		hostsManager: HostsManager()
 	)
 }
