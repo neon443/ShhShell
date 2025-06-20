@@ -12,8 +12,11 @@ struct ContentView: View {
 	
 	@State var passphrase: String = ""
 	
-	@State var pubkey: String = ""
-	@State var privkey: String = ""
+	@State var pubkeyStr: String = ""
+	@State var privkeyStr: String = ""
+	
+	@State var pubkey: Data?
+	@State var privkey: Data?
 	
 	@State var privPickerPresented: Bool = false
 	@State var pubPickerPresented: Bool = false
@@ -22,7 +25,10 @@ struct ContentView: View {
 		NavigationStack {
 			List {
 				HStack {
-					TextField("", text: $pubkey, prompt: Text("Public Key"))
+					TextField("", text: $pubkeyStr, prompt: Text("Public Key"))
+						.onSubmit {
+							pubkey = Data(pubkeyStr.utf8)
+						}
 					Button() {
 						pubPickerPresented.toggle()
 					} label: {
@@ -32,8 +38,7 @@ struct ContentView: View {
 					.fileImporter(isPresented: $pubPickerPresented, allowedContentTypes: [.item, .content, .data]) { (Result) in
 						do {
 							let fileURL = try Result.get()
-							let data = try! Data(contentsOf: fileURL)
-							pubkey = data.base64EncodedString()
+							pubkey = try! Data(contentsOf: fileURL)
 							print(fileURL)
 						} catch {
 							print(error.localizedDescription)
@@ -42,7 +47,10 @@ struct ContentView: View {
 				}
 				
 				HStack {
-					TextField("", text: $pubkey, prompt: Text("Public Key"))
+					TextField("", text: $privkeyStr, prompt: Text("Private Key"))
+						.onSubmit {
+							privkey = Data(privkeyStr.utf8)
+						}
 					Button() {
 						privPickerPresented.toggle()
 					} label: {
@@ -52,8 +60,7 @@ struct ContentView: View {
 					.fileImporter(isPresented: $privPickerPresented, allowedContentTypes: [.item, .content, .data]) { (Result) in
 						do {
 							let fileURL = try Result.get()
-							let data = try! Data(contentsOf: fileURL)
-							privkey = data.base64EncodedString()
+							privkey = try! Data(contentsOf: fileURL)
 							print(fileURL)
 						} catch {
 							print(error.localizedDescription)
@@ -106,8 +113,8 @@ struct ContentView: View {
 				} else {
 					Button() {
 						handler.connect()
-						if !pubkey.isEmpty && !privkey.isEmpty {
-							handler.authWithPubkey(pub: pubkey, priv: privkey, pass: passphrase)
+						if pubkey != nil && privkey != nil {
+							handler.authWithPubkey(pub: pubkey!, priv: privkey!, pass: passphrase)
 						} else {
 							let _ = handler.authWithPw()
 						}
@@ -116,7 +123,7 @@ struct ContentView: View {
 						Label("Connect", systemImage: "powerplug.portrait")
 					}
 					.disabled(
-						pubkey.isEmpty && privkey.isEmpty ||
+						pubkey == nil && privkey == nil ||
 						handler.host.username.isEmpty && handler.host.password.isEmpty
 					)
 				}
