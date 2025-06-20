@@ -19,19 +19,16 @@ class SSHHandler: ObservableObject {
 	@Published var authorized: Bool = false
 	@Published var testSuceeded: Bool = false
 	
-	@Published var host: HostPr
+	@Published var host: Host
 	@Published var terminal: String = ""
 	
 	private let userDefaults = NSUbiquitousKeyValueStore.default
 	private let logger = Logger(subsystem: "xy", category: "sshHandler")
 
 	init(
-		host: HostPr
+		host: Host
 	) {
 		self.host = host
-#if DEBUG
-		self.host = Host.debug
-#endif
 	}
 	
 	func getHostkey() -> Data? {

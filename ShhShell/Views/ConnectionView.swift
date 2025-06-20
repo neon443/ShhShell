@@ -79,11 +79,6 @@ struct ConnectionView: View {
 						.modifier(foregroundColorStyle(handler.authorized ? .green : .red))
 				}
 				
-				//				if let testSucceded = testSucceded {
-				//					Image(systemName: testSucceded ? "checkmark.circle" : "xmark.circle")
-				//						.modifier(foregroundColorStyle(testSucceded ? .green : .red))
-				//				}
-				
 				if handler.host.key != nil {
 					Text("Hostkey: \(handler.host.key!.base64EncodedString())")
 				}
@@ -125,7 +120,7 @@ struct ConnectionView: View {
 						Label("Connect", systemImage: "powerplug.portrait")
 					}
 					.disabled(
-						pubkey == nil && privkey == nil ||
+						pubkey == nil && privkey == nil &&
 						handler.host.username.isEmpty && handler.host.password.isEmpty
 					)
 				}
@@ -147,9 +142,15 @@ struct ConnectionView: View {
 						Label("Test Connection", systemImage: "checkmark")
 					}
 				}
-				.disabled(!(handler.connected && handler.authorized))
+//				.disabled(!(handler.connected && handler.authorized))
 			}
 			.transition(.opacity)
+		}
+		.onDisappear {
+			if let index = hostsManager.savedHosts.firstIndex(where: { $0.id == handler.host.id }) {
+				hostsManager.savedHosts[index] = handler.host
+				hostsManager.saveSavedHosts()
+			}
 		}
 	}
 }
