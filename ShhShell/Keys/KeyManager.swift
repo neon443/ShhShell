@@ -17,6 +17,25 @@ struct Key: Identifiable, Hashable {
 }
 
 class KeyManager: ObservableObject {
+	private let userdefaults = NSUbiquitousKeyValueStore.default
+	
+	var tags: [String] = []
+	
+	func loadTags() {
+		let decoder = JSONDecoder()
+		guard let data = userdefaults.data(forKey: "keyTags") else { return }
+		guard let decoded = try? decoder.decode([String].self, from: data) else { return }
+		tags = decoded
+	}
+	
+	func saveTags() {
+		let encoder = JSONEncoder()
+		guard let encoded = try? encoder.encode(tags) else { return }
+		userdefaults.set(encoded, forKey: "keyTags")
+		userdefaults.synchronize()
+	}
+	
+	//MARK: generate keys
 	func generateEd25519() {
 		let privateKey = Curve25519.Signing.PrivateKey()
 		let publicKeyData = privateKey.publicKey
@@ -26,7 +45,8 @@ class KeyManager: ObservableObject {
 	
 	func generateRSA() throws {
 		let type = kSecAttrKeyTypeRSA
-		let tag = "com.neon443.ShhSell.keys.\(Date().timeIntervalSince1970)".data(using: .utf8)!
+		let label = Date().ISO8601Format()
+		let tag = label.data(using: .utf8)!
 		let attributes: [String: Any] =
 		[kSecAttrKeyType as String:			type,
 		 kSecAttrKeySizeInBits as String:	4096,
@@ -42,5 +62,10 @@ class KeyManager: ObservableObject {
 		print(privateKey)
 		
 		print(SecKeyCopyPublicKey(privateKey))
+//		do {
+//			try storeKey(privateKey, label: label)
+//		} catch {
+//			print(error.localizedDescription)
+//		}
 	}
 }

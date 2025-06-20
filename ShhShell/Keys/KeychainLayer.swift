@@ -91,5 +91,12 @@ kSecUseDataProtectionKeychain: true,
 	case errSecItemNotFound: return nil
 	case let status: throw KeyStoreError.KeyStoreError("keychain read failed")
 	}
-	return secKey
+//	return secKey
+	
+	var error: Unmanaged<CFError>?
+	guard let data = SecKeyCopyExternalRepresentation(secKey, &error) as Data? else {
+		throw KeyStoreError.KeyStoreError(error.debugDescription)
+	}
+//	let key = try T(x963Representation: data)
+	return nil
 }

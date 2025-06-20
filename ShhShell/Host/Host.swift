@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol HostPr: Codable, Identifiable {
+protocol HostPr: Codable, Identifiable, Equatable {
 	var id: UUID { get set }
 	var address: String { get set }
 	var port: Int { get set }

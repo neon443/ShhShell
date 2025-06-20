@@ -25,6 +25,9 @@ struct HostsView: View {
 					} label: {
 						Text(host.address)
 					}
+					.onChange(of: host) { _ in
+						hostsManager.saveSavedHosts()
+					}
 				}
 			}
 			.toolbar {
