@@ -25,25 +25,20 @@ struct HostsView: View {
 					.buttonStyle(.borderedProminent)
 				}
 				ForEach(hostsManager.savedHosts) { host in
-					HStack {
+					NavigationLink() {
+						ConnectionView(
+							handler: SSHHandler(host: host),
+							keyManager: keyManager,
+							hostsManager: hostsManager
+						)
+					} label: {
 						if host.address.isEmpty {
 							Text(host.id.uuidString)
 						} else {
 							Text(host.address)
 						}
-						NavigationLink() {
-							ConnectionView(
-								handler: SSHHandler(host: host),
-								keyManager: keyManager,
-								hostsManager: hostsManager
-							)
-						} label: {
-							Image(systemName: "info.circle")
-						}
-						.onChange(of: host) { _ in
-							hostsManager.saveSavedHosts()
-						}
 					}
+					.animation(.default, value: host)
 					.swipeActions(edge: .trailing) {
 						Button(role: .destructive) {
 							if let index = hostsManager.savedHosts.firstIndex(where: { $0.id == host.id }) {
@@ -56,22 +51,21 @@ struct HostsView: View {
 					}
 				}
 			}
-			.transition(.scale)
+			.transition(.opacity)
 			.toolbar {
 				ToolbarItem(placement: .confirmationAction) {
-					if !hostsManager.savedHosts.isEmpty {
-						NavigationLink {
-							ConnectionView(
-								handler: SSHHandler(host: hostsManager.savedHosts.last!),
-								keyManager: keyManager,
-								hostsManager: hostsManager
-							)
-							.onAppear() {
-								withAnimation { hostsManager.savedHosts.append(Host.blank) }
-							}
-						} label: {
-							Label("Add", systemImage: "plus")
+					let host = Host.blank
+					NavigationLink {
+						ConnectionView(
+							handler: SSHHandler(host: host),
+							keyManager: keyManager,
+							hostsManager: hostsManager
+						)
+						.task(priority: .userInitiated) {
+							withAnimation { hostsManager.savedHosts.append(host) }
 						}
+					} label: {
+						Label("Add", systemImage: "plus")
 					}
 				}
 			}

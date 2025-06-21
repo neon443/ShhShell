@@ -26,103 +26,96 @@ struct ConnectionView: View {
 	var body: some View {
 		NavigationStack {
 			List {
-				HStack {
-					TextField("", text: $pubkeyStr, prompt: Text("Public Key"))
-						.onSubmit {
-							pubkey = Data(pubkeyStr.utf8)
-						}
-					Button() {
-						pubPickerPresented.toggle()
-					} label: {
-						Image(systemName: "folder")
+				Section {
+					HStack {
+						Text(handler.connected ? "connected" : "not connected")
+							.modifier(foregroundColorStyle(handler.connected ? .green : .red))
+						
+						Text(handler.authorized ? "authorized" : "unauthorized")
+							.modifier(foregroundColorStyle(handler.authorized ? .green : .red))
 					}
-					.buttonStyle(.plain)
-					.fileImporter(isPresented: $pubPickerPresented, allowedContentTypes: [.item, .content, .data]) { (Result) in
-						do {
-							let fileURL = try Result.get()
-							pubkey = try! Data(contentsOf: fileURL)
-							print(fileURL)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-				
-				HStack {
-					TextField("", text: $privkeyStr, prompt: Text("Private Key"))
-						.onSubmit {
-							privkey = Data(privkeyStr.utf8)
-						}
-					Button() {
-						privPickerPresented.toggle()
-					} label: {
-						Image(systemName: "folder")
-					}
-					.buttonStyle(.plain)
-					.fileImporter(isPresented: $privPickerPresented, allowedContentTypes: [.item, .content, .data]) { (Result) in
-						do {
-							let fileURL = try Result.get()
-							privkey = try! Data(contentsOf: fileURL)
-							print(fileURL)
-						} catch {
-							print(error.localizedDescription)
-						}
-					}
-				}
-				
-				TextField("", text: $passphrase)
-				HStack {
-					Text(handler.connected ? "connected" : "not connected")
-						.modifier(foregroundColorStyle(handler.connected ? .green : .red))
+					TextField("address", text: $handler.host.address)
+						.textFieldStyle(.roundedBorder)
 					
-					Text(handler.authorized ? "authorized" : "unauthorized")
-						.modifier(foregroundColorStyle(handler.authorized ? .green : .red))
+					TextField(
+						"port",
+						text: Binding(
+							get: { String(handler.host.port) },
+							set: {
+								if let input = Int($0) {
+									handler.host.port = input
+								}
+							}
+						)
+					)
+					.keyboardType(.numberPad)
+					.textFieldStyle(.roundedBorder)
+				}
+				
+				Section {
+					TextField("Username", text: $handler.host.username)
+						.textFieldStyle(.roundedBorder)
+					
+					SecureField("Password", text: $handler.host.password)
+						.textFieldStyle(.roundedBorder)
+					
+					HStack {
+						TextField("", text: $pubkeyStr, prompt: Text("Public Key"))
+							.onSubmit {
+								pubkey = Data(pubkeyStr.utf8)
+							}
+						Button() {
+							pubPickerPresented.toggle()
+						} label: {
+							Image(systemName: "folder")
+						}
+						.buttonStyle(.plain)
+						.fileImporter(isPresented: $pubPickerPresented, allowedContentTypes: [.item, .content, .data]) { (Result) in
+							do {
+								let fileURL = try Result.get()
+								pubkey = try! Data(contentsOf: fileURL)
+								print(fileURL)
+							} catch {
+								print(error.localizedDescription)
+							}
+						}
+					}
+					
+					HStack {
+						TextField("", text: $privkeyStr, prompt: Text("Private Key"))
+							.onSubmit {
+								privkey = Data(privkeyStr.utf8)
+							}
+						Button() {
+							privPickerPresented.toggle()
+						} label: {
+							Image(systemName: "folder")
+						}
+						.buttonStyle(.plain)
+						.fileImporter(isPresented: $privPickerPresented, allowedContentTypes: [.item, .content, .data]) { (Result) in
+							do {
+								let fileURL = try Result.get()
+								privkey = try! Data(contentsOf: fileURL)
+								print(fileURL)
+							} catch {
+								print(error.localizedDescription)
+							}
+						}
+					}
+					TextField("", text: $passphrase, prompt: Text("Passphrase (Optional)"))
 				}
 				
 				if handler.host.key != nil {
 					Text("Hostkey: \(handler.host.key!.base64EncodedString())")
-				}
-				
-				TextField("address", text: $handler.host.address)
-					.textFieldStyle(.roundedBorder)
-				
-				TextField(
-					"port",
-					text: Binding(
-						get: { String(handler.host.port) },
-						set: { handler.host.port = Int($0) ?? 22} )
-				)
-				.keyboardType(.numberPad)
-				.textFieldStyle(.roundedBorder)
-				
-				TextField("username", text: $handler.host.username)
-					.textFieldStyle(.roundedBorder)
-				
-				SecureField("password", text: $handler.host.password)
-					.textFieldStyle(.roundedBorder)
-				
-				if handler.connected {
-					Button() {
-						handler.disconnect()
-					} label: {
-						Label("Disconnect", systemImage: "xmark.app.fill")
-					}
-				} else {
-					Button() {
-						handler.connect()
-						if pubkey != nil && privkey != nil {
-							handler.authWithPubkey(pub: pubkey!, priv: privkey!, pass: passphrase)
-						} else {
-							let _ = handler.authWithPw()
+						.onChange(of: handler.host.key) { _ in
+							guard let matchedIndex = hostsManager.getHostIndexMatching(handler.host) else { return }
+							guard handler.host.key == hostsManager.savedHosts[matchedIndex].key else {
+								let hostkeyBefore = hostsManager.savedHosts[matchedIndex].key
+								let currentHostkey = handler.host.key
+								print("hiiii")
+								fatalError()
+							}
 						}
-						handler.openShell()
-					} label: {
-						Label("Connect", systemImage: "powerplug.portrait")
-					}
-					.disabled(
-						pubkey == nil && privkey == nil &&
-						handler.host.username.isEmpty && handler.host.password.isEmpty
-					)
 				}
 				
 				NavigationLink() {
@@ -135,21 +128,46 @@ struct ConnectionView: View {
 				Button() {
 					withAnimation { handler.testExec() }
 				} label: {
-					if handler.testSuceeded {
-						Image(systemName: handler.testSuceeded ? "checkmark.circle" : "xmark.circle")
-							.modifier(foregroundColorStyle(handler.testSuceeded ? .green : .red))
+					if let testResult = handler.testSuceeded {
+							Image(systemName: testResult ? "checkmark.circle" : "xmark.circle")
+								.modifier(foregroundColorStyle(testResult ? .green : .red))
 					} else {
 						Label("Test Connection", systemImage: "checkmark")
 					}
 				}
-//				.disabled(!(handler.connected && handler.authorized))
 			}
 			.transition(.opacity)
+			.toolbar {
+				ToolbarItem() {
+					if handler.connected {
+						Button() {
+							handler.disconnect()
+						} label: {
+							Label("Disconnect", systemImage: "xmark.app.fill")
+						}
+					} else {
+						Button() {
+							handler.connect()
+							if pubkey != nil && privkey != nil {
+								handler.authWithPubkey(pub: pubkey!, priv: privkey!, pass: passphrase)
+							} else {
+								let _ = handler.authWithPw()
+							}
+							handler.openShell()
+						} label: {
+							Label("Connect", systemImage: "powerplug.portrait")
+						}
+						.disabled(
+							pubkey == nil && privkey == nil &&
+							handler.host.username.isEmpty && handler.host.password.isEmpty
+						)
+					}
+				}
+			}
 		}
 		.onDisappear {
-			if let index = hostsManager.savedHosts.firstIndex(where: { $0.id == handler.host.id }) {
-				hostsManager.savedHosts[index] = handler.host
-				hostsManager.saveSavedHosts()
+			if hostsManager.getHostMatching(handler.host) != handler.host {
+				hostsManager.updateHost(handler.host)
 			}
 		}
 	}

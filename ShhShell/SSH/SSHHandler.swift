@@ -17,7 +17,7 @@ class SSHHandler: ObservableObject {
 	
 	@Published var connected: Bool = false
 	@Published var authorized: Bool = false
-	@Published var testSuceeded: Bool = false
+	@Published var testSuceeded: Bool? = nil
 	
 	@Published var host: Host
 	@Published var terminal: String = ""
@@ -86,8 +86,9 @@ class SSHHandler: ObservableObject {
 		ssh_free(session)
 		withAnimation { authorized = false }
 		withAnimation { connected = false }
+		withAnimation { testSuceeded = nil }
 		session = nil
-		host.key = nil
+//		host.key = nil
 	}
 
 	func testExec() {
