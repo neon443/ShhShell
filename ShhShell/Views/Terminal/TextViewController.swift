@@ -28,8 +28,8 @@ struct TextViewController: UIViewRepresentable {
 	}
 	
 	private func setTextViewState(on textView: TextView) {
+		let text = self.text
 		DispatchQueue.global(qos: .userInitiated).async {
-			let text = self.text
 			let state = TextViewState(text: text, language: .bash)
 			DispatchQueue.main.async {
 				textView.setState(state)

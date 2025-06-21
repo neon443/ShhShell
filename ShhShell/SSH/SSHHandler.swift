@@ -88,6 +88,7 @@ class SSHHandler: ObservableObject {
 		withAnimation { connected = false }
 		withAnimation { testSuceeded = nil }
 		session = nil
+		terminal = ""
 //		host.key = nil
 	}
 
@@ -336,7 +337,7 @@ class SSHHandler: ObservableObject {
 		var nwritten: Int
 		
 //		readFromChannel()
-		nbytes = Int(read(0, &buffer, buffer.count))
+//		nbytes = Int(read(0, &buffer, buffer.count))
 		nbytes = buffer.count
 		guard nbytes > 0 else {
 			return
