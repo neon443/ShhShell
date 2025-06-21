@@ -146,10 +146,7 @@ struct ConnectionView: View {
 					handler.host.key = hostsManager.getHostMatching(handler.host)?.key
 				}
 			} message: {
-				Text("""
-						Expected \(hostsManager.getHostMatching(handler.host)!.key!.base64EncodedString())
-						but recieved \(handler.host.key!.base64EncodedString()) from the server
-					""")
+				Text("Expected \(hostsManager.getHostMatching(handler.host)!.key?.base64EncodedString() ?? "null")\nbut recieved \(handler.host.key?.base64EncodedString() ?? "null" ) from the server")
 			}
 			.transition(.opacity)
 			.toolbar {

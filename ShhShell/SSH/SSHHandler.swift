@@ -54,7 +54,7 @@ class SSHHandler: ObservableObject {
 			self.host.key = getHostkey()
 		}
 		
-		var verbosity: Int = SSH_LOG_FUNCTIONS
+		var verbosity: Int = 0
 		
 		session = ssh_new()
 		guard session != nil else {
