@@ -41,6 +41,7 @@ class HostsManager: ObservableObject {
 	}
 	
 	func loadSavedHosts() {
+		userDefaults.synchronize()
 		let decoder = JSONDecoder()
 		guard let data = userDefaults.data(forKey: "savedHosts") else { return }
 		

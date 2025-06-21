@@ -23,6 +23,8 @@ struct ConnectionView: View {
 	@State var privPickerPresented: Bool = false
 	@State var pubPickerPresented: Bool = false
 	
+	@State var hostKeyChangedAlert: Bool = false
+	
 	var body: some View {
 		NavigationStack {
 			List {
@@ -108,12 +110,10 @@ struct ConnectionView: View {
 				if handler.host.key != nil {
 					Text("Hostkey: \(handler.host.key!.base64EncodedString())")
 						.onChange(of: handler.host.key) { _ in
-							guard let matchedIndex = hostsManager.getHostIndexMatching(handler.host) else { return }
-							guard handler.host.key == hostsManager.savedHosts[matchedIndex].key else {
-								let hostkeyBefore = hostsManager.savedHosts[matchedIndex].key
-								let currentHostkey = handler.host.key
-								print("hiiii")
-								fatalError()
+							guard let previousKnownHost = hostsManager.getHostMatching(handler.host) else { return }
+							guard handler.host.key == previousKnownHost.key else {
+								hostKeyChangedAlert = true
+								return
 							}
 						}
 				}
@@ -129,12 +129,27 @@ struct ConnectionView: View {
 					withAnimation { handler.testExec() }
 				} label: {
 					if let testResult = handler.testSuceeded {
-							Image(systemName: testResult ? "checkmark.circle" : "xmark.circle")
-								.modifier(foregroundColorStyle(testResult ? .green : .red))
+						Image(systemName: testResult ? "checkmark.circle" : "xmark.circle")
+							.modifier(foregroundColorStyle(testResult ? .green : .red))
 					} else {
 						Label("Test Connection", systemImage: "checkmark")
 					}
 				}
+			}
+			.alert("Hostkey changed", isPresented: $hostKeyChangedAlert) {
+				Button("Accept New Hostkey", role: .destructive) {
+					hostsManager.updateHost(handler.host)
+				}
+				
+				Button("Disconnect", role: .cancel) {
+					handler.disconnect()
+					handler.host.key = hostsManager.getHostMatching(handler.host)?.key
+				}
+			} message: {
+				Text("""
+						Expected \(hostsManager.getHostMatching(handler.host)!.key!.base64EncodedString())
+						but recieved \(handler.host.key!.base64EncodedString()) from the server
+					""")
 			}
 			.transition(.opacity)
 			.toolbar {
@@ -166,8 +181,9 @@ struct ConnectionView: View {
 			}
 		}
 		.onDisappear {
-			if hostsManager.getHostMatching(handler.host) != handler.host {
+			guard hostsManager.getHostMatching(handler.host) == handler.host else {
 				hostsManager.updateHost(handler.host)
+				return
 			}
 		}
 	}
