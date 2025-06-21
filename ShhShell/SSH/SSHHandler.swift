@@ -321,31 +321,25 @@ class SSHHandler: ObservableObject {
 		write(1, buffer, Int(nbytes))
 		
 		let data = Data(bytes: buffer, count: buffer.count)
-		self.terminal.append(String(data: data, encoding: .utf8)!)
+		if let string = String(data: data, encoding: .utf8) {
+			self.terminal.append(string)
+			terminal = self.terminal.replacingOccurrences(of: "[K", with: "\n")
+		}
 	}
 	
 	private func logSshGetError() {
 		logger.critical("\(String(cString: ssh_get_error(&self.session)))")
 	}
 	
-	func writeToChannel() {
+	func writeToChannel(_ string: String) {
 		guard ssh_channel_is_open(channel) != 0 else { return }
 		guard ssh_channel_is_eof(channel) == 0 else { return }
 		
-		var buffer: [CChar] = Array(repeating: 65, count: 256)
-		var nbytes: Int
-		var nwritten: Int
+		var buffer: [CChar] = Array(string.utf8CString)
+		let nwritten = Int(ssh_channel_write(channel, &buffer, UInt32(buffer.count)))
 		
-//		readFromChannel()
-//		nbytes = Int(read(0, &buffer, buffer.count))
-		nbytes = buffer.count
-		guard nbytes > 0 else {
-			return
+		if nwritten != buffer.count {
+			print("partial write!!")
 		}
-		if nbytes > 0 {
-			nwritten = Int(ssh_channel_write(channel, &buffer, UInt32(nbytes)))
-			guard nwritten == nbytes else { return }
-		}
-//		readFromChannel()
 	}
 }

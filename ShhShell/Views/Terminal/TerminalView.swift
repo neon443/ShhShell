@@ -14,9 +14,9 @@ struct TerminalView: View {
 	
     var body: some View {
 		Button("write") {
-			handler.writeToChannel()
+			handler.writeToChannel("top\n")
 		}
-		TextViewController(text: $handler.terminal)
+		TextViewController(handler: handler)
 			.toolbar {
 				ToolbarItem(placement: .cancellationAction) {
 					Button("reload") {
