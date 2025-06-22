@@ -27,11 +27,9 @@ class SSHTerminalView: TerminalView, TerminalViewDelegate {
 			while handler.connected {
 				guard let handler = self.handler else { break }
 				if let read = handler.readFromChannel() {
-					DispatchQueue.main.async {
-						self.feed(text: read)
-					}
+					DispatchQueue.main.async { self.feed(text: read) }
 				} else {
-					usleep(10_000)
+					usleep(1_000)
 				}
 			}
 		}
@@ -55,8 +53,6 @@ class SSHTerminalView: TerminalView, TerminalViewDelegate {
 	
 	public func send(source: TerminalView, data: ArraySlice<UInt8>) {
 		let data = Data(data)
-//		let dataSlice = Data(bytes: [data], count: data.count)
-		print("sending \(String(data: data, encoding: .utf8))")
 		handler?.writeToChannel(String(data: data, encoding: .utf8))
 	}
 	

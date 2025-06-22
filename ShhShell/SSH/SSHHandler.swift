@@ -19,6 +19,8 @@ class SSHHandler: ObservableObject {
 	@Published var authorized: Bool = false
 	@Published var testSuceeded: Bool? = nil
 	
+	@Published var bell: UUID?
+	
 	@Published var host: Host
 	
 	private let userDefaults = NSUbiquitousKeyValueStore.default

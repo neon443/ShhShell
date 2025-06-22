@@ -11,6 +11,7 @@
 		A92317282E07111E00ECE1E6 /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; productRef = A92317272E07111E00ECE1E6 /* SwiftTerm */; };
 		A923172A2E07113100ECE1E6 /* TerminalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92317292E07113100ECE1E6 /* TerminalController.swift */; };
 		A923172D2E07138000ECE1E6 /* SSHTerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A923172C2E07138000ECE1E6 /* SSHTerminalView.swift */; };
+		A923172F2E08851200ECE1E6 /* ShellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A923172E2E08851200ECE1E6 /* ShellView.swift */; };
 		A92538C82DEE0742007E0A18 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538C52DEE0742007E0A18 /* ContentView.swift */; };
 		A92538C92DEE0742007E0A18 /* ShhShellApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538C62DEE0742007E0A18 /* ShhShellApp.swift */; };
 		A92538CA2DEE0742007E0A18 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A92538C42DEE0742007E0A18 /* Assets.xcassets */; };
@@ -70,6 +71,7 @@
 		A9083E3F2DF2225A0042906E /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		A92317292E07113100ECE1E6 /* TerminalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalController.swift; sourceTree = "<group>"; };
 		A923172C2E07138000ECE1E6 /* SSHTerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHTerminalView.swift; sourceTree = "<group>"; };
+		A923172E2E08851200ECE1E6 /* ShellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShellView.swift; path = ShhShell/Views/Terminal/ShellView.swift; sourceTree = SOURCE_ROOT; };
 		A925389A2DEE06DC007E0A18 /* ShhShell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShhShell.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A92538A72DEE06DE007E0A18 /* ShhShellTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShhShellTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A92538B12DEE06DE007E0A18 /* ShhShellUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShhShellUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				A92317292E07113100ECE1E6 /* TerminalController.swift */,
+				A923172E2E08851200ECE1E6 /* ShellView.swift */,
 				A923172C2E07138000ECE1E6 /* SSHTerminalView.swift */,
 			);
 			path = Terminal;
@@ -409,6 +412,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A923172F2E08851200ECE1E6 /* ShellView.swift in Sources */,
 				A985545F2E056EDD009051BD /* KeychainLayer.swift in Sources */,
 				A93143C62DF61FE300FCD5DB /* ViewModifiers.swift in Sources */,
 				A98554632E0587DF009051BD /* HostsView.swift in Sources */,

@@ -132,10 +132,7 @@ struct ConnectionView: View {
 				}
 				
 				NavigationLink() {
-					Button("send Ax256") {
-						handler.writeToChannel(Array(repeating: "A", count: 256).joined())
-					}
-					TerminalController(handler: handler)
+					ShellView(handler: handler)
 				} label: {
 					Label("Open Terminal", systemImage: "apple.terminal")
 				}
@@ -183,7 +180,7 @@ struct ConnectionView: View {
 							}
 							handler.openShell()
 						} label: {
-							Label("Connect", systemImage: "powerplug.portrait")
+							Label("Connect", systemImage: "power")
 						}
 						.disabled(
 							pubkey == nil && privkey == nil &&
