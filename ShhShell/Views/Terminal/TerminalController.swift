@@ -14,9 +14,14 @@ struct TerminalController: UIViewRepresentable {
 	@ObservedObject var handler: SSHHandler
 	
 	func makeUIView(context: Context) -> TerminalView {
-		let tv = TerminalView()
-		let terminalDelegate = ShhTerminalViewDelegate()
-		tv.terminalDelegate = terminalDelegate
+		let tv = SSHTerminalView(
+			frame: CGRect(
+				origin: CGPoint(x: 0, y: 0),
+				size: CGSize(width: 100, height: 100)
+			),
+			handler: handler
+		)
+//		tv.terminalDelegate = terminalDelegate
 		
 		tv.getTerminal().feed(text: handler.readFromChannel())
 		return tv

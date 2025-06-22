@@ -132,8 +132,8 @@ struct ConnectionView: View {
 				}
 				
 				NavigationLink() {
-					Button("Reload") {
-						handler.readFromChannel()
+					Button("send Ax256") {
+						handler.writeToChannel(Array(repeating: "A", count: 256).joined())
 					}
 					TerminalController(handler: handler)
 				} label: {

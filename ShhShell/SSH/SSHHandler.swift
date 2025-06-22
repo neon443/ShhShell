@@ -332,7 +332,8 @@ class SSHHandler: ObservableObject {
 		logger.critical("\(String(cString: ssh_get_error(&self.session)))")
 	}
 	
-	func writeToChannel(_ string: String) {
+	func writeToChannel(_ string: String?) {
+		guard let string = string else { return }
 		guard ssh_channel_is_open(channel) != 0 else { return }
 		guard ssh_channel_is_eof(channel) == 0 else { return }
 		
@@ -342,5 +343,13 @@ class SSHHandler: ObservableObject {
 		if nwritten != buffer.count {
 			print("partial write!!")
 		}
+	}
+	
+	func resizeTTY(toRows: Int, toCols: Int) {
+		guard ssh_channel_is_open(channel) != 0 else { return }
+		guard ssh_channel_is_eof(channel) == 0 else { return }
+		
+		ssh_channel_change_pty_size(channel, Int32(toCols), Int32(toRows))
+		print("resized tty to \(toRows)rows and \(toCols)cols")
 	}
 }
