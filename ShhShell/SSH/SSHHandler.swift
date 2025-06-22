@@ -20,7 +20,6 @@ class SSHHandler: ObservableObject {
 	@Published var testSuceeded: Bool? = nil
 	
 	@Published var host: Host
-	@Published var terminal: String = ""
 	
 	private let userDefaults = NSUbiquitousKeyValueStore.default
 	private let logger = Logger(subsystem: "xy", category: "sshHandler")
@@ -88,7 +87,6 @@ class SSHHandler: ObservableObject {
 		withAnimation { connected = false }
 		withAnimation { testSuceeded = nil }
 		session = nil
-		terminal = ""
 //		host.key = nil
 	}
 
@@ -173,28 +171,29 @@ class SSHHandler: ObservableObject {
 			withAnimation { authorized = false }
 			return
 		}
-		
 		var status: Int32
-		let fileManager = FileManager.default
-		let tempDir = fileManager.temporaryDirectory
-		let tempPubkey = tempDir.appendingPathComponent("key.pub")
-		let tempKey = tempDir.appendingPathComponent("key")
 		
-		fileManager.createFile(atPath: tempPubkey.path(), contents: nil)
-		fileManager.createFile(atPath: tempKey.path(), contents: nil)
+		print(pubInp)
+		var pubInpCChar: [Int8] = []
+		for byte in pubInp {
+			pubInpCChar.append(Int8(byte))
+		}
 		
-		try? pubInp.write(to: tempPubkey)
-		try? privInp.write(to: tempKey)
+		var privInpCChar: [Int8] = []
+		for byte in privInp {
+			privInpCChar.append(Int8(byte))
+		}
 		
 		var pubkey: ssh_key?
-		ssh_pki_import_pubkey_file(tempPubkey.path(), &pubkey)
+		
+		ssh_pki_import_pubkey_base64(&pubInpCChar, SSH_KEYTYPE_SK_ED25519, &pubkey)
 		status = ssh_userauth_try_publickey(session, nil, pubkey)
 		print(status)
 		
 		var privkey: ssh_key?
-		if ssh_pki_import_privkey_file(tempKey.path(), pass, nil, nil, &privkey) != 0 {
+		if ssh_pki_import_privkey_base64(&privInpCChar, pass, nil, nil, &privkey) != 0 {
 			print("help?!?")
-			print("likeley password is incorrect")
+			print("likeley passphrase is incorrect")
 		}
 		
 		status = ssh_userauth_publickey(session, nil, privkey)
@@ -207,11 +206,6 @@ class SSHHandler: ObservableObject {
 		withAnimation { authorized = true }
 		return
 		//if u got this far, youre authed!
-		//cleanpu here:
-//		ssh_key_free(pubkey)
-//		ssh_key_free(privkey)
-//		try? fileManager.removeItem(at: tempPubkey)
-//		try? fileManager.removeItem(at: tempKey)
 	}
 	
 	func authWithPw() -> Bool {
@@ -305,26 +299,25 @@ class SSHHandler: ObservableObject {
 				self.readTimer = nil
 				return
 			}
-			self.readFromChannel()
 		}
-		RunLoop.main.add(self.readTimer!, forMode: .common)
+//		RunLoop.main.add(self.readTimer!, forMode: .common)
 	}
 	
-	func readFromChannel() {
-		guard ssh_channel_is_open(channel) != 0 else { return }
-		guard ssh_channel_is_eof(channel) == 0 else { return }
+	func readFromChannel() -> String {
+		guard ssh_channel_is_open(channel) != 0 else { return "" }
+		guard ssh_channel_is_eof(channel) == 0 else { return "" }
 		
 		var buffer: [CChar] = Array(repeating: 0, count: 256)
 		let nbytes = ssh_channel_read_nonblocking(channel, &buffer, UInt32(buffer.count), 0)
 		
-		guard nbytes > 0 else { return }
+		guard nbytes > 0 else { return "" }
 		write(1, buffer, Int(nbytes))
 		
 		let data = Data(bytes: buffer, count: buffer.count)
 		if let string = String(data: data, encoding: .utf8) {
-			self.terminal.append(string)
-			terminal = self.terminal.replacingOccurrences(of: "[K", with: "\n")
+			return string
 		}
+		return ""
 	}
 	
 	private func logSshGetError() {

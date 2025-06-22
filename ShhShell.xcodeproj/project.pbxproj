@@ -8,13 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		A9083E402DF2226F0042906E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A9083E3F2DF2225A0042906E /* libz.tbd */; };
-		A91AE38A2DF722A700FF3537 /* Runestone in Frameworks */ = {isa = PBXBuildFile; productRef = A91AE3892DF722A600FF3537 /* Runestone */; };
-		A91AE3B22DF73E0900FF3537 /* TerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91AE3B12DF73E0900FF3537 /* TerminalView.swift */; };
-		A91AE3B52DF73F1D00FF3537 /* TreeSitterBash in Frameworks */ = {isa = PBXBuildFile; productRef = A91AE3B42DF73F1D00FF3537 /* TreeSitterBash */; };
-		A91AE3B72DF73F1D00FF3537 /* TreeSitterBashQueries in Frameworks */ = {isa = PBXBuildFile; productRef = A91AE3B62DF73F1D00FF3537 /* TreeSitterBashQueries */; };
-		A91AE3B92DF73F1D00FF3537 /* TreeSitterBashRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = A91AE3B82DF73F1D00FF3537 /* TreeSitterBashRunestone */; };
-		A91AE3BB2DF73F1D00FF3537 /* TreeSitterLanguagesCommon in Frameworks */ = {isa = PBXBuildFile; productRef = A91AE3BA2DF73F1D00FF3537 /* TreeSitterLanguagesCommon */; };
-		A91AE3BD2DF7402100FF3537 /* TextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91AE3BC2DF7402100FF3537 /* TextViewController.swift */; };
+		A92317282E07111E00ECE1E6 /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; productRef = A92317272E07111E00ECE1E6 /* SwiftTerm */; };
+		A923172A2E07113100ECE1E6 /* TerminalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92317292E07113100ECE1E6 /* TerminalController.swift */; };
+		A923172D2E07138000ECE1E6 /* TerminalDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A923172C2E07138000ECE1E6 /* TerminalDelegate.swift */; };
 		A92538C82DEE0742007E0A18 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538C52DEE0742007E0A18 /* ContentView.swift */; };
 		A92538C92DEE0742007E0A18 /* ShhShellApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538C62DEE0742007E0A18 /* ShhShellApp.swift */; };
 		A92538CA2DEE0742007E0A18 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A92538C42DEE0742007E0A18 /* Assets.xcassets */; };
@@ -72,8 +68,8 @@
 
 /* Begin PBXFileReference section */
 		A9083E3F2DF2225A0042906E /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		A91AE3B12DF73E0900FF3537 /* TerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalView.swift; sourceTree = "<group>"; };
-		A91AE3BC2DF7402100FF3537 /* TextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewController.swift; sourceTree = "<group>"; };
+		A92317292E07113100ECE1E6 /* TerminalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalController.swift; sourceTree = "<group>"; };
+		A923172C2E07138000ECE1E6 /* TerminalDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalDelegate.swift; sourceTree = "<group>"; };
 		A925389A2DEE06DC007E0A18 /* ShhShell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShhShell.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A92538A72DEE06DE007E0A18 /* ShhShellTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShhShellTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A92538B12DEE06DE007E0A18 /* ShhShellUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShhShellUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -107,13 +103,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A91AE3B72DF73F1D00FF3537 /* TreeSitterBashQueries in Frameworks */,
 				A95FAA542DF4B62900DE2F5A /* LibSSH.xcframework in Frameworks */,
-				A91AE3B52DF73F1D00FF3537 /* TreeSitterBash in Frameworks */,
-				A91AE3B92DF73F1D00FF3537 /* TreeSitterBashRunestone in Frameworks */,
-				A91AE38A2DF722A700FF3537 /* Runestone in Frameworks */,
+				A92317282E07111E00ECE1E6 /* SwiftTerm in Frameworks */,
 				A93143BE2DF4D0B300FCD5DB /* libpthread.tbd in Frameworks */,
-				A91AE3BB2DF73F1D00FF3537 /* TreeSitterLanguagesCommon in Frameworks */,
 				A9083E402DF2226F0042906E /* libz.tbd in Frameworks */,
 				A95FAA562DF4B62A00DE2F5A /* openssl.xcframework in Frameworks */,
 			);
@@ -136,6 +128,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A923172B2E0712F200ECE1E6 /* Terminal */ = {
+			isa = PBXGroup;
+			children = (
+				A92317292E07113100ECE1E6 /* TerminalController.swift */,
+				A923172C2E07138000ECE1E6 /* TerminalDelegate.swift */,
+			);
+			path = Terminal;
+			sourceTree = "<group>";
+		};
 		A92538912DEE06DC007E0A18 = {
 			isa = PBXGroup;
 			children = (
@@ -197,8 +198,8 @@
 				A92538C52DEE0742007E0A18 /* ContentView.swift */,
 				A98554622E0587DF009051BD /* HostsView.swift */,
 				A985545C2E055D4D009051BD /* ConnectionView.swift */,
-				A98554522E055347009051BD /* Terminal */,
 				A93143C52DF61FE300FCD5DB /* ViewModifiers.swift */,
+				A923172B2E0712F200ECE1E6 /* Terminal */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -227,15 +228,6 @@
 				A95FAA5C2DF4B7A300DE2F5A /* ci_prost_xcodebuild.sh */,
 			);
 			path = ci_scripts;
-			sourceTree = "<group>";
-		};
-		A98554522E055347009051BD /* Terminal */ = {
-			isa = PBXGroup;
-			children = (
-				A91AE3B12DF73E0900FF3537 /* TerminalView.swift */,
-				A91AE3BC2DF7402100FF3537 /* TextViewController.swift */,
-			);
-			path = Terminal;
 			sourceTree = "<group>";
 		};
 		A98554532E05534F009051BD /* Keys */ = {
@@ -293,11 +285,7 @@
 			);
 			name = ShhShell;
 			packageProductDependencies = (
-				A91AE3892DF722A600FF3537 /* Runestone */,
-				A91AE3B42DF73F1D00FF3537 /* TreeSitterBash */,
-				A91AE3B62DF73F1D00FF3537 /* TreeSitterBashQueries */,
-				A91AE3B82DF73F1D00FF3537 /* TreeSitterBashRunestone */,
-				A91AE3BA2DF73F1D00FF3537 /* TreeSitterLanguagesCommon */,
+				A92317272E07111E00ECE1E6 /* SwiftTerm */,
 			);
 			productName = ShhShell;
 			productReference = A925389A2DEE06DC007E0A18 /* ShhShell.app */;
@@ -376,8 +364,7 @@
 			mainGroup = A92538912DEE06DC007E0A18;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				A91AE3882DF722A600FF3537 /* XCRemoteSwiftPackageReference "runestone" */,
-				A91AE3B32DF73F1D00FF3537 /* XCRemoteSwiftPackageReference "treesitterlanguages" */,
+				A92317262E07111E00ECE1E6 /* XCRemoteSwiftPackageReference "SwiftTerm" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A925389B2DEE06DC007E0A18 /* Products */;
@@ -430,11 +417,11 @@
 				A92538C92DEE0742007E0A18 /* ShhShellApp.swift in Sources */,
 				A98554612E058433009051BD /* HostsManager.swift in Sources */,
 				A985545D2E055D4D009051BD /* ConnectionView.swift in Sources */,
-				A91AE3B22DF73E0900FF3537 /* TerminalView.swift in Sources */,
 				A98554592E0553AA009051BD /* KeyManager.swift in Sources */,
-				A91AE3BD2DF7402100FF3537 /* TextViewController.swift in Sources */,
 				A9C897EF2DF1A9A400EF9A5F /* SSHHandler.swift in Sources */,
 				A98554552E05535F009051BD /* KeyManagerView.swift in Sources */,
+				A923172D2E07138000ECE1E6 /* TerminalDelegate.swift in Sources */,
+				A923172A2E07113100ECE1E6 /* TerminalController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -770,49 +757,21 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		A91AE3882DF722A600FF3537 /* XCRemoteSwiftPackageReference "runestone" */ = {
+		A92317262E07111E00ECE1E6 /* XCRemoteSwiftPackageReference "SwiftTerm" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/simonbs/runestone";
+			repositoryURL = "https://github.com/migueldeicaza/SwiftTerm";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.5.1;
-			};
-		};
-		A91AE3B32DF73F1D00FF3537 /* XCRemoteSwiftPackageReference "treesitterlanguages" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/simonbs/treesitterlanguages";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.10;
+				minimumVersion = 1.2.5;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A91AE3892DF722A600FF3537 /* Runestone */ = {
+		A92317272E07111E00ECE1E6 /* SwiftTerm */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A91AE3882DF722A600FF3537 /* XCRemoteSwiftPackageReference "runestone" */;
-			productName = Runestone;
-		};
-		A91AE3B42DF73F1D00FF3537 /* TreeSitterBash */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A91AE3B32DF73F1D00FF3537 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
-			productName = TreeSitterBash;
-		};
-		A91AE3B62DF73F1D00FF3537 /* TreeSitterBashQueries */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A91AE3B32DF73F1D00FF3537 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
-			productName = TreeSitterBashQueries;
-		};
-		A91AE3B82DF73F1D00FF3537 /* TreeSitterBashRunestone */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A91AE3B32DF73F1D00FF3537 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
-			productName = TreeSitterBashRunestone;
-		};
-		A91AE3BA2DF73F1D00FF3537 /* TreeSitterLanguagesCommon */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A91AE3B32DF73F1D00FF3537 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
-			productName = TreeSitterLanguagesCommon;
+			package = A92317262E07111E00ECE1E6 /* XCRemoteSwiftPackageReference "SwiftTerm" */;
+			productName = SwiftTerm;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

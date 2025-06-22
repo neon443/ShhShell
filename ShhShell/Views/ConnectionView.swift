@@ -75,7 +75,7 @@ struct ConnectionView: View {
 						.fileImporter(isPresented: $pubPickerPresented, allowedContentTypes: [.item, .content, .data]) { (Result) in
 							do {
 								let fileURL = try Result.get()
-								pubkey = try! Data(contentsOf: fileURL)
+								pubkey = try? Data(contentsOf: fileURL)
 								print(fileURL)
 							} catch {
 								print(error.localizedDescription)
@@ -97,7 +97,8 @@ struct ConnectionView: View {
 						.fileImporter(isPresented: $privPickerPresented, allowedContentTypes: [.item, .content, .data]) { (Result) in
 							do {
 								let fileURL = try Result.get()
-								privkey = try! Data(contentsOf: fileURL)
+								privkey = try? Data(contentsOf: fileURL)
+								print(privkey)
 								print(fileURL)
 							} catch {
 								print(error.localizedDescription)
@@ -119,7 +120,10 @@ struct ConnectionView: View {
 				}
 				
 				NavigationLink() {
-					TerminalView(handler: handler)
+					Button("Reload") {
+						handler.readFromChannel()
+					}
+					TerminalController(handler: handler)
 				} label: {
 					Label("Open Terminal", systemImage: "apple.terminal")
 				}
