@@ -21,7 +21,6 @@ struct TerminalController: UIViewRepresentable {
 			),
 			handler: handler
 		)
-//		tv.terminalDelegate = terminalDelegate
 		
 		return tv
 	}

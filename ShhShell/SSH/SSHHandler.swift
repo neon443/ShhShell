@@ -315,7 +315,7 @@ class SSHHandler: ObservableObject {
 		guard ssh_channel_is_open(channel) != 0 else { return nil }
 		guard ssh_channel_is_eof(channel) == 0 else { return nil }
 		
-		var buffer: [CChar] = Array(repeating: 0, count: 16)
+		var buffer: [CChar] = Array(repeating: 0, count: 256)
 		let nbytes = ssh_channel_read_nonblocking(channel, &buffer, UInt32(buffer.count), 0)
 		
 		guard nbytes > 0 else { return nil }
@@ -350,6 +350,6 @@ class SSHHandler: ObservableObject {
 		guard ssh_channel_is_eof(channel) == 0 else { return }
 		
 		ssh_channel_change_pty_size(channel, Int32(toCols), Int32(toRows))
-		print("resized tty to \(toRows)rows and \(toCols)cols")
+//		print("resized tty to \(toRows)rows and \(toCols)cols")
 	}
 }
