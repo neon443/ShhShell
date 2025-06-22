@@ -23,6 +23,7 @@ class ShhTerminalViewDelegate: TerminalViewDelegate {
 	
 	func send(source: TerminalView, data: ArraySlice<UInt8>) {
 		print(data)
+		print("send")
 	}
 	
 	func scrolled(source: TerminalView, position: Double) {

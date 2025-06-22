@@ -64,7 +64,8 @@ struct ConnectionView: View {
 					HStack {
 						TextField("", text: $pubkeyStr, prompt: Text("Public Key"))
 							.onSubmit {
-								pubkey = Data(pubkeyStr.utf8)
+								let newStr = pubkeyStr.replacingOccurrences(of: "\r\n", with: "")
+								pubkey = Data(newStr.utf8)
 							}
 						Button() {
 							pubPickerPresented.toggle()
@@ -75,6 +76,11 @@ struct ConnectionView: View {
 						.fileImporter(isPresented: $pubPickerPresented, allowedContentTypes: [.item, .content, .data]) { (Result) in
 							do {
 								let fileURL = try Result.get()
+								guard fileURL.startAccessingSecurityScopedResource() else {
+									print("cant acces file")
+									return
+								}
+								defer { fileURL.stopAccessingSecurityScopedResource() }
 								pubkey = try? Data(contentsOf: fileURL)
 								print(fileURL)
 							} catch {
@@ -86,7 +92,8 @@ struct ConnectionView: View {
 					HStack {
 						TextField("", text: $privkeyStr, prompt: Text("Private Key"))
 							.onSubmit {
-								privkey = Data(privkeyStr.utf8)
+								let newStr = privkeyStr.replacingOccurrences(of: "\r\n", with: "")
+								privkey = Data(newStr.utf8)
 							}
 						Button() {
 							privPickerPresented.toggle()
@@ -97,6 +104,11 @@ struct ConnectionView: View {
 						.fileImporter(isPresented: $privPickerPresented, allowedContentTypes: [.item, .content, .data]) { (Result) in
 							do {
 								let fileURL = try Result.get()
+								guard fileURL.startAccessingSecurityScopedResource() else {
+									print("cant access file")
+									return
+								}
+								defer { fileURL.stopAccessingSecurityScopedResource() }
 								privkey = try? Data(contentsOf: fileURL)
 								print(privkey)
 								print(fileURL)
@@ -150,7 +162,7 @@ struct ConnectionView: View {
 					handler.host.key = hostsManager.getHostMatching(handler.host)?.key
 				}
 			} message: {
-				Text("Expected \(hostsManager.getHostMatching(handler.host)!.key?.base64EncodedString() ?? "null")\nbut recieved \(handler.host.key?.base64EncodedString() ?? "null" ) from the server")
+				Text("Expected \(hostsManager.getHostMatching(handler.host)?.key?.base64EncodedString() ?? "null")\nbut recieved \(handler.host.key?.base64EncodedString() ?? "null" ) from the server")
 			}
 			.transition(.opacity)
 			.toolbar {

@@ -171,29 +171,32 @@ class SSHHandler: ObservableObject {
 			withAnimation { authorized = false }
 			return
 		}
+		
 		var status: Int32
+		let fileManager = FileManager.default
+		let tempDir = fileManager.temporaryDirectory
+		let tempPubkey = tempDir.appendingPathComponent("key.pub")
+		let tempKey = tempDir.appendingPathComponent("key")
 		
-		print(pubInp)
-		var pubInpCChar: [Int8] = []
-		for byte in pubInp {
-			pubInpCChar.append(Int8(byte))
-		}
+		fileManager.createFile(atPath: tempPubkey.path(), contents: nil)
+		fileManager.createFile(atPath: tempKey.path(), contents: nil)
 		
-		var privInpCChar: [Int8] = []
-		for byte in privInp {
-			privInpCChar.append(Int8(byte))
-		}
+		let attributes: [FileAttributeKey: Any] = [.posixPermissions: 0o600]
+		try? fileManager.setAttributes(attributes, ofItemAtPath: tempPubkey.path())
+		try? fileManager.setAttributes(attributes, ofItemAtPath: tempKey.path())
+		
+		try? pubInp.write(to: tempPubkey)
+		try? privInp.write(to: tempKey)
 		
 		var pubkey: ssh_key?
-		
-		ssh_pki_import_pubkey_base64(&pubInpCChar, SSH_KEYTYPE_SK_ED25519, &pubkey)
+		ssh_pki_import_pubkey_file(tempPubkey.path(), &pubkey)
 		status = ssh_userauth_try_publickey(session, nil, pubkey)
 		print(status)
 		
 		var privkey: ssh_key?
-		if ssh_pki_import_privkey_base64(&privInpCChar, pass, nil, nil, &privkey) != 0 {
+		if ssh_pki_import_privkey_file(tempKey.path(), pass, nil, nil, &privkey) != 0 {
 			print("help?!?")
-			print("likeley passphrase is incorrect")
+			print("likeley password is incorrect")
 		}
 		
 		status = ssh_userauth_publickey(session, nil, privkey)
@@ -206,6 +209,11 @@ class SSHHandler: ObservableObject {
 		withAnimation { authorized = true }
 		return
 		//if u got this far, youre authed!
+		//cleanpu here:
+		//ssh_key_free(pubkey)
+		//ssh_key_free(privkey)
+		//try? fileManager.removeItem(at: tempPubkey)
+		//try? fileManager.removeItem(at: tempKey)
 	}
 	
 	func authWithPw() -> Bool {
