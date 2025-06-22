@@ -22,6 +22,16 @@ class SSHTerminalView: TerminalView, TerminalViewDelegate {
 		
 		super.init(frame: frame)
 		terminalDelegate = self
+		sshQueue.async {
+			guard let handler = self.handler else { return }
+			while handler.connected {
+				guard let handler = self.handler else { break }
+				guard let read = handler.readFromChannel() else { return }
+				DispatchQueue.main.async {
+					self.feed(text: read)
+				}
+			}
+		}
 	}
 	
 	required init?(coder: NSCoder) {

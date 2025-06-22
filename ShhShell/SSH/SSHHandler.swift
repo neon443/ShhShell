@@ -311,21 +311,21 @@ class SSHHandler: ObservableObject {
 //		RunLoop.main.add(self.readTimer!, forMode: .common)
 	}
 	
-	func readFromChannel() -> String {
-		guard ssh_channel_is_open(channel) != 0 else { return "" }
-		guard ssh_channel_is_eof(channel) == 0 else { return "" }
+	func readFromChannel() -> String? {
+		guard ssh_channel_is_open(channel) != 0 else { return nil }
+		guard ssh_channel_is_eof(channel) == 0 else { return nil }
 		
-		var buffer: [CChar] = Array(repeating: 0, count: 256)
+		var buffer: [CChar] = Array(repeating: 0, count: 16)
 		let nbytes = ssh_channel_read_nonblocking(channel, &buffer, UInt32(buffer.count), 0)
 		
-		guard nbytes > 0 else { return "" }
+		guard nbytes > 0 else { return nil }
 		write(1, buffer, Int(nbytes))
 		
 		let data = Data(bytes: buffer, count: buffer.count)
 		if let string = String(data: data, encoding: .utf8) {
 			return string
 		}
-		return ""
+		return nil
 	}
 	
 	private func logSshGetError() {

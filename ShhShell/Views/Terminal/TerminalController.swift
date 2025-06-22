@@ -23,11 +23,9 @@ struct TerminalController: UIViewRepresentable {
 		)
 //		tv.terminalDelegate = terminalDelegate
 		
-		tv.getTerminal().feed(text: handler.readFromChannel())
 		return tv
 	}
 	
 	func updateUIView(_ tv: TerminalView, context: Context) {
-		tv.getTerminal().feed(text: handler.readFromChannel())
 	}
 }
