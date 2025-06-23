@@ -23,15 +23,15 @@ class SSHTerminalView: TerminalView, TerminalViewDelegate {
 		
 		super.init(frame: frame)
 		terminalDelegate = self
-		sshQueue.async { [weak self] in
-			guard let handler = self?.handler else { return }
+		sshQueue.async {
+			guard let handler = self.handler else { return }
+			guard handler.channel != nil else { return }
 			
 			while handler.connected {
-				guard let handler = self?.handler else { break }
 				if let read = handler.readFromChannel() {
-					DispatchQueue.main.async { self?.feed(text: read) }
+					DispatchQueue.main.async { self.feed(text: read) }
 				} else {
-					usleep(1_000_000)
+					usleep(100_000)
 				}
 //				self?.setNeedsDisplay()
 			}

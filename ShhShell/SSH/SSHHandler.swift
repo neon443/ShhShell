@@ -10,18 +10,17 @@ import LibSSH
 import OSLog
 import SwiftUI
 
-@MainActor
 class SSHHandler: ObservableObject {
 	private var session: ssh_session?
-	private var channel: ssh_channel?
+	 var channel: ssh_channel?
 	
-	@MainActor @Published var connected: Bool = false
-	@MainActor @Published var authorized: Bool = false
-	@MainActor @Published var testSuceeded: Bool? = nil
+	@Published var connected: Bool = false
+	@Published var authorized: Bool = false
+	@Published var testSuceeded: Bool? = nil
 	
-	@MainActor @Published var bell: UUID?
+	@Published var bell: UUID?
 	
-	@MainActor @Published var host: Host
+	@Published var host: Host
 	
 	private let userDefaults = NSUbiquitousKeyValueStore.default
 	private let logger = Logger(subsystem: "xy", category: "sshHandler")
@@ -67,6 +66,9 @@ class SSHHandler: ObservableObject {
 			}
 		}
 		openShell()
+		ssh_channel_request_env(channel, "TERM", "xterm-256color")
+		ssh_channel_request_env(channel, "LANG", "en_US.UTF-8")
+		ssh_channel_request_env(channel, "LC_ALL", "en_US.UTF-8")
 	}
 	
 	func connect() throws(SSHError) {
@@ -75,7 +77,8 @@ class SSHHandler: ObservableObject {
 			self.host.key = getHostkey()
 		}
 		
-		var verbosity: Int = SSH_LOG_FUNCTIONS
+		var verbosity: Int = 0
+//		var verbosity: Int = SSH_LOG_FUNCTIONS
 		
 		session = ssh_new()
 		guard session != nil else {
@@ -86,6 +89,7 @@ class SSHHandler: ObservableObject {
 		ssh_options_set(session, SSH_OPTIONS_HOST, host.address)
 		ssh_options_set(session, SSH_OPTIONS_LOG_VERBOSITY, &verbosity)
 		ssh_options_set(session, SSH_OPTIONS_PORT, &host.port)
+		ssh_options_set(session, SSH_OPTIONS_USER, host.username)
 
 		let status = ssh_connect(session)
 		if status != SSH_OK {
@@ -99,15 +103,20 @@ class SSHHandler: ObservableObject {
 	}
 
 	func disconnect() {
-		guard session != nil else { return }
-		ssh_disconnect(session)
-		ssh_free(session)
-		withAnimation { authorized = false }
 		withAnimation { connected = false }
+		withAnimation { authorized = false }
 		withAnimation { testSuceeded = nil }
-		session = nil
+		
+		ssh_channel_send_eof(self.channel)
+		ssh_channel_close(self.channel)
+		ssh_channel_free(self.channel)
+//		self.channel = nil
+		
+		ssh_disconnect(self.session)
+		ssh_free(self.session)
+//		self.session = nil
 	}
-
+	
 	func testExec() {
 		if ssh_is_connected(session) == 0 {
 			withAnimation { testSuceeded = false }
@@ -198,12 +207,16 @@ class SSHHandler: ObservableObject {
 		fileManager.createFile(atPath: tempPubkey.path(), contents: nil)
 		fileManager.createFile(atPath: tempKey.path(), contents: nil)
 		
-		let attributes: [FileAttributeKey: Any] = [.posixPermissions: 0o600]
-		try? fileManager.setAttributes(attributes, ofItemAtPath: tempPubkey.path())
-		try? fileManager.setAttributes(attributes, ofItemAtPath: tempKey.path())
+		try? pubInp.write(to: tempPubkey, options: .completeFileProtection)
+		try? privInp.write(to: tempKey, options: .completeFileProtection)
 		
-		try? pubInp.write(to: tempPubkey)
-		try? privInp.write(to: tempKey)
+		let attributes: [FileAttributeKey: Any] = [.posixPermissions: 0o600]
+		do {
+			try fileManager.setAttributes(attributes, ofItemAtPath: tempPubkey.path())
+			try fileManager.setAttributes(attributes, ofItemAtPath: tempKey.path())
+		} catch {
+			logCritical("permission settig failed\(error.localizedDescription)")
+		}
 		
 		var pubkey: ssh_key?
 		if ssh_pki_import_pubkey_file(tempPubkey.path(), &pubkey) != 0 {
@@ -233,7 +246,6 @@ class SSHHandler: ObservableObject {
 			try? fileManager.removeItem(at: tempPubkey)
 			try? fileManager.removeItem(at: tempKey)
 		}
-		
 		return
 	}
 	
@@ -297,10 +309,6 @@ class SSHHandler: ObservableObject {
 		}
 		
 		interactiveShellSession()
-		
-//		ssh_channel_close(channel)
-//		ssh_channel_send_eof(channel)
-//		ssh_channel_free(channel)
 	}
 	
 	private func interactiveShellSession() {
@@ -316,9 +324,25 @@ class SSHHandler: ObservableObject {
 		guard status == SSH_OK else { return }
 	}
 	
+	func asyncReadFromChannel() async -> String? {
+		return await withCheckedContinuation { continuation in
+			DispatchQueue.global(qos: .userInteractive).async {
+				let result = self.readFromChannel()
+				continuation.resume(returning: result)
+			}
+		}
+	}
+	
 	func readFromChannel() -> String? {
-		guard ssh_channel_is_open(channel) != 0 else { return nil }
-		guard ssh_channel_is_eof(channel) == 0 else { return nil }
+		print(connected)
+		if !connected {
+			return nil
+		}
+		guard connected else { return nil }
+		guard ssh_channel_is_open(channel) != 0 || ssh_channel_is_eof(channel) == 0 else {
+			disconnect()
+			return nil
+		}
 		
 		var buffer: [CChar] = Array(repeating: 0, count: 512)
 		let nbytes = ssh_channel_read(channel, &buffer, UInt32(buffer.count), 0)
@@ -342,8 +366,10 @@ class SSHHandler: ObservableObject {
 	
 	func writeToChannel(_ string: String?) {
 		guard let string = string else { return }
-		guard ssh_channel_is_open(channel) != 0 else { return }
-		guard ssh_channel_is_eof(channel) == 0 else { return }
+		guard ssh_channel_is_open(channel) != 0 || ssh_channel_is_eof(channel) == 0 else {
+			disconnect()
+			return
+		}
 		
 		var buffer: [CChar] = []
 		for byte in string.utf8 {
