@@ -9,7 +9,8 @@ import Foundation
 import UIKit
 import SwiftTerm
 
-class SSHTerminalView: TerminalView, TerminalViewDelegate {
+@MainActor
+class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalViewDelegate {
 	var handler: SSHHandler?
 	var sshQueue: DispatchQueue
 	
@@ -29,7 +30,7 @@ class SSHTerminalView: TerminalView, TerminalViewDelegate {
 			
 			while handler.connected {
 				if let read = handler.readFromChannel() {
-					DispatchQueue.main.async { self.feed(text: read) }
+					self.feed(text: read)
 				} else {
 					usleep(100_000)
 				}
@@ -42,11 +43,11 @@ class SSHTerminalView: TerminalView, TerminalViewDelegate {
 		fatalError("unimplemented")
 	}
 
-	public func scrolled(source: TerminalView, position: Double) {
+	nonisolated public func scrolled(source: TerminalView, position: Double) {
 		print("scrolled to \(position)")
 	}
 	
-	public func setTerminalTitle(source: TerminalView, title: String) {
+	nonisolated public func setTerminalTitle(source: TerminalView, title: String) {
 		print("set title to \(title)")
 	}
 	
@@ -59,11 +60,11 @@ class SSHTerminalView: TerminalView, TerminalViewDelegate {
 		handler?.writeToChannel(String(data: data, encoding: .utf8))
 	}
 	
-	public func clipboardCopy(source: TerminalView, content: Data) {
+	nonisolated public func clipboardCopy(source: TerminalView, content: Data) {
 		print(content)
 	}
 	
-	public func hostCurrentDirectoryUpdate(source: TerminalView, directory: String?) {
+	nonisolated public func hostCurrentDirectoryUpdate(source: TerminalView, directory: String?) {
 		print("new dir: \(directory ?? "")")
 	}
 	
@@ -73,7 +74,7 @@ class SSHTerminalView: TerminalView, TerminalViewDelegate {
 		UIApplication.shared.open(url, options: [:])
 	}
 	
-	public func rangeChanged(source: TerminalView, startY: Int, endY: Int) {
+	nonisolated public func rangeChanged(source: TerminalView, startY: Int, endY: Int) {
 		print(startY, endY)
 	}
 }

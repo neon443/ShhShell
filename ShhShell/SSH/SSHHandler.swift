@@ -10,7 +10,7 @@ import LibSSH
 import OSLog
 import SwiftUI
 
-class SSHHandler: ObservableObject {
+class SSHHandler: @unchecked Sendable, ObservableObject {
 	private var session: ssh_session?
 	 var channel: ssh_channel?
 	
@@ -240,12 +240,10 @@ class SSHHandler: ObservableObject {
 		//if u got this far, youre authed!
 		withAnimation { authorized = true }
 		
-		DispatchQueue.main.asyncAfter(deadline: .now()+10) {
-			ssh_key_free(pubkey)
-			ssh_key_free(privkey)
-			try? fileManager.removeItem(at: tempPubkey)
-			try? fileManager.removeItem(at: tempKey)
-		}
+		ssh_key_free(pubkey)
+		ssh_key_free(privkey)
+		try? FileManager.default.removeItem(at: tempPubkey)
+		try? FileManager.default.removeItem(at: tempKey)
 		return
 	}
 	
@@ -334,7 +332,6 @@ class SSHHandler: ObservableObject {
 	}
 	
 	func readFromChannel() -> String? {
-		print(connected)
 		if !connected {
 			return nil
 		}
@@ -366,6 +363,7 @@ class SSHHandler: ObservableObject {
 	
 	func writeToChannel(_ string: String?) {
 		guard let string = string else { return }
+		guard channel != nil else { return }
 		guard ssh_channel_is_open(channel) != 0 || ssh_channel_is_eof(channel) == 0 else {
 			disconnect()
 			return
