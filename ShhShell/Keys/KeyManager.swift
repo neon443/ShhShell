@@ -61,7 +61,7 @@ class KeyManager: ObservableObject {
 		}
 		print(privateKey)
 		
-		print(SecKeyCopyPublicKey(privateKey))
+		print(SecKeyCopyPublicKey(privateKey) ?? "")
 //		do {
 //			try storeKey(privateKey, label: label)
 //		} catch {

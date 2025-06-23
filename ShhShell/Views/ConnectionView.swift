@@ -110,7 +110,7 @@ struct ConnectionView: View {
 								}
 								defer { fileURL.stopAccessingSecurityScopedResource() }
 								privkey = try? Data(contentsOf: fileURL)
-								print(privkey)
+								print(privkey ?? "")
 								print(fileURL)
 							} catch {
 								print(error.localizedDescription)

@@ -89,12 +89,14 @@ kSecUseDataProtectionKeychain: true,
 	switch SecItemCopyMatching(query as CFDictionary, &item) {
 	case errSecSuccess: secKey = item as! SecKey
 	case errSecItemNotFound: return nil
-	case let status: throw KeyStoreError.KeyStoreError("keychain read failed")
+	case let status:
+		print(status)
+		throw KeyStoreError.KeyStoreError("keychain read failed")
 	}
 //	return secKey
 	
 	var error: Unmanaged<CFError>?
-	guard let data = SecKeyCopyExternalRepresentation(secKey, &error) as Data? else {
+	guard (SecKeyCopyExternalRepresentation(secKey, &error) as Data?) != nil else {
 		throw KeyStoreError.KeyStoreError(error.debugDescription)
 	}
 //	let key = try T(x963Representation: data)
