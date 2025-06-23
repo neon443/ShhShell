@@ -10,18 +10,18 @@ import LibSSH
 import OSLog
 import SwiftUI
 
+@MainActor
 class SSHHandler: ObservableObject {
 	private var session: ssh_session?
 	private var channel: ssh_channel?
-	private var readTimer: Timer?
 	
-	@Published var connected: Bool = false
-	@Published var authorized: Bool = false
-	@Published var testSuceeded: Bool? = nil
+	@MainActor @Published var connected: Bool = false
+	@MainActor @Published var authorized: Bool = false
+	@MainActor @Published var testSuceeded: Bool? = nil
 	
-	@Published var bell: UUID?
+	@MainActor @Published var bell: UUID?
 	
-	@Published var host: Host
+	@MainActor @Published var host: Host
 	
 	private let userDefaults = NSUbiquitousKeyValueStore.default
 	private let logger = Logger(subsystem: "xy", category: "sshHandler")
@@ -208,14 +208,17 @@ class SSHHandler: ObservableObject {
 			return
 		}
 		
-		withAnimation { authorized = true }
-		return
 		//if u got this far, youre authed!
-		//cleanpu here:
-		//ssh_key_free(pubkey)
-		//ssh_key_free(privkey)
-		//try? fileManager.removeItem(at: tempPubkey)
-		//try? fileManager.removeItem(at: tempKey)
+		withAnimation { authorized = true }
+		
+		DispatchQueue.main.asyncAfter(deadline: .now()+10) {
+			ssh_key_free(pubkey)
+			ssh_key_free(privkey)
+			try? fileManager.removeItem(at: tempPubkey)
+			try? fileManager.removeItem(at: tempKey)
+		}
+		
+		return
 	}
 	
 	func authWithPw() -> Bool {
@@ -297,20 +300,6 @@ class SSHHandler: ObservableObject {
 		
 		status = ssh_channel_request_shell(self.channel)
 		guard status == SSH_OK else { return }
-		
-		self.readTimer = Timer(timeInterval: 0.1, repeats: true) { timer in
-			guard self.connected else {
-				timer.invalidate()
-				self.readTimer = nil
-				return
-			}
-			guard ssh_channel_is_open(self.channel) != 0 && ssh_channel_is_eof(self.channel) == 0 else {
-				timer.invalidate()
-				self.readTimer = nil
-				return
-			}
-		}
-//		RunLoop.main.add(self.readTimer!, forMode: .common)
 	}
 	
 	func readFromChannel() -> String? {
@@ -321,9 +310,8 @@ class SSHHandler: ObservableObject {
 		let nbytes = ssh_channel_read_nonblocking(channel, &buffer, UInt32(buffer.count), 0)
 		
 		guard nbytes > 0 else { return nil }
-		write(1, buffer, Int(nbytes))
 		
-		let data = Data(bytes: buffer, count: buffer.count)
+		let data = Data(bytes: buffer, count: Int(nbytes))
 		if let string = String(data: data, encoding: .utf8) {
 			return string
 		}

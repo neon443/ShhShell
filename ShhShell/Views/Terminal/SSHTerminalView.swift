@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 import SwiftTerm
 
 class SSHTerminalView: TerminalView, TerminalViewDelegate {
@@ -65,7 +66,9 @@ class SSHTerminalView: TerminalView, TerminalViewDelegate {
 	}
 	
 	public func requestOpenLink(source: TerminalView, link: String, params: [String : String]) {
-		print("open link \(link) \(params)")
+		guard let url = URL(string: link) else { return }
+		guard UIApplication.shared.canOpenURL(url) else { return }
+		UIApplication.shared.open(url, options: [:])
 	}
 	
 	public func rangeChanged(source: TerminalView, startY: Int, endY: Int) {

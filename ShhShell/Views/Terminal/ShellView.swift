@@ -25,7 +25,7 @@ struct ShellView: View {
 						}
 					} label: {
 						if handler.connected {
-							Label("Disconnect", image: "xmark.square.fill")
+							Label("Disconnect", systemImage: "xmark.square.fill")
 						} else {
 							Label("Connect", image: "power")
 						}
