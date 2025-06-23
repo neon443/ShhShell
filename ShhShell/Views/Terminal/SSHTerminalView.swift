@@ -31,8 +31,9 @@ class SSHTerminalView: TerminalView, TerminalViewDelegate {
 				if let read = handler.readFromChannel() {
 					DispatchQueue.main.async { self?.feed(text: read) }
 				} else {
-					usleep(1_000)
+					usleep(1_000_000)
 				}
+//				self?.setNeedsDisplay()
 			}
 		}
 	}
@@ -50,7 +51,7 @@ class SSHTerminalView: TerminalView, TerminalViewDelegate {
 	}
 	
 	public func sizeChanged(source: TerminalView, newCols: Int, newRows: Int) {
-		handler?.resizeTTY(toRows: newRows, toCols: newCols)
+		handler?.resizePTY(toRows: newRows, toCols: newCols)
 	}
 	
 	public func send(source: TerminalView, data: ArraySlice<UInt8>) {

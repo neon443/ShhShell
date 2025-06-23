@@ -136,6 +136,10 @@ struct ConnectionView: View {
 				.disabled(!(handler.connected && handler.authorized))
 				
 				Button() {
+					if handler.authorized && handler.connected {
+					} else {
+						handler.go()
+					}
 					withAnimation { handler.testExec() }
 				} label: {
 					if let testResult = handler.testSuceeded {

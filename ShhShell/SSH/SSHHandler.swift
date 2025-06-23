@@ -320,8 +320,8 @@ class SSHHandler: ObservableObject {
 		guard ssh_channel_is_open(channel) != 0 else { return nil }
 		guard ssh_channel_is_eof(channel) == 0 else { return nil }
 		
-		var buffer: [CChar] = Array(repeating: 0, count: 256)
-		let nbytes = ssh_channel_read_nonblocking(channel, &buffer, UInt32(buffer.count), 0)
+		var buffer: [CChar] = Array(repeating: 0, count: 512)
+		let nbytes = ssh_channel_read(channel, &buffer, UInt32(buffer.count), 0)
 		
 		guard nbytes > 0 else { return nil }
 		
@@ -345,7 +345,10 @@ class SSHHandler: ObservableObject {
 		guard ssh_channel_is_open(channel) != 0 else { return }
 		guard ssh_channel_is_eof(channel) == 0 else { return }
 		
-		var buffer: [CChar] = Array(string.utf8CString)
+		var buffer: [CChar] = []
+		for byte in string.utf8 {
+			buffer.append(CChar(bitPattern: byte))
+		}
 		let nwritten = Int(ssh_channel_write(channel, &buffer, UInt32(buffer.count)))
 		
 		if nwritten != buffer.count {
@@ -353,7 +356,7 @@ class SSHHandler: ObservableObject {
 		}
 	}
 	
-	func resizeTTY(toRows: Int, toCols: Int) {
+	func resizePTY(toRows: Int, toCols: Int) {
 		guard ssh_channel_is_open(channel) != 0 else { return }
 		guard ssh_channel_is_eof(channel) == 0 else { return }
 		
