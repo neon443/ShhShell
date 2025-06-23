@@ -7,6 +7,7 @@
 
 import Foundation
 import CryptoKit
+import Security
 
 struct Key: Identifiable, Hashable {
 	var id = UUID()
@@ -62,10 +63,15 @@ class KeyManager: ObservableObject {
 		print(privateKey)
 		
 		print(SecKeyCopyPublicKey(privateKey) ?? "")
+		print(SecKeyCopyExternalRepresentation(privateKey, nil) as Any)
 //		do {
 //			try storeKey(privateKey, label: label)
 //		} catch {
-//			print(error.localizedDescription)
-//		}
+		//			print(error.localizedDescription)
+		//		}
+	}
+	
+	func getPubkey(_ privateKey: SecKey) -> SecKey? {
+		return SecKeyCopyPublicKey(privateKey)
 	}
 }

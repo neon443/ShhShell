@@ -18,17 +18,12 @@ struct ShellView: View {
 			.toolbar {
 				ToolbarItem {
 					Button() {
-						if handler.connected {
-							handler.disconnect()
-						} else {
-							handler.connect()
-						}
+						handler.go()
 					} label: {
-						if handler.connected {
-							Label("Disconnect", systemImage: "xmark.square.fill")
-						} else {
-							Label("Connect", image: "power")
-						}
+						Label(
+							handler.connected ? "Disconnect" : "Connect",
+							systemImage: handler.connected ? "xmark.app.fill" : "power"
+						)
 					}
 				}
 			}

@@ -17,9 +17,6 @@ struct ConnectionView: View {
 	@State var pubkeyStr: String = ""
 	@State var privkeyStr: String = ""
 	
-	@State var pubkey: Data?
-	@State var privkey: Data?
-	
 	@State var privPickerPresented: Bool = false
 	@State var pubPickerPresented: Bool = false
 	
@@ -65,7 +62,7 @@ struct ConnectionView: View {
 						TextField("", text: $pubkeyStr, prompt: Text("Public Key"))
 							.onSubmit {
 								let newStr = pubkeyStr.replacingOccurrences(of: "\r\n", with: "")
-								pubkey = Data(newStr.utf8)
+								handler.host.publicKey = Data(newStr.utf8)
 							}
 						Button() {
 							pubPickerPresented.toggle()
@@ -81,7 +78,7 @@ struct ConnectionView: View {
 									return
 								}
 								defer { fileURL.stopAccessingSecurityScopedResource() }
-								pubkey = try? Data(contentsOf: fileURL)
+								handler.host.publicKey = try? Data(contentsOf: fileURL)
 								print(fileURL)
 							} catch {
 								print(error.localizedDescription)
@@ -90,10 +87,10 @@ struct ConnectionView: View {
 					}
 					
 					HStack {
-						TextField("", text: $privkeyStr, prompt: Text("Private Key"))
+						SecureField("", text: $privkeyStr, prompt: Text("Private Key"))
 							.onSubmit {
 								let newStr = privkeyStr.replacingOccurrences(of: "\r\n", with: "")
-								privkey = Data(newStr.utf8)
+								handler.host.privateKey = Data(newStr.utf8)
 							}
 						Button() {
 							privPickerPresented.toggle()
@@ -109,8 +106,8 @@ struct ConnectionView: View {
 									return
 								}
 								defer { fileURL.stopAccessingSecurityScopedResource() }
-								privkey = try? Data(contentsOf: fileURL)
-								print(privkey ?? "")
+								handler.host.privateKey = try? Data(contentsOf: fileURL)
+								print(handler.host.privateKey ?? "")
 								print(fileURL)
 							} catch {
 								print(error.localizedDescription)
@@ -164,27 +161,12 @@ struct ConnectionView: View {
 			.transition(.opacity)
 			.toolbar {
 				ToolbarItem() {
-					if handler.connected {
-						Button() {
-							handler.disconnect()
-						} label: {
-							Label("Disconnect", systemImage: "xmark.app.fill")
-						}
-					} else {
-						Button() {
-							handler.connect()
-							if pubkey != nil && privkey != nil {
-								handler.authWithPubkey(pub: pubkey!, priv: privkey!, pass: passphrase)
-							} else {
-								let _ = handler.authWithPw()
-							}
-							handler.openShell()
-						} label: {
-							Label("Connect", systemImage: "power")
-						}
-						.disabled(
-							pubkey == nil && privkey == nil &&
-							handler.host.username.isEmpty && handler.host.password.isEmpty
+					Button() {
+						handler.go()
+					} label: {
+						Label(
+							handler.connected ? "Disconnect" : "Connect",
+							systemImage: handler.connected ? "xmark.app.fill" : "power"
 						)
 					}
 				}
@@ -194,6 +176,14 @@ struct ConnectionView: View {
 			guard hostsManager.getHostMatching(handler.host) == handler.host else {
 				hostsManager.updateHost(handler.host)
 				return
+			}
+		}
+		.task {
+			if let publicKeyData = handler.host.publicKey {
+				pubkeyStr = String(data: publicKeyData, encoding: .utf8) ?? ""
+			}
+			if let privateKeyData = handler.host.privateKey {
+				privkeyStr = String(data: privateKeyData, encoding: .utf8) ?? ""
 			}
 		}
 	}

@@ -45,11 +45,31 @@ class SSHHandler: ObservableObject {
 		return Data(base64Encoded: String(cString: data))
 	}
 	
-//	func connect(_: Host) {
-//		
-//	}
+	func go() {
+		guard !connected else {
+			disconnect()
+			return
+		}
+		
+		guard let _ = try? connect() else { return }
+		if !host.password.isEmpty {
+			do { try authWithPw() } catch {
+				print("pw auth error")
+			}
+		} else {
+			do {
+				if let publicKey = host.publicKey,
+				   let privateKey = host.privateKey {
+					try authWithPubkey(pub: publicKey, priv: privateKey, pass: host.passphrase)
+				}
+			} catch {
+				print("error with pubkey auth")
+			}
+		}
+		openShell()
+	}
 	
-	func connect() {
+	func connect() throws(SSHError) {
 		defer {
 			getAuthMethods()
 			self.host.key = getHostkey()
@@ -60,7 +80,7 @@ class SSHHandler: ObservableObject {
 		session = ssh_new()
 		guard session != nil else {
 			withAnimation { connected = false }
-			return
+			throw .backendError("Failed opening session")
 		}
 
 		ssh_options_set(session, SSH_OPTIONS_HOST, host.address)
@@ -72,24 +92,20 @@ class SSHHandler: ObservableObject {
 			logger.critical("connection not ok: \(status)")
 			logSshGetError()
 			withAnimation { connected = false }
-			return
+			throw .connectionFailed("Failed connecting")
 		}
 		withAnimation { connected = true }
 		return
 	}
 
 	func disconnect() {
-		guard session != nil else {
-			print("cant disconnect when im not connected")
-			return
-		}
+		guard session != nil else { return }
 		ssh_disconnect(session)
 		ssh_free(session)
 		withAnimation { authorized = false }
 		withAnimation { connected = false }
 		withAnimation { testSuceeded = nil }
 		session = nil
-//		host.key = nil
 	}
 
 	func testExec() {
@@ -135,7 +151,7 @@ class SSHHandler: ObservableObject {
 		nbytes = ssh_channel_read(
 			channel,
 			&buffer,
-			UInt32(MemoryLayout.size(ofValue: CChar.self)),
+			UInt32(buffer.count),
 			0
 		)
 		while nbytes > 0 {
@@ -148,7 +164,7 @@ class SSHHandler: ObservableObject {
 				withAnimation { testSuceeded = false }
 				return
 			}
-			nbytes = ssh_channel_read(channel, &buffer, UInt32(MemoryLayout.size(ofValue: Character.self)), 0)
+			nbytes = ssh_channel_read(channel, &buffer, UInt32(buffer.count), 0)
 		}
 
 		if nbytes < 0 {
@@ -168,7 +184,7 @@ class SSHHandler: ObservableObject {
 		return
 	}
 	
-	func authWithPubkey(pub pubInp: Data, priv privInp: Data, pass: String) {
+	func authWithPubkey(pub pubInp: Data, priv privInp: Data, pass: String) throws(KeyError) {
 		guard session != nil else {
 			withAnimation { authorized = false }
 			return
@@ -191,23 +207,21 @@ class SSHHandler: ObservableObject {
 		
 		var pubkey: ssh_key?
 		if ssh_pki_import_pubkey_file(tempPubkey.path(), &pubkey) != 0 {
-			print("pubkey import error")
+			throw .importPrivkeyError
 		}
 		
 		if ssh_userauth_try_publickey(session, nil, pubkey) != 0 {
-			print("pubkey pubkey auth error")
+			throw .pubkeyRejected
 		}
 		
 		var privkey: ssh_key?
 		if ssh_pki_import_privkey_file(tempKey.path(), pass, nil, nil, &privkey) != 0 {
-			print("privkey import error")
-			print("likely incorrect passphrase")
+			throw .importPrivkeyError
 		}
 		
 		if (ssh_userauth_publickey(session, nil, privkey) != 0) {
 			withAnimation { authorized = false }
-			print("auth failed lol")
-			return
+			throw .privkeyRejected
 		}
 		
 		//if u got this far, youre authed!
@@ -223,26 +237,24 @@ class SSHHandler: ObservableObject {
 		return
 	}
 	
-	func authWithPw() -> Bool {
+	func authWithPw() throws(AuthError) {
 		var status: CInt
 		status = ssh_userauth_password(session, host.username, host.password)
 		guard status == SSH_AUTH_SUCCESS.rawValue else {
-			print("ssh pw auth error")
 			logSshGetError()
-			return false
+			throw .rejectedCredentials
 		}
-		print("auth success")
 		withAnimation { authorized = true }
-		return true
+		return
 	}
 	
-	func authWithNone() -> Bool {
+	func authWithNone() throws(AuthError) {
 		let status = ssh_userauth_none(session, nil)
-		guard status == SSH_AUTH_SUCCESS.rawValue else { return false }
+		guard status == SSH_AUTH_SUCCESS.rawValue else { throw .rejectedCredentials }
 		
-		print("no security moment lol")
+		logCritical("no security moment lol")
 		withAnimation { authorized = true }
-		return true
+		return
 	}
 	
 	//always unknown idk why
@@ -322,6 +334,10 @@ class SSHHandler: ObservableObject {
 	
 	private func logSshGetError() {
 		logger.critical("\(String(cString: ssh_get_error(&self.session)))")
+	}
+	
+	private func logCritical(_ logMessage: String) {
+		logger.critical("\(logMessage)")
 	}
 	
 	func writeToChannel(_ string: String?) {
