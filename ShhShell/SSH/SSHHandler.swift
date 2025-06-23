@@ -55,7 +55,7 @@ class SSHHandler: ObservableObject {
 			self.host.key = getHostkey()
 		}
 		
-		var verbosity: Int = 0
+		var verbosity: Int = SSH_LOG_FUNCTIONS
 		
 		session = ssh_new()
 		guard session != nil else {
@@ -168,41 +168,49 @@ class SSHHandler: ObservableObject {
 		return
 	}
 	
+	func stripPubkey(_ data: Data) -> [CChar] {
+		let string = String(data: data, encoding: .utf8) ?? ""
+		let splitString = string.components(separatedBy: " ")
+		
+		if splitString.count >= 2 {
+			return splitString[1].cString(using: .utf8) ?? []
+		} else { return [] }
+	}
+	
+	func stripPrivkey(_ data: Data) -> [CChar] {
+		let string = String(data: data, encoding: .utf8) ?? ""
+		var splitString = string.components(separatedBy: "-----BEGIN OPENSSH PRIVATE KEY-----")
+		splitString[splitString.count-1] = splitString[splitString.count-1].components(separatedBy: "-----END OPENSSH PRIVATE KEY-----")[0]
+		
+
+		if splitString.count >= 2 {
+			return splitString[1].cString(using: .utf8) ?? []
+		} else { return [] }
+	}
+	
 	func authWithPubkey(pub pubInp: Data, priv privInp: Data, pass: String) {
 		guard session != nil else {
 			withAnimation { authorized = false }
 			return
 		}
 		
-		var status: Int32
-		let fileManager = FileManager.default
-		let tempDir = fileManager.temporaryDirectory
-		let tempPubkey = tempDir.appendingPathComponent("key.pub")
-		let tempKey = tempDir.appendingPathComponent("key")
-		
-		fileManager.createFile(atPath: tempPubkey.path(), contents: nil)
-		fileManager.createFile(atPath: tempKey.path(), contents: nil)
-		
-		let attributes: [FileAttributeKey: Any] = [.posixPermissions: 0o600]
-		try? fileManager.setAttributes(attributes, ofItemAtPath: tempPubkey.path())
-		try? fileManager.setAttributes(attributes, ofItemAtPath: tempKey.path())
-		
-		try? pubInp.write(to: tempPubkey)
-		try? privInp.write(to: tempKey)
-		
 		var pubkey: ssh_key?
-		ssh_pki_import_pubkey_file(tempPubkey.path(), &pubkey)
-		status = ssh_userauth_try_publickey(session, nil, pubkey)
-		print(status)
-		
-		var privkey: ssh_key?
-		if ssh_pki_import_privkey_file(tempKey.path(), pass, nil, nil, &privkey) != 0 {
-			print("help?!?")
-			print("likeley password is incorrect")
+		if ssh_pki_import_pubkey_base64(stripPubkey(pubInp), SSH_KEYTYPE_ED25519, &pubkey) != 0 {
+			print("pubkey import error")
 		}
 		
-		status = ssh_userauth_publickey(session, nil, privkey)
-		if status != 0 {
+		if ssh_userauth_try_publickey(session, nil, pubkey) != 0 {
+			print("pubkey pubkey auth error")
+		}
+		
+		var privkey: ssh_key?
+		let strippedPrivkey = stripPrivkey(privInp)
+		if ssh_pki_import_privkey_base64(strippedPrivkey, pass, nil, nil, &privkey) != 0 {
+			print("privkey import error")
+			print("likely incorrect passphrase")
+		}
+		
+		if (ssh_userauth_publickey(session, nil, privkey) != 0) {
 			withAnimation { authorized = false }
 			print("auth failed lol")
 			return
@@ -214,8 +222,8 @@ class SSHHandler: ObservableObject {
 		DispatchQueue.main.asyncAfter(deadline: .now()+10) {
 			ssh_key_free(pubkey)
 			ssh_key_free(privkey)
-			try? fileManager.removeItem(at: tempPubkey)
-			try? fileManager.removeItem(at: tempKey)
+//			try? fileManager.removeItem(at: tempPubkey)
+//			try? fileManager.removeItem(at: tempKey)
 		}
 		
 		return
