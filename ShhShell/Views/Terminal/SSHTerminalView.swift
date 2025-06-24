@@ -26,7 +26,6 @@ final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalVie
 		terminalDelegate = self
 		sshQueue.async {
 			guard let handler = self.handler else { return }
-			guard handler.channel != nil else { return }
 			
 			while handler.connected {
 				if let read = handler.readFromChannel() {
@@ -35,7 +34,7 @@ final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalVie
 						await self.feed(text: read)
 					}
 				} else {
-					usleep(100_000)
+					usleep(1_000)
 				}
 //				self?.setNeedsDisplay()
 			}

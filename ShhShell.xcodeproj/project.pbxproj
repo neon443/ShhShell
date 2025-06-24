@@ -32,6 +32,7 @@
 		A985545F2E056EDD009051BD /* KeychainLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A985545E2E056EDD009051BD /* KeychainLayer.swift */; };
 		A98554612E058433009051BD /* HostsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554602E058433009051BD /* HostsManager.swift */; };
 		A98554632E0587DF009051BD /* HostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554622E0587DF009051BD /* HostsView.swift */; };
+		A9B15A9A2E0ABA0400F66E02 /* DialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B15A992E0ABA0400F66E02 /* DialogView.swift */; };
 		A9C4140C2E096DB7005E3047 /* SSHError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4140B2E096DB7005E3047 /* SSHError.swift */; };
 		A9C897EF2DF1A9A400EF9A5F /* SSHHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */; };
 /* End PBXBuildFile section */
@@ -98,6 +99,7 @@
 		A985545E2E056EDD009051BD /* KeychainLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainLayer.swift; sourceTree = "<group>"; };
 		A98554602E058433009051BD /* HostsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostsManager.swift; sourceTree = "<group>"; };
 		A98554622E0587DF009051BD /* HostsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostsView.swift; sourceTree = "<group>"; };
+		A9B15A992E0ABA0400F66E02 /* DialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogView.swift; sourceTree = "<group>"; };
 		A9C4140B2E096DB7005E3047 /* SSHError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHError.swift; sourceTree = "<group>"; };
 		A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -137,6 +139,7 @@
 			children = (
 				A92317292E07113100ECE1E6 /* TerminalController.swift */,
 				A923172E2E08851200ECE1E6 /* ShellView.swift */,
+				A9B15A992E0ABA0400F66E02 /* DialogView.swift */,
 				A923172C2E07138000ECE1E6 /* SSHTerminalView.swift */,
 			);
 			path = Terminal;
@@ -421,6 +424,7 @@
 				A98554632E0587DF009051BD /* HostsView.swift in Sources */,
 				A92538C82DEE0742007E0A18 /* ContentView.swift in Sources */,
 				A93143C02DF61B3200FCD5DB /* Host.swift in Sources */,
+				A9B15A9A2E0ABA0400F66E02 /* DialogView.swift in Sources */,
 				A92538C92DEE0742007E0A18 /* ShhShellApp.swift in Sources */,
 				A98554612E058433009051BD /* HostsManager.swift in Sources */,
 				A985545D2E055D4D009051BD /* ConnectionView.swift in Sources */,

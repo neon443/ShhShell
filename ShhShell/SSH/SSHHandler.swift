@@ -12,7 +12,8 @@ import SwiftUI
 
 class SSHHandler: @unchecked Sendable, ObservableObject {
 	private var session: ssh_session?
-	 var channel: ssh_channel?
+	private var channel: ssh_channel?
+	private let sshQueue = DispatchQueue(label: "SSH Queue")
 	
 	@Published var connected: Bool = false
 	@Published var authorized: Bool = false
@@ -332,22 +333,22 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	}
 	
 	func readFromChannel() -> String? {
-		if !connected {
-			return nil
-		}
 		guard connected else { return nil }
 		guard ssh_channel_is_open(channel) != 0 || ssh_channel_is_eof(channel) == 0 else {
 			disconnect()
 			return nil
 		}
 		
-		var buffer: [CChar] = Array(repeating: 0, count: 512)
+		var buffer: [CChar] = Array(repeating: 0, count: 4096)
 		let nbytes = ssh_channel_read_nonblocking(channel, &buffer, UInt32(buffer.count), 0)
 		
 		guard nbytes > 0 else { return nil }
 		
 		let data = Data(bytes: buffer, count: Int(nbytes))
 		if let string = String(data: data, encoding: .utf8) {
+			#if DEBUG
+			print(String(data: Data(bytes: buffer, count: Int(nbytes)), encoding: .utf8)!)
+			#endif
 			return string
 		}
 		return nil

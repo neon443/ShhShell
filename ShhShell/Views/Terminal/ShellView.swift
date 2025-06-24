@@ -13,6 +13,9 @@ struct ShellView: View {
     var body: some View {
 		NavigationStack {
 			ZStack {
+				if !handler.connected {
+					DialogView(handler: handler, showDialog: !handler.connected)
+				}
 				TerminalController(handler: handler)
 			}
 			.toolbar {

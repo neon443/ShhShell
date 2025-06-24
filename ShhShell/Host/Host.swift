@@ -56,6 +56,15 @@ extension Host {
 		Host(address: "")
 	}
 	static var debug: Host {
-		Host(address: "localhost", username: "default", password: "")
+		Host(
+			address: "localhost",
+			port: 22,
+			username: "neon443",
+			password: "password",
+			publicKey: nil,
+			privateKey: nil,
+			passphrase: "",
+			hostkey: nil
+		)
 	}
 }

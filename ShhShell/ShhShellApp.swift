@@ -20,6 +20,7 @@ struct ShhShellApp: App {
 				keyManager: keyManager,
 				hostsManager: hostsManager
 			)
+			.colorScheme(.dark)
 		}
 	}
 }
