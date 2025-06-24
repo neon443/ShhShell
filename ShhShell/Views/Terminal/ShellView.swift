@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ShellView: View {
 	@ObservedObject var handler: SSHHandler
+	@Environment(\.dismiss) var dismiss
 	
     var body: some View {
 		NavigationStack {
@@ -22,6 +23,9 @@ struct ShellView: View {
 				ToolbarItem {
 					Button() {
 						handler.go()
+						if !handler.connected {
+							dismiss()
+						}
 					} label: {
 						Label(
 							handler.connected ? "Disconnect" : "Connect",

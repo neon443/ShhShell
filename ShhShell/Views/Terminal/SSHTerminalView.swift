@@ -24,8 +24,8 @@ final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalVie
 		
 		super.init(frame: frame)
 		terminalDelegate = self
-		sshQueue.async {
-			guard let handler = self.handler else { return }
+		sshQueue.async { [self] in
+			guard let handler = handler else { return }
 			
 			while handler.connected {
 				if let read = handler.readFromChannel() {

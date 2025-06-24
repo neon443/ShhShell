@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DialogView: View {
 	@ObservedObject var handler: SSHHandler
-	@State var showDialog: Bool = true
+	@State var showDialog: Bool
 	@State var icon: String = "network.slash"
 	@State var headline: String = "Disconnected"
 	@State var text: String = "Connection to the SSH server has been lost, try reconnecting"
@@ -53,15 +53,12 @@ struct DialogView: View {
 				.frame(maxWidth: .infinity, maxHeight: .infinity)
 			}
 		}
-		Button("show button") {
-			withAnimation { showDialog.toggle() }
-		}
 	}
 }
 
 #Preview {
 	ZStack {
 		Color.black
-		DialogView(handler: SSHHandler(host: Host.debug))
+		DialogView(handler: SSHHandler(host: Host.debug), showDialog: true)
 	}
 }
