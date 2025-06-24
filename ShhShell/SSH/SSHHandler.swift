@@ -15,7 +15,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	private var channel: ssh_channel?
 	private let sshQueue = DispatchQueue(label: "SSH Queue")
 	
-	@Published var hostsManager = HostsManager()
+//	@Published var hostsManager = HostsManager()
 	
 	@Published var connected: Bool = false
 	@Published var authorized: Bool = false
@@ -27,7 +27,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	
 	private let userDefaults = NSUbiquitousKeyValueStore.default
 	private let logger = Logger(subsystem: "xy", category: "sshHandler")
-
+	
 	init(
 		host: Host
 //		hostsManager: HostsManager

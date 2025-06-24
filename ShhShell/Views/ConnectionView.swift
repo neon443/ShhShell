@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct ConnectionView: View {
-	@StateObject var handler: SSHHandler
-	@StateObject var keyManager: KeyManager
+	@ObservedObject var handler: SSHHandler
+	@ObservedObject var hostsManager: HostsManager
+	@ObservedObject var keyManager: KeyManager
 	
 	@State var passphrase: String = ""
 	
@@ -119,7 +120,7 @@ struct ConnectionView: View {
 				if handler.host.key != nil {
 					Text("Hostkey: \(handler.host.key!.base64EncodedString())")
 						.onChange(of: handler.host.key) { _ in
-							guard let previousKnownHost = handler.hostsManager.getHostMatching(handler.host) else { return }
+							guard let previousKnownHost = hostsManager.getHostMatching(handler.host) else { return }
 							guard handler.host.key == previousKnownHost.key else {
 								hostKeyChangedAlert = true
 								return
@@ -151,17 +152,17 @@ struct ConnectionView: View {
 			}
 			.alert("Hostkey changed", isPresented: $hostKeyChangedAlert) {
 				Button("Accept New Hostkey", role: .destructive) {
-					handler.hostsManager.updateHost(handler.host)
+					hostsManager.updateHost(handler.host)
 				}
 				
 				Button("Disconnect", role: .cancel) {
 					Task {
 						await handler.disconnect()
-						handler.host.key = handler.hostsManager.getHostMatching(handler.host)?.key
+						handler.host.key = hostsManager.getHostMatching(handler.host)?.key
 					}
 				}
 			} message: {
-				Text("Expected \(handler.hostsManager.getHostMatching(handler.host)?.key?.base64EncodedString() ?? "null")\nbut recieved \(handler.host.key?.base64EncodedString() ?? "null" ) from the server")
+				Text("Expected \(hostsManager.getHostMatching(handler.host)?.key?.base64EncodedString() ?? "null")\nbut recieved \(handler.host.key?.base64EncodedString() ?? "null" ) from the server")
 			}
 			.transition(.opacity)
 			.toolbar {
@@ -178,8 +179,8 @@ struct ConnectionView: View {
 			}
 		}
 		.onDisappear {
-			guard handler.hostsManager.getHostMatching(handler.host) == handler.host else {
-				handler.hostsManager.updateHost(handler.host)
+			guard hostsManager.getHostMatching(handler.host) == handler.host else {
+				hostsManager.updateHost(handler.host)
 				return
 			}
 		}
@@ -198,6 +199,7 @@ struct ConnectionView: View {
 #Preview {
 	ConnectionView(
 		handler: SSHHandler(host: Host.debug),
+		hostsManager: HostsManager(),
 		keyManager: KeyManager()
 	)
 }

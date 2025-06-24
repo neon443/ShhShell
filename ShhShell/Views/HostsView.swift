@@ -9,25 +9,38 @@ import SwiftUI
 
 struct HostsView: View {
 	@ObservedObject var handler: SSHHandler
+	@ObservedObject var hostsManager: HostsManager
 	@ObservedObject var keyManager: KeyManager
 	
     var body: some View {
 		NavigationStack {
 			List {
-				if handler.hostsManager.savedHosts.isEmpty {
+				if hostsManager.savedHosts.isEmpty {
 					Text("Add your first Host!")
 					Button() {
-						withAnimation { handler.hostsManager.savedHosts.append(Host.blank) }
+						withAnimation { hostsManager.savedHosts.append(Host.blank) }
 					} label: {
 						Text("Create")
-//							.font()
 					}
 					.buttonStyle(.borderedProminent)
 				}
-				ForEach(handler.hostsManager.savedHosts) { host in
+				
+				//proves that u can connect to multiple at the same time
+//				NavigationLink() {
+//					ForEach(hostsManager.savedHosts) { host in
+//						let miniHandler = SSHHandler(host: host)
+//						TerminalController(handler: miniHandler)
+//							.onAppear { miniHandler.go() }
+//					}
+//				} label: {
+//					Label("multiview", systemImage: "square.split.2x2")
+//				}
+				
+				ForEach(hostsManager.savedHosts) { host in
 					NavigationLink() {
 						ConnectionView(
 							handler: SSHHandler(host: host),
+							hostsManager: hostsManager,
 							keyManager: keyManager
 						)
 					} label: {
@@ -40,9 +53,9 @@ struct HostsView: View {
 					.animation(.default, value: host)
 					.swipeActions(edge: .trailing) {
 						Button(role: .destructive) {
-							if let index = handler.hostsManager.savedHosts.firstIndex(where: { $0.id == host.id }) {
-								let _ = withAnimation { handler.hostsManager.savedHosts.remove(at: index) }
-								handler.hostsManager.saveSavedHosts()
+							if let index = hostsManager.savedHosts.firstIndex(where: { $0.id == host.id }) {
+								let _ = withAnimation { hostsManager.savedHosts.remove(at: index) }
+								hostsManager.saveSavedHosts()
 							}
 						} label: {
 							Label("Delete", systemImage: "trash")
@@ -57,10 +70,11 @@ struct HostsView: View {
 					NavigationLink {
 						ConnectionView(
 							handler: SSHHandler(host: host),
+							hostsManager: hostsManager,
 							keyManager: keyManager
 						)
-						.task(priority: .userInitiated) {
-							withAnimation { handler.hostsManager.savedHosts.append(host) }
+						.onAppear {
+							withAnimation { hostsManager.savedHosts.append(host) }
 						}
 					} label: {
 						Label("Add", systemImage: "plus")
@@ -74,6 +88,7 @@ struct HostsView: View {
 #Preview {
 	HostsView(
 		handler: SSHHandler(host: Host.debug),
+		hostsManager: HostsManager(),
 		keyManager: KeyManager()
 	)
 }

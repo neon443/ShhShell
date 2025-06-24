@@ -9,12 +9,14 @@ import SwiftUI
 
 struct ContentView: View {
 	@ObservedObject var handler: SSHHandler
+	@ObservedObject var hostsManger: HostsManager
 	@ObservedObject var keyManager: KeyManager
 	
     var body: some View {
 		TabView {
 			HostsView(
 				handler: handler,
+				hostsManager: hostsManger,
 				keyManager: keyManager
 			)
 			.tabItem {
@@ -31,6 +33,7 @@ struct ContentView: View {
 #Preview {
     ContentView(
 		handler: SSHHandler(host: Host.debug),
+		hostsManger: HostsManager(),
 		keyManager: KeyManager()
 	)
 }
