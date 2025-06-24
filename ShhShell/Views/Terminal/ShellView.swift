@@ -11,13 +11,18 @@ struct ShellView: View {
 	@ObservedObject var handler: SSHHandler
 	@Environment(\.dismiss) var dismiss
 	
+	@State private var terminalControllerRef: TerminalController?
+	
     var body: some View {
 		NavigationStack {
 			ZStack {
 				if !handler.connected {
 					DialogView(handler: handler, showDialog: !handler.connected)
 				}
-				TerminalController(handler: handler)
+				terminalControllerRef
+			}
+			.task {
+				terminalControllerRef = TerminalController(handler: handler)
 			}
 			.toolbar {
 				ToolbarItem {

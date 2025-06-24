@@ -11,14 +11,12 @@ import SwiftUI
 struct ShhShellApp: App {
 	@StateObject var sshHandler: SSHHandler = SSHHandler(host: Host.blank)
 	@StateObject var keyManager: KeyManager = KeyManager()
-	@StateObject var hostsManager: HostsManager = HostsManager()
 	
 	var body: some Scene {
 		WindowGroup {
 			ContentView(
 				handler: sshHandler,
-				keyManager: keyManager,
-				hostsManager: hostsManager
+				keyManager: keyManager
 			)
 			.colorScheme(.dark)
 		}

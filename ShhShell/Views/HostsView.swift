@@ -8,28 +8,27 @@
 import SwiftUI
 
 struct HostsView: View {
+	@ObservedObject var handler: SSHHandler
 	@ObservedObject var keyManager: KeyManager
-	@ObservedObject var hostsManager: HostsManager
 	
     var body: some View {
 		NavigationStack {
 			List {
-				if hostsManager.savedHosts.isEmpty {
+				if handler.hostsManager.savedHosts.isEmpty {
 					Text("Add your first Host!")
 					Button() {
-						withAnimation { hostsManager.savedHosts.append(Host.blank) }
+						withAnimation { handler.hostsManager.savedHosts.append(Host.blank) }
 					} label: {
 						Text("Create")
 //							.font()
 					}
 					.buttonStyle(.borderedProminent)
 				}
-				ForEach(hostsManager.savedHosts) { host in
+				ForEach(handler.hostsManager.savedHosts) { host in
 					NavigationLink() {
 						ConnectionView(
 							handler: SSHHandler(host: host),
-							keyManager: keyManager,
-							hostsManager: hostsManager
+							keyManager: keyManager
 						)
 					} label: {
 						if host.address.isEmpty {
@@ -41,9 +40,9 @@ struct HostsView: View {
 					.animation(.default, value: host)
 					.swipeActions(edge: .trailing) {
 						Button(role: .destructive) {
-							if let index = hostsManager.savedHosts.firstIndex(where: { $0.id == host.id }) {
-								let _ = withAnimation { hostsManager.savedHosts.remove(at: index) }
-								hostsManager.saveSavedHosts()
+							if let index = handler.hostsManager.savedHosts.firstIndex(where: { $0.id == host.id }) {
+								let _ = withAnimation { handler.hostsManager.savedHosts.remove(at: index) }
+								handler.hostsManager.saveSavedHosts()
 							}
 						} label: {
 							Label("Delete", systemImage: "trash")
@@ -58,11 +57,10 @@ struct HostsView: View {
 					NavigationLink {
 						ConnectionView(
 							handler: SSHHandler(host: host),
-							keyManager: keyManager,
-							hostsManager: hostsManager
+							keyManager: keyManager
 						)
 						.task(priority: .userInitiated) {
-							withAnimation { hostsManager.savedHosts.append(host) }
+							withAnimation { handler.hostsManager.savedHosts.append(host) }
 						}
 					} label: {
 						Label("Add", systemImage: "plus")
@@ -74,5 +72,8 @@ struct HostsView: View {
 }
 
 #Preview {
-	HostsView(keyManager: KeyManager(), hostsManager: HostsManager())
+	HostsView(
+		handler: SSHHandler(host: Host.debug),
+		keyManager: KeyManager()
+	)
 }

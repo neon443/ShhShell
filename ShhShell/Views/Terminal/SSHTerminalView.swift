@@ -24,9 +24,29 @@ final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalVie
 		
 		super.init(frame: frame)
 		terminalDelegate = self
-		sshQueue.async { [self] in
-			guard let handler = handler else { return }
-			
+		sshQueue.async {
+			Task {
+				guard let handler = await self.handler else { return }
+				
+				while handler.connected {
+					if let read = handler.readFromChannel() {
+						Task { [weak self] in
+							guard let self = self else { return }
+							await self.feed(text: read)
+						}
+					} else {
+						try? await Task.sleep(nanoseconds: 1_000_000) //1ms
+					}
+				}
+			}
+		}
+	}
+	
+	public func resetTerminalView(handler: SSHHandler) {
+		self.handler = handler
+//		terminal.softReset()
+		self.setNeedsDisplay()
+		sshQueue.async {
 			while handler.connected {
 				if let read = handler.readFromChannel() {
 					Task { [weak self] in
@@ -34,9 +54,8 @@ final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalVie
 						await self.feed(text: read)
 					}
 				} else {
-					usleep(1_000)
+					Task{ try? await Task.sleep(nanoseconds: 1_000_000) }
 				}
-//				self?.setNeedsDisplay()
 			}
 		}
 	}
