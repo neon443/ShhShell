@@ -35,7 +35,7 @@ final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalVie
 						await self.feed(text: read)
 					}
 				} else {
-					usleep(1_000_000)
+					usleep(100_000)
 				}
 //				self?.setNeedsDisplay()
 			}

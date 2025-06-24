@@ -342,7 +342,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		}
 		
 		var buffer: [CChar] = Array(repeating: 0, count: 512)
-		let nbytes = ssh_channel_read(channel, &buffer, UInt32(buffer.count), 0)
+		let nbytes = ssh_channel_read_nonblocking(channel, &buffer, UInt32(buffer.count), 0)
 		
 		guard nbytes > 0 else { return nil }
 		
