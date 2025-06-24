@@ -10,7 +10,7 @@ import UIKit
 import SwiftTerm
 
 @MainActor
-class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalViewDelegate {
+final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalViewDelegate {
 	var handler: SSHHandler?
 	var sshQueue: DispatchQueue
 	
@@ -30,9 +30,12 @@ class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalViewDeleg
 			
 			while handler.connected {
 				if let read = handler.readFromChannel() {
-					self.feed(text: read)
+					Task { [weak self] in
+						guard let self = self else { return }
+						await self.feed(text: read)
+					}
 				} else {
-					usleep(100_000)
+					usleep(1_000_000)
 				}
 //				self?.setNeedsDisplay()
 			}
