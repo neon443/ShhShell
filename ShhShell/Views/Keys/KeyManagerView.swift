@@ -19,13 +19,31 @@ struct KeyManagerView: View {
 						NavigationLink {
 							KeyDetailView(hostsManager: hostsManager, keypair: keypair)
 						} label: {
-							Text(String(data: keypair.publicKey!, encoding: .utf8) ?? "nil")
+							if let publicKey = keypair.publicKey {
+								Text(String(data: publicKey, encoding: .utf8) ?? "nil")
+							}
 						}
 					}
 				}
 				Section {
 					NavigationLink {
 						List {
+							if hostsManager.savedHosts.isEmpty {
+								VStack(alignment: .center) {
+									Text("Looking empty 'round here...")
+										.font(.title3)
+										.bold()
+										.padding(.bottom)
+									VStack(alignment: .leading) {
+										Text("Connect to some hosts to collect more hostkeys!")
+											.padding(.bottom)
+										Text("ShhShell remembers hostkey fingerprints for you, and can alert you if they change.")
+											.font(.subheadline)
+										Text("This could be due a man in the middle attack, where a bad actor tries to impersonate your server.")
+											.font(.subheadline)
+									}
+								}
+							}
 							ForEach(hostsManager.savedHosts) { host in
 								VStack(alignment: .leading) {
 									Text(host.address)

@@ -76,17 +76,6 @@ struct ConnectionView: View {
 					TextField("", text: $passphrase, prompt: Text("Passphrase (Optional)"))
 				}
 				
-				if handler.host.key != nil {
-					Text("Hostkey: \(handler.getHostkey() ?? hostsManager.getHostMatching(handler.host)?.key ?? "nil")")
-					.onChange(of: handler.host.key) { _ in
-							guard let previousKnownHost = hostsManager.getHostMatching(handler.host) else { return }
-							guard handler.host.key == previousKnownHost.key else {
-								hostKeyChangedAlert = true
-								return
-							}
-						}
-				}
-				
 				Button() {
 					showTerminal.toggle()
 				} label: {
@@ -130,11 +119,19 @@ struct ConnectionView: View {
 							systemImage: handler.connected ? "xmark.app.fill" : "power"
 						)
 					}
+					.disabled(handler.hostInvalid())
 				}
 			}
 		}
 		.fullScreenCover(isPresented: $showTerminal) {
 			ShellView(handler: handler)
+		}
+		.onChange(of: handler.host.key) { _ in
+			guard let previousKnownHost = hostsManager.getHostMatching(handler.host) else { return }
+			guard handler.host.key == previousKnownHost.key else {
+				hostKeyChangedAlert = true
+				return
+			}
 		}
 		.onDisappear {
 			guard hostsManager.getHostMatching(handler.host) == handler.host else {

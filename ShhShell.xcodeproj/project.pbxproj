@@ -180,8 +180,8 @@
 		A92538C72DEE0742007E0A18 /* ShhShell */ = {
 			isa = PBXGroup;
 			children = (
-				A93143C22DF61F5700FCD5DB /* ShhShell.entitlements */,
 				A92538C62DEE0742007E0A18 /* ShhShellApp.swift */,
+				A93143C22DF61F5700FCD5DB /* ShhShell.entitlements */,
 				A98554572E055398009051BD /* Keys */,
 				A98554562E055394009051BD /* Host */,
 				A93143C12DF61E8500FCD5DB /* SSH */,
@@ -210,12 +210,11 @@
 		A92538D32DEE0749007E0A18 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				A98554532E05534F009051BD /* Keys */,
 				A92538C52DEE0742007E0A18 /* ContentView.swift */,
-				A98554622E0587DF009051BD /* HostsView.swift */,
-				A985545C2E055D4D009051BD /* ConnectionView.swift */,
-				A93143C52DF61FE300FCD5DB /* ViewModifiers.swift */,
+				A98554532E05534F009051BD /* Keys */,
+				A96C6B042E0C523E00F377FE /* Hosts */,
 				A923172B2E0712F200ECE1E6 /* Terminal */,
+				A96C6B032E0C523600F377FE /* Misc */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -248,11 +247,29 @@
 			path = ci_scripts;
 			sourceTree = "<group>";
 		};
+		A96C6B032E0C523600F377FE /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				A96C6B012E0C49E800F377FE /* CenteredLabel.swift */,
+				A93143C52DF61FE300FCD5DB /* ViewModifiers.swift */,
+			);
+			path = Misc;
+			sourceTree = "<group>";
+		};
+		A96C6B042E0C523E00F377FE /* Hosts */ = {
+			isa = PBXGroup;
+			children = (
+				A985545C2E055D4D009051BD /* ConnectionView.swift */,
+				A98554622E0587DF009051BD /* HostsView.swift */,
+			);
+			path = Hosts;
+			sourceTree = "<group>";
+		};
 		A98554532E05534F009051BD /* Keys */ = {
 			isa = PBXGroup;
 			children = (
+				A96C6AFF2E0C45FE00F377FE /* KeyDetailView.swift */,
 				A98554542E05535F009051BD /* KeyManagerView.swift */,
-				A96C6AFD2E0C43B600F377FE /* Keypair.swift */,
 			);
 			path = Keys;
 			sourceTree = "<group>";
@@ -271,8 +288,7 @@
 			children = (
 				A98554582E0553AA009051BD /* KeyManager.swift */,
 				A985545E2E056EDD009051BD /* KeychainLayer.swift */,
-				A96C6AFF2E0C45FE00F377FE /* KeyDetailView.swift */,
-				A96C6B012E0C49E800F377FE /* CenteredLabel.swift */,
+				A96C6AFD2E0C43B600F377FE /* Keypair.swift */,
 			);
 			path = Keys;
 			sourceTree = "<group>";

@@ -9,6 +9,7 @@ import Foundation
 
 protocol HostPr: Codable, Identifiable, Equatable {
 	var id: UUID { get set }
+	var name: String { get set }
 	var address: String { get set }
 	var port: Int { get set }
 	var username: String { get set }
@@ -21,6 +22,7 @@ protocol HostPr: Codable, Identifiable, Equatable {
 
 struct Host: HostPr {
 	var id = UUID()
+	var name: String = ""
 	var address: String = ""
 	var port: Int
 	var username: String
@@ -31,6 +33,7 @@ struct Host: HostPr {
 	var key: String?
 	
 	init(
+		name: String = "",
 		address: String,
 		port: Int = 22,
 		username: String = "",
@@ -40,6 +43,7 @@ struct Host: HostPr {
 		passphrase: String = "",
 		hostkey: String? = nil
 	) {
+		self.name = name
 		self.address = address
 		self.port = port
 		self.username = username
@@ -57,6 +61,7 @@ extension Host {
 	}
 	static var debug: Host {
 		Host(
+			name: "name for localhost",
 			address: "localhost",
 			port: 22,
 			username: "neon443",

@@ -19,6 +19,7 @@ enum AuthError: Error {
 }
 
 enum KeyError: Error {
+	case notConnected
 	case importPubkeyError
 	case importPrivkeyError
 	case pubkeyRejected

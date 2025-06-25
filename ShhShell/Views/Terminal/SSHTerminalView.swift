@@ -75,7 +75,7 @@ final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalVie
 	}
 	
 	public func sizeChanged(source: TerminalView, newCols: Int, newRows: Int) {
-		handler?.resizePTY(toRows: newRows, toCols: newCols)
+		try? handler?.resizePTY(toRows: newRows, toCols: newCols)
 	}
 	
 	public func send(source: TerminalView, data: ArraySlice<UInt8>) {

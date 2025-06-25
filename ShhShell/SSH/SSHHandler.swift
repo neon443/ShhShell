@@ -82,7 +82,13 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 				print(error.localizedDescription)
 			}
 		}
-		openShell()
+		
+		do {
+			try openShell()
+		} catch {
+			print(error.localizedDescription)
+		}
+		
 		setTitle("\(host.username)@\(host.address)")
 		ssh_channel_request_env(channel, "TERM", "xterm-256color")
 		ssh_channel_request_env(channel, "LANG", "en_US.UTF-8")
@@ -90,6 +96,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	}
 	
 	func connect() throws(SSHError) {
+		guard !host.address.isEmpty else { throw .connectionFailed("No address to connect to.") }
 		withAnimation { state = .connecting }
 		
 		var verbosity: Int = 0
@@ -153,6 +160,14 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		}
 	}
 	
+	func hostInvalid() -> Bool {
+		if host.address.isEmpty && host.username.isEmpty {
+			return true
+		} else {
+			return false
+		}
+	}
+	
 	func testExec() {
 		var success = false
 		defer {
@@ -174,9 +189,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		var nbytes: CInt
 		
 		let testChannel = ssh_channel_new(session)
-		guard testChannel != nil else {
-			return
-		}
+		guard testChannel != nil else { return }
 		
 		status = ssh_channel_open_session(testChannel)
 		guard status == SSH_OK else {
@@ -220,9 +233,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	
 	//MARK: auth
 	func authWithPubkey(pub pubInp: Data, priv privInp: Data, pass: String) throws(KeyError) {
-		guard session != nil else {
-			return
-		}
+		guard session != nil else { throw .notConnected }
 		
 		let fileManager = FileManager.default
 		let tempDir = fileManager.temporaryDirectory
@@ -328,32 +339,36 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	}
 	
 	//MARK: shell
-	func openShell() {
+	func openShell() throws(SSHError) {
 		var status: CInt
 		
 		channel = ssh_channel_new(session)
-		guard let channel else { return }
+		guard let channel else { throw .communicationError("Not connected") }
 		
 		status = ssh_channel_open_session(channel)
 		guard status == SSH_OK else {
 			ssh_channel_free(channel)
-			return
+			throw .communicationError("Failed opening channel")
 		}
 		
-		interactiveShellSession()
+		do {
+			try interactiveShellSession()
+		} catch {
+			print(error.localizedDescription)
+		}
 	}
 	
-	private func interactiveShellSession() {
+	private func interactiveShellSession() throws(SSHError) {
 		var status: CInt
 		
 		status = ssh_channel_request_pty(self.channel)
-		guard status == SSH_OK else { return }
+		guard status == SSH_OK else { throw .communicationError("PTY request failed") }
 		
 		status = ssh_channel_change_pty_size(self.channel, 80, 24)
-		guard status == SSH_OK else { return }
+		guard status == SSH_OK else { throw .communicationError("Failed setting PTY size") }
 		
 		status = ssh_channel_request_shell(self.channel)
-		guard status == SSH_OK else { return }
+		guard status == SSH_OK else { throw .communicationError("Failed requesting shell") }
 		
 		withAnimation { state = .shellOpen }
 	}
@@ -398,9 +413,9 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		}
 	}
 	
-	func resizePTY(toRows: Int, toCols: Int) {
-		guard ssh_channel_is_open(channel) != 0 else { return }
-		guard ssh_channel_is_eof(channel) == 0 else { return }
+	func resizePTY(toRows: Int, toCols: Int) throws(SSHError) {
+		guard ssh_channel_is_open(channel) != 0 else { throw .communicationError("Channel not open") }
+		guard ssh_channel_is_eof(channel) == 0 else { throw .backendError("Channel is EOF") }
 		
 		ssh_channel_change_pty_size(channel, Int32(toCols), Int32(toRows))
 //		print("resized tty to \(toRows)rows and \(toCols)cols")
