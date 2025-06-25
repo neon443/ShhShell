@@ -24,7 +24,6 @@ struct ConnectionView: View {
 	var body: some View {
 		NavigationStack {
 			List {
-				Text("\(handler.state)")
 				Section {
 					HStack {
 						Text(handler.connected ? "connected" : "not connected")
@@ -32,6 +31,7 @@ struct ConnectionView: View {
 						
 						Text(checkAuth(handler.state) ? "authorized" : "unauthorized")
 							.modifier(foregroundColorStyle(checkAuth(handler.state) ? .green : .red))
+						Text("\(handler.state)")
 					}
 					TextField("address", text: $handler.host.address)
 						.textFieldStyle(.roundedBorder)
@@ -133,7 +133,6 @@ struct ConnectionView: View {
 			}
 		}
 		.fullScreenCover(isPresented: $showTerminal) {
-			Text("\(handler.state)")
 			ShellView(handler: handler)
 		}
 		.onDisappear {

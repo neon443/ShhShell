@@ -13,7 +13,6 @@ import SwiftUI
 class SSHHandler: @unchecked Sendable, ObservableObject {
 	private var session: ssh_session?
 	private var channel: ssh_channel?
-	private let sshQueue = DispatchQueue(label: "SSH Queue")
 	
 	@Published var title: String = ""
 	@Published var state: SSHState = .idle
@@ -49,12 +48,8 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	
 	func go() {
 		guard !connected else {
-			Task { @MainActor in
-				withAnimation { state = .idle }
-			}
-			Task {
-				disconnect()
-			}
+			withAnimation { state = .idle }
+			disconnect()
 			return
 		}
 		
@@ -113,6 +108,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		
 		let status = ssh_connect(session)
 		if status != SSH_OK {
+			ssh_free(session)
 			logger.critical("connection not ok: \(status)")
 			logSshGetError()
 			withAnimation { state = .idle }
@@ -123,10 +119,8 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	}
 	
 	func disconnect() {
-		DispatchQueue.main.async {
-			withAnimation { self.state = .idle }
-			withAnimation { self.testSuceeded = nil }
-		}
+		withAnimation { self.state = .idle }
+		withAnimation { self.testSuceeded = nil }
 		
 		//send eof if open
 		if ssh_channel_is_open(channel) == 1 {
@@ -161,11 +155,9 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	
 	func testExec() {
 		defer {
-			Task { @MainActor in
-				let result = self.testSuceeded
-				disconnect()
-				withAnimation { testSuceeded = result }
-			}
+			let result = self.testSuceeded
+			disconnect()
+			withAnimation { testSuceeded = result }
 		}
 		
 		if !checkAuth(state) {
@@ -211,15 +203,12 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			return
 		}
 		
-		nbytes = ssh_channel_read(
+		nbytes = ssh_channel_read_nonblocking(
 			testChannel,
 			&buffer,
 			UInt32(buffer.count),
 			0
 		)
-		while nbytes > 0 {
-			nbytes = ssh_channel_read_nonblocking(testChannel, &buffer, UInt32(buffer.count), 0)
-		}
 		
 		if nbytes < 0 {
 			ssh_channel_close(testChannel)
@@ -246,8 +235,8 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		
 		let fileManager = FileManager.default
 		let tempDir = fileManager.temporaryDirectory
-		let tempPubkey = tempDir.appendingPathComponent("key.pub")
-		let tempKey = tempDir.appendingPathComponent("key")
+		let tempPubkey = tempDir.appendingPathComponent("\(UUID())key.pub")
+		let tempKey = tempDir.appendingPathComponent("\(UUID())key")
 		
 		fileManager.createFile(atPath: tempPubkey.path(), contents: nil)
 		fileManager.createFile(atPath: tempKey.path(), contents: nil)
@@ -272,6 +261,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		if ssh_pki_import_pubkey_file(tempPubkey.path(), &pubkey) != 0 {
 			throw .importPrivkeyError
 		}
+		defer { ssh_key_free(pubkey) }
 		
 		if ssh_userauth_try_publickey(session, nil, pubkey) != 0 {
 			throw .pubkeyRejected
@@ -281,6 +271,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		if ssh_pki_import_privkey_file(tempKey.path(), pass, nil, nil, &privkey) != 0 {
 			throw .importPrivkeyError
 		}
+		defer { ssh_key_free(privkey) }
 		
 		if (ssh_userauth_publickey(session, nil, privkey) != 0) {
 			throw .privkeyRejected
@@ -289,8 +280,6 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		//if u got this far, youre authed!
 		withAnimation { state = .authorized }
 		
-		ssh_key_free(pubkey)
-		ssh_key_free(privkey)
 		do {
 			try FileManager.default.removeItem(at: tempPubkey)
 			try FileManager.default.removeItem(at: tempKey)
@@ -341,7 +330,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		let allAuths = zip(allAuthDescriptions, allAuthRaws)
 		
 		for authMethod in allAuths {
-			if authMethod.1 == recievedMethod {
+			if (recievedMethod & Int32(authMethod.1)) != 0 {
 				print(authMethod.0)
 			}
 		}
@@ -381,7 +370,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	func readFromChannel() -> String? {
 		guard connected else { return nil }
 		guard ssh_channel_is_open(channel) == 1 && ssh_channel_is_eof(channel) == 0 else {
-			Task { disconnect() }
+			disconnect()
 			return nil
 		}
 		
