@@ -99,13 +99,6 @@ struct ConnectionView: View {
 						handler.go()
 					}
 					handler.testExec()
-					DispatchQueue.main.asyncAfter(deadline: .now()+3) {
-						Task {
-							let result = handler.testSuceeded
-							await handler.disconnect()
-							handler.testSuceeded = result
-						}
-					}
 				} label: {
 					if let testResult = handler.testSuceeded {
 						Image(systemName: testResult ? "checkmark.circle" : "xmark.circle")

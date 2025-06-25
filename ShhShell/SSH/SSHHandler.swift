@@ -156,6 +156,14 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	}
 	
 	func testExec() {
+		defer {
+			Task { @MainActor in
+				let result = self.testSuceeded
+				await disconnect()
+				withAnimation { testSuceeded = result }
+			}
+		}
+		
 		if ssh_is_connected(session) == 0 {
 			withAnimation { testSuceeded = false }
 			return
