@@ -20,8 +20,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	@Published var title: String = ""
 	@Published var state: SSHState = .idle
 	var connected: Bool {
-		return !(state == .idle || state == .connecting)
-//		return state == .authorized || state == .shellOpen || state == .authorizing
+		return checkConnected(state)
 	}
 //	@Published var connected: Bool = false
 //	@Published var authorized: Bool = false
@@ -57,6 +56,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	
 	func go() {
 		guard !connected else {
+			withAnimation { state = .idle }
 			Task {
 				await disconnect()
 			}
@@ -130,8 +130,6 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	func disconnect() async {
 		await MainActor.run {
 			withAnimation { state = .idle }
-//			withAnimation { connected = false }
-//			withAnimation { authorized = false }
 			withAnimation { testSuceeded = nil }
 		}
 		
@@ -171,7 +169,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			}
 		}
 		
-		if state == .authorized {} else {
+		if !checkAuth(state) {
 			go()
 		}
 		
@@ -180,7 +178,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			return
 		}
 		
-		guard state == .authorized else {
+		guard checkAuth(state) else {
 			withAnimation { testSuceeded = false }
 			return
 		}
@@ -378,7 +376,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		status = ssh_channel_request_shell(self.channel)
 		guard status == SSH_OK else { return }
 		
-		
+		withAnimation { state = .shellOpen }
 	}
 	
 	func readFromChannel() -> String? {

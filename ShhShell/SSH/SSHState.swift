@@ -14,3 +14,15 @@ enum SSHState {
 	case authorized
 	case shellOpen
 }
+
+func checkConnected(_ state: SSHState) -> Bool {
+	return !(state == .idle || state == .connecting)
+}
+
+func checkAuth(_ state: SSHState) -> Bool {
+	return state == .authorized || state == .shellOpen
+}
+
+func checkShell(_ state: SSHState) -> Bool {
+	return state == .shellOpen
+}

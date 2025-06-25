@@ -24,13 +24,14 @@ struct ConnectionView: View {
 	var body: some View {
 		NavigationStack {
 			List {
+				Text("\(handler.state)")
 				Section {
 					HStack {
 						Text(handler.connected ? "connected" : "not connected")
 							.modifier(foregroundColorStyle(handler.connected ? .green : .red))
 						
-						Text(handler.state == .authorized ? "authorized" : "unauthorized")
-							.modifier(foregroundColorStyle(handler.state == .authorized ? .green : .red))
+						Text(checkAuth(handler.state) ? "authorized" : "unauthorized")
+							.modifier(foregroundColorStyle(checkAuth(handler.state) ? .green : .red))
 					}
 					TextField("address", text: $handler.host.address)
 						.textFieldStyle(.roundedBorder)
@@ -91,7 +92,7 @@ struct ConnectionView: View {
 				} label: {
 					Label("Show Terminal", systemImage: "apple.terminal")
 				}
-				.disabled(!handler.connected || !(handler.state == .authorized))
+				.disabled(!checkShell(handler.state))
 				
 				Button() {
 					handler.testExec()
@@ -123,7 +124,7 @@ struct ConnectionView: View {
 				ToolbarItem() {
 					Button() {
 						handler.go()
-						showTerminal = handler.connected && handler.state == .authorized
+						showTerminal = checkShell(handler.state)
 					} label: {
 						Label(
 							handler.connected ? "Disconnect" : "Connect",
@@ -134,6 +135,7 @@ struct ConnectionView: View {
 			}
 		}
 		.fullScreenCover(isPresented: $showTerminal) {
+			Text("\(handler.state)")
 			ShellView(handler: handler)
 		}
 		.onDisappear {
