@@ -91,6 +91,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	
 	func connect() throws(SSHError) {
 		defer {
+			try? authWithNone()
 			getAuthMethods()
 			self.host.key = getHostkey()
 		}
@@ -169,25 +170,25 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		var buffer: [CChar] = Array(repeating: 0, count: 256)
 		var nbytes: CInt
 
-		let channel = ssh_channel_new(session)
-		guard channel != nil else {
+		let testChannel = ssh_channel_new(session)
+		guard testChannel != nil else {
 			withAnimation { testSuceeded = false }
 			return
 		}
 
-		status = ssh_channel_open_session(channel)
+		status = ssh_channel_open_session(testChannel)
 		guard status == SSH_OK else {
-			ssh_channel_free(channel)
+			ssh_channel_free(testChannel)
 			logger.critical("session opening error")
 			logSshGetError()
 			withAnimation { testSuceeded = false }
 			return
 		}
 
-		status = ssh_channel_request_exec(channel, "uptime")
+		status = ssh_channel_request_exec(testChannel, "uptime")
 		guard status == SSH_OK else {
-			ssh_channel_close(channel)
-			ssh_channel_free(channel)
+			ssh_channel_close(testChannel)
+			ssh_channel_free(testChannel)
 			logger.critical("session opening error")
 			logSshGetError()
 			withAnimation { testSuceeded = false }
@@ -195,36 +196,27 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		}
 		
 		nbytes = ssh_channel_read(
-			channel,
+			testChannel,
 			&buffer,
 			UInt32(buffer.count),
 			0
 		)
 		while nbytes > 0 {
-			let written = write(1, buffer, Int(nbytes))
-			guard written == Int(nbytes) else {
-				ssh_channel_close(channel)
-				ssh_channel_free(channel)
-				logger.critical("write error")
-				logSshGetError()
-				withAnimation { testSuceeded = false }
-				return
-			}
-			nbytes = ssh_channel_read(channel, &buffer, UInt32(buffer.count), 0)
+			nbytes = ssh_channel_read_nonblocking(testChannel, &buffer, UInt32(buffer.count), 0)
 		}
 
 		if nbytes < 0 {
-			ssh_channel_close(channel)
-			ssh_channel_free(channel)
+			ssh_channel_close(testChannel)
+			ssh_channel_free(testChannel)
 			logger.critical("didnt read?")
 			logSshGetError()
 			withAnimation { testSuceeded = false }
 			return
 		}
 		
-		ssh_channel_send_eof(channel)
-		ssh_channel_close(channel)
-		ssh_channel_free(channel)
+		ssh_channel_send_eof(testChannel)
+		ssh_channel_close(testChannel)
+		ssh_channel_free(testChannel)
 		print("testExec succeeded")
 		withAnimation { testSuceeded = true }
 		return
@@ -339,7 +331,6 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 				print(authMethod.0)
 			}
 		}
-		print(recievedMethod)
 	}
 	
 	//MARK: shell
