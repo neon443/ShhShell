@@ -15,11 +15,11 @@ struct KeyManagerView: View {
 		NavigationStack {
 			List {
 				Section {
-					ForEach(hostsManager.savedHosts) { host in
+					ForEach(hostsManager.getKeys()) { keypair in
 						NavigationLink {
-							
+							KeyDetailView(hostsManager: hostsManager, keypair: keypair)
 						} label: {
-							
+							Text(String(data: keypair.publicKey!, encoding: .utf8) ?? "nil")
 						}
 					}
 				}
@@ -27,9 +27,11 @@ struct KeyManagerView: View {
 					NavigationLink {
 						List {
 							ForEach(hostsManager.savedHosts) { host in
-								Text(host.address)
-									.bold()
-								Text(host.key ?? "nil")
+								VStack(alignment: .leading) {
+									Text(host.address)
+										.bold()
+									Text(host.key ?? "nil")
+								}
 							}
 						}
 					} label: {

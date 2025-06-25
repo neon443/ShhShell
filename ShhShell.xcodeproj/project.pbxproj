@@ -27,6 +27,8 @@
 		A95FAA572DF4B62A00DE2F5A /* openssl.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A95FAA512DF4B62100DE2F5A /* openssl.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A96C6A8A2E0C0B1100F377FE /* SSHState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96C6A892E0C0B1100F377FE /* SSHState.swift */; };
 		A96C6AFE2E0C43B600F377FE /* Keypair.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96C6AFD2E0C43B600F377FE /* Keypair.swift */; };
+		A96C6B002E0C45FE00F377FE /* KeyDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96C6AFF2E0C45FE00F377FE /* KeyDetailView.swift */; };
+		A96C6B022E0C49E800F377FE /* CenteredLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96C6B012E0C49E800F377FE /* CenteredLabel.swift */; };
 		A98554552E05535F009051BD /* KeyManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554542E05535F009051BD /* KeyManagerView.swift */; };
 		A98554592E0553AA009051BD /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554582E0553AA009051BD /* KeyManager.swift */; };
 		A985545D2E055D4D009051BD /* ConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A985545C2E055D4D009051BD /* ConnectionView.swift */; };
@@ -97,6 +99,8 @@
 		A95FAA5C2DF4B7A300DE2F5A /* ci_prost_xcodebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_prost_xcodebuild.sh; sourceTree = "<group>"; };
 		A96C6A892E0C0B1100F377FE /* SSHState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHState.swift; sourceTree = "<group>"; };
 		A96C6AFD2E0C43B600F377FE /* Keypair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keypair.swift; sourceTree = "<group>"; };
+		A96C6AFF2E0C45FE00F377FE /* KeyDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyDetailView.swift; sourceTree = "<group>"; };
+		A96C6B012E0C49E800F377FE /* CenteredLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenteredLabel.swift; sourceTree = "<group>"; };
 		A98554542E05535F009051BD /* KeyManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyManagerView.swift; sourceTree = "<group>"; };
 		A98554582E0553AA009051BD /* KeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
 		A985545C2E055D4D009051BD /* ConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionView.swift; sourceTree = "<group>"; };
@@ -267,6 +271,8 @@
 			children = (
 				A98554582E0553AA009051BD /* KeyManager.swift */,
 				A985545E2E056EDD009051BD /* KeychainLayer.swift */,
+				A96C6AFF2E0C45FE00F377FE /* KeyDetailView.swift */,
+				A96C6B012E0C49E800F377FE /* CenteredLabel.swift */,
 			);
 			path = Keys;
 			sourceTree = "<group>";
@@ -424,6 +430,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A96C6B022E0C49E800F377FE /* CenteredLabel.swift in Sources */,
 				A923172F2E08851200ECE1E6 /* ShellView.swift in Sources */,
 				A985545F2E056EDD009051BD /* KeychainLayer.swift in Sources */,
 				A93143C62DF61FE300FCD5DB /* ViewModifiers.swift in Sources */,
@@ -433,6 +440,7 @@
 				A93143C02DF61B3200FCD5DB /* Host.swift in Sources */,
 				A9B15A9A2E0ABA0400F66E02 /* DialogView.swift in Sources */,
 				A92538C92DEE0742007E0A18 /* ShhShellApp.swift in Sources */,
+				A96C6B002E0C45FE00F377FE /* KeyDetailView.swift in Sources */,
 				A98554612E058433009051BD /* HostsManager.swift in Sources */,
 				A985545D2E055D4D009051BD /* ConnectionView.swift in Sources */,
 				A98554592E0553AA009051BD /* KeyManager.swift in Sources */,
@@ -613,6 +621,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "ShhShell uses Face ID to verify your identity";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = _;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -649,6 +658,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "ShhShell uses Face ID to verify your identity";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = _;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

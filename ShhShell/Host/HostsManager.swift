@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import LocalAuthentication
 
-class HostsManager: ObservableObject {
+class HostsManager: ObservableObject, @unchecked Sendable {
 	private let userDefaults = NSUbiquitousKeyValueStore.default
 	
 	@Published var savedHosts: [Host] = []
@@ -61,12 +62,27 @@ class HostsManager: ObservableObject {
 	func getKeys() -> [Keypair] {
 		var result: [Keypair] = []
 		for host in savedHosts {
-			if !result.contains(where: { $0 == Keypair(publicKey: host.publicKey, privateKey: host.privateKey)}) {
+			if result.contains(where: { $0 == Keypair(publicKey: host.publicKey, privateKey: host.privateKey)}) {
 				
 			} else {
 				result.append(Keypair(publicKey: host.publicKey, privateKey: host.privateKey))
 			}
 		}
 		return result
+	}
+	
+	func authWithBiometrics() async -> Bool {
+		let context = LAContext()
+		var error: NSError?
+		guard context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) else {
+			return false
+		}
+		
+		let reason = "Authenticate yourself with Face ID to view private keys"
+		return await withCheckedContinuation { continuation in
+			context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { success, _ in
+				continuation.resume(returning: success)
+			}
+		}
 	}
 }
