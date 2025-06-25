@@ -29,8 +29,8 @@ struct ConnectionView: View {
 						Text(handler.connected ? "connected" : "not connected")
 							.modifier(foregroundColorStyle(handler.connected ? .green : .red))
 						
-						Text(handler.authorized ? "authorized" : "unauthorized")
-							.modifier(foregroundColorStyle(handler.authorized ? .green : .red))
+						Text(handler.state == .authorized ? "authorized" : "unauthorized")
+							.modifier(foregroundColorStyle(handler.state == .authorized ? .green : .red))
 					}
 					TextField("address", text: $handler.host.address)
 						.textFieldStyle(.roundedBorder)
@@ -91,13 +91,9 @@ struct ConnectionView: View {
 				} label: {
 					Label("Show Terminal", systemImage: "apple.terminal")
 				}
-				.disabled(!handler.connected || !handler.authorized)
+				.disabled(!handler.connected || !(handler.state == .authorized))
 				
 				Button() {
-					if handler.authorized && handler.connected {
-					} else {
-						handler.go()
-					}
 					handler.testExec()
 				} label: {
 					if let testResult = handler.testSuceeded {
@@ -127,7 +123,7 @@ struct ConnectionView: View {
 				ToolbarItem() {
 					Button() {
 						handler.go()
-						showTerminal = handler.connected && handler.authorized
+						showTerminal = handler.connected && handler.state == .authorized
 					} label: {
 						Label(
 							handler.connected ? "Disconnect" : "Connect",

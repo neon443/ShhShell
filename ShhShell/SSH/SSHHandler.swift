@@ -18,8 +18,13 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 //	@Published var hostsManager = HostsManager()
 	
 	@Published var title: String = ""
-	@Published var connected: Bool = false
-	@Published var authorized: Bool = false
+	@Published var state: SSHState = .idle
+	var connected: Bool {
+		return !(state == .idle || state == .connecting)
+//		return state == .authorized || state == .shellOpen || state == .authorizing
+	}
+//	@Published var connected: Bool = false
+//	@Published var authorized: Bool = false
 	@Published var testSuceeded: Bool? = nil
 	
 	@Published var bell: UUID? = nil
@@ -90,6 +95,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	}
 	
 	func connect() throws(SSHError) {
+		withAnimation { state = .connecting }
 		defer {
 			try? authWithNone()
 			getAuthMethods()
@@ -101,7 +107,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		
 		session = ssh_new()
 		guard session != nil else {
-			withAnimation { connected = false }
+			withAnimation { state = .idle }
 			throw .backendError("Failed opening session")
 		}
 
@@ -114,17 +120,18 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		if status != SSH_OK {
 			logger.critical("connection not ok: \(status)")
 			logSshGetError()
-			withAnimation { connected = false }
+			withAnimation { state = .idle }
 			throw .connectionFailed("Failed connecting")
 		}
-		withAnimation { connected = true }
+		withAnimation { state = .authorizing }
 		return
 	}
 
 	func disconnect() async {
 		await MainActor.run {
-			withAnimation { connected = false }
-			withAnimation { authorized = false }
+			withAnimation { state = .idle }
+//			withAnimation { connected = false }
+//			withAnimation { authorized = false }
 			withAnimation { testSuceeded = nil }
 		}
 		
@@ -164,12 +171,16 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			}
 		}
 		
+		if state == .authorized {} else {
+			go()
+		}
+		
 		if ssh_is_connected(session) == 0 {
 			withAnimation { testSuceeded = false }
 			return
 		}
 		
-		guard authorized else {
+		guard state == .authorized else {
 			withAnimation { testSuceeded = false }
 			return
 		}
@@ -233,7 +244,6 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	//MARK: auth
 	func authWithPubkey(pub pubInp: Data, priv privInp: Data, pass: String) throws(KeyError) {
 		guard session != nil else {
-			withAnimation { authorized = false }
 			return
 		}
 		
@@ -276,12 +286,11 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		}
 		
 		if (ssh_userauth_publickey(session, nil, privkey) != 0) {
-			withAnimation { authorized = false }
 			throw .privkeyRejected
 		}
 		
 		//if u got this far, youre authed!
-		withAnimation { authorized = true }
+		withAnimation { state = .authorized }
 		
 		ssh_key_free(pubkey)
 		ssh_key_free(privkey)
@@ -302,7 +311,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			logSshGetError()
 			throw .rejectedCredentials
 		}
-		withAnimation { authorized = true }
+		withAnimation { state = .authorized }
 		return
 	}
 	
@@ -311,7 +320,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		guard status == SSH_AUTH_SUCCESS.rawValue else { throw .rejectedCredentials }
 		
 		logCritical("no security moment lol")
-		withAnimation { authorized = true }
+		withAnimation { state = .authorized }
 		return
 	}
 	

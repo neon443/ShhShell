@@ -13,5 +13,4 @@ enum SSHState {
 	case authorizing
 	case authorized
 	case shellOpen
-//	case unauthorized
 }
