@@ -33,7 +33,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		self.host = host
 	}
 	
-	func getHostkey() -> Data? {
+	func getHostkey() -> String? {
 		var hostkey: ssh_key?
 		ssh_get_server_publickey(session, &hostkey)
 		
@@ -41,7 +41,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		
 		let status = ssh_pki_export_pubkey_base64(hostkey, &hostkeyB64)
 		guard status == SSH_OK, let cString = hostkeyB64 else { return nil }
-		return String(cString: cString).data(using: .utf8)
+		return String(cString: cString)
 	}
 	
 	func go() {
@@ -60,7 +60,11 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		
 		try? authWithNone()
 		getAuthMethods()
-		self.host.key = getHostkey()
+		
+		if self.host.key != getHostkey() {
+			self.host.key = getHostkey()
+			return
+		}
 		
 		if !host.password.isEmpty {
 			do { try authWithPw() } catch {

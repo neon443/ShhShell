@@ -76,10 +76,9 @@ struct ConnectionView: View {
 					TextField("", text: $passphrase, prompt: Text("Passphrase (Optional)"))
 				}
 				
-				if handler.host.key != nil,
-				   let hostkeyString = String(data: handler.host.key!, encoding: .utf8) {
-					Text("Hostkey: "+hostkeyString)
-						.onChange(of: handler.host.key) { _ in
+				if handler.host.key != nil {
+					Text("Hostkey: \(handler.getHostkey() ?? hostsManager.getHostMatching(handler.host)?.key ?? "nil")")
+					.onChange(of: handler.host.key) { _ in
 							guard let previousKnownHost = hostsManager.getHostMatching(handler.host) else { return }
 							guard handler.host.key == previousKnownHost.key else {
 								hostKeyChangedAlert = true
@@ -116,7 +115,7 @@ struct ConnectionView: View {
 					handler.host.key = hostsManager.getHostMatching(handler.host)?.key
 				}
 			} message: {
-				Text("Expected \(hostsManager.getHostMatching(handler.host)?.key?.base64EncodedString() ?? "null")\nbut recieved \(handler.host.key?.base64EncodedString() ?? "null" ) from the server")
+				Text("Expected \(handler.host.key ?? "nil")\nbut recieved \(handler.getHostkey() ?? "nil") from the server")
 			}
 			.transition(.opacity)
 			.toolbar {

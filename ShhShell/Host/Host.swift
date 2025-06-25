@@ -16,7 +16,7 @@ protocol HostPr: Codable, Identifiable, Equatable {
 	var publicKey: Data? { get set }
 	var privateKey: Data? { get set }
 	var passphrase: String { get set }
-	var key: Data? { get set }
+	var key: String? { get set }
 }
 
 struct Host: HostPr {
@@ -28,7 +28,7 @@ struct Host: HostPr {
 	var publicKey: Data?
 	var privateKey: Data?
 	var passphrase: String = ""
-	var key: Data?
+	var key: String?
 	
 	init(
 		address: String,
@@ -38,7 +38,7 @@ struct Host: HostPr {
 		publicKey: Data? = nil,
 		privateKey: Data? = nil,
 		passphrase: String = "",
-		hostkey: Data? = nil
+		hostkey: String? = nil
 	) {
 		self.address = address
 		self.port = port
