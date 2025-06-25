@@ -33,6 +33,9 @@ struct ConnectionView: View {
 							.modifier(foregroundColorStyle(checkAuth(handler.state) ? .green : .red))
 						Text("\(handler.state)")
 					}
+					TextField("name", text: $handler.host.name)
+						.textFieldStyle(.roundedBorder)
+					
 					TextField("address", text: $handler.host.address)
 						.textFieldStyle(.roundedBorder)
 					

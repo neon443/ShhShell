@@ -46,7 +46,7 @@ struct KeyManagerView: View {
 							}
 							ForEach(hostsManager.savedHosts) { host in
 								VStack(alignment: .leading) {
-									Text(host.address)
+									Text(host.name + "\n" + host.address)
 										.bold()
 									Text(host.key ?? "nil")
 								}

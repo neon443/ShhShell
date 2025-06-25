@@ -7,6 +7,7 @@
 
 import Foundation
 import LocalAuthentication
+import SwiftUI
 
 class HostsManager: ObservableObject, @unchecked Sendable {
 	private let userDefaults = NSUbiquitousKeyValueStore.default
@@ -36,8 +37,16 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	
 	func updateHost(_ updatedHost: Host) {
 		if let index = savedHosts.firstIndex(where: { $0.id == updatedHost.id }) {
-			savedHosts[index] = updatedHost
+			withAnimation { savedHosts[index] = updatedHost }
 			saveSavedHosts()
+		}
+	}
+	
+	func duplicateHost(_ hostToDup: Host) {
+		var hostNewID = hostToDup
+		hostNewID.id = UUID()
+		if let index = savedHosts.firstIndex(where: { $0 == hostToDup }) {
+			savedHosts.insert(hostNewID, at: index+1)
 		}
 	}
 	
@@ -56,6 +65,13 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		if let encoded = try? encoder.encode(savedHosts) {
 			userDefaults.set(encoded, forKey: "savedHosts")
 			userDefaults.synchronize()
+		}
+	}
+	
+	func removeHost(_ host: Host) {
+		if let index = savedHosts.firstIndex(where: { $0.id == host.id }) {
+			let _ = withAnimation { savedHosts.remove(at: index) }
+			saveSavedHosts()
 		}
 	}
 	

@@ -44,21 +44,25 @@ struct HostsView: View {
 							keyManager: keyManager
 						)
 					} label: {
-						if host.address.isEmpty {
-							Text(host.id.uuidString)
-						} else {
+						if host.name.isEmpty {
 							Text(host.address)
+						} else if host.address.isEmpty {
+							Text(host.name)
+						} else {
+							Text(host.id.uuidString)
 						}
 					}
 					.animation(.default, value: host)
 					.swipeActions(edge: .trailing) {
 						Button(role: .destructive) {
-							if let index = hostsManager.savedHosts.firstIndex(where: { $0.id == host.id }) {
-								let _ = withAnimation { hostsManager.savedHosts.remove(at: index) }
-								hostsManager.saveSavedHosts()
-							}
+							hostsManager.removeHost(host)
 						} label: {
 							Label("Delete", systemImage: "trash")
+						}
+						Button() {
+							hostsManager.duplicateHost(host)
+						} label: {
+							Label("Duplicate", systemImage: "square.filled.on.square")
 						}
 					}
 				}
