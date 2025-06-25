@@ -54,7 +54,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		do {
 			try connect()
 		} catch {
-			print("error in connect \(error.localizedDescription)")
+//			print("error in connect \(error.localizedDescription)")
 			return
 		}
 		
@@ -248,7 +248,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			try privInp.write(to: tempKey, options: .completeFileProtection)
 		} catch {
 			print("file writing error")
-			print(error.localizedDescription)
+//			print(error.localizedDescription)
 		}
 		
 		let attributes: [FileAttributeKey: Any] = [.posixPermissions: 0o600]
@@ -256,7 +256,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			try fileManager.setAttributes(attributes, ofItemAtPath: tempPubkey.path())
 			try fileManager.setAttributes(attributes, ofItemAtPath: tempKey.path())
 		} catch {
-			logCritical("permission settig failed\(error.localizedDescription)")
+//			logCritical("permission settig failed\(error.localizedDescription)")
 		}
 		
 		var pubkey: ssh_key?
