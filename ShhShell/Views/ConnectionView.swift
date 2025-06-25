@@ -18,8 +18,6 @@ struct ConnectionView: View {
 	@State var privkeyStr: String = ""
 	
 	@State var showTerminal: Bool = false
-	@State var privPickerPresented: Bool = false
-	@State var pubPickerPresented: Bool = false
 	
 	@State var hostKeyChangedAlert: Bool = false
 	
@@ -65,26 +63,6 @@ struct ConnectionView: View {
 								let newStr = pubkeyStr.replacingOccurrences(of: "\r\n", with: "")
 								handler.host.publicKey = Data(newStr.utf8)
 							}
-						Button() {
-							pubPickerPresented.toggle()
-						} label: {
-							Image(systemName: "folder")
-						}
-						.buttonStyle(.plain)
-						.fileImporter(isPresented: $pubPickerPresented, allowedContentTypes: [.item, .content, .data]) { (Result) in
-							do {
-								let fileURL = try Result.get()
-								guard fileURL.startAccessingSecurityScopedResource() else {
-									print("cant acces file")
-									return
-								}
-								defer { fileURL.stopAccessingSecurityScopedResource() }
-								handler.host.publicKey = try? Data(contentsOf: fileURL)
-								print(fileURL)
-							} catch {
-								print(error.localizedDescription)
-							}
-						}
 					}
 					
 					HStack {
@@ -93,27 +71,6 @@ struct ConnectionView: View {
 								let newStr = privkeyStr.replacingOccurrences(of: "\r\n", with: "")
 								handler.host.privateKey = Data(newStr.utf8)
 							}
-						Button() {
-							privPickerPresented.toggle()
-						} label: {
-							Image(systemName: "folder")
-						}
-						.buttonStyle(.plain)
-						.fileImporter(isPresented: $privPickerPresented, allowedContentTypes: [.item, .content, .data]) { (Result) in
-							do {
-								let fileURL = try Result.get()
-								guard fileURL.startAccessingSecurityScopedResource() else {
-									print("cant access file")
-									return
-								}
-								defer { fileURL.stopAccessingSecurityScopedResource() }
-								handler.host.privateKey = try? Data(contentsOf: fileURL)
-								print(handler.host.privateKey ?? "")
-								print(fileURL)
-							} catch {
-								print(error.localizedDescription)
-							}
-						}
 					}
 					TextField("", text: $passphrase, prompt: Text("Passphrase (Optional)"))
 				}

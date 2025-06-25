@@ -58,13 +58,18 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			return
 		}
 		
-		guard let _ = try? connect() else { return }
-		
+		do {
+			try connect()
+		} catch {
+			print("error in connect \(error.localizedDescription)")
+		}
+		guard connected else { return }
 		
 		
 		if !host.password.isEmpty {
 			do { try authWithPw() } catch {
 				print("pw auth error")
+				print(error.localizedDescription)
 			}
 		} else {
 			do {
@@ -74,6 +79,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 				}
 			} catch {
 				print("error with pubkey auth")
+				print(error.localizedDescription)
 			}
 		}
 		openShell()
@@ -121,7 +127,10 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			withAnimation { testSuceeded = nil }
 		}
 		
-		ssh_channel_send_eof(self.channel)
+		//send eof if open
+		if ssh_channel_is_open(channel) == 1 {
+			ssh_channel_send_eof(channel)
+		}
 		ssh_channel_free(self.channel)
 		self.channel = nil
 		
@@ -157,7 +166,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		}
 
 		var status: CInt
-		var buffer: [Int] = Array(repeating: 0, count: 256)
+		var buffer: [CChar] = Array(repeating: 0, count: 256)
 		var nbytes: CInt
 
 		let channel = ssh_channel_new(session)
@@ -236,8 +245,13 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		fileManager.createFile(atPath: tempPubkey.path(), contents: nil)
 		fileManager.createFile(atPath: tempKey.path(), contents: nil)
 		
-		try? pubInp.write(to: tempPubkey, options: .completeFileProtection)
-		try? privInp.write(to: tempKey, options: .completeFileProtection)
+		do {
+			try pubInp.write(to: tempPubkey, options: .completeFileProtection)
+			try privInp.write(to: tempKey, options: .completeFileProtection)
+		} catch {
+			print("file writing error")
+			print(error.localizedDescription)
+		}
 		
 		let attributes: [FileAttributeKey: Any] = [.posixPermissions: 0o600]
 		do {
@@ -271,8 +285,13 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		
 		ssh_key_free(pubkey)
 		ssh_key_free(privkey)
-		try? FileManager.default.removeItem(at: tempPubkey)
-		try? FileManager.default.removeItem(at: tempKey)
+		do {
+			try FileManager.default.removeItem(at: tempPubkey)
+			try FileManager.default.removeItem(at: tempKey)
+		} catch {
+			print("error removing file")
+			print(error.localizedDescription)
+		}
 		return
 	}
 	
@@ -328,7 +347,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		var status: CInt
 		
 		channel = ssh_channel_new(session)
-		guard let channel = channel else { return }
+		guard let channel else { return }
 		
 		status = ssh_channel_open_session(channel)
 		guard status == SSH_OK else {
@@ -356,7 +375,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	
 	func readFromChannel() -> String? {
 		guard connected else { return nil }
-		guard ssh_channel_is_open(channel) != 0 || ssh_channel_is_eof(channel) == 0 else {
+		guard ssh_channel_is_open(channel) == 1 && ssh_channel_is_eof(channel) == 0 else {
 			Task { await disconnect() }
 			return nil
 		}
@@ -376,19 +395,12 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		return nil
 	}
 	
-	private func logSshGetError() {
-		logger.critical("\(String(cString: ssh_get_error(&self.session)))")
-	}
-	
-	private func logCritical(_ logMessage: String) {
-		logger.critical("\(logMessage)")
-	}
-	
 	func writeToChannel(_ string: String?) {
-		guard let string = string else { return }
-		guard channel != nil else { return }
-		guard ssh_channel_is_open(channel) != 0 else { return }
-		guard ssh_channel_is_eof(channel) == 0 else { return }
+		guard let string else { return }
+		guard ssh_channel_is_open(channel) == 1 && ssh_channel_is_eof(channel) == 0 else {
+			Task { await disconnect() }
+			return
+		}
 		
 		var buffer: [CChar] = []
 		for byte in string.utf8 {
@@ -407,5 +419,14 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		
 		ssh_channel_change_pty_size(channel, Int32(toCols), Int32(toRows))
 //		print("resized tty to \(toRows)rows and \(toCols)cols")
+	}
+	
+	private func logSshGetError() {
+		guard var session = self.session else { return }
+		logger.critical("\(String(cString: ssh_get_error(&session)))")
+	}
+	
+	private func logCritical(_ logMessage: String) {
+		logger.critical("\(logMessage)")
 	}
 }
