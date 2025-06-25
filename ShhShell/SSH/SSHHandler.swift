@@ -55,8 +55,8 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			try connect()
 		} catch {
 			print("error in connect \(error.localizedDescription)")
+			return
 		}
-		guard connected else { return }
 		
 		try? authWithNone()
 		getAuthMethods()

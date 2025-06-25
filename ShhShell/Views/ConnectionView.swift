@@ -108,6 +108,7 @@ struct ConnectionView: View {
 			.alert("Hostkey changed", isPresented: $hostKeyChangedAlert) {
 				Button("Accept New Hostkey", role: .destructive) {
 					hostsManager.updateHost(handler.host)
+					handler.go()
 				}
 				
 				Button("Disconnect", role: .cancel) {
