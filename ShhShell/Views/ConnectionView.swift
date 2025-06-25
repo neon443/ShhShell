@@ -17,6 +17,7 @@ struct ConnectionView: View {
 	@State var pubkeyStr: String = ""
 	@State var privkeyStr: String = ""
 	
+	@State var showTerminal: Bool = false
 	@State var privPickerPresented: Bool = false
 	@State var pubPickerPresented: Bool = false
 	
@@ -128,12 +129,12 @@ struct ConnectionView: View {
 						}
 				}
 				
-				NavigationLink() {
-					ShellView(handler: handler)
+				Button() {
+					showTerminal.toggle()
 				} label: {
-					Label("Open Terminal", systemImage: "apple.terminal")
+					Label("Show Terminal", systemImage: "apple.terminal")
 				}
-				.disabled(!(handler.connected && handler.authorized))
+				.disabled(!handler.connected || !handler.authorized)
 				
 				Button() {
 					if handler.authorized && handler.connected {
@@ -169,6 +170,7 @@ struct ConnectionView: View {
 				ToolbarItem() {
 					Button() {
 						handler.go()
+						showTerminal = handler.connected && handler.authorized
 					} label: {
 						Label(
 							handler.connected ? "Disconnect" : "Connect",
@@ -177,6 +179,9 @@ struct ConnectionView: View {
 					}
 				}
 			}
+		}
+		.fullScreenCover(isPresented: $showTerminal) {
+			ShellView(handler: handler)
 		}
 		.onDisappear {
 			guard hostsManager.getHostMatching(handler.host) == handler.host else {

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		A9083E402DF2226F0042906E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A9083E3F2DF2225A0042906E /* libz.tbd */; };
-		A92317282E07111E00ECE1E6 /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; productRef = A92317272E07111E00ECE1E6 /* SwiftTerm */; };
 		A923172A2E07113100ECE1E6 /* TerminalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92317292E07113100ECE1E6 /* TerminalController.swift */; };
 		A923172D2E07138000ECE1E6 /* SSHTerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A923172C2E07138000ECE1E6 /* SSHTerminalView.swift */; };
 		A923172F2E08851200ECE1E6 /* ShellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A923172E2E08851200ECE1E6 /* ShellView.swift */; };
@@ -32,6 +31,7 @@
 		A985545F2E056EDD009051BD /* KeychainLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A985545E2E056EDD009051BD /* KeychainLayer.swift */; };
 		A98554612E058433009051BD /* HostsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554602E058433009051BD /* HostsManager.swift */; };
 		A98554632E0587DF009051BD /* HostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554622E0587DF009051BD /* HostsView.swift */; };
+		A9A587202E0BF220006B31E6 /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; productRef = A9A5871F2E0BF220006B31E6 /* SwiftTerm */; };
 		A9B15A9A2E0ABA0400F66E02 /* DialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B15A992E0ABA0400F66E02 /* DialogView.swift */; };
 		A9C4140C2E096DB7005E3047 /* SSHError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4140B2E096DB7005E3047 /* SSHError.swift */; };
 		A9C897EF2DF1A9A400EF9A5F /* SSHHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */; };
@@ -110,7 +110,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A95FAA542DF4B62900DE2F5A /* LibSSH.xcframework in Frameworks */,
-				A92317282E07111E00ECE1E6 /* SwiftTerm in Frameworks */,
+				A9A587202E0BF220006B31E6 /* SwiftTerm in Frameworks */,
 				A93143BE2DF4D0B300FCD5DB /* libpthread.tbd in Frameworks */,
 				A9083E402DF2226F0042906E /* libz.tbd in Frameworks */,
 				A95FAA562DF4B62A00DE2F5A /* openssl.xcframework in Frameworks */,
@@ -294,7 +294,7 @@
 			);
 			name = ShhShell;
 			packageProductDependencies = (
-				A92317272E07111E00ECE1E6 /* SwiftTerm */,
+				A9A5871F2E0BF220006B31E6 /* SwiftTerm */,
 			);
 			productName = ShhShell;
 			productReference = A925389A2DEE06DC007E0A18 /* ShhShell.app */;
@@ -373,7 +373,7 @@
 			mainGroup = A92538912DEE06DC007E0A18;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				A92317262E07111E00ECE1E6 /* XCRemoteSwiftPackageReference "SwiftTerm" */,
+				A9A5871E2E0BF220006B31E6 /* XCRemoteSwiftPackageReference "SwiftTerm" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A925389B2DEE06DC007E0A18 /* Products */;
@@ -624,7 +624,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_STRICT_CONCURRENCY = complete;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -660,7 +660,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_STRICT_CONCURRENCY = complete;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -779,20 +779,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		A92317262E07111E00ECE1E6 /* XCRemoteSwiftPackageReference "SwiftTerm" */ = {
+		A9A5871E2E0BF220006B31E6 /* XCRemoteSwiftPackageReference "SwiftTerm" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/migueldeicaza/SwiftTerm";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.5;
+				branch = main;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A92317272E07111E00ECE1E6 /* SwiftTerm */ = {
+		A9A5871F2E0BF220006B31E6 /* SwiftTerm */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A92317262E07111E00ECE1E6 /* XCRemoteSwiftPackageReference "SwiftTerm" */;
+			package = A9A5871E2E0BF220006B31E6 /* XCRemoteSwiftPackageReference "SwiftTerm" */;
 			productName = SwiftTerm;
 		};
 /* End XCSwiftPackageProductDependency section */

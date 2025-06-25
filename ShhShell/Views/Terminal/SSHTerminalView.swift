@@ -35,7 +35,7 @@ final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalVie
 							await self.feed(text: read)
 						}
 					} else {
-						try? await Task.sleep(nanoseconds: 1_000_000) //1ms
+						try? await Task.sleep(nanoseconds: 10_000_000) //10ms
 					}
 				}
 			}
@@ -54,7 +54,7 @@ final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalVie
 						await self.feed(text: read)
 					}
 				} else {
-					Task{ try? await Task.sleep(nanoseconds: 1_000_000) }
+					Task{ try? await Task.sleep(nanoseconds: 10_000_000) }
 				}
 			}
 		}
@@ -69,7 +69,9 @@ final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalVie
 	}
 	
 	nonisolated public func setTerminalTitle(source: TerminalView, title: String) {
-		print("set title to \(title)")
+		Task {
+			await MainActor.run { handler?.setTitle(title) }
+		}
 	}
 	
 	public func sizeChanged(source: TerminalView, newCols: Int, newRows: Int) {

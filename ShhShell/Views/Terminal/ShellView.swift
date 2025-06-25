@@ -16,6 +16,11 @@ struct ShellView: View {
     var body: some View {
 		NavigationStack {
 			ZStack {
+				if handler.bell != nil {
+					Text("🔔")
+						.font(.title)
+						.transition(.scale)
+				}
 				if !handler.connected {
 					DialogView(handler: handler, showDialog: !handler.connected)
 				}
@@ -27,18 +32,27 @@ struct ShellView: View {
 			.toolbar {
 				ToolbarItem {
 					Button() {
-						handler.go()
-						if !handler.connected {
-							dismiss()
+						Task {
+							await handler.disconnect()
+							if !handler.connected { dismiss() }
 						}
 					} label: {
-						Label(
-							handler.connected ? "Disconnect" : "Connect",
-							systemImage: handler.connected ? "xmark.app.fill" : "power"
-						)
+						Label("Disconnect", systemImage: "xmark.app.fill")
+					}
+				}
+				ToolbarItem(placement: .cancellationAction) {
+					Button() {
+						dismiss()
+					} label: {
+						Label("Close", systemImage: "arrow.down.right.and.arrow.up.left")
 					}
 				}
 			}
+			.onChange(of: handler.connected) { _ in
+				if !handler.connected { dismiss() }
+			}
+			.navigationTitle(handler.title)
+			.navigationBarTitleDisplayMode(.inline)
 		}
     }
 }

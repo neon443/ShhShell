@@ -17,11 +17,12 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	
 //	@Published var hostsManager = HostsManager()
 	
+	@Published var title: String = ""
 	@Published var connected: Bool = false
 	@Published var authorized: Bool = false
 	@Published var testSuceeded: Bool? = nil
 	
-	@Published var bell: UUID?
+	@Published var bell: UUID? = nil
 	
 	@Published var host: Host
 	
@@ -76,6 +77,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			}
 		}
 		openShell()
+		setTitle("\(host.username)@\(host.address)")
 		ssh_channel_request_env(channel, "TERM", "xterm-256color")
 		ssh_channel_request_env(channel, "LANG", "en_US.UTF-8")
 		ssh_channel_request_env(channel, "LC_ALL", "en_US.UTF-8")
@@ -130,6 +132,17 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	
 	func checkHostkey() {
 		
+	}
+	
+	func ring() {
+		withAnimation { bell = UUID() }
+		DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+			withAnimation { self.bell = nil }
+		}
+	}
+	
+	func setTitle(_ newTitle: String) {
+		self.title = newTitle
 	}
 	
 	func testExec() {
@@ -208,6 +221,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		return
 	}
 	
+	//MARK: auth
 	func authWithPubkey(pub pubInp: Data, priv privInp: Data, pass: String) throws(KeyError) {
 		guard session != nil else {
 			withAnimation { authorized = false }
@@ -309,6 +323,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		print(recievedMethod)
 	}
 	
+	//MARK: shell
 	func openShell() {
 		var status: CInt
 		
@@ -346,7 +361,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			return nil
 		}
 		
-		var buffer: [CChar] = Array(repeating: 0, count: 4096)
+		var buffer: [CChar] = Array(repeating: 0, count: 16_384)
 		let nbytes = ssh_channel_read_nonblocking(channel, &buffer, UInt32(buffer.count), 0)
 		
 		guard nbytes > 0 else { return nil }
@@ -354,7 +369,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		let data = Data(bytes: buffer, count: Int(nbytes))
 		if let string = String(data: data, encoding: .utf8) {
 			#if DEBUG
-			print(String(data: Data(bytes: buffer, count: Int(nbytes)), encoding: .utf8)!)
+//			print(String(data: Data(bytes: buffer, count: Int(nbytes)), encoding: .utf8)!)
 			#endif
 			return string
 		}
