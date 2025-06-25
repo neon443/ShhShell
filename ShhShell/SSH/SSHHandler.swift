@@ -15,15 +15,12 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	private var channel: ssh_channel?
 	private let sshQueue = DispatchQueue(label: "SSH Queue")
 	
-//	@Published var hostsManager = HostsManager()
-	
 	@Published var title: String = ""
 	@Published var state: SSHState = .idle
 	var connected: Bool {
 		return checkConnected(state)
 	}
-//	@Published var connected: Bool = false
-//	@Published var authorized: Bool = false
+	
 	@Published var testSuceeded: Bool? = nil
 	
 	@Published var bell: UUID? = nil
@@ -33,12 +30,8 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	private let userDefaults = NSUbiquitousKeyValueStore.default
 	private let logger = Logger(subsystem: "xy", category: "sshHandler")
 	
-	init(
-		host: Host
-//		hostsManager: HostsManager
-	) {
+	init(host: Host) {
 		self.host = host
-//		self.hostsManager = hostsManager
 	}
 	
 	func getHostkey() -> Data? {
@@ -56,9 +49,11 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	
 	func go() {
 		guard !connected else {
-			withAnimation { state = .idle }
+			Task { @MainActor in
+				withAnimation { state = .idle }
+			}
 			Task {
-				await disconnect()
+				disconnect()
 			}
 			return
 		}
@@ -110,12 +105,12 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			withAnimation { state = .idle }
 			throw .backendError("Failed opening session")
 		}
-
+		
 		ssh_options_set(session, SSH_OPTIONS_HOST, host.address)
 		ssh_options_set(session, SSH_OPTIONS_LOG_VERBOSITY, &verbosity)
 		ssh_options_set(session, SSH_OPTIONS_PORT, &host.port)
 		ssh_options_set(session, SSH_OPTIONS_USER, host.username)
-
+		
 		let status = ssh_connect(session)
 		if status != SSH_OK {
 			logger.critical("connection not ok: \(status)")
@@ -126,11 +121,11 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		withAnimation { state = .authorizing }
 		return
 	}
-
-	func disconnect() async {
-		await MainActor.run {
-			withAnimation { state = .idle }
-			withAnimation { testSuceeded = nil }
+	
+	func disconnect() {
+		DispatchQueue.main.async {
+			withAnimation { self.state = .idle }
+			withAnimation { self.testSuceeded = nil }
 		}
 		
 		//send eof if open
@@ -140,7 +135,9 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		ssh_channel_free(self.channel)
 		self.channel = nil
 		
-		ssh_disconnect(self.session)
+		if connected && (ssh_is_connected(session) == 1) {
+			ssh_disconnect(self.session)
+		}
 		ssh_free(self.session)
 		self.session = nil
 	}
@@ -157,14 +154,16 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	}
 	
 	func setTitle(_ newTitle: String) {
-		self.title = newTitle
+		DispatchQueue.main.async {
+			self.title = newTitle
+		}
 	}
 	
 	func testExec() {
 		defer {
 			Task { @MainActor in
 				let result = self.testSuceeded
-				await disconnect()
+				disconnect()
 				withAnimation { testSuceeded = result }
 			}
 		}
@@ -182,17 +181,17 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			withAnimation { testSuceeded = false }
 			return
 		}
-
+		
 		var status: CInt
 		var buffer: [CChar] = Array(repeating: 0, count: 256)
 		var nbytes: CInt
-
+		
 		let testChannel = ssh_channel_new(session)
 		guard testChannel != nil else {
 			withAnimation { testSuceeded = false }
 			return
 		}
-
+		
 		status = ssh_channel_open_session(testChannel)
 		guard status == SSH_OK else {
 			ssh_channel_free(testChannel)
@@ -201,7 +200,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			withAnimation { testSuceeded = false }
 			return
 		}
-
+		
 		status = ssh_channel_request_exec(testChannel, "uptime")
 		guard status == SSH_OK else {
 			ssh_channel_close(testChannel)
@@ -221,7 +220,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		while nbytes > 0 {
 			nbytes = ssh_channel_read_nonblocking(testChannel, &buffer, UInt32(buffer.count), 0)
 		}
-
+		
 		if nbytes < 0 {
 			ssh_channel_close(testChannel)
 			ssh_channel_free(testChannel)
@@ -382,7 +381,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	func readFromChannel() -> String? {
 		guard connected else { return nil }
 		guard ssh_channel_is_open(channel) == 1 && ssh_channel_is_eof(channel) == 0 else {
-			Task { await disconnect() }
+			Task { disconnect() }
 			return nil
 		}
 		
@@ -404,7 +403,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	func writeToChannel(_ string: String?) {
 		guard let string else { return }
 		guard ssh_channel_is_open(channel) == 1 && ssh_channel_is_eof(channel) == 0 else {
-			Task { await disconnect() }
+			Task { disconnect() }
 			return
 		}
 		

@@ -32,10 +32,8 @@ struct ShellView: View {
 			.toolbar {
 				ToolbarItem {
 					Button() {
-						Task {
-							await handler.disconnect()
-							if !handler.connected { dismiss() }
-						}
+						handler.disconnect()
+						if !handler.connected { dismiss() }
 					} label: {
 						Label("Disconnect", systemImage: "xmark.app.fill")
 					}
