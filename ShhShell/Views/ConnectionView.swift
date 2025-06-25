@@ -76,8 +76,9 @@ struct ConnectionView: View {
 					TextField("", text: $passphrase, prompt: Text("Passphrase (Optional)"))
 				}
 				
-				if handler.host.key != nil {
-					Text("Hostkey: \(handler.host.key!.base64EncodedString())")
+				if handler.host.key != nil,
+				   let hostkeyString = String(data: handler.host.key!, encoding: .utf8) {
+					Text("Hostkey: "+hostkeyString)
 						.onChange(of: handler.host.key) { _ in
 							guard let previousKnownHost = hostsManager.getHostMatching(handler.host) else { return }
 							guard handler.host.key == previousKnownHost.key else {

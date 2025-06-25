@@ -13,6 +13,9 @@ enum SSHState {
 	case authorizing
 	case authorized
 	case shellOpen
+	
+	case connectionFailed
+	case authFailed
 }
 
 func checkConnected(_ state: SSHState) -> Bool {

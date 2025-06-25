@@ -40,10 +40,8 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		var hostkeyB64: UnsafeMutablePointer<CChar>? = nil
 		
 		let status = ssh_pki_export_pubkey_base64(hostkey, &hostkeyB64)
-		guard status == SSH_OK else { return nil }
-		guard let data = hostkeyB64 else { return nil }
-		
-		return Data(base64Encoded: String(cString: data))
+		guard status == SSH_OK, let cString = hostkeyB64 else { return nil }
+		return String(cString: cString).data(using: .utf8)
 	}
 	
 	func go() {
@@ -60,6 +58,9 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		}
 		guard connected else { return }
 		
+		try? authWithNone()
+		getAuthMethods()
+		self.host.key = getHostkey()
 		
 		if !host.password.isEmpty {
 			do { try authWithPw() } catch {
@@ -86,11 +87,6 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	
 	func connect() throws(SSHError) {
 		withAnimation { state = .connecting }
-		defer {
-			try? authWithNone()
-			getAuthMethods()
-			self.host.key = getHostkey()
-		}
 		
 		var verbosity: Int = 0
 //		var verbosity: Int = SSH_LOG_FUNCTIONS
@@ -154,25 +150,20 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	}
 	
 	func testExec() {
+		var success = false
 		defer {
-			let result = self.testSuceeded
 			disconnect()
-			withAnimation { testSuceeded = result }
+			withAnimation { testSuceeded = success }
 		}
 		
 		if !checkAuth(state) {
 			go()
 		}
+		guard checkAuth(state) else { return }
 		
-		if ssh_is_connected(session) == 0 {
-			withAnimation { testSuceeded = false }
-			return
-		}
+		if ssh_is_connected(session) == 0 { return }
 		
-		guard checkAuth(state) else {
-			withAnimation { testSuceeded = false }
-			return
-		}
+		guard checkAuth(state) else { return }
 		
 		var status: CInt
 		var buffer: [CChar] = Array(repeating: 0, count: 256)
@@ -180,7 +171,6 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		
 		let testChannel = ssh_channel_new(session)
 		guard testChannel != nil else {
-			withAnimation { testSuceeded = false }
 			return
 		}
 		
@@ -189,7 +179,6 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			ssh_channel_free(testChannel)
 			logger.critical("session opening error")
 			logSshGetError()
-			withAnimation { testSuceeded = false }
 			return
 		}
 		
@@ -199,7 +188,6 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			ssh_channel_free(testChannel)
 			logger.critical("session opening error")
 			logSshGetError()
-			withAnimation { testSuceeded = false }
 			return
 		}
 		
@@ -215,7 +203,6 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			ssh_channel_free(testChannel)
 			logger.critical("didnt read?")
 			logSshGetError()
-			withAnimation { testSuceeded = false }
 			return
 		}
 		
@@ -223,7 +210,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		ssh_channel_close(testChannel)
 		ssh_channel_free(testChannel)
 		print("testExec succeeded")
-		withAnimation { testSuceeded = true }
+		success = true
 		return
 	}
 	
