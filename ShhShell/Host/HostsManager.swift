@@ -57,4 +57,16 @@ class HostsManager: ObservableObject {
 			userDefaults.synchronize()
 		}
 	}
+	
+	func getKeys() -> [Keypair] {
+		var result: [Keypair] = []
+		for host in savedHosts {
+			if !result.contains(where: { $0 == Keypair(publicKey: host.publicKey, privateKey: host.privateKey)}) {
+				
+			} else {
+				result.append(Keypair(publicKey: host.publicKey, privateKey: host.privateKey))
+			}
+		}
+		return result
+	}
 }

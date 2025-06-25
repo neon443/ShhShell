@@ -65,7 +65,7 @@ final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalVie
 	}
 
 	nonisolated public func scrolled(source: TerminalView, position: Double) {
-		print("scrolled to \(position)")
+		
 	}
 	
 	nonisolated public func setTerminalTitle(source: TerminalView, title: String) {
@@ -99,5 +99,10 @@ final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalVie
 	
 	nonisolated public func rangeChanged(source: TerminalView, startY: Int, endY: Int) {
 		print(startY, endY)
+	}
+	
+	public func bell(source: TerminalView) {
+		print("bell rung")
+		handler?.ring()
 	}
 }

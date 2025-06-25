@@ -22,7 +22,7 @@ struct ContentView: View {
 			.tabItem {
 				Label("Hosts", systemImage: "server.rack")
 			}
-			KeyManagerView(keyManager: keyManager)
+			KeyManagerView(hostsManager: hostsManger, keyManager: keyManager)
 				.tabItem {
 					Label("Keys", systemImage: "key.2.on.ring")
 				}

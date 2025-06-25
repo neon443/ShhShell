@@ -26,6 +26,7 @@
 		A95FAA562DF4B62A00DE2F5A /* openssl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A95FAA512DF4B62100DE2F5A /* openssl.xcframework */; };
 		A95FAA572DF4B62A00DE2F5A /* openssl.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A95FAA512DF4B62100DE2F5A /* openssl.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A96C6A8A2E0C0B1100F377FE /* SSHState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96C6A892E0C0B1100F377FE /* SSHState.swift */; };
+		A96C6AFE2E0C43B600F377FE /* Keypair.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96C6AFD2E0C43B600F377FE /* Keypair.swift */; };
 		A98554552E05535F009051BD /* KeyManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554542E05535F009051BD /* KeyManagerView.swift */; };
 		A98554592E0553AA009051BD /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554582E0553AA009051BD /* KeyManager.swift */; };
 		A985545D2E055D4D009051BD /* ConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A985545C2E055D4D009051BD /* ConnectionView.swift */; };
@@ -95,6 +96,7 @@
 		A95FAA5B2DF4B7A000DE2F5A /* ci_pre_xcodebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_pre_xcodebuild.sh; sourceTree = "<group>"; };
 		A95FAA5C2DF4B7A300DE2F5A /* ci_prost_xcodebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_prost_xcodebuild.sh; sourceTree = "<group>"; };
 		A96C6A892E0C0B1100F377FE /* SSHState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHState.swift; sourceTree = "<group>"; };
+		A96C6AFD2E0C43B600F377FE /* Keypair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keypair.swift; sourceTree = "<group>"; };
 		A98554542E05535F009051BD /* KeyManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyManagerView.swift; sourceTree = "<group>"; };
 		A98554582E0553AA009051BD /* KeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
 		A985545C2E055D4D009051BD /* ConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionView.swift; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 			isa = PBXGroup;
 			children = (
 				A98554542E05535F009051BD /* KeyManagerView.swift */,
+				A96C6AFD2E0C43B600F377FE /* Keypair.swift */,
 			);
 			path = Keys;
 			sourceTree = "<group>";
@@ -436,6 +439,7 @@
 				A9C897EF2DF1A9A400EF9A5F /* SSHHandler.swift in Sources */,
 				A98554552E05535F009051BD /* KeyManagerView.swift in Sources */,
 				A923172D2E07138000ECE1E6 /* SSHTerminalView.swift in Sources */,
+				A96C6AFE2E0C43B600F377FE /* Keypair.swift in Sources */,
 				A9C4140C2E096DB7005E3047 /* SSHError.swift in Sources */,
 				A923172A2E07113100ECE1E6 /* TerminalController.swift in Sources */,
 			);
