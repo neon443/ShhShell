@@ -17,7 +17,6 @@ struct ShellView: View {
 			ZStack {
 				TerminalController(handler: handler)
 					.onAppear {
-						print("asd\(handler.scrollback.count)")
 						TerminalController.TerminalViewContainer.shared?.restoreScrollback()
 					}
 				
