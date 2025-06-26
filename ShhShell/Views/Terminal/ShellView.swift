@@ -16,10 +16,19 @@ struct ShellView: View {
     var body: some View {
 		NavigationStack {
 			ZStack {
+				terminalControllerRef
+				
+				Group {
+					Color.gray.opacity(0.2)
+						.transition(.opacity)
+					Text("🔔")
+						.font(.title)
+				}
+				.opacity(handler.bell ? 1 : 0)
+				
 				if !handler.connected {
 					DialogView(handler: handler, showDialog: !handler.connected)
 				}
-				terminalControllerRef
 			}
 			.task {
 				terminalControllerRef = TerminalController(handler: handler)
@@ -45,7 +54,7 @@ struct ShellView: View {
 			.onChange(of: handler.connected) { _ in
 				if !handler.connected { dismiss() }
 			}
-			.navigationTitle(handler.bell ? "🔔" : handler.title)
+			.navigationTitle(handler.title)
 			.navigationBarTitleDisplayMode(.inline)
 		}
     }

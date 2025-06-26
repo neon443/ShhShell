@@ -150,9 +150,10 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	}
 	
 	func ring() {
-		bell = true
-		DispatchQueue.main.asyncAfter(deadline: .now()+0.2) {
-			self.bell = false
+		Task { @MainActor in
+			withAnimation { self.bell = true }
+			try? await Task.sleep(nanoseconds: 250_000_000) // 250ms
+			withAnimation { self.bell = false }
 		}
 	}
 	
