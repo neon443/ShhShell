@@ -24,6 +24,7 @@ final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalVie
 		
 		super.init(frame: frame)
 		terminalDelegate = self
+		
 		sshQueue.async {
 			Task {
 				guard let handler = await self.handler else { return }
@@ -32,7 +33,12 @@ final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalVie
 					if let read = handler.readFromChannel() {
 						Task { [weak self] in
 							guard let self else { return }
-							await self.feed(text: read)
+							await MainActor.run {
+								CATransaction.begin()
+								CATransaction.setDisableActions(true)
+								feed(text: read)
+								CATransaction.commit()
+							}
 						}
 					} else {
 						try? await Task.sleep(nanoseconds: 10_000_000) //10ms
@@ -42,31 +48,11 @@ final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalVie
 		}
 	}
 	
-	public func resetTerminalView(handler: SSHHandler) {
-		self.handler = handler
-//		terminal.softReset()
-		self.setNeedsDisplay()
-		sshQueue.async {
-			while handler.connected {
-				if let read = handler.readFromChannel() {
-					Task { [weak self] in
-						guard let self else { return }
-						await self.feed(text: read)
-					}
-				} else {
-					Task{ try? await Task.sleep(nanoseconds: 10_000_000) }
-				}
-			}
-		}
-	}
-	
 	required init?(coder: NSCoder) {
 		fatalError("unimplemented")
 	}
 
-	nonisolated public func scrolled(source: TerminalView, position: Double) {
-		
-	}
+	nonisolated public func scrolled(source: TerminalView, position: Double) {}
 	
 	nonisolated public func setTerminalTitle(source: TerminalView, title: String) {
 		Task {
@@ -76,6 +62,7 @@ final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalVie
 	
 	public func sizeChanged(source: TerminalView, newCols: Int, newRows: Int) {
 		try? handler?.resizePTY(toRows: newRows, toCols: newCols)
+		setNeedsDisplay()
 	}
 	
 	public func send(source: TerminalView, data: ArraySlice<UInt8>) {

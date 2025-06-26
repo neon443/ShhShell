@@ -22,9 +22,18 @@ struct TerminalController: UIViewRepresentable {
 			handler: handler
 		)
 		
+		tv.translatesAutoresizingMaskIntoConstraints = false
+		tv.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+		
 		return tv
 	}
 	
 	func updateUIView(_ tv: TerminalView, context: Context) {
+		tv.setNeedsLayout()
+		tv.layoutIfNeeded()
+	}
+	
+	static func dismantleUIView(_ uiView: SSHTerminalView, coordinator: ()) {
+		uiView.handler?.disconnect()
 	}
 }

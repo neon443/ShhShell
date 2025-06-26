@@ -83,6 +83,10 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			}
 		}
 		
+		ssh_channel_request_env(channel, "TERM", "xterm-256color")
+		ssh_channel_request_env(channel, "LANG", "en_US.UTF-8")
+		ssh_channel_request_env(channel, "LC_ALL", "en_US.UTF-8")
+		
 		do {
 			try openShell()
 		} catch {
@@ -90,9 +94,6 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		}
 		
 		setTitle("\(host.username)@\(host.address)")
-		ssh_channel_request_env(channel, "TERM", "xterm-256color")
-		ssh_channel_request_env(channel, "LANG", "en_US.UTF-8")
-		ssh_channel_request_env(channel, "LC_ALL", "en_US.UTF-8")
 	}
 	
 	func connect() throws(SSHError) {
@@ -380,8 +381,8 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			return nil
 		}
 		
-		var buffer: [CChar] = Array(repeating: 0, count: 16_384)
-		let nbytes = ssh_channel_read_nonblocking(channel, &buffer, UInt32(buffer.count), 0)
+		var buffer: [CChar] = Array(repeating: 0, count: 1024)
+		let nbytes = ssh_channel_read(channel, &buffer, UInt32(buffer.count), 0)
 		
 		guard nbytes > 0 else { return nil }
 		
