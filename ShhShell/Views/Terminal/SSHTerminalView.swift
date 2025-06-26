@@ -28,19 +28,16 @@ final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalVie
 		sshQueue.async {
 			Task {
 				guard let handler = await self.handler else { return }
-				
 				while handler.connected {
 					if let read = handler.readFromChannel() {
-//						Task { [weak self] in
-//							guard let self else { return }
-							Task { @MainActor in
-								self.feed(text: read)
-							}
-//						}
+						Task { @MainActor in
+							self.feed(text: read)
+						}
 					} else {
-						try? await Task.sleep(nanoseconds: 10_000_000) //10ms
+						Task {try? await Task.sleep(nanoseconds: 10_000_000) } //10ms
 					}
 				}
+				handler.disconnect()
 			}
 		}
 	}

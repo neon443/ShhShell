@@ -17,7 +17,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	@Published var title: String = ""
 	@Published var state: SSHState = .idle
 	var connected: Bool {
-		return checkConnected(state)
+		return ssh_channel_is_open(channel) == 1 && checkConnected(state)
 	}
 	
 	@Published var testSuceeded: Bool? = nil
@@ -46,7 +46,6 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	
 	func go() {
 		guard !connected else {
-			withAnimation { state = .idle }
 			disconnect()
 			return
 		}
