@@ -12,29 +12,15 @@ import SwiftTerm
 @MainActor
 final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalViewDelegate {
 	var handler: SSHHandler?
-	var sshQueue = DispatchQueue(label: "sshQueue")
-	var resuming: Bool
+//	var sshQueue = DispatchQueue(label: "sshQueue")
 	
-	public convenience init(frame: CGRect, handler: SSHHandler, resuming: Bool) {
+	public convenience init(frame: CGRect, handler: SSHHandler) {
 		self.init(frame: frame)
 		self.handler = handler
-		self.resuming = resuming
 		
-		sshQueue.async {
-			Task {
-				if resuming {
-					if let handler = await self.handler {
-						for chunk in handler.scrollback {
-							await MainActor.run {
-								self.feed(text: chunk)
-							}
-						}
-					}
-				}
-			}
-		}
-
-		sshQueue.async {
+		restoreScrollback()
+		
+		DispatchQueue.main.async {
 			Task {
 				guard let handler = await self.handler else { return }
 				while handler.connected {
@@ -52,7 +38,6 @@ final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalVie
 	}
 	
 	public override init(frame: CGRect) {
-		self.resuming = false
 		super.init(frame: frame)
 		terminalDelegate = self
 	}
@@ -99,5 +84,17 @@ final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalVie
 	
 	public func bell(source: TerminalView) {
 		handler?.ring()
+	}
+	
+	func restoreScrollback() {
+		guard let scrollback = handler?.scrollback else { return }
+		
+		DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+			for line in scrollback {
+				self.feed(text: line)
+			}
+			self.setNeedsLayout()
+			self.setNeedsDisplay()
+		}
 	}
 }

@@ -15,6 +15,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	private var channel: ssh_channel?
 	
 	var scrollback: [String] = []
+	var scrollbackSize = 0.0
 	
 	@Published var title: String = ""
 	@Published var state: SSHState = .idle
@@ -132,6 +133,9 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			withAnimation { self.state = .idle }
 			withAnimation { self.testSuceeded = nil }
 		}
+		
+		scrollback = []
+		scrollbackSize = 0
 		
 		//send eof if open
 		if ssh_channel_is_open(channel) == 1 {
@@ -396,7 +400,12 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 //			print(String(data: Data(bytes: buffer, count: Int(nbytes)), encoding: .utf8)!)
 			#endif
 			Task { @MainActor in
-				scrollback.append(string)
+				scrollback.append(string)				
+				if scrollbackSize/1024/1024 > 10 {
+					scrollback.remove(at: 0)
+				} else {
+					scrollbackSize += Double(string.lengthOfBytes(using: .utf8))
+				}
 			}
 			return string
 		}
@@ -427,6 +436,16 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		
 		ssh_channel_change_pty_size(channel, Int32(toCols), Int32(toRows))
 //		print("resized tty to \(toRows)rows and \(toCols)cols")
+	}
+	
+	func prettyScrollbackSize() -> String {
+		if (scrollbackSize/1024/1024) > 1 {
+			return "\(scrollbackSize/1024/1024) MiB scrollback"
+		} else if scrollbackSize/1024 > 1 {
+			return "\(scrollbackSize/1024) KiB scrollback"
+		} else {
+			return "\(scrollbackSize) B scrollback"
+		}
 	}
 	
 	private func logSshGetError() {

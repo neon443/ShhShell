@@ -12,8 +12,6 @@ struct ConnectionView: View {
 	@ObservedObject var hostsManager: HostsManager
 	@ObservedObject var keyManager: KeyManager
 	
-	@State var resuming: Bool = false
-	
 	@State var passphrase: String = ""
 	
 	@State var pubkeyStr: String = ""
@@ -112,7 +110,6 @@ struct ConnectionView: View {
 				
 				Button() {
 					showTerminal.toggle()
-					resuming = true
 				} label: {
 					Label("Show Terminal", systemImage: "apple.terminal")
 				}
@@ -159,7 +156,7 @@ struct ConnectionView: View {
 			}
 		}
 		.fullScreenCover(isPresented: $showTerminal) {
-			ShellView(handler: handler, resuming: resuming)
+			ShellView(handler: handler)
 		}
 		.onChange(of: handler.host.key) { _ in
 			guard let previousKnownHost = hostsManager.getHostMatching(handler.host) else { return }
@@ -169,7 +166,7 @@ struct ConnectionView: View {
 			}
 		}
 		.onDisappear {
-//			hostsManager.updateHost(handler.host)
+			hostsManager.updateHost(handler.host)
 		}
 		.task {
 			if let publicKeyData = handler.host.publicKey {

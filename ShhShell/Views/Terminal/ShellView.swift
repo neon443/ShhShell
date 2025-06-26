@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ShellView: View {
 	@ObservedObject var handler: SSHHandler
-	@State var resuming: Bool = false
 	
 	@Environment(\.dismiss) var dismiss
 	
@@ -33,7 +32,7 @@ struct ShellView: View {
 				}
 			}
 			.task {
-				terminalControllerRef = TerminalController(handler: handler, resuming: resuming)
+				terminalControllerRef = TerminalController(handler: handler)
 			}
 			.toolbar {
 				ToolbarItem {
