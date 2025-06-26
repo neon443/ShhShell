@@ -16,11 +16,6 @@ struct ShellView: View {
     var body: some View {
 		NavigationStack {
 			ZStack {
-				if handler.bell != nil {
-					Text("🔔")
-						.font(.title)
-						.transition(.scale)
-				}
 				if !handler.connected {
 					DialogView(handler: handler, showDialog: !handler.connected)
 				}
@@ -50,7 +45,7 @@ struct ShellView: View {
 			.onChange(of: handler.connected) { _ in
 				if !handler.connected { dismiss() }
 			}
-			.navigationTitle(handler.title)
+			.navigationTitle(handler.bell ? "🔔" : handler.title)
 			.navigationBarTitleDisplayMode(.inline)
 		}
     }

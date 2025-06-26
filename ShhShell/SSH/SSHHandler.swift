@@ -22,7 +22,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	
 	@Published var testSuceeded: Bool? = nil
 	
-	@Published var bell: UUID? = nil
+	@Published var bell: Bool = false
 	
 	@Published var host: Host
 	
@@ -150,9 +150,9 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	}
 	
 	func ring() {
-		withAnimation { bell = UUID() }
-		DispatchQueue.main.asyncAfter(deadline: .now()+1) {
-			withAnimation { self.bell = nil }
+		bell = true
+		DispatchQueue.main.asyncAfter(deadline: .now()+0.2) {
+			self.bell = false
 		}
 	}
 	
@@ -383,7 +383,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		}
 		
 		var buffer: [CChar] = Array(repeating: 0, count: 1024)
-		let nbytes = ssh_channel_read(channel, &buffer, UInt32(buffer.count), 0)
+		let nbytes = ssh_channel_read_nonblocking(channel, &buffer, UInt32(buffer.count), 0)
 		
 		guard nbytes > 0 else { return nil }
 		

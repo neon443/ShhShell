@@ -34,7 +34,7 @@ final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalVie
 							self.feed(text: read)
 						}
 					} else {
-						Task {try? await Task.sleep(nanoseconds: 10_000_000) } //10ms
+						try? await Task.sleep(nanoseconds: 10_000_000) //10ms
 					}
 				}
 				handler.disconnect()
@@ -83,7 +83,6 @@ final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalVie
 	}
 	
 	public func bell(source: TerminalView) {
-		print("bell rung")
 		handler?.ring()
 	}
 }
