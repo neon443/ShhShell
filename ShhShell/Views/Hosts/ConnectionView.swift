@@ -25,19 +25,31 @@ struct ConnectionView: View {
 		NavigationStack {
 			List {
 				Section {
-						HStack {
-							Picker("", selection: $handler.host.symbol) {
-								ForEach(Symbol.allCases, id: \.self) { symbol in
-									SymbolPreview(symbol: symbol, label: handler.host.label)
-									.tag(symbol)
-									.frame(width: 60, height: 60)
+					HStack {
+						Picker("", selection: $handler.host.symbol) {
+							ForEach(Symbol.allCases, id: \.self) { symbol in
+								Group {
+									if symbol.isCustom {
+										Image(symbol.sf)
+											.resizable().scaledToFit()
+									} else {
+										Image(systemName: symbol.sf)
+											.resizable().scaledToFit()
+									}
 								}
+								.padding(5)
+								.tag(symbol)
 							}
-							.pickerStyle(SegmentedPickerStyle())
 						}
-						.scrollIndicators(.hidden)
+						.controlSize(.large)
+						.pickerStyle(SegmentedPickerStyle())
+						
+						SymbolPreview(host: handler.host)
+							.frame(width: 60, height: 60)
+						
 						TextField("label", text: $handler.host.label)
 							.textFieldStyle(.roundedBorder)
+					}
 				}
 				Section {
 					HStack {

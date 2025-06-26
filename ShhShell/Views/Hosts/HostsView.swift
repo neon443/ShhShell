@@ -44,8 +44,9 @@ struct HostsView: View {
 							keyManager: keyManager
 						)
 					} label: {
-						SymbolPreview(symbol: host.symbol, label: host.label)
-							.frame(width: 30, height: 30)
+						SymbolPreview(host: host)
+							.frame(width: 40, height: 40)
+						Text(hostsManager.makeLabel(forHost: host))
 					}
 					.animation(.default, value: host)
 					.swipeActions(edge: .trailing) {
