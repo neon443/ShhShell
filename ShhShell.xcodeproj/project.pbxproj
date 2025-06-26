@@ -151,7 +151,6 @@
 			children = (
 				A92317292E07113100ECE1E6 /* TerminalController.swift */,
 				A923172E2E08851200ECE1E6 /* ShellView.swift */,
-				A9B15A992E0ABA0400F66E02 /* DialogView.swift */,
 				A923172C2E07138000ECE1E6 /* SSHTerminalView.swift */,
 			);
 			path = Terminal;
@@ -256,6 +255,7 @@
 			children = (
 				A96C6B012E0C49E800F377FE /* CenteredLabel.swift */,
 				A93143C52DF61FE300FCD5DB /* ViewModifiers.swift */,
+				A9B15A992E0ABA0400F66E02 /* DialogView.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
