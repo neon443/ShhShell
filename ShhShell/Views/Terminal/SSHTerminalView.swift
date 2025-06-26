@@ -12,25 +12,34 @@ import SwiftTerm
 @MainActor
 final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalViewDelegate {
 	var handler: SSHHandler?
-	var sshQueue: DispatchQueue
+	var sshQueue = DispatchQueue(label: "sshQueue")
+	var resuming: Bool
 	
-	public convenience init(frame: CGRect, handler: SSHHandler) {
+	public convenience init(frame: CGRect, handler: SSHHandler, resuming: Bool) {
 		self.init(frame: frame)
 		self.handler = handler
-	}
-	
-	public override init(frame: CGRect) {
-		sshQueue = DispatchQueue(label: "sshQueue")
+		self.resuming = resuming
 		
-		super.init(frame: frame)
-		terminalDelegate = self
-		
+		sshQueue.async {
+			Task {
+				if resuming {
+					if let handler = await self.handler {
+						for chunk in handler.scrollback {
+							await MainActor.run {
+								self.feed(text: chunk)
+							}
+						}
+					}
+				}
+			}
+		}
+
 		sshQueue.async {
 			Task {
 				guard let handler = await self.handler else { return }
 				while handler.connected {
 					if let read = handler.readFromChannel() {
-						Task { @MainActor in
+						await MainActor.run {
 							self.feed(text: read)
 						}
 					} else {
@@ -40,6 +49,12 @@ final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalVie
 				handler.disconnect()
 			}
 		}
+	}
+	
+	public override init(frame: CGRect) {
+		self.resuming = false
+		super.init(frame: frame)
+		terminalDelegate = self
 	}
 	
 	required init?(coder: NSCoder) {

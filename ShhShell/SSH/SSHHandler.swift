@@ -14,6 +14,8 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	private var session: ssh_session?
 	private var channel: ssh_channel?
 	
+	var scrollback: [String] = []
+	
 	@Published var title: String = ""
 	@Published var state: SSHState = .idle
 	var connected: Bool {
@@ -393,6 +395,9 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			#if DEBUG
 //			print(String(data: Data(bytes: buffer, count: Int(nbytes)), encoding: .utf8)!)
 			#endif
+			Task { @MainActor in
+				scrollback.append(string)
+			}
 			return string
 		}
 		return nil

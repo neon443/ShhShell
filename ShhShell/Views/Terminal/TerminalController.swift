@@ -12,6 +12,7 @@ import SwiftTerm
 
 struct TerminalController: UIViewRepresentable {
 	@ObservedObject var handler: SSHHandler
+	@State var resuming: Bool
 	
 	func makeUIView(context: Context) -> TerminalView {
 		let tv = SSHTerminalView(
@@ -19,7 +20,8 @@ struct TerminalController: UIViewRepresentable {
 				origin: CGPoint(x: 0, y: 0),
 				size: .zero
 			),
-			handler: handler
+			handler: handler,
+			resuming: resuming
 		)
 		
 		tv.translatesAutoresizingMaskIntoConstraints = false

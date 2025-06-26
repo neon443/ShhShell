@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ShellView: View {
 	@ObservedObject var handler: SSHHandler
+	@State var resuming: Bool = false
+	
 	@Environment(\.dismiss) var dismiss
 	
 	@State private var terminalControllerRef: TerminalController?
@@ -31,7 +33,7 @@ struct ShellView: View {
 				}
 			}
 			.task {
-				terminalControllerRef = TerminalController(handler: handler)
+				terminalControllerRef = TerminalController(handler: handler, resuming: resuming)
 			}
 			.toolbar {
 				ToolbarItem {
@@ -43,13 +45,13 @@ struct ShellView: View {
 					}
 				}
 				//TODO: FIX
-//				ToolbarItem(placement: .cancellationAction) {
-//					Button() {
-//						dismiss()
-//					} label: {
-//						Label("Close", systemImage: "arrow.down.right.and.arrow.up.left")
-//					}
-//				}
+				ToolbarItem(placement: .cancellationAction) {
+					Button() {
+						dismiss()
+					} label: {
+						Label("Close", systemImage: "arrow.down.right.and.arrow.up.left")
+					}
+				}
 			}
 			.onChange(of: handler.connected) { _ in
 				if !handler.connected { dismiss() }

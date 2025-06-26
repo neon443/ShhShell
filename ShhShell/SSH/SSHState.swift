@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 enum SSHState {
 	case idle
@@ -16,6 +17,22 @@ enum SSHState {
 	
 	case connectionFailed
 	case authFailed
+	
+	var color: Color {
+		switch self {
+		case .idle:
+			return .gray
+			
+		case .connecting, .authorizing:
+			return .orange
+			
+		case .authorized, .shellOpen:
+			return .green
+			
+		case .connectionFailed, .authFailed:
+			return .red
+		}
+	}
 }
 
 func checkConnected(_ state: SSHState) -> Bool {

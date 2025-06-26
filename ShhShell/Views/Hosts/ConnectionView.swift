@@ -12,6 +12,8 @@ struct ConnectionView: View {
 	@ObservedObject var hostsManager: HostsManager
 	@ObservedObject var keyManager: KeyManager
 	
+	@State var resuming: Bool = false
+	
 	@State var passphrase: String = ""
 	
 	@State var pubkeyStr: String = ""
@@ -54,14 +56,8 @@ struct ConnectionView: View {
 					}
 				}
 				Section {
-					HStack {
-						Text(handler.connected ? "connected" : "not connected")
-							.modifier(foregroundColorStyle(handler.connected ? .green : .red))
-						
-						Text(checkAuth(handler.state) ? "authorized" : "unauthorized")
-							.modifier(foregroundColorStyle(checkAuth(handler.state) ? .green : .red))
-						Text("\(handler.state)")
-					}
+					Text("\(handler.state)")
+						.foregroundStyle(handler.state.color)
 					
 					TextField("name", text: $handler.host.name)
 						.textFieldStyle(.roundedBorder)
@@ -116,6 +112,7 @@ struct ConnectionView: View {
 				
 				Button() {
 					showTerminal.toggle()
+					resuming = true
 				} label: {
 					Label("Show Terminal", systemImage: "apple.terminal")
 				}
@@ -162,7 +159,7 @@ struct ConnectionView: View {
 			}
 		}
 		.fullScreenCover(isPresented: $showTerminal) {
-			ShellView(handler: handler)
+			ShellView(handler: handler, resuming: resuming)
 		}
 		.onChange(of: handler.host.key) { _ in
 			guard let previousKnownHost = hostsManager.getHostMatching(handler.host) else { return }
@@ -172,7 +169,7 @@ struct ConnectionView: View {
 			}
 		}
 		.onDisappear {
-			hostsManager.updateHost(handler.host)
+//			hostsManager.updateHost(handler.host)
 		}
 		.task {
 			if let publicKeyData = handler.host.publicKey {
