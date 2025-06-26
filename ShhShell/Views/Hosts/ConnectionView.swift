@@ -25,26 +25,28 @@ struct ConnectionView: View {
 		NavigationStack {
 			List {
 				Section {
-					HStack {
-						Picker("", selection: $handler.host.symbol) {
+					ScrollView(.horizontal) {
+						HStack {
 							ForEach(Symbol.allCases, id: \.self) { symbol in
-								Group {
-									if symbol.isCustom {
-										Image(symbol.sf)
-											.resizable().scaledToFit()
-									} else {
-										Image(systemName: symbol.sf)
-											.resizable().scaledToFit()
+								ZStack {
+									if handler.host.symbol == symbol {
+										RoundedRectangle(cornerRadius: 10)
+											.fill(.gray.opacity(0.5))
 									}
+									SymbolPreview(symbol: symbol, label: handler.host.label)
+										.padding(5)
 								}
-								.padding(5)
-								.tag(symbol)
+								.frame(width: 60, height: 60)
+								.onTapGesture {
+									withAnimation { handler.host.symbol = symbol }
+								}
 							}
 						}
-						.controlSize(.large)
-						.pickerStyle(SegmentedPickerStyle())
-						
-						SymbolPreview(host: handler.host)
+					}
+					
+					HStack {
+						SymbolPreview(symbol: handler.host.symbol, label: handler.host.label)
+							.id(handler.host)
 							.frame(width: 60, height: 60)
 						
 						TextField("label", text: $handler.host.label)
@@ -60,7 +62,7 @@ struct ConnectionView: View {
 							.modifier(foregroundColorStyle(checkAuth(handler.state) ? .green : .red))
 						Text("\(handler.state)")
 					}
-
+					
 					TextField("name", text: $handler.host.name)
 						.textFieldStyle(.roundedBorder)
 					

@@ -8,28 +8,29 @@
 import SwiftUI
 
 struct SymbolPreview: View {
-	@State var host: Host
+	@State var symbol: Symbol
+	@State var label: String
 	
     var body: some View {
 		ZStack(alignment: .center) {
-			if host.symbol.isCustom {
-				Image(host.symbol.sf)
+			if symbol.isCustom {
+				Image(symbol.sf)
 					.resizable().scaledToFit()
 					.symbolRenderingMode(.monochrome)
 					.padding(5)
 			} else {
-				Image(systemName: host.symbol.sf)
+				Image(systemName: symbol.sf)
 					.resizable().scaledToFit()
 					.symbolRenderingMode(.monochrome)
 					.padding(5)
 			}
-			Text(host.label)
+			Text(label)
 				.font(.headline)
-				.offset(host.symbol.offset)
+				.offset(symbol.offset)
 		}
     }
 }
 
 #Preview {
-	SymbolPreview(host: Host.debug)
+	SymbolPreview(symbol: Symbol.desktopcomputer, label: "lo0")
 }

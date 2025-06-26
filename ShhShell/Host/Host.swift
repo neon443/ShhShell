@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-protocol HostPr: Codable, Identifiable, Equatable {
+protocol HostPr: Codable, Identifiable, Equatable, Hashable {
 	var id: UUID { get set }
 	var name: String { get set }
 	var symbol: Symbol { get set }

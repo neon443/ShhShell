@@ -44,7 +44,7 @@ struct HostsView: View {
 							keyManager: keyManager
 						)
 					} label: {
-						SymbolPreview(host: host)
+						SymbolPreview(symbol: host.symbol, label: host.label)
 							.frame(width: 40, height: 40)
 						Text(hostsManager.makeLabel(forHost: host))
 					}
