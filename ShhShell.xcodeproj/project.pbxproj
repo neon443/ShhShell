@@ -825,8 +825,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/migueldeicaza/SwiftTerm";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = revision;
+				revision = 7976db83cbc8729c3b1ade6aa9cf990445164354;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

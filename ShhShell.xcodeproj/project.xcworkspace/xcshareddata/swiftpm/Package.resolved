@@ -6,8 +6,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/migueldeicaza/SwiftTerm",
       "state" : {
-        "branch" : "main",
-        "revision" : "bf476952af79b2458aac5b5297f1e00598e66007"
+        "revision" : "7976db83cbc8729c3b1ade6aa9cf990445164354"
       }
     }
   ],
