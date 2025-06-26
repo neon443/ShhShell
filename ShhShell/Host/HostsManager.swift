@@ -113,7 +113,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 			return false
 		}
 		
-		let reason = "Authenticate yourself with Face ID to view private keys"
+		let reason = "Authenticate yourself to view private keys"
 		return await withCheckedContinuation { continuation in
 			context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { success, _ in
 				continuation.resume(returning: success)

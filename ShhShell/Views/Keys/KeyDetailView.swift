@@ -22,7 +22,8 @@ struct KeyDetailView: View {
 			VStack(alignment: .leading) {
 				Text("Private key")
 					.bold()
-				ZStack {
+					.frame(maxWidth: .infinity)
+				ZStack(alignment: .center) {
 					Text(String(data: keypair.privateKey!, encoding: .utf8) ?? "nil")
 						.blur(radius: reveal ? 0 : 5)
 					VStack {
@@ -33,6 +34,7 @@ struct KeyDetailView: View {
 					}
 					.opacity(reveal ? 0 : 1)
 				}
+				.frame(maxWidth: .infinity)
 				.onTapGesture {
 					Task {
 						if !reveal {

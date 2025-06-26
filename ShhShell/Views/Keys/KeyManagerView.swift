@@ -29,7 +29,7 @@ struct KeyManagerView: View {
 					NavigationLink {
 						List {
 							if hostsManager.savedHosts.isEmpty {
-								VStack(alignment: .center) {
+								VStack(alignment: .leading) {
 									Text("Looking empty 'round here...")
 										.font(.title3)
 										.bold()

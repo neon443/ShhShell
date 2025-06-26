@@ -141,7 +141,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		if connected && (ssh_is_connected(session) == 1) {
 			ssh_disconnect(self.session)
 		}
-		ssh_free(self.session)
+//		ssh_free(self.session)
 		self.session = nil
 	}
 	
