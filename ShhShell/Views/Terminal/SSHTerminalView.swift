@@ -31,15 +31,12 @@ final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalVie
 				
 				while handler.connected {
 					if let read = handler.readFromChannel() {
-						Task { [weak self] in
-							guard let self else { return }
-							await MainActor.run {
-								CATransaction.begin()
-								CATransaction.setDisableActions(true)
-								feed(text: read)
-								CATransaction.commit()
+//						Task { [weak self] in
+//							guard let self else { return }
+							Task { @MainActor in
+								self.feed(text: read)
 							}
-						}
+//						}
 					} else {
 						try? await Task.sleep(nanoseconds: 10_000_000) //10ms
 					}

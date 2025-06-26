@@ -127,8 +127,10 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	}
 	
 	func disconnect() {
-		withAnimation { self.state = .idle }
-		withAnimation { self.testSuceeded = nil }
+		DispatchQueue.main.async {
+			withAnimation { self.state = .idle }
+			withAnimation { self.testSuceeded = nil }
+		}
 		
 		//send eof if open
 		if ssh_channel_is_open(channel) == 1 {
