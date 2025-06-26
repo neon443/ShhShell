@@ -38,13 +38,14 @@ struct ShellView: View {
 						Label("Disconnect", systemImage: "xmark.app.fill")
 					}
 				}
-				ToolbarItem(placement: .cancellationAction) {
-					Button() {
-						dismiss()
-					} label: {
-						Label("Close", systemImage: "arrow.down.right.and.arrow.up.left")
-					}
-				}
+				//TODO: FIX
+//				ToolbarItem(placement: .cancellationAction) {
+//					Button() {
+//						dismiss()
+//					} label: {
+//						Label("Close", systemImage: "arrow.down.right.and.arrow.up.left")
+//					}
+//				}
 			}
 			.onChange(of: handler.connected) { _ in
 				if !handler.connected { dismiss() }
