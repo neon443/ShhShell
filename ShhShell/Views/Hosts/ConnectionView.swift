@@ -25,6 +25,21 @@ struct ConnectionView: View {
 		NavigationStack {
 			List {
 				Section {
+						HStack {
+							Picker("", selection: $handler.host.symbol) {
+								ForEach(Symbol.allCases, id: \.self) { symbol in
+									SymbolPreview(symbol: symbol, label: handler.host.label)
+									.tag(symbol)
+									.frame(width: 60, height: 60)
+								}
+							}
+							.pickerStyle(SegmentedPickerStyle())
+						}
+						.scrollIndicators(.hidden)
+						TextField("label", text: $handler.host.label)
+							.textFieldStyle(.roundedBorder)
+				}
+				Section {
 					HStack {
 						Text(handler.connected ? "connected" : "not connected")
 							.modifier(foregroundColorStyle(handler.connected ? .green : .red))
@@ -33,6 +48,7 @@ struct ConnectionView: View {
 							.modifier(foregroundColorStyle(checkAuth(handler.state) ? .green : .red))
 						Text("\(handler.state)")
 					}
+
 					TextField("name", text: $handler.host.name)
 						.textFieldStyle(.roundedBorder)
 					

@@ -6,10 +6,13 @@
 //
 
 import Foundation
+import SwiftUI
 
 protocol HostPr: Codable, Identifiable, Equatable {
 	var id: UUID { get set }
 	var name: String { get set }
+	var symbol: Symbol { get set }
+	var label: String { get set }
 	var address: String { get set }
 	var port: Int { get set }
 	var username: String { get set }
@@ -22,18 +25,22 @@ protocol HostPr: Codable, Identifiable, Equatable {
 
 struct Host: HostPr {
 	var id = UUID()
-	var name: String = ""
-	var address: String = ""
+	var name: String
+	var symbol: Symbol
+	var label: String
+	var address: String
 	var port: Int
 	var username: String
 	var password: String
 	var publicKey: Data?
 	var privateKey: Data?
-	var passphrase: String = ""
+	var passphrase: String
 	var key: String?
 	
 	init(
 		name: String = "",
+		symbol: Symbol = .genericServer,
+		label: String = "",
 		address: String,
 		port: Int = 22,
 		username: String = "",
@@ -44,6 +51,8 @@ struct Host: HostPr {
 		hostkey: String? = nil
 	) {
 		self.name = name
+		self.symbol = symbol
+		self.label = label
 		self.address = address
 		self.port = port
 		self.username = username
@@ -62,6 +71,7 @@ extension Host {
 	static var debug: Host {
 		Host(
 			name: "name for localhost",
+			label: "lo0",
 			address: "localhost",
 			port: 22,
 			username: "neon443",

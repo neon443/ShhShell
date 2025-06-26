@@ -44,13 +44,8 @@ struct HostsView: View {
 							keyManager: keyManager
 						)
 					} label: {
-						if host.name.isEmpty {
-							Text(host.address)
-						} else if host.address.isEmpty {
-							Text(host.name)
-						} else {
-							Text(host.id.uuidString)
-						}
+						SymbolPreview(symbol: host.symbol, label: host.label)
+							.frame(width: 30, height: 30)
 					}
 					.animation(.default, value: host)
 					.swipeActions(edge: .trailing) {
@@ -66,6 +61,9 @@ struct HostsView: View {
 						}
 					}
 				}
+				.onMove(perform: {
+					hostsManager.moveHost(from: $0, to: $1)
+				})
 			}
 			.transition(.opacity)
 			.toolbar {

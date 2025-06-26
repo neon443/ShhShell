@@ -50,6 +50,23 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		}
 	}
 	
+	func makeLabel(forHost: Host) -> String {
+		if forHost.name.isEmpty && forHost.address.isEmpty {
+			return forHost.id.uuidString
+		} else if forHost.name.isEmpty {
+			return forHost.address
+		} else if forHost.address.isEmpty {
+			return forHost.name
+		} else {
+			return forHost.name
+		}
+	}
+	
+	func moveHost(from: IndexSet, to: Int) {
+		savedHosts.move(fromOffsets: from, toOffset: to)
+		saveSavedHosts()
+	}
+	
 	func loadSavedHosts() {
 		userDefaults.synchronize()
 		let decoder = JSONDecoder()
