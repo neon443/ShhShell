@@ -12,12 +12,14 @@ struct ShellView: View {
 	
 	@Environment(\.dismiss) var dismiss
 	
-	@State private var terminalControllerRef: TerminalController?
-	
     var body: some View {
 		NavigationStack {
 			ZStack {
-				terminalControllerRef
+				TerminalController(handler: handler)
+					.onAppear {
+						print("asd\(handler.scrollback.count)")
+						TerminalController.TerminalViewContainer.shared?.restoreScrollback()
+					}
 				
 				Group {
 					Color.gray.opacity(0.2)
@@ -30,9 +32,6 @@ struct ShellView: View {
 				if !handler.connected {
 					DialogView(handler: handler, showDialog: !handler.connected)
 				}
-			}
-			.task {
-				terminalControllerRef = TerminalController(handler: handler)
 			}
 			.toolbar {
 				ToolbarItem {

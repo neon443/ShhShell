@@ -18,8 +18,6 @@ final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalVie
 		self.init(frame: frame)
 		self.handler = handler
 		
-		restoreScrollback()
-		
 		DispatchQueue.main.async {
 			Task {
 				guard let handler = self.handler else { return }
@@ -88,8 +86,10 @@ final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalVie
 	
 	func restoreScrollback() {
 		guard let scrollback = handler?.scrollback else { return }
+		guard !scrollback.isEmpty else { return }
 		
-		DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+		DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+			self.getTerminal().resetToInitialState()
 			for line in scrollback {
 				self.feed(text: line)
 			}

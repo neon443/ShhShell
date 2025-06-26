@@ -12,6 +12,8 @@ struct ConnectionView: View {
 	@ObservedObject var hostsManager: HostsManager
 	@ObservedObject var keyManager: KeyManager
 	
+	@State private var shellView: ShellView? = nil
+	
 	@State var passphrase: String = ""
 	
 	@State var pubkeyStr: String = ""
@@ -145,6 +147,7 @@ struct ConnectionView: View {
 					Button() {
 						handler.go()
 						showTerminal = checkShell(handler.state)
+						TerminalController.TerminalViewContainer.shared = nil
 					} label: {
 						Label(
 							handler.connected ? "Disconnect" : "Connect",
@@ -156,7 +159,11 @@ struct ConnectionView: View {
 			}
 		}
 		.fullScreenCover(isPresented: $showTerminal) {
-			ShellView(handler: handler)
+			if let shellView {
+				shellView
+			} else {
+				Text("no shellview")
+			}
 		}
 		.onChange(of: handler.host.key) { _ in
 			guard let previousKnownHost = hostsManager.getHostMatching(handler.host) else { return }
@@ -174,6 +181,11 @@ struct ConnectionView: View {
 			}
 			if let privateKeyData = handler.host.privateKey {
 				privkeyStr = String(data: privateKeyData, encoding: .utf8) ?? ""
+			}
+		}
+		.onAppear {
+			if shellView == nil {
+				shellView = ShellView(handler: handler)
 			}
 		}
 	}
