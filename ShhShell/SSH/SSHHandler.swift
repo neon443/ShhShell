@@ -400,7 +400,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 //			print(String(data: Data(bytes: buffer, count: Int(nbytes)), encoding: .utf8)!)
 			#endif
 			Task { @MainActor in
-				scrollback.append(string)				
+				scrollback.append(string)
 				if scrollbackSize/1024/1024 > 10 {
 					scrollback.remove(at: 0)
 				} else {

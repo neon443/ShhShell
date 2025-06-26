@@ -22,7 +22,7 @@ final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalVie
 		
 		DispatchQueue.main.async {
 			Task {
-				guard let handler = await self.handler else { return }
+				guard let handler = self.handler else { return }
 				while handler.connected {
 					if let read = handler.readFromChannel() {
 						await MainActor.run {
