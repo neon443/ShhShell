@@ -11,7 +11,7 @@ import SwiftUI
 protocol HostPr: Codable, Identifiable, Equatable, Hashable {
 	var id: UUID { get set }
 	var name: String { get set }
-	var symbol: Symbol { get set }
+	var symbol: HostSymbol { get set }
 	var label: String { get set }
 	var address: String { get set }
 	var port: Int { get set }
@@ -26,7 +26,7 @@ protocol HostPr: Codable, Identifiable, Equatable, Hashable {
 struct Host: HostPr {
 	var id = UUID()
 	var name: String
-	var symbol: Symbol
+	var symbol: HostSymbol
 	var label: String
 	var address: String
 	var port: Int
@@ -39,7 +39,7 @@ struct Host: HostPr {
 	
 	init(
 		name: String = "",
-		symbol: Symbol = .genericServer,
+		symbol: HostSymbol = .genericServer,
 		label: String = "",
 		address: String,
 		port: Int = 22,

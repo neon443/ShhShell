@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SymbolPreview: View {
-	@State var symbol: Symbol
+	@State var symbol: HostSymbol
 	@State var label: String
 	
     var body: some View {
@@ -17,12 +17,10 @@ struct SymbolPreview: View {
 				Image(symbol.sf)
 					.resizable().scaledToFit()
 					.symbolRenderingMode(.monochrome)
-					.padding(5)
 			} else {
 				Image(systemName: symbol.sf)
 					.resizable().scaledToFit()
 					.symbolRenderingMode(.monochrome)
-					.padding(5)
 			}
 			Text(label)
 				.font(.headline)
@@ -32,5 +30,5 @@ struct SymbolPreview: View {
 }
 
 #Preview {
-	SymbolPreview(symbol: Symbol.desktopcomputer, label: "lo0")
+	SymbolPreview(symbol: HostSymbol.desktopcomputer, label: "lo0")
 }

@@ -37,7 +37,9 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	
 	func updateHost(_ updatedHost: Host) {
 		if let index = savedHosts.firstIndex(where: { $0.id == updatedHost.id }) {
-			withAnimation { savedHosts[index] = updatedHost }
+			var updateHostWithNewID = updatedHost
+			updateHostWithNewID.id = UUID()
+			withAnimation { savedHosts[index] = updateHostWithNewID }
 			saveSavedHosts()
 		}
 	}

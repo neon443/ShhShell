@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-enum Symbol: Codable, Hashable, Equatable, CaseIterable {
+enum HostSymbol: Codable, Equatable, Hashable, CaseIterable {
 	case desktopcomputer
 	case laptopcomputer
 	

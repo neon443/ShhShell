@@ -27,7 +27,7 @@ struct ConnectionView: View {
 				Section {
 					ScrollView(.horizontal) {
 						HStack {
-							ForEach(Symbol.allCases, id: \.self) { symbol in
+							ForEach(HostSymbol.allCases, id: \.self) { symbol in
 								ZStack {
 									if handler.host.symbol == symbol {
 										RoundedRectangle(cornerRadius: 10)
@@ -91,21 +91,26 @@ struct ConnectionView: View {
 					SecureField("Password", text: $handler.host.password)
 						.textFieldStyle(.roundedBorder)
 					
-					HStack {
-						TextField("", text: $pubkeyStr, prompt: Text("Public Key"))
-							.onSubmit {
-								let newStr = pubkeyStr.replacingOccurrences(of: "\r\n", with: "")
-								handler.host.publicKey = Data(newStr.utf8)
-							}
-					}
+					TextField("", text: $pubkeyStr, prompt: Text("Public Key"))
+						.onChange(of: pubkeyStr) { _ in
+							let newStr = pubkeyStr.replacingOccurrences(of: "\r\n", with: "")
+							handler.host.publicKey = Data(newStr.utf8)
+						}
+						.onSubmit {
+							let newStr = pubkeyStr.replacingOccurrences(of: "\r\n", with: "")
+							handler.host.publicKey = Data(newStr.utf8)
+						}
 					
-					HStack {
-						SecureField("", text: $privkeyStr, prompt: Text("Private Key"))
-							.onSubmit {
-								let newStr = privkeyStr.replacingOccurrences(of: "\r\n", with: "")
-								handler.host.privateKey = Data(newStr.utf8)
-							}
-					}
+					SecureField("", text: $privkeyStr, prompt: Text("Private Key"))
+						.onSubmit {
+							let newStr = privkeyStr.replacingOccurrences(of: "\r\n", with: "")
+							handler.host.privateKey = Data(newStr.utf8)
+						}
+						.onChange(of: privkeyStr) { _ in
+							let newStr = privkeyStr.replacingOccurrences(of: "\r\n", with: "")
+							handler.host.privateKey = Data(newStr.utf8)
+						}
+					
 					TextField("", text: $passphrase, prompt: Text("Passphrase (Optional)"))
 				}
 				
@@ -167,10 +172,7 @@ struct ConnectionView: View {
 			}
 		}
 		.onDisappear {
-			guard hostsManager.getHostMatching(handler.host) == handler.host else {
-				hostsManager.updateHost(handler.host)
-				return
-			}
+			hostsManager.updateHost(handler.host)
 		}
 		.task {
 			if let publicKeyData = handler.host.publicKey {

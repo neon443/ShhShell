@@ -39,7 +39,7 @@
 		A9B15A9A2E0ABA0400F66E02 /* DialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B15A992E0ABA0400F66E02 /* DialogView.swift */; };
 		A9C4140C2E096DB7005E3047 /* SSHError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4140B2E096DB7005E3047 /* SSHError.swift */; };
 		A9C897EF2DF1A9A400EF9A5F /* SSHHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */; };
-		A9DA97712E0D30ED00142DDC /* Symbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA97702E0D30ED00142DDC /* Symbol.swift */; };
+		A9DA97712E0D30ED00142DDC /* HostSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA97702E0D30ED00142DDC /* HostSymbol.swift */; };
 		A9DA97732E0D40C100142DDC /* SymbolPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA97722E0D40C100142DDC /* SymbolPreview.swift */; };
 /* End PBXBuildFile section */
 
@@ -112,7 +112,7 @@
 		A9B15A992E0ABA0400F66E02 /* DialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogView.swift; sourceTree = "<group>"; };
 		A9C4140B2E096DB7005E3047 /* SSHError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHError.swift; sourceTree = "<group>"; };
 		A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHHandler.swift; sourceTree = "<group>"; };
-		A9DA97702E0D30ED00142DDC /* Symbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Symbol.swift; sourceTree = "<group>"; };
+		A9DA97702E0D30ED00142DDC /* HostSymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostSymbol.swift; sourceTree = "<group>"; };
 		A9DA97722E0D40C100142DDC /* SymbolPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolPreview.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -283,7 +283,7 @@
 			children = (
 				A93143BF2DF61B3200FCD5DB /* Host.swift */,
 				A98554602E058433009051BD /* HostsManager.swift */,
-				A9DA97702E0D30ED00142DDC /* Symbol.swift */,
+				A9DA97702E0D30ED00142DDC /* HostSymbol.swift */,
 				A9DA97722E0D40C100142DDC /* SymbolPreview.swift */,
 			);
 			path = Host;
@@ -464,7 +464,7 @@
 				A9B15A9A2E0ABA0400F66E02 /* DialogView.swift in Sources */,
 				A92538C92DEE0742007E0A18 /* ShhShellApp.swift in Sources */,
 				A96C6B002E0C45FE00F377FE /* KeyDetailView.swift in Sources */,
-				A9DA97712E0D30ED00142DDC /* Symbol.swift in Sources */,
+				A9DA97712E0D30ED00142DDC /* HostSymbol.swift in Sources */,
 				A98554612E058433009051BD /* HostsManager.swift in Sources */,
 				A985545D2E055D4D009051BD /* ConnectionView.swift in Sources */,
 				A98554592E0553AA009051BD /* KeyManager.swift in Sources */,
