@@ -13,15 +13,39 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	private let userDefaults = NSUbiquitousKeyValueStore.default
 	
 	@Published var savedHosts: [Host] = []
+	@Published var themes: [Theme] = []
 	
 	init() {
 		loadSavedHosts()
 	}
 	
-	/// get the index of a matching host in saved hosts
-	/// - Parameter host: input a host
-	/// - Returns: if an item in savedHosts has a matching uuid to the parameter, it returns the index
-	/// else returns nil
+	
+	func loadThemes() {
+		guard let dataTheme = userDefaults.data(forKey: "themes") else { return }
+		guard let dataThemeNames = userDefaults.data(forKey: "themeNames") else { return }
+		
+		guard let decodedThemes = try? JSONDecoder().decode([ThemeCodable].self, from: dataTheme) else { return }
+		guard let decodedThemeNames = try? JSONDecoder().decode([String].self, from: dataThemeNames) else { return }
+		
+		for index in 0..<decodedThemes.count {
+			if let encoded = try? JSONEncoder().encode(decodedThemes) {
+				if let synthedTheme = Theme.fromiTermColors(name: decodedThemeNames[index], data: encoded) {
+					self.themes.append(synthedTheme)
+				}
+			}
+		}
+	}
+	
+	func saveThemes() {
+		let encoder = JSONEncoder()
+		guard let encodedThemes = try? encoder.encode(themes.map({$0.themeCodable})) else { return }
+		guard let encodedThemeNames = try? encoder.encode(themes.map{$0.name}) else { return }
+		
+		userDefaults.set(encodedThemes, forKey: "themes")
+		userDefaults.set(encodedThemeNames, forKey: "themeNames")
+		userDefaults.synchronize()
+	}
+	
 	func getHostIndexMatching(_ hostSearchingFor: Host) -> Int? {
 		if let index = savedHosts.firstIndex(where: { $0.id == hostSearchingFor.id }) {
 			return index

@@ -40,6 +40,7 @@
 		A9C4140C2E096DB7005E3047 /* SSHError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4140B2E096DB7005E3047 /* SSHError.swift */; };
 		A9C897EF2DF1A9A400EF9A5F /* SSHHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */; };
 		A9D819292E0E904200442D38 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D819282E0E904200442D38 /* Theme.swift */; };
+		A9D8192D2E0E9EB500442D38 /* ThemesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D8192C2E0E9EB500442D38 /* ThemesView.swift */; };
 		A9DA97712E0D30ED00142DDC /* HostSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA97702E0D30ED00142DDC /* HostSymbol.swift */; };
 		A9DA97732E0D40C100142DDC /* SymbolPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA97722E0D40C100142DDC /* SymbolPreview.swift */; };
 /* End PBXBuildFile section */
@@ -114,6 +115,7 @@
 		A9C4140B2E096DB7005E3047 /* SSHError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHError.swift; sourceTree = "<group>"; };
 		A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHHandler.swift; sourceTree = "<group>"; };
 		A9D819282E0E904200442D38 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		A9D8192C2E0E9EB500442D38 /* ThemesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesView.swift; sourceTree = "<group>"; };
 		A9DA97702E0D30ED00142DDC /* HostSymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostSymbol.swift; sourceTree = "<group>"; };
 		A9DA97722E0D40C100142DDC /* SymbolPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolPreview.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -217,6 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				A92538C52DEE0742007E0A18 /* ContentView.swift */,
+				A9D8192B2E0E9EA400442D38 /* Themes */,
 				A98554532E05534F009051BD /* Keys */,
 				A96C6B042E0C523E00F377FE /* Hosts */,
 				A923172B2E0712F200ECE1E6 /* Terminal */,
@@ -317,6 +320,14 @@
 			isa = PBXGroup;
 			children = (
 				A9D819282E0E904200442D38 /* Theme.swift */,
+			);
+			path = Themes;
+			sourceTree = "<group>";
+		};
+		A9D8192B2E0E9EA400442D38 /* Themes */ = {
+			isa = PBXGroup;
+			children = (
+				A9D8192C2E0E9EB500442D38 /* ThemesView.swift */,
 			);
 			path = Themes;
 			sourceTree = "<group>";
@@ -467,6 +478,7 @@
 				A923172F2E08851200ECE1E6 /* ShellView.swift in Sources */,
 				A985545F2E056EDD009051BD /* KeychainLayer.swift in Sources */,
 				A9D819292E0E904200442D38 /* Theme.swift in Sources */,
+				A9D8192D2E0E9EB500442D38 /* ThemesView.swift in Sources */,
 				A93143C62DF61FE300FCD5DB /* ViewModifiers.swift in Sources */,
 				A98554632E0587DF009051BD /* HostsView.swift in Sources */,
 				A96C6A8A2E0C0B1100F377FE /* SSHState.swift in Sources */,

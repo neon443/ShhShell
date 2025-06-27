@@ -65,6 +65,14 @@ struct HostsView: View {
 				.onMove(perform: {
 					hostsManager.moveHost(from: $0, to: $1)
 				})
+				
+				Section() {
+					NavigationLink {
+						ThemesView(hostsManager: HostsManager())
+					} label: {
+						Label("Themes", systemImage: "swatchpalette")
+					}
+				}
 			}
 			.transition(.opacity)
 			.toolbar {

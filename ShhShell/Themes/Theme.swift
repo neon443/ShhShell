@@ -9,7 +9,8 @@ import Foundation
 import SwiftTerm
 import SwiftUI
 
-struct Theme: Hashable, Equatable {
+struct Theme: Hashable, Equatable, Identifiable {
+	var id = UUID()
 	var name: String
 	var ansi: [SwiftTerm.Color]
 	var foreground: SwiftTerm.Color
@@ -19,6 +20,34 @@ struct Theme: Hashable, Equatable {
 	var bold: SwiftTerm.Color
 	var selectedText: SwiftTerm.Color
 	var selection: SwiftTerm.Color
+	
+	var themeCodable: ThemeCodable {
+		return ThemeCodable(
+			ansi0: ansi[0].colorCodable,
+			ansi1: ansi[1].colorCodable,
+			ansi2: ansi[2].colorCodable,
+			ansi3: ansi[3].colorCodable,
+			ansi4: ansi[4].colorCodable,
+			ansi5: ansi[5].colorCodable,
+			ansi6: ansi[6].colorCodable,
+			ansi7: ansi[7].colorCodable,
+			ansi8: ansi[8].colorCodable,
+			ansi9: ansi[9].colorCodable,
+			ansi10: ansi[10].colorCodable,
+			ansi11: ansi[11].colorCodable,
+			ansi12: ansi[12].colorCodable,
+			ansi13: ansi[13].colorCodable,
+			ansi14: ansi[14].colorCodable,
+			ansi15: ansi[15].colorCodable,
+			foreground: foreground.colorCodable,
+			background: background.colorCodable,
+			cursor: cursor.colorCodable,
+			cursorText: cursorText.colorCodable,
+			bold: bold.colorCodable,
+			selectedText: selectedText.colorCodable,
+			selection: selection.colorCodable
+		)
+	}
 	
 	static func fromiTermColors(name: String, data: Data?) -> Theme? {
 		guard let data else { return nil }
@@ -121,6 +150,13 @@ extension SwiftTerm.Color {
 		let green = UInt16(colorCodable.green * 65535)
 		let blue = UInt16(colorCodable.blue * 65535)
 		self.init(red: red, green: green, blue: blue)
+	}
+	
+	var colorCodable: ColorCodable {
+		let red = Double(self.red)/65535
+		let green = Double(self.green)/65535
+		let blue = Double(self.blue)/65535
+		return ColorCodable(red: red, green: green, blue: blue)
 	}
 }
 
