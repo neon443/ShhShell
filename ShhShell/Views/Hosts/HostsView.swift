@@ -68,7 +68,7 @@ struct HostsView: View {
 				
 				Section() {
 					NavigationLink {
-						ThemesView(hostsManager: hostsManager)
+						ThemeManagerView(hostsManager: hostsManager)
 					} label: {
 						Label("Themes", systemImage: "swatchpalette")
 					}
