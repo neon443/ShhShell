@@ -14,6 +14,10 @@ struct ThemeManagerView: View {
 	@State var importURL: String = ""
 	@State var toImportName: String = ""
 	
+	@State var showRenameAlert: Bool = false
+	@State var themeToRename: Theme?
+	@State var rename: String = ""
+	
 	let grid: GridItem = GridItem(
 		.fixed(90),
 		spacing: 8,
@@ -27,10 +31,32 @@ struct ThemeManagerView: View {
 					LazyHGrid(rows: [grid, grid], alignment: .center, spacing: 8) {
 						ForEach(hostsManager.themes) { theme in
 							ThemePreview(theme: theme)
+								.contextMenu {
+									Button() {
+										themeToRename = theme
+										rename = theme.name
+										showRenameAlert.toggle()
+									} label: {
+										Label("Rename", systemImage: "pencil")
+									}
+									Button(role: .destructive) {
+										
+									} label: {
+										Label("Delete", systemImage: "trash")
+									}
+								}
 						}
 					}
+					.alert("", isPresented: $showRenameAlert) {
+						TextField("", text: $rename)
+						Button("OK") {
+							hostsManager.renameTheme(themeToRename, to: rename)
+							rename = ""
+						}
+					}
+					.padding(.horizontal, 8)
 				}
-				.frame(height: 160)
+				.fixedSize(horizontal: false, vertical: true)
 				.scrollIndicators(.hidden)
 				.alert("Enter URL", isPresented: $showAlert) {
 					TextField("", text: $importURL, prompt: Text("URL"))
@@ -42,15 +68,6 @@ struct ThemeManagerView: View {
 					}
 				}
 				.toolbar {
-					ToolbarItem(placement: .confirmationAction) {
-						Button() {
-							if let pasteboard = UIPasteboard().string {
-								hostsManager.importTheme(name: toImportName, data: pasteboard.data(using: .utf8))
-							}
-						} label: {
-							Label("Import", systemImage: "plus")
-						}
-					}
 					ToolbarItem() {
 						Button() {
 							UIApplication.shared.open(URL(string: "https://iterm2colorschemes.com")!)

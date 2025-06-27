@@ -48,6 +48,16 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		task.resume()
 	}
 	
+	func renameTheme(_ theme: Theme?, to newName: String) {
+		guard let theme else { return }
+		guard let index = themes.firstIndex(where: {$0.id == theme.id}) else { return }
+		var newTheme = themes[index]
+		newTheme.name = newName
+		newTheme.id = UUID()
+		withAnimation { themes[index] = newTheme }
+		saveThemes()
+	}
+	
 	@MainActor
 	func importTheme(name: String, data: Data?) {
 		guard let data else { return }

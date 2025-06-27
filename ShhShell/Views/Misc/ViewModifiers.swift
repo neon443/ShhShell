@@ -23,3 +23,39 @@ struct foregroundColorStyle: ViewModifier {
 		}
 	}
 }
+
+struct scrollPaging: ViewModifier {
+	func body(content: Content) -> some View {
+		if #available(iOS 17, *) {
+			content.scrollTargetBehavior(.paging)
+		} else {
+			content
+		}
+	}
+}
+
+struct scrollTargetLayoutt: ViewModifier {
+	func body(content: Content) -> some View {
+		if #available(iOS 17, *) {
+			content.scrollTargetLayout()
+		} else {
+			content
+		}
+	}
+}
+
+struct contentMarginss: ViewModifier {
+	var length: CGFloat
+	
+	init(length: CGFloat) {
+		self.length = length
+	}
+	
+	func body(content: Content) -> some View {
+		if #available(iOS 17, *) {
+			content.contentMargins(length)
+		} else {
+			content
+		}
+	}
+}
