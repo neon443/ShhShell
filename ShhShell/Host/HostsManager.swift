@@ -17,6 +17,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	
 	init() {
 		loadSavedHosts()
+		loadThemes()
 	}
 	
 	
@@ -28,12 +29,31 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		guard let decodedThemeNames = try? JSONDecoder().decode([String].self, from: dataThemeNames) else { return }
 		
 		for index in 0..<decodedThemes.count {
-			if let encoded = try? JSONEncoder().encode(decodedThemes) {
-				if let synthedTheme = Theme.fromiTermColors(name: decodedThemeNames[index], data: encoded) {
-					self.themes.append(synthedTheme)
-				}
+			guard let encoded = try? JSONEncoder().encode(decodedThemes) else { return }
+			guard let synthedTheme = Theme.decodeTheme(name: decodedThemeNames[index], data: encoded) else { return }
+			self.themes.append(synthedTheme)
+		}
+	}
+	
+	func downloadTheme(fromUrl: URL?) {
+		guard let fromUrl else { return }
+		let task = URLSession.shared.dataTask(with: fromUrl) { data, response, error in
+			guard let data else { return }
+			let name = fromUrl.lastPathComponent.replacingOccurrences(of: ".itermcolors", with: "")
+			DispatchQueue.main.async {
+				self.importTheme(name: name, data: data)
 			}
 		}
+		
+		task.resume()
+	}
+	
+	@MainActor
+	func importTheme(name: String, data: Data?) {
+		guard let data else { return }
+		guard let theme = Theme.decodeTheme(name: name, data: data) else { return }
+		self.themes.append(theme)
+		saveThemes()
 	}
 	
 	func saveThemes() {

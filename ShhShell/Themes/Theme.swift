@@ -49,13 +49,16 @@ struct Theme: Hashable, Equatable, Identifiable {
 		)
 	}
 	
-	static func fromiTermColors(name: String, data: Data?) -> Theme? {
+	static func decodeTheme(name: String, data: Data?) -> Theme? {
 		guard let data else { return nil }
 		
-		let decoder = PropertyListDecoder()
+		let plistDecoder = PropertyListDecoder()
+		let jsonDecoder = JSONDecoder()
 		
-		guard let decoded = try? decoder.decode(ThemeCodable.self, from: data) else { return nil }
-		
+		guard let decoded =
+				(try? plistDecoder.decode(ThemeCodable.self, from: data)) ??
+				(try? jsonDecoder.decode(ThemeCodable.self, from: data))
+		else { return nil }
 		let theme = Theme(
 			name: name,
 			ansi: decoded.ansi,
@@ -161,10 +164,14 @@ extension SwiftTerm.Color {
 }
 
 extension SwiftTerm.Color {
+	var suiColor: SwiftUI.Color {
+		return Color(uiColor: self.uiColor)
+	}
+	
 	var uiColor: UIColor {
-		let red = CGFloat(self.red/65535)
-		let green = CGFloat(self.green/65535)
-		let blue = CGFloat(self.blue/65535)
+		let red = CGFloat(self.red)/65535
+		let green = CGFloat(self.green)/65535
+		let blue = CGFloat(self.blue)/65535
 		return UIColor(red: red, green: green, blue: blue, alpha: 1)
 	}
 }
