@@ -39,6 +39,7 @@
 		A9B15A9A2E0ABA0400F66E02 /* DialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B15A992E0ABA0400F66E02 /* DialogView.swift */; };
 		A9C4140C2E096DB7005E3047 /* SSHError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4140B2E096DB7005E3047 /* SSHError.swift */; };
 		A9C897EF2DF1A9A400EF9A5F /* SSHHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */; };
+		A9D819292E0E904200442D38 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D819282E0E904200442D38 /* Theme.swift */; };
 		A9DA97712E0D30ED00142DDC /* HostSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA97702E0D30ED00142DDC /* HostSymbol.swift */; };
 		A9DA97732E0D40C100142DDC /* SymbolPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA97722E0D40C100142DDC /* SymbolPreview.swift */; };
 /* End PBXBuildFile section */
@@ -112,6 +113,7 @@
 		A9B15A992E0ABA0400F66E02 /* DialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogView.swift; sourceTree = "<group>"; };
 		A9C4140B2E096DB7005E3047 /* SSHError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHError.swift; sourceTree = "<group>"; };
 		A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHHandler.swift; sourceTree = "<group>"; };
+		A9D819282E0E904200442D38 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		A9DA97702E0D30ED00142DDC /* HostSymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostSymbol.swift; sourceTree = "<group>"; };
 		A9DA97722E0D40C100142DDC /* SymbolPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolPreview.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -185,6 +187,7 @@
 			children = (
 				A92538C62DEE0742007E0A18 /* ShhShellApp.swift */,
 				A93143C22DF61F5700FCD5DB /* ShhShell.entitlements */,
+				A9D8192A2E0E904900442D38 /* Themes */,
 				A98554572E055398009051BD /* Keys */,
 				A98554562E055394009051BD /* Host */,
 				A93143C12DF61E8500FCD5DB /* SSH */,
@@ -308,6 +311,14 @@
 				A95FAA512DF4B62100DE2F5A /* openssl.xcframework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A9D8192A2E0E904900442D38 /* Themes */ = {
+			isa = PBXGroup;
+			children = (
+				A9D819282E0E904200442D38 /* Theme.swift */,
+			);
+			path = Themes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -455,6 +466,7 @@
 				A96C6B022E0C49E800F377FE /* CenteredLabel.swift in Sources */,
 				A923172F2E08851200ECE1E6 /* ShellView.swift in Sources */,
 				A985545F2E056EDD009051BD /* KeychainLayer.swift in Sources */,
+				A9D819292E0E904200442D38 /* Theme.swift in Sources */,
 				A93143C62DF61FE300FCD5DB /* ViewModifiers.swift in Sources */,
 				A98554632E0587DF009051BD /* HostsView.swift in Sources */,
 				A96C6A8A2E0C0B1100F377FE /* SSHState.swift in Sources */,

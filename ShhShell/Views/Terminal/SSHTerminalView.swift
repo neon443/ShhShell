@@ -34,6 +34,20 @@ final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalVie
 		}
 	}
 	
+	func restoreScrollback() {
+		guard let scrollback = handler?.scrollback else { return }
+		guard !scrollback.isEmpty else { return }
+		
+		DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+			self.getTerminal().resetToInitialState()
+			for line in scrollback {
+				self.feed(text: line)
+			}
+			self.setNeedsLayout()
+			self.setNeedsDisplay()
+		}
+	}
+	
 	public override init(frame: CGRect) {
 		super.init(frame: frame)
 		terminalDelegate = self
@@ -81,19 +95,5 @@ final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalVie
 	
 	public func bell(source: TerminalView) {
 		handler?.ring()
-	}
-	
-	func restoreScrollback() {
-		guard let scrollback = handler?.scrollback else { return }
-		guard !scrollback.isEmpty else { return }
-		
-		DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-			self.getTerminal().resetToInitialState()
-			for line in scrollback {
-				self.feed(text: line)
-			}
-			self.setNeedsLayout()
-			self.setNeedsDisplay()
-		}
 	}
 }
