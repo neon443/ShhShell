@@ -12,31 +12,31 @@ struct ThemePreview: View {
 	
     var body: some View {
 		ZStack(alignment: .center) {
-			RoundedRectangle(cornerRadius: 5)
+			RoundedRectangle(cornerRadius: 10)
 				.fill(theme.background.suiColor)
 			VStack(alignment: .leading) {
 				Text(theme.name)
 					.foregroundStyle(theme.foreground.suiColor)
 					.font(.headline)
-				HStack {
+				Spacer()
+				HStack(spacing: 8) {
 					ForEach(0..<8, id: \.self) { index in
-						Rectangle()
-							.frame(width: 15, height: 15)
+						RoundedRectangle(cornerRadius: 2)
+							.frame(width: 16, height: 16)
 							.foregroundStyle(theme.ansi[index].suiColor)
 					}
 				}
-				HStack {
+				HStack(spacing: 8) {
 					ForEach(8..<16, id: \.self) { index in
-						Rectangle()
-							.frame(width: 15, height: 15)
+						RoundedRectangle(cornerRadius: 2)
+							.frame(width: 16, height: 16)
 							.foregroundStyle(theme.ansi[index].suiColor)
 					}
 				}
 			}
-			.padding(5)
+			.padding(8)
 		}
-		.fixedSize()
-		.frame(maxWidth: 150, maxHeight: 80)
+		.frame(maxWidth: 200, maxHeight: 90)
     }
 }
 

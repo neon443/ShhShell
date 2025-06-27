@@ -14,23 +14,23 @@ struct ThemeManagerView: View {
 	@State var importURL: String = ""
 	@State var toImportName: String = ""
 	
-	let grid = GridItem(
-		.adaptive(minimum: 80, maximum: 150),
-		spacing: 0,
+	let grid: GridItem = GridItem(
+		.fixed(90),
+		spacing: 8,
 		alignment: .center
 	)
 	
 	var body: some View {
 		GeometryReader { geo in
 			NavigationStack {
-				let columns = Int(geo.size.width/150)
 				ScrollView(.horizontal) {
-					LazyHGrid(rows: Array(repeating: grid, count: columns), alignment: .center, spacing: 0) {
+					LazyHGrid(rows: [grid, grid], alignment: .center, spacing: 8) {
 						ForEach(hostsManager.themes) { theme in
 							ThemePreview(theme: theme)
 						}
 					}
 				}
+				.frame(height: 160)
 				.scrollIndicators(.hidden)
 				.alert("Enter URL", isPresented: $showAlert) {
 					TextField("", text: $importURL, prompt: Text("URL"))
