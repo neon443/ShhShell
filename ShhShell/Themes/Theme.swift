@@ -51,35 +51,26 @@ struct Theme: Hashable, Equatable, Identifiable {
 	
 	static func decodeTheme(name: String, data: Data?) -> Theme? {
 		guard let data else { return nil }
-		guard let string = String(data: data, encoding: .utf8) else { return nil }
 		
-		if string.contains("plist") {
-			guard let decoded = try? PropertyListDecoder().decode(ThemeCodable.self, from: data) else { return nil }
-			return Theme(
-				name: name,
-				ansi: decoded.ansi,
-				foreground: Color(decoded.foreground),
-				background: Color(decoded.background),
-				cursor: Color(decoded.cursor),
-				cursorText: Color(decoded.cursorText),
-				bold: Color(decoded.bold),
-				selectedText: Color(decoded.selectedText),
-				selection: Color(decoded.selection)
-			)
-		} else {
-			guard let decoded = try? JSONDecoder().decode(ThemeCodable.self, from: data) else { return nil }
-			return Theme(
-				name: name,
-				ansi: decoded.ansi,
-				foreground: Color(decoded.foreground),
-				background: Color(decoded.background),
-				cursor: Color(decoded.cursor),
-				cursorText: Color(decoded.cursorText),
-				bold: Color(decoded.bold),
-				selectedText: Color(decoded.selectedText),
-				selection: Color(decoded.selection)
-			)
-		}
+		let plistDecoder = PropertyListDecoder()
+		let jsonDecoder = JSONDecoder()
+		
+		guard let decoded =
+				(try? plistDecoder.decode(ThemeCodable.self, from: data)) ??
+				(try? jsonDecoder.decode(ThemeCodable.self, from: data))
+		else { return nil }
+		let theme = Theme(
+			name: name,
+			ansi: decoded.ansi,
+			foreground: Color(decoded.foreground),
+			background: Color(decoded.background),
+			cursor: Color(decoded.cursor),
+			cursorText: Color(decoded.cursorText),
+			bold: Color(decoded.bold),
+			selectedText: Color(decoded.selectedText),
+			selection: Color(decoded.selection)
+		)
+		return theme
 	}
 }
 
