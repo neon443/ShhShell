@@ -12,7 +12,6 @@ import SwiftTerm
 @MainActor
 final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalViewDelegate {
 	var handler: SSHHandler?
-//	var sshQueue = DispatchQueue(label: "sshQueue")
 	
 	public convenience init(frame: CGRect, handler: SSHHandler) {
 		self.init(frame: frame)

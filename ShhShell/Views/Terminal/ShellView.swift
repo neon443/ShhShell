@@ -23,8 +23,9 @@ struct ShellView: View {
 				Group {
 					Color.gray.opacity(0.2)
 						.transition(.opacity)
-					Text("🔔")
-						.font(.title)
+					Image(systemName: "bell.fill")
+						.font(.largeTitle)
+						.shadow(color: .black, radius: 5)
 				}
 				.opacity(handler.bell ? 1 : 0)
 				
