@@ -29,7 +29,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		guard let decodedThemeNames = try? JSONDecoder().decode([String].self, from: dataThemeNames) else { return }
 		
 		for index in 0..<decodedThemes.count {
-			guard let encoded = try? JSONEncoder().encode(decodedThemes) else { return }
+			guard let encoded = try? JSONEncoder().encode(decodedThemes[index]) else { return }
 			guard let synthedTheme = Theme.decodeTheme(name: decodedThemeNames[index], data: encoded) else { return }
 			self.themes.append(synthedTheme)
 		}

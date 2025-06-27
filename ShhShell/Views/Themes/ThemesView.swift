@@ -29,21 +29,15 @@ struct ThemesView: View {
 									HStack {
 										ForEach(0..<8, id: \.self) { index in
 											Rectangle()
-												.frame(width: 12)
+												.frame(width: 12, height: 12)
 												.foregroundStyle(theme.ansi[index].suiColor)
-												.onAppear {
-													print(index)
-												}
 										}
 									}
 									HStack {
 										ForEach(8..<16, id: \.self) { index in
 											Rectangle()
-												.frame(width: 12)
+												.frame(width: 12, height: 12)
 												.foregroundStyle(theme.ansi[index].suiColor)
-												.onAppear {
-													print(index)
-												}
 										}
 									}
 								}
