@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftTerm
+import SwiftUI
 
 struct Theme: Hashable, Equatable {
 	var name: String
@@ -21,7 +22,6 @@ struct Theme: Hashable, Equatable {
 	
 	static func fromiTermColors(name: String, data: Data?) -> Theme? {
 		guard let data else { return nil }
-		guard let string = String(data: data, encoding: .utf8) else { return nil }
 		
 		let decoder = PropertyListDecoder()
 		
@@ -96,7 +96,7 @@ struct ThemeCodable: Codable {
 }
 
 extension ThemeCodable {
-	var ansi: [Color] {
+	var ansi: [SwiftTerm.Color] {
 		let arr = [ansi0, ansi1, ansi2, ansi3, ansi4, ansi5, ansi6, ansi7, ansi8, ansi9, ansi10, ansi11, ansi12, ansi13, ansi14, ansi15]
 		return arr.map(SwiftTerm.Color.init)
 	}
@@ -121,5 +121,14 @@ extension SwiftTerm.Color {
 		let green = UInt16(colorCodable.green * 65535)
 		let blue = UInt16(colorCodable.blue * 65535)
 		self.init(red: red, green: green, blue: blue)
+	}
+}
+
+extension SwiftTerm.Color {
+	var uiColor: UIColor {
+		let red = CGFloat(self.red/65535)
+		let green = CGFloat(self.green/65535)
+		let blue = CGFloat(self.blue/65535)
+		return UIColor(red: red, green: green, blue: blue, alpha: 1)
 	}
 }

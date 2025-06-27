@@ -10,7 +10,7 @@ import UIKit
 import SwiftTerm
 
 @MainActor
-final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalViewDelegate {
+final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency TerminalViewDelegate {
 	var handler: SSHHandler?
 	
 	public convenience init(frame: CGRect, handler: SSHHandler) {
@@ -46,6 +46,17 @@ final class SSHTerminalView: TerminalView, Sendable, @preconcurrency TerminalVie
 			self.setNeedsLayout()
 			self.setNeedsDisplay()
 		}
+	}
+	
+	func applyTheme(_ theme: Theme) {
+		getTerminal().installPalette(colors: theme.ansi)
+		getTerminal().foregroundColor = theme.foreground
+		getTerminal().backgroundColor = theme.background
+		
+		caretColor = theme.cursor.uiColor
+		selectedTextBackgroundColor = theme.selection.uiColor
+		
+		// TODO: selectedtext and cursor colors
 	}
 	
 	public override init(frame: CGRect) {
