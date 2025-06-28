@@ -9,13 +9,14 @@ import SwiftUI
 
 struct ShellView: View {
 	@ObservedObject var handler: SSHHandler
+	@ObservedObject var hostsManager: HostsManager
 	
 	@Environment(\.dismiss) var dismiss
 	
     var body: some View {
 		NavigationStack {
 			ZStack {
-				TerminalController(handler: handler)
+				TerminalController(handler: handler, hostsManager: hostsManager)
 					.onAppear {
 						TerminalController.TerminalViewContainer.shared?.restoreScrollback()
 					}
@@ -61,5 +62,8 @@ struct ShellView: View {
 }
 
 #Preview {
-	ShellView(handler: SSHHandler(host: Host.debug))
+	ShellView(
+		handler: SSHHandler(host: Host.debug),
+		hostsManager: HostsManager()
+	)
 }

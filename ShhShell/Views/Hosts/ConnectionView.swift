@@ -185,7 +185,7 @@ struct ConnectionView: View {
 		}
 		.onAppear {
 			if shellView == nil {
-				shellView = ShellView(handler: handler)
+				shellView = ShellView(handler: handler, hostsManager: hostsManager)
 			}
 		}
 		.onAppear {

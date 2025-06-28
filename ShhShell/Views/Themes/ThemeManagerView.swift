@@ -31,6 +31,10 @@ struct ThemeManagerView: View {
 					LazyHGrid(rows: [grid, grid], alignment: .center, spacing: 8) {
 						ForEach(hostsManager.themes) { theme in
 							ThemePreview(theme: theme)
+								.scaleEffect(hostsManager.isThemeSelected(theme) ? 1.2 : 1)
+								.onTapGesture {
+									hostsManager.selectTheme(theme)
+								}
 								.contextMenu {
 									Button() {
 										themeToRename = theme

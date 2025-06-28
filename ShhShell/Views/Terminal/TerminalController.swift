@@ -12,6 +12,7 @@ import SwiftTerm
 
 struct TerminalController: UIViewRepresentable {
 	@ObservedObject var handler: SSHHandler
+	@ObservedObject var hostsManager: HostsManager
 	
 	final class TerminalViewContainer {
 		@MainActor static var shared: SSHTerminalDelegate?
@@ -22,7 +23,11 @@ struct TerminalController: UIViewRepresentable {
 			return existing
 		}
 		
-		let tv = SSHTerminalDelegate(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: .zero), handler: handler)
+		let tv = SSHTerminalDelegate(
+			frame: CGRect(origin: CGPoint(x: 0, y: 0), size: .zero),
+			handler: handler,
+			hostsManager: hostsManager
+		)
 		tv.translatesAutoresizingMaskIntoConstraints = false
 		tv.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 		

@@ -21,7 +21,7 @@ struct HostsView: View {
 		NavigationLink() {
 			ForEach(hostsManager.hosts) { host in
 				let miniHandler = SSHHandler(host: host)
-				TerminalController(handler: miniHandler)
+				TerminalController(handler: miniHandler, hostsManager: hostsManager)
 					.onAppear { miniHandler.go() }
 			}
 		} label: {

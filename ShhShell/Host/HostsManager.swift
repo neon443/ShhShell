@@ -14,6 +14,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	
 	@Published var hosts: [Host] = []
 	@Published var themes: [Theme] = []
+	@Published var selectedThemeIndex: Int = -1
 	
 	init() {
 		loadHosts()
@@ -46,6 +47,19 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		}
 		
 		task.resume()
+	}
+	
+	func selectTheme(_ selectedTheme: Theme) {
+		guard let index = themes.firstIndex(where: { $0 == selectedTheme }) else {
+			withAnimation { selectedThemeIndex = -1 }
+			return
+		}
+		withAnimation { selectedThemeIndex = index }
+	}
+	
+	func isThemeSelected(_ themeInQuestion: Theme) -> Bool {
+		guard let index = themes.firstIndex(where: { $0 == themeInQuestion }) else { return false }
+		return index == selectedThemeIndex 
 	}
 	
 	func renameTheme(_ theme: Theme?, to newName: String) {

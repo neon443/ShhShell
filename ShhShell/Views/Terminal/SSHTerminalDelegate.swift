@@ -12,10 +12,14 @@ import SwiftTerm
 @MainActor
 final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency TerminalViewDelegate {
 	var handler: SSHHandler?
+	var hostsManager: HostsManager?
 	
-	public convenience init(frame: CGRect, handler: SSHHandler) {
+	public convenience init(frame: CGRect, handler: SSHHandler, hostsManager: HostsManager) {
 		self.init(frame: frame)
 		self.handler = handler
+		self.hostsManager = hostsManager
+		
+		applyTheme(index: hostsManager.selectedThemeIndex)
 		
 		DispatchQueue.main.async {
 			Task {
@@ -48,7 +52,11 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 		}
 	}
 	
-	func applyTheme(_ theme: Theme) {
+	func applyTheme(index themeIndex: Int) {
+		guard themeIndex != -1 else { return }
+		guard let hostsManager = hostsManager else { return }
+		
+		let theme = hostsManager.themes[themeIndex]
 		getTerminal().installPalette(colors: theme.ansi)
 		getTerminal().foregroundColor = theme.foreground
 		getTerminal().backgroundColor = theme.background
