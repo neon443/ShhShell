@@ -188,6 +188,9 @@ struct ConnectionView: View {
 				shellView = ShellView(handler: handler)
 			}
 		}
+		.onAppear {
+			hostsManager.addHostIfNeeded(handler.host)
+		}
 	}
 }
 

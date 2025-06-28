@@ -12,11 +12,11 @@ import SwiftUI
 class HostsManager: ObservableObject, @unchecked Sendable {
 	private let userDefaults = NSUbiquitousKeyValueStore.default
 	
-	@Published var savedHosts: [Host] = []
+	@Published var hosts: [Host] = []
 	@Published var themes: [Theme] = []
 	
 	init() {
-		loadSavedHosts()
+		loadHosts()
 		loadThemes()
 	}
 	
@@ -84,7 +84,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	}
 	
 	func getHostIndexMatching(_ hostSearchingFor: Host) -> Int? {
-		if let index = savedHosts.firstIndex(where: { $0.id == hostSearchingFor.id }) {
+		if let index = hosts.firstIndex(where: { $0.id == hostSearchingFor.id }) {
 			return index
 		} else {
 			return nil
@@ -93,28 +93,28 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	
 	func getHostMatching(_ HostSearchingFor: Host) -> Host? {
 		guard let index = getHostIndexMatching(HostSearchingFor) else { return nil }
-		return savedHosts[index]
+		return hosts[index]
 	}
 	
 	func updateHost(_ updatedHost: Host) {
 		let oldID = updatedHost.id
 		
-		if let index = savedHosts.firstIndex(where: { $0.id == updatedHost.id }) {
+		if let index = hosts.firstIndex(where: { $0.id == updatedHost.id }) {
 			var updateHostWithNewID = updatedHost
 			updateHostWithNewID.id = UUID()
-			withAnimation { savedHosts[index] = updateHostWithNewID }
+			withAnimation { hosts[index] = updateHostWithNewID }
 			
 			updateHostWithNewID.id = oldID
-			withAnimation { savedHosts[index] = updateHostWithNewID }
-			saveSavedHosts()
+			withAnimation { hosts[index] = updateHostWithNewID }
+			saveHosts()
 		}
 	}
 	
 	func duplicateHost(_ hostToDup: Host) {
 		var hostNewID = hostToDup
 		hostNewID.id = UUID()
-		if let index = savedHosts.firstIndex(where: { $0 == hostToDup }) {
-			savedHosts.insert(hostNewID, at: index+1)
+		if let index = hosts.firstIndex(where: { $0 == hostToDup }) {
+			hosts.insert(hostNewID, at: index+1)
 		}
 	}
 	
@@ -131,38 +131,44 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	}
 	
 	func moveHost(from: IndexSet, to: Int) {
-		savedHosts.move(fromOffsets: from, toOffset: to)
-		saveSavedHosts()
+		hosts.move(fromOffsets: from, toOffset: to)
+		saveHosts()
 	}
 	
-	func loadSavedHosts() {
+	func loadHosts() {
 		userDefaults.synchronize()
 		let decoder = JSONDecoder()
 		guard let data = userDefaults.data(forKey: "savedHosts") else { return }
 		
 		if let decoded = try? decoder.decode([Host].self, from: data) {
-			self.savedHosts = decoded
+			self.hosts = decoded
 		}
 	}
 	
-	func saveSavedHosts() {
+	func saveHosts() {
 		let encoder = JSONEncoder()
-		if let encoded = try? encoder.encode(savedHosts) {
+		if let encoded = try? encoder.encode(hosts) {
 			userDefaults.set(encoded, forKey: "savedHosts")
 			userDefaults.synchronize()
 		}
 	}
 	
+	func addHostIfNeeded(_ hostToAdd: Host) {
+		if !hosts.contains(hostToAdd) {
+			hosts.append(hostToAdd)
+		}
+	}
+	
 	func removeHost(_ host: Host) {
-		if let index = savedHosts.firstIndex(where: { $0.id == host.id }) {
-			let _ = withAnimation { savedHosts.remove(at: index) }
-			saveSavedHosts()
+		if let index = hosts.firstIndex(where: { $0.id == host.id }) {
+			let _ = withAnimation { hosts.remove(at: index) }
+			saveHosts()
 		}
 	}
 	
 	func getKeys() -> [Keypair] {
 		var result: [Keypair] = []
-		for host in savedHosts {
+		for host in hosts {
 			let keypair = Keypair(publicKey: host.publicKey, privateKey: host.privateKey)
 			if !result.contains(keypair) {
 				result.append(keypair)
@@ -174,7 +180,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	func getHostsKeysUsedOn(_ keys: [Keypair]) -> [Host] {
 		var result: [Host] = []
 		for key in keys {
-			let hosts = savedHosts.filter({
+			let hosts = hosts.filter({
 				$0.publicKey == key.publicKey &&
 				$0.privateKey == key.privateKey
 			})

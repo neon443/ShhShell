@@ -42,6 +42,7 @@
 		A9D819292E0E904200442D38 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D819282E0E904200442D38 /* Theme.swift */; };
 		A9D8192D2E0E9EB500442D38 /* ThemeManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D8192C2E0E9EB500442D38 /* ThemeManagerView.swift */; };
 		A9D8192F2E0F1BEE00442D38 /* ThemePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D8192E2E0F1BEE00442D38 /* ThemePreview.swift */; };
+		A9D819312E102D8700442D38 /* HostkeysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D819302E102D8700442D38 /* HostkeysView.swift */; };
 		A9DA97712E0D30ED00142DDC /* HostSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA97702E0D30ED00142DDC /* HostSymbol.swift */; };
 		A9DA97732E0D40C100142DDC /* SymbolPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA97722E0D40C100142DDC /* SymbolPreview.swift */; };
 /* End PBXBuildFile section */
@@ -118,6 +119,7 @@
 		A9D819282E0E904200442D38 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		A9D8192C2E0E9EB500442D38 /* ThemeManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManagerView.swift; sourceTree = "<group>"; };
 		A9D8192E2E0F1BEE00442D38 /* ThemePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePreview.swift; sourceTree = "<group>"; };
+		A9D819302E102D8700442D38 /* HostkeysView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostkeysView.swift; sourceTree = "<group>"; };
 		A9DA97702E0D30ED00142DDC /* HostSymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostSymbol.swift; sourceTree = "<group>"; };
 		A9DA97722E0D40C100142DDC /* SymbolPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolPreview.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -282,6 +284,7 @@
 			children = (
 				A96C6AFF2E0C45FE00F377FE /* KeyDetailView.swift */,
 				A98554542E05535F009051BD /* KeyManagerView.swift */,
+				A9D819302E102D8700442D38 /* HostkeysView.swift */,
 			);
 			path = Keys;
 			sourceTree = "<group>";
@@ -497,6 +500,7 @@
 				A985545D2E055D4D009051BD /* ConnectionView.swift in Sources */,
 				A98554592E0553AA009051BD /* KeyManager.swift in Sources */,
 				A9C897EF2DF1A9A400EF9A5F /* SSHHandler.swift in Sources */,
+				A9D819312E102D8700442D38 /* HostkeysView.swift in Sources */,
 				A98554552E05535F009051BD /* KeyManagerView.swift in Sources */,
 				A923172D2E07138000ECE1E6 /* SSHTerminalDelegate.swift in Sources */,
 				A96C6AFE2E0C43B600F377FE /* Keypair.swift in Sources */,

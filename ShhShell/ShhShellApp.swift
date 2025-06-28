@@ -17,7 +17,7 @@ struct ShhShellApp: App {
 		WindowGroup {
 			ContentView(
 				handler: sshHandler,
-				hostsManger: hostsManager,
+				hostsManager: hostsManager,
 				keyManager: keyManager
 			)
 			.colorScheme(.dark)

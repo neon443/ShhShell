@@ -9,31 +9,38 @@ import SwiftUI
 
 struct ContentView: View {
 	@ObservedObject var handler: SSHHandler
-	@ObservedObject var hostsManger: HostsManager
+	@ObservedObject var hostsManager: HostsManager
 	@ObservedObject var keyManager: KeyManager
 	
-    var body: some View {
-		TabView {
-			HostsView(
-				handler: handler,
-				hostsManager: hostsManger,
-				keyManager: keyManager
-			)
-			.tabItem {
-				Label("Hosts", systemImage: "server.rack")
-			}
-			KeyManagerView(hostsManager: hostsManger, keyManager: keyManager)
-				.tabItem {
-					Label("Keys", systemImage: "key.2.on.ring")
+	var body: some View {
+		NavigationStack {
+			List {
+				HostsView(
+					handler: handler,
+					hostsManager: hostsManager,
+					keyManager: keyManager
+				)
+				
+				NavigationLink {
+					KeyManagerView(hostsManager: hostsManager, keyManager: keyManager)
+				} label: {
+					Label("Keys", systemImage: "key.fill")
 				}
+				
+				NavigationLink {
+					HostkeysView(hostsManager: hostsManager)
+				} label: {
+					Label("Hostkey Fingerprints", systemImage: "lock.display")
+				}
+			}
 		}
-    }
+	}
 }
 
 #Preview {
     ContentView(
 		handler: SSHHandler(host: Host.debug),
-		hostsManger: HostsManager(),
+		hostsManager: HostsManager(),
 		keyManager: KeyManager()
 	)
 }

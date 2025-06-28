@@ -59,6 +59,7 @@ struct ThemeManagerView: View {
 				}
 				.fixedSize(horizontal: false, vertical: true)
 				.scrollIndicators(.hidden)
+				.navigationTitle("Themes")
 				.alert("Enter URL", isPresented: $showAlert) {
 					TextField("", text: $importURL, prompt: Text("URL"))
 					Button() {
