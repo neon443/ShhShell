@@ -48,6 +48,7 @@ struct HostsView: View {
 							.frame(width: 40, height: 40)
 						Text(hostsManager.makeLabel(forHost: host))
 					}
+					.id(host)
 					.animation(.default, value: host)
 					.swipeActions(edge: .trailing) {
 						Button(role: .destructive) {

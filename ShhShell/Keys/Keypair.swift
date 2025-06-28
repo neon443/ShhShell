@@ -24,4 +24,13 @@ struct Keypair: KeypairProtocol {
 		self.publicKey = publicKey
 		self.privateKey = privateKey
 	}
+	
+	static func ==(lhs: Keypair, rhs: Keypair) -> Bool {
+		if lhs.publicKey?.base64EncodedString() == rhs.publicKey?.base64EncodedString()
+			&& lhs.privateKey?.base64EncodedString() == rhs.privateKey?.base64EncodedString() {
+			return true
+		} else {
+			return false
+		}
+	}
 }

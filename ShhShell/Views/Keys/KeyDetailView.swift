@@ -15,6 +15,17 @@ struct KeyDetailView: View {
     var body: some View {
 		List {
 			VStack(alignment: .leading) {
+				Text("Used on")
+					.bold()
+				ForEach(hostsManager.getHostsKeysUsedOn([keypair])) { host in
+					HStack {
+						SymbolPreview(symbol: host.symbol, label: host.label)
+							.frame(width: 40, height: 40)
+						Text(hostsManager.makeLabel(forHost: host))
+					}
+				}
+			}
+			VStack(alignment: .leading) {
 				Text("Public key")
 					.bold()
 				Text(String(data: keypair.publicKey!, encoding: .utf8) ?? "nil")

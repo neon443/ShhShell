@@ -40,13 +40,14 @@ struct ThemeManagerView: View {
 										Label("Rename", systemImage: "pencil")
 									}
 									Button(role: .destructive) {
-										
+										hostsManager.deleteTheme(theme)
 									} label: {
 										Label("Delete", systemImage: "trash")
 									}
 								}
 						}
 					}
+					.animation(.default, value: hostsManager.themes)
 					.alert("", isPresented: $showRenameAlert) {
 						TextField("", text: $rename)
 						Button("OK") {
@@ -66,6 +67,7 @@ struct ThemeManagerView: View {
 					} label: {
 						Label("Import", systemImage: "square.and.arrow.down")
 					}
+					Button("Cancel") {}
 				}
 				.toolbar {
 					ToolbarItem() {

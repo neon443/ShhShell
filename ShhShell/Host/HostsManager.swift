@@ -50,11 +50,18 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	
 	func renameTheme(_ theme: Theme?, to newName: String) {
 		guard let theme else { return }
+		guard theme.name != newName else { return }
 		guard let index = themes.firstIndex(where: {$0.id == theme.id}) else { return }
 		var newTheme = themes[index]
 		newTheme.name = newName
 		newTheme.id = UUID()
 		withAnimation { themes[index] = newTheme }
+		saveThemes()
+	}
+	
+	func deleteTheme(_ themeToDel: Theme) {
+		guard let index = themes.firstIndex(where: {$0 == themeToDel}) else { return }
+		themes.remove(at: index)
 		saveThemes()
 	}
 	
@@ -156,11 +163,22 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	func getKeys() -> [Keypair] {
 		var result: [Keypair] = []
 		for host in savedHosts {
-			if result.contains(where: { $0 == Keypair(publicKey: host.publicKey, privateKey: host.privateKey)}) {
-				
-			} else {
-				result.append(Keypair(publicKey: host.publicKey, privateKey: host.privateKey))
+			let keypair = Keypair(publicKey: host.publicKey, privateKey: host.privateKey)
+			if !result.contains(keypair) {
+				result.append(keypair)
 			}
+		}
+		return result
+	}
+	
+	func getHostsKeysUsedOn(_ keys: [Keypair]) -> [Host] {
+		var result: [Host] = []
+		for key in keys {
+			let hosts = savedHosts.filter({
+				$0.publicKey == key.publicKey &&
+				$0.privateKey == key.privateKey
+			})
+			result += hosts
 		}
 		return result
 	}
