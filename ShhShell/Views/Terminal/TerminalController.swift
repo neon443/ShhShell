@@ -32,10 +32,12 @@ struct TerminalController: UIViewRepresentable {
 		tv.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 		
 		if let sessionID = handler.sessionID {
-			container.sessions[sessionID] = TerminalContainer(
-				handler: handler,
-				terminalView: tv
-			)
+			Task { @MainActor in
+				container.sessions[sessionID] = TerminalContainer(
+					handler: handler,
+					terminalView: tv
+				)
+			}
 		}
 		
 		return tv

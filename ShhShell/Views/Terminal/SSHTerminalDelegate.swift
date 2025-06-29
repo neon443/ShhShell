@@ -22,7 +22,7 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 		print(getTerminal().backgroundColor)
 		print(getTerminal().foregroundColor)
 		
-		applyTheme(hostsManager.selectedTheme)
+		applySelectedTheme()
 		
 		DispatchQueue.main.async {
 			Task {
@@ -53,6 +53,11 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 			self.setNeedsLayout()
 			self.setNeedsDisplay()
 		}
+	}
+	
+	func applySelectedTheme() {
+		guard let hostsManager else { return }
+		applyTheme(hostsManager.selectedTheme)
 	}
 	
 	func applyTheme(_ theme: Theme) {

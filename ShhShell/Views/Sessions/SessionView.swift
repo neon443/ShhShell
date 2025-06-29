@@ -18,18 +18,19 @@ struct SessionView: View {
 		container.sessions[key]?.handler.host ?? Host.blank
 	}
 	
-    var body: some View {
-		HStack {
-			Image(systemName: "apple.terminal")
-				.resizable().scaledToFit()
-				.frame(width: 40, height: 40)
-				.foregroundStyle(.terminalGreen)
-			SymbolPreview(symbol: host.symbol, label: host.label)
-				.frame(width: 40, height: 40)
-			Text(hostsManager.makeLabel(forHost: host))
-		}
-		.onTapGesture {
+	var body: some View {
+		Button() {
 			shellPresented.toggle()
+		} label: {
+			HStack {
+				Image(systemName: "apple.terminal")
+					.resizable().scaledToFit()
+					.frame(width: 40, height: 40)
+					.foregroundStyle(.terminalGreen)
+				SymbolPreview(symbol: host.symbol, label: host.label)
+					.frame(width: 40, height: 40)
+				Text(hostsManager.makeLabel(forHost: host))
+			}
 		}
 		.fullScreenCover(isPresented: $shellPresented) {
 			ShellView(
@@ -37,7 +38,7 @@ struct SessionView: View {
 				hostsManager: hostsManager
 			)
 		}
-    }
+	}
 }
 
 #Preview {

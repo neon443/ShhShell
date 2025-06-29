@@ -38,6 +38,14 @@ struct ShellView: View {
 					DialogView(handler: handler, showDialog: !handler.connected)
 				}
 			}
+			.onChange(of: handler.connected) { _ in
+				if !handler.connected { dismiss() }
+			}
+			.onAppear {
+				handler.applySelectedTheme()
+			}
+			.navigationTitle(handler.title)
+			.navigationBarTitleDisplayMode(.inline)
 			.toolbar {
 				ToolbarItem {
 					Button() {
@@ -56,11 +64,6 @@ struct ShellView: View {
 					}
 				}
 			}
-			.onChange(of: handler.connected) { _ in
-				if !handler.connected { dismiss() }
-			}
-			.navigationTitle(handler.title)
-			.navigationBarTitleDisplayMode(.inline)
 		}
     }
 }

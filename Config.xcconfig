@@ -5,8 +5,8 @@
 //  Created by neon443 on 06/06/2025.
 //
 
-VERSION = 1.2
-BUILD = 25
+VERSION = 1.3.1
+BUILD = 50
 
 // Configuration settings file format documentation can be found at:
 // https://developer.apple.com/documentation/xcode/adding-a-build-configuration-file-to-your-project
