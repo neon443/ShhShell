@@ -10,7 +10,7 @@ import SwiftTerm
 import SwiftUI
 
 struct Theme: Hashable, Equatable, Identifiable {
-	var id = UUID()
+	var id: String = UUID().uuidString
 	var name: String
 	var ansi: [SwiftTerm.Color]
 	var foreground: SwiftTerm.Color
@@ -23,6 +23,7 @@ struct Theme: Hashable, Equatable, Identifiable {
 	
 	var themeCodable: ThemeCodable {
 		return ThemeCodable(
+			name: name,
 			ansi0: ansi[0].colorCodable,
 			ansi1: ansi[1].colorCodable,
 			ansi2: ansi[2].colorCodable,
@@ -50,7 +51,7 @@ struct Theme: Hashable, Equatable, Identifiable {
 	}
 	
 	static func decodeTheme(name: String, data: Data?) -> Theme? {
-		guard let data else { return nil }
+		guard let data else { fatalError() }
 		
 		let plistDecoder = PropertyListDecoder()
 		let jsonDecoder = JSONDecoder()
@@ -58,9 +59,9 @@ struct Theme: Hashable, Equatable, Identifiable {
 		guard let decoded =
 				(try? plistDecoder.decode(ThemeCodable.self, from: data)) ??
 				(try? jsonDecoder.decode(ThemeCodable.self, from: data))
-		else { return nil }
-		let theme = Theme(
-			name: name,
+		else { fatalError() }
+		var theme = Theme(
+			name: decoded.name ?? name,
 			ansi: decoded.ansi,
 			foreground: Color(decoded.foreground),
 			background: Color(decoded.background),
@@ -72,10 +73,46 @@ struct Theme: Hashable, Equatable, Identifiable {
 		)
 		return theme
 	}
+	
+	static func decodeLocalTheme(fileName: String) -> Theme? {
+		guard let path = Bundle.main.url(forResource: fileName, withExtension: "plist") else { return nil }
+		let themeName = path.lastPathComponent.replacingOccurrences(of: ".plist", with: "")
+		
+		guard let fileContents = try? Data(contentsOf: path) else { return nil }
+		
+		guard var theme = Theme.decodeTheme(name: themeName, data: fileContents) else { return nil }
+		theme.name = themeName
+		theme.id = themeName
+		return theme
+	}
+	
+	static var defaultTheme: Theme {
+		return decodeLocalTheme(fileName: "defaultTheme")!
+	}
+	
+	static var builtinThemes: [Theme] {
+		return ThemesBuiltin.allCases.map({ decodeLocalTheme(fileName: $0.rawValue)! })
+	}
 }
 
+enum ThemesBuiltin: String, CaseIterable, Hashable, Equatable {
+	case defaultTheme = "defaultTheme"
+	case xcodedark = "xcodedark"
+	case xcodedarkhc = "xcodedarkhc"
+	case xcodewwdc = "xcodewwdc"
+	case tomorrowNight = "tomorrowNight"
+	case zeroXNineSixF = "0x96f"
+	case iTerm2SolarizedDark = "iTerm2SolarizedDark"
+	case iTerm2SolarizedLight = "iTerm2SolarizedLight"
+	case catppuccinFrappe = "catppuccinFrappe"
+	case catppuccinMocha = "catppuccinMocha"
+	case dracula = "dracula"
+	case gruvboxDark = "gruvboxDark"
+	case ubuntu = "ubuntu"
+}
 
 struct ThemeCodable: Codable {
+	var name: String?
 	var ansi0: ColorCodable
 	var ansi1: ColorCodable
 	var ansi2: ColorCodable

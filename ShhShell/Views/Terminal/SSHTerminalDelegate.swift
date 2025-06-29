@@ -19,7 +19,10 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 		self.handler = handler
 		self.hostsManager = hostsManager
 		
-		applyTheme(index: hostsManager.selectedThemeIndex)
+		print(getTerminal().backgroundColor)
+		print(getTerminal().foregroundColor)
+		
+		applyTheme(hostsManager.selectedTheme)
 		
 		DispatchQueue.main.async {
 			Task {
@@ -52,11 +55,7 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 		}
 	}
 	
-	func applyTheme(index themeIndex: Int) {
-		guard themeIndex != -1 else { return }
-		guard let hostsManager = hostsManager else { return }
-		
-		let theme = hostsManager.themes[themeIndex]
+	func applyTheme(_ theme: Theme) {
 		getTerminal().installPalette(colors: theme.ansi)
 		getTerminal().foregroundColor = theme.foreground
 		getTerminal().backgroundColor = theme.background

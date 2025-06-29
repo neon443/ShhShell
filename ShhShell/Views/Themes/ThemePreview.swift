@@ -8,12 +8,25 @@
 import SwiftUI
 
 struct ThemePreview: View {
+	@ObservedObject var hostsManager: HostsManager
 	@State var theme: Theme
 	
     var body: some View {
 		ZStack(alignment: .center) {
-			RoundedRectangle(cornerRadius: 10)
+			Rectangle()
+				.fill(Color.accentColor)
+			
+			Rectangle()
 				.fill(theme.background.suiColor)
+				.frame(
+					width: hostsManager.isThemeSelected(theme) ? 190 : 200,
+					height: hostsManager.isThemeSelected(theme) ? 80 : 90
+				)
+				.clipShape(
+					RoundedRectangle(
+						cornerRadius: hostsManager.isThemeSelected(theme) ? 5 : 10
+					)
+				)
 			VStack(alignment: .leading) {
 				Text(theme.name)
 					.foregroundStyle(theme.foreground.suiColor)
@@ -37,6 +50,10 @@ struct ThemePreview: View {
 			.padding(8)
 		}
 		.frame(maxWidth: 200, maxHeight: 90)
+		.clipShape(RoundedRectangle(cornerRadius: 10))
+		.onTapGesture {
+			hostsManager.selectTheme(theme)
+		}
     }
 }
 
@@ -45,6 +62,7 @@ struct ThemePreview: View {
 	let data = try! Data(contentsOf: url)
 	
 	ThemePreview(
+		hostsManager: HostsManager(),
 		theme: Theme.decodeTheme(name: "theme", data: data)!
 	)
 }

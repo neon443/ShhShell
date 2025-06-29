@@ -17,6 +17,7 @@
 		A92538CD2DEE0744007E0A18 /* ShhShellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538CB2DEE0744007E0A18 /* ShhShellTests.swift */; };
 		A92538D12DEE0745007E0A18 /* ShhShellUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538CE2DEE0745007E0A18 /* ShhShellUITests.swift */; };
 		A92538D22DEE0745007E0A18 /* ShhShellUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92538CF2DEE0745007E0A18 /* ShhShellUITestsLaunchTests.swift */; };
+		A92DDDE22E104CB300A87DB2 /* defaultTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = A92DDDE12E104CB300A87DB2 /* defaultTheme.plist */; };
 		A93143BE2DF4D0B300FCD5DB /* libpthread.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A93143BD2DF4D0A700FCD5DB /* libpthread.tbd */; };
 		A93143C02DF61B3200FCD5DB /* Host.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93143BF2DF61B3200FCD5DB /* Host.swift */; };
 		A93143C62DF61FE300FCD5DB /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93143C52DF61FE300FCD5DB /* ViewModifiers.swift */; };
@@ -25,6 +26,18 @@
 		A95FAA552DF4B62900DE2F5A /* LibSSH.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A95FAA502DF4B62100DE2F5A /* LibSSH.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A95FAA562DF4B62A00DE2F5A /* openssl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A95FAA512DF4B62100DE2F5A /* openssl.xcframework */; };
 		A95FAA572DF4B62A00DE2F5A /* openssl.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A95FAA512DF4B62100DE2F5A /* openssl.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A96BE6972E10846B00C0FEE9 /* catppuccinMocha.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE68D2E10846B00C0FEE9 /* catppuccinMocha.plist */; };
+		A96BE6982E10846B00C0FEE9 /* ubuntu.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE6932E10846B00C0FEE9 /* ubuntu.plist */; };
+		A96BE6992E10846B00C0FEE9 /* iTerm2SolarizedDark.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE6902E10846B00C0FEE9 /* iTerm2SolarizedDark.plist */; };
+		A96BE69A2E10846B00C0FEE9 /* xcodedark.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE6942E10846B00C0FEE9 /* xcodedark.plist */; };
+		A96BE69B2E10846B00C0FEE9 /* iTerm2SolarizedLight.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE6912E10846B00C0FEE9 /* iTerm2SolarizedLight.plist */; };
+		A96BE69C2E10846B00C0FEE9 /* 0x96f.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE68B2E10846B00C0FEE9 /* 0x96f.plist */; };
+		A96BE69D2E10846B00C0FEE9 /* gruvboxDark.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE68F2E10846B00C0FEE9 /* gruvboxDark.plist */; };
+		A96BE69E2E10846B00C0FEE9 /* xcodedarkhc.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE6952E10846B00C0FEE9 /* xcodedarkhc.plist */; };
+		A96BE69F2E10846B00C0FEE9 /* tomorrowNight.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE6922E10846B00C0FEE9 /* tomorrowNight.plist */; };
+		A96BE6A02E10846B00C0FEE9 /* dracula.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE68E2E10846B00C0FEE9 /* dracula.plist */; };
+		A96BE6A12E10846B00C0FEE9 /* catppuccinFrappe.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE68C2E10846B00C0FEE9 /* catppuccinFrappe.plist */; };
+		A96BE6A22E10846B00C0FEE9 /* xcodewwdc.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE6962E10846B00C0FEE9 /* xcodewwdc.plist */; };
 		A96C6A8A2E0C0B1100F377FE /* SSHState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96C6A892E0C0B1100F377FE /* SSHState.swift */; };
 		A96C6AFE2E0C43B600F377FE /* Keypair.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96C6AFD2E0C43B600F377FE /* Keypair.swift */; };
 		A96C6B002E0C45FE00F377FE /* KeyDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96C6AFF2E0C45FE00F377FE /* KeyDetailView.swift */; };
@@ -93,6 +106,7 @@
 		A92538CB2DEE0744007E0A18 /* ShhShellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShhShellTests.swift; sourceTree = "<group>"; };
 		A92538CE2DEE0745007E0A18 /* ShhShellUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShhShellUITests.swift; sourceTree = "<group>"; };
 		A92538CF2DEE0745007E0A18 /* ShhShellUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShhShellUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		A92DDDE12E104CB300A87DB2 /* defaultTheme.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = defaultTheme.plist; sourceTree = "<group>"; };
 		A93143BD2DF4D0A700FCD5DB /* libpthread.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libpthread.tbd; path = usr/lib/libpthread.tbd; sourceTree = SDKROOT; };
 		A93143BF2DF61B3200FCD5DB /* Host.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Host.swift; sourceTree = "<group>"; };
 		A93143C22DF61F5700FCD5DB /* ShhShell.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShhShell.entitlements; sourceTree = "<group>"; };
@@ -103,6 +117,18 @@
 		A95FAA5A2DF4B79900DE2F5A /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
 		A95FAA5B2DF4B7A000DE2F5A /* ci_pre_xcodebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_pre_xcodebuild.sh; sourceTree = "<group>"; };
 		A95FAA5C2DF4B7A300DE2F5A /* ci_prost_xcodebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_prost_xcodebuild.sh; sourceTree = "<group>"; };
+		A96BE68B2E10846B00C0FEE9 /* 0x96f.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = 0x96f.plist; sourceTree = "<group>"; };
+		A96BE68C2E10846B00C0FEE9 /* catppuccinFrappe.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = catppuccinFrappe.plist; sourceTree = "<group>"; };
+		A96BE68D2E10846B00C0FEE9 /* catppuccinMocha.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = catppuccinMocha.plist; sourceTree = "<group>"; };
+		A96BE68E2E10846B00C0FEE9 /* dracula.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = dracula.plist; sourceTree = "<group>"; };
+		A96BE68F2E10846B00C0FEE9 /* gruvboxDark.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = gruvboxDark.plist; sourceTree = "<group>"; };
+		A96BE6902E10846B00C0FEE9 /* iTerm2SolarizedDark.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = iTerm2SolarizedDark.plist; sourceTree = "<group>"; };
+		A96BE6912E10846B00C0FEE9 /* iTerm2SolarizedLight.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = iTerm2SolarizedLight.plist; sourceTree = "<group>"; };
+		A96BE6922E10846B00C0FEE9 /* tomorrowNight.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = tomorrowNight.plist; sourceTree = "<group>"; };
+		A96BE6932E10846B00C0FEE9 /* ubuntu.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ubuntu.plist; sourceTree = "<group>"; };
+		A96BE6942E10846B00C0FEE9 /* xcodedark.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = xcodedark.plist; sourceTree = "<group>"; };
+		A96BE6952E10846B00C0FEE9 /* xcodedarkhc.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = xcodedarkhc.plist; sourceTree = "<group>"; };
+		A96BE6962E10846B00C0FEE9 /* xcodewwdc.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = xcodewwdc.plist; sourceTree = "<group>"; };
 		A96C6A892E0C0B1100F377FE /* SSHState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHState.swift; sourceTree = "<group>"; };
 		A96C6AFD2E0C43B600F377FE /* Keypair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keypair.swift; sourceTree = "<group>"; };
 		A96C6AFF2E0C45FE00F377FE /* KeyDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyDetailView.swift; sourceTree = "<group>"; };
@@ -235,9 +261,30 @@
 		A92538D42DEE0756007E0A18 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A92DDDE02E104CA400A87DB2 /* themes */,
 				A92538C42DEE0742007E0A18 /* Assets.xcassets */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		A92DDDE02E104CA400A87DB2 /* themes */ = {
+			isa = PBXGroup;
+			children = (
+				A92DDDE12E104CB300A87DB2 /* defaultTheme.plist */,
+				A96BE6942E10846B00C0FEE9 /* xcodedark.plist */,
+				A96BE6952E10846B00C0FEE9 /* xcodedarkhc.plist */,
+				A96BE6962E10846B00C0FEE9 /* xcodewwdc.plist */,
+				A96BE6922E10846B00C0FEE9 /* tomorrowNight.plist */,
+				A96BE68B2E10846B00C0FEE9 /* 0x96f.plist */,
+				A96BE6902E10846B00C0FEE9 /* iTerm2SolarizedDark.plist */,
+				A96BE6912E10846B00C0FEE9 /* iTerm2SolarizedLight.plist */,
+				A96BE68C2E10846B00C0FEE9 /* catppuccinFrappe.plist */,
+				A96BE68D2E10846B00C0FEE9 /* catppuccinMocha.plist */,
+				A96BE68E2E10846B00C0FEE9 /* dracula.plist */,
+				A96BE68F2E10846B00C0FEE9 /* gruvboxDark.plist */,
+				A96BE6932E10846B00C0FEE9 /* ubuntu.plist */,
+			);
+			path = themes;
 			sourceTree = "<group>";
 		};
 		A93143C12DF61E8500FCD5DB /* SSH */ = {
@@ -454,8 +501,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A96BE6972E10846B00C0FEE9 /* catppuccinMocha.plist in Resources */,
+				A96BE6982E10846B00C0FEE9 /* ubuntu.plist in Resources */,
+				A96BE6992E10846B00C0FEE9 /* iTerm2SolarizedDark.plist in Resources */,
+				A96BE69A2E10846B00C0FEE9 /* xcodedark.plist in Resources */,
+				A96BE69B2E10846B00C0FEE9 /* iTerm2SolarizedLight.plist in Resources */,
+				A96BE69C2E10846B00C0FEE9 /* 0x96f.plist in Resources */,
+				A96BE69D2E10846B00C0FEE9 /* gruvboxDark.plist in Resources */,
+				A96BE69E2E10846B00C0FEE9 /* xcodedarkhc.plist in Resources */,
+				A96BE69F2E10846B00C0FEE9 /* tomorrowNight.plist in Resources */,
+				A96BE6A02E10846B00C0FEE9 /* dracula.plist in Resources */,
+				A96BE6A12E10846B00C0FEE9 /* catppuccinFrappe.plist in Resources */,
+				A96BE6A22E10846B00C0FEE9 /* xcodewwdc.plist in Resources */,
 				A95FAA472DF3884B00DE2F5A /* Config.xcconfig in Resources */,
 				A92538CA2DEE0742007E0A18 /* Assets.xcassets in Resources */,
+				A92DDDE22E104CB300A87DB2 /* defaultTheme.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -25,69 +25,93 @@ struct ThemeManagerView: View {
 	)
 	
 	var body: some View {
-		GeometryReader { geo in
-			NavigationStack {
-				ScrollView(.horizontal) {
-					LazyHGrid(rows: [grid, grid], alignment: .center, spacing: 8) {
-						ForEach(hostsManager.themes) { theme in
-							ThemePreview(theme: theme)
-								.scaleEffect(hostsManager.isThemeSelected(theme) ? 1.2 : 1)
-								.onTapGesture {
-									hostsManager.selectTheme(theme)
-								}
-								.contextMenu {
-									Button() {
-										themeToRename = theme
-										rename = theme.name
-										showRenameAlert.toggle()
-									} label: {
-										Label("Rename", systemImage: "pencil")
-									}
-									Button(role: .destructive) {
-										hostsManager.deleteTheme(theme)
-									} label: {
-										Label("Delete", systemImage: "trash")
-									}
-								}
+		NavigationStack {
+			List {
+				Section("Your Themes") {
+					if hostsManager.themes.isEmpty {
+						VStack(alignment: .leading) {
+							Image(systemName: "paintpalette")
+								.resizable().scaledToFit()
+								.symbolRenderingMode(.multicolor)
+								.frame(width: 50)
+							Text("No themes (yet)")
+								.font(.title)
+								.padding(.vertical, 10)
+								.bold()
+							Text("Tap the Safari icon at the top right to find themes!")
+							Text("Once you find one that you like, copy it's link and enter it here using the link button.")
 						}
-					}
-					.animation(.default, value: hostsManager.themes)
-					.alert("", isPresented: $showRenameAlert) {
-						TextField("", text: $rename)
-						Button("OK") {
-							hostsManager.renameTheme(themeToRename, to: rename)
-							rename = ""
+					} else {
+						ScrollView(.horizontal) {
+							LazyHGrid(rows: [grid, grid], alignment: .center, spacing: 8) {
+								ForEach(hostsManager.themes) { theme in
+									ThemePreview(hostsManager: hostsManager, theme: theme)
+										.contextMenu {
+											Button() {
+												themeToRename = theme
+												rename = theme.name
+												showRenameAlert.toggle()
+											} label: {
+												Label("Rename", systemImage: "pencil")
+											}
+											Button(role: .destructive) {
+												hostsManager.deleteTheme(theme)
+											} label: {
+												Label("Delete", systemImage: "trash")
+											}
+										}
+								}
+							}
+							.animation(.default, value: hostsManager.themes)
+							.alert("", isPresented: $showRenameAlert) {
+								TextField("", text: $rename)
+								Button("OK") {
+									hostsManager.renameTheme(themeToRename, to: rename)
+									rename = ""
+								}
+							}
 						}
+						.fixedSize(horizontal: false, vertical: true)
+						.scrollIndicators(.hidden)
 					}
-					.padding(.horizontal, 8)
 				}
-				.fixedSize(horizontal: false, vertical: true)
-				.scrollIndicators(.hidden)
-				.navigationTitle("Themes")
-				.alert("Enter URL", isPresented: $showAlert) {
-					TextField("", text: $importURL, prompt: Text("URL"))
+				
+				Section("Builtin Themes") {
+					ScrollView(.horizontal) {
+						LazyHGrid(rows: [grid, grid], alignment: .center, spacing: 8) {
+							ForEach(Theme.builtinThemes) { theme in
+								ThemePreview(hostsManager: hostsManager, theme: theme)
+							}
+						}
+					}
+					.scrollIndicators(.hidden)
+					.fixedSize(horizontal: false, vertical: true)
+				}
+			}
+			.navigationTitle("Themes")
+			.alert("Enter URL", isPresented: $showAlert) {
+				TextField("", text: $importURL, prompt: Text("URL"))
+				Button() {
+					hostsManager.downloadTheme(fromUrl: URL(string: importURL))
+					importURL = ""
+				} label: {
+					Label("Import", systemImage: "square.and.arrow.down")
+				}
+				Button("Cancel") {}
+			}
+			.toolbar {
+				ToolbarItem() {
 					Button() {
-						hostsManager.downloadTheme(fromUrl: URL(string: importURL))
-						importURL = ""
+						UIApplication.shared.open(URL(string: "https://iterm2colorschemes.com")!)
 					} label: {
-						Label("Import", systemImage: "square.and.arrow.down")
+						Label("Open themes site", systemImage: "safari")
 					}
-					Button("Cancel") {}
 				}
-				.toolbar {
-					ToolbarItem() {
-						Button() {
-							UIApplication.shared.open(URL(string: "https://iterm2colorschemes.com")!)
-						} label: {
-							Label("Open themes site", systemImage: "safari")
-						}
-					}
-					ToolbarItem() {
-						Button() {
-							showAlert.toggle()
-						} label: {
-							Label("From URL", systemImage: "link")
-						}
+				ToolbarItem() {
+					Button() {
+						showAlert.toggle()
+					} label: {
+						Label("From URL", systemImage: "link")
 					}
 				}
 			}

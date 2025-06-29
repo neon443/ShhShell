@@ -10,17 +10,17 @@ import LocalAuthentication
 import SwiftUI
 
 class HostsManager: ObservableObject, @unchecked Sendable {
-	private let userDefaults = NSUbiquitousKeyValueStore.default
+	private let userDefaults = UserDefaults.standard
 	
 	@Published var hosts: [Host] = []
 	@Published var themes: [Theme] = []
-	@Published var selectedThemeIndex: Int = -1
+	@Published var selectedTheme: Theme = Theme.defaultTheme
 	
 	init() {
 		loadHosts()
 		loadThemes()
+		print(selectedTheme == Theme.defaultTheme)
 	}
-	
 	
 	func loadThemes() {
 		guard let dataTheme = userDefaults.data(forKey: "themes") else { return }
@@ -34,6 +34,12 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 			guard let synthedTheme = Theme.decodeTheme(name: decodedThemeNames[index], data: encoded) else { return }
 			self.themes.append(synthedTheme)
 		}
+		
+		
+		guard let dataSelTheme = userDefaults.data(forKey: "selectedTheme") else { return }
+		guard let decodedSelTheme = Theme.decodeTheme(name: "", data: dataSelTheme) else { return }
+		//name doesnt matter
+		self.selectedTheme = decodedSelTheme
 	}
 	
 	func downloadTheme(fromUrl: URL?) {
@@ -50,16 +56,16 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	}
 	
 	func selectTheme(_ selectedTheme: Theme) {
-		guard let index = themes.firstIndex(where: { $0 == selectedTheme }) else {
-			withAnimation { selectedThemeIndex = -1 }
-			return
-		}
-		withAnimation { selectedThemeIndex = index }
+		withAnimation { self.selectedTheme = selectedTheme }
+		print("selected: \(selectedTheme.name) \(selectedTheme.id)")
+		saveThemes()
 	}
 	
 	func isThemeSelected(_ themeInQuestion: Theme) -> Bool {
-		guard let index = themes.firstIndex(where: { $0 == themeInQuestion }) else { return false }
-		return index == selectedThemeIndex 
+		var themeInQWithSameID = themeInQuestion
+		themeInQWithSameID.id = selectedTheme.id
+		
+		return themeInQuestion.id == self.selectedTheme.id
 	}
 	
 	func renameTheme(_ theme: Theme?, to newName: String) {
@@ -68,7 +74,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		guard let index = themes.firstIndex(where: {$0.id == theme.id}) else { return }
 		var newTheme = themes[index]
 		newTheme.name = newName
-		newTheme.id = UUID()
+		newTheme.id = UUID().uuidString
 		withAnimation { themes[index] = newTheme }
 		saveThemes()
 	}
@@ -89,12 +95,19 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	
 	func saveThemes() {
 		let encoder = JSONEncoder()
+		// map the theme to themecodable
 		guard let encodedThemes = try? encoder.encode(themes.map({$0.themeCodable})) else { return }
+		//map the themes to get their names
 		guard let encodedThemeNames = try? encoder.encode(themes.map{$0.name}) else { return }
 		
 		userDefaults.set(encodedThemes, forKey: "themes")
 		userDefaults.set(encodedThemeNames, forKey: "themeNames")
+		
+		guard let encodedSelectedTheme = try? encoder.encode(selectedTheme.themeCodable) else { return }
+		userDefaults.set(encodedSelectedTheme, forKey: "selectedTheme")
 		userDefaults.synchronize()
+		print(Theme.decodeTheme(name: "", data: userDefaults.data(forKey: "selectedTheme")))
+		print("saved themes")
 	}
 	
 	func getHostIndexMatching(_ hostSearchingFor: Host) -> Int? {
