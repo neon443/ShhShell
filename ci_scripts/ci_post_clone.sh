@@ -9,6 +9,6 @@
 #working dir starts at /Volumes/workspace/repository/ci_scripts
 cd ..
 mkdir Frameworks; cd Frameworks
-curl -o frameworks.zip https://files.catbox.moe/8094yg.zip
-unzip frameworks.zip
-rm frameworks.zip
+curl -o frameworks.tar.xz https://files.catbox.moe/hd2s6n.xz
+tar xzf frameworks.tar.xz
+rm frameworks.tar.xz
