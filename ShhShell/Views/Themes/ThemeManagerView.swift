@@ -83,6 +83,7 @@ struct ThemeManagerView: View {
 								ThemePreview(hostsManager: hostsManager, theme: theme)
 							}
 						}
+						.animation(.default, value: hostsManager.themes)
 					}
 					.scrollIndicators(.hidden)
 					.fixedSize(horizontal: false, vertical: true)

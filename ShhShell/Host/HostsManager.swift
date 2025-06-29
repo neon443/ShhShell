@@ -19,25 +19,22 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	init() {
 		loadHosts()
 		loadThemes()
-		print(selectedTheme == Theme.defaultTheme)
 	}
 	
 	func loadThemes() {
 		guard let dataTheme = userDefaults.data(forKey: "themes") else { return }
-		guard let dataThemeNames = userDefaults.data(forKey: "themeNames") else { return }
 		
 		guard let decodedThemes = try? JSONDecoder().decode([ThemeCodable].self, from: dataTheme) else { return }
-		guard let decodedThemeNames = try? JSONDecoder().decode([String].self, from: dataThemeNames) else { return }
 		
 		for index in 0..<decodedThemes.count {
 			guard let encoded = try? JSONEncoder().encode(decodedThemes[index]) else { return }
-			guard let synthedTheme = Theme.decodeTheme(name: decodedThemeNames[index], data: encoded) else { return }
+			guard let synthedTheme = Theme.decodeTheme(data: encoded) else { return }
 			self.themes.append(synthedTheme)
 		}
 		
 		
 		guard let dataSelTheme = userDefaults.data(forKey: "selectedTheme") else { return }
-		guard let decodedSelTheme = Theme.decodeTheme(name: "", data: dataSelTheme) else { return }
+		guard let decodedSelTheme = Theme.decodeTheme(data: dataSelTheme) else { return }
 		//name doesnt matter
 		self.selectedTheme = decodedSelTheme
 	}
@@ -46,9 +43,8 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		guard let fromUrl else { return }
 		let task = URLSession.shared.dataTask(with: fromUrl) { data, response, error in
 			guard let data else { return }
-			let name = fromUrl.lastPathComponent.replacingOccurrences(of: ".itermcolors", with: "")
 			DispatchQueue.main.async {
-				self.importTheme(name: name, data: data)
+				self.importTheme(data: data, fromUrl: fromUrl)
 			}
 		}
 		
@@ -57,7 +53,6 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	
 	func selectTheme(_ selectedTheme: Theme) {
 		withAnimation { self.selectedTheme = selectedTheme }
-		print("selected: \(selectedTheme.name) \(selectedTheme.id)")
 		saveThemes()
 	}
 	
@@ -65,7 +60,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		var themeInQWithSameID = themeInQuestion
 		themeInQWithSameID.id = selectedTheme.id
 		
-		return themeInQuestion.id == self.selectedTheme.id
+		return themeInQWithSameID == self.selectedTheme
 	}
 	
 	func renameTheme(_ theme: Theme?, to newName: String) {
@@ -86,9 +81,10 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	}
 	
 	@MainActor
-	func importTheme(name: String, data: Data?) {
+	func importTheme(data: Data?, fromUrl: URL? = nil) {
 		guard let data else { return }
-		guard let theme = Theme.decodeTheme(name: name, data: data) else { return }
+		guard var theme = Theme.decodeTheme(data: data) else { return }
+		theme.name = fromUrl?.lastPathComponent.replacingOccurrences(of: ".itermcolors", with: "") ?? ""
 		self.themes.append(theme)
 		saveThemes()
 	}
@@ -97,17 +93,11 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		let encoder = JSONEncoder()
 		// map the theme to themecodable
 		guard let encodedThemes = try? encoder.encode(themes.map({$0.themeCodable})) else { return }
-		//map the themes to get their names
-		guard let encodedThemeNames = try? encoder.encode(themes.map{$0.name}) else { return }
-		
 		userDefaults.set(encodedThemes, forKey: "themes")
-		userDefaults.set(encodedThemeNames, forKey: "themeNames")
 		
 		guard let encodedSelectedTheme = try? encoder.encode(selectedTheme.themeCodable) else { return }
 		userDefaults.set(encodedSelectedTheme, forKey: "selectedTheme")
 		userDefaults.synchronize()
-		print(Theme.decodeTheme(name: "", data: userDefaults.data(forKey: "selectedTheme")))
-		print("saved themes")
 	}
 	
 	func getHostIndexMatching(_ hostSearchingFor: Host) -> Int? {

@@ -63,6 +63,6 @@ struct ThemePreview: View {
 	
 	ThemePreview(
 		hostsManager: HostsManager(),
-		theme: Theme.decodeTheme(name: "theme", data: data)!
+		theme: Theme.decodeTheme(data: data)!
 	)
 }

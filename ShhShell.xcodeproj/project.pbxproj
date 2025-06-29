@@ -38,6 +38,8 @@
 		A96BE6A02E10846B00C0FEE9 /* dracula.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE68E2E10846B00C0FEE9 /* dracula.plist */; };
 		A96BE6A12E10846B00C0FEE9 /* catppuccinFrappe.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE68C2E10846B00C0FEE9 /* catppuccinFrappe.plist */; };
 		A96BE6A22E10846B00C0FEE9 /* xcodewwdc.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE6962E10846B00C0FEE9 /* xcodewwdc.plist */; };
+		A96BE6A42E113D9400C0FEE9 /* ThemeCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96BE6A32E113D9400C0FEE9 /* ThemeCodable.swift */; };
+		A96BE6A62E113DB000C0FEE9 /* ColorCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96BE6A52E113DB000C0FEE9 /* ColorCodable.swift */; };
 		A96C6A8A2E0C0B1100F377FE /* SSHState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96C6A892E0C0B1100F377FE /* SSHState.swift */; };
 		A96C6AFE2E0C43B600F377FE /* Keypair.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96C6AFD2E0C43B600F377FE /* Keypair.swift */; };
 		A96C6B002E0C45FE00F377FE /* KeyDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96C6AFF2E0C45FE00F377FE /* KeyDetailView.swift */; };
@@ -129,6 +131,8 @@
 		A96BE6942E10846B00C0FEE9 /* xcodedark.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = xcodedark.plist; sourceTree = "<group>"; };
 		A96BE6952E10846B00C0FEE9 /* xcodedarkhc.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = xcodedarkhc.plist; sourceTree = "<group>"; };
 		A96BE6962E10846B00C0FEE9 /* xcodewwdc.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = xcodewwdc.plist; sourceTree = "<group>"; };
+		A96BE6A32E113D9400C0FEE9 /* ThemeCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeCodable.swift; sourceTree = "<group>"; };
+		A96BE6A52E113DB000C0FEE9 /* ColorCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCodable.swift; sourceTree = "<group>"; };
 		A96C6A892E0C0B1100F377FE /* SSHState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHState.swift; sourceTree = "<group>"; };
 		A96C6AFD2E0C43B600F377FE /* Keypair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keypair.swift; sourceTree = "<group>"; };
 		A96C6AFF2E0C45FE00F377FE /* KeyDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyDetailView.swift; sourceTree = "<group>"; };
@@ -372,6 +376,8 @@
 			isa = PBXGroup;
 			children = (
 				A9D819282E0E904200442D38 /* Theme.swift */,
+				A96BE6A32E113D9400C0FEE9 /* ThemeCodable.swift */,
+				A96BE6A52E113DB000C0FEE9 /* ColorCodable.swift */,
 			);
 			path = Themes;
 			sourceTree = "<group>";
@@ -550,7 +556,9 @@
 				A98554632E0587DF009051BD /* HostsView.swift in Sources */,
 				A96C6A8A2E0C0B1100F377FE /* SSHState.swift in Sources */,
 				A9DA97732E0D40C100142DDC /* SymbolPreview.swift in Sources */,
+				A96BE6A62E113DB000C0FEE9 /* ColorCodable.swift in Sources */,
 				A92538C82DEE0742007E0A18 /* ContentView.swift in Sources */,
+				A96BE6A42E113D9400C0FEE9 /* ThemeCodable.swift in Sources */,
 				A93143C02DF61B3200FCD5DB /* Host.swift in Sources */,
 				A9B15A9A2E0ABA0400F66E02 /* DialogView.swift in Sources */,
 				A92538C92DEE0742007E0A18 /* ShhShellApp.swift in Sources */,
