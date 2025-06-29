@@ -29,15 +29,15 @@
 		A96BE6972E10846B00C0FEE9 /* catppuccinMocha.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE68D2E10846B00C0FEE9 /* catppuccinMocha.plist */; };
 		A96BE6982E10846B00C0FEE9 /* ubuntu.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE6932E10846B00C0FEE9 /* ubuntu.plist */; };
 		A96BE6992E10846B00C0FEE9 /* iTerm2SolarizedDark.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE6902E10846B00C0FEE9 /* iTerm2SolarizedDark.plist */; };
-		A96BE69A2E10846B00C0FEE9 /* xcodedark.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE6942E10846B00C0FEE9 /* xcodedark.plist */; };
+		A96BE69A2E10846B00C0FEE9 /* xcodeDark.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE6942E10846B00C0FEE9 /* xcodeDark.plist */; };
 		A96BE69B2E10846B00C0FEE9 /* iTerm2SolarizedLight.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE6912E10846B00C0FEE9 /* iTerm2SolarizedLight.plist */; };
 		A96BE69C2E10846B00C0FEE9 /* 0x96f.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE68B2E10846B00C0FEE9 /* 0x96f.plist */; };
 		A96BE69D2E10846B00C0FEE9 /* gruvboxDark.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE68F2E10846B00C0FEE9 /* gruvboxDark.plist */; };
-		A96BE69E2E10846B00C0FEE9 /* xcodedarkhc.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE6952E10846B00C0FEE9 /* xcodedarkhc.plist */; };
+		A96BE69E2E10846B00C0FEE9 /* xcodeDarkHC.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE6952E10846B00C0FEE9 /* xcodeDarkHC.plist */; };
 		A96BE69F2E10846B00C0FEE9 /* tomorrowNight.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE6922E10846B00C0FEE9 /* tomorrowNight.plist */; };
 		A96BE6A02E10846B00C0FEE9 /* dracula.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE68E2E10846B00C0FEE9 /* dracula.plist */; };
 		A96BE6A12E10846B00C0FEE9 /* catppuccinFrappe.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE68C2E10846B00C0FEE9 /* catppuccinFrappe.plist */; };
-		A96BE6A22E10846B00C0FEE9 /* xcodewwdc.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE6962E10846B00C0FEE9 /* xcodewwdc.plist */; };
+		A96BE6A22E10846B00C0FEE9 /* xcodeWWDC.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE6962E10846B00C0FEE9 /* xcodeWWDC.plist */; };
 		A96BE6A42E113D9400C0FEE9 /* ThemeCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96BE6A32E113D9400C0FEE9 /* ThemeCodable.swift */; };
 		A96BE6A62E113DB000C0FEE9 /* ColorCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96BE6A52E113DB000C0FEE9 /* ColorCodable.swift */; };
 		A96C6A8A2E0C0B1100F377FE /* SSHState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96C6A892E0C0B1100F377FE /* SSHState.swift */; };
@@ -128,9 +128,9 @@
 		A96BE6912E10846B00C0FEE9 /* iTerm2SolarizedLight.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = iTerm2SolarizedLight.plist; sourceTree = "<group>"; };
 		A96BE6922E10846B00C0FEE9 /* tomorrowNight.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = tomorrowNight.plist; sourceTree = "<group>"; };
 		A96BE6932E10846B00C0FEE9 /* ubuntu.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ubuntu.plist; sourceTree = "<group>"; };
-		A96BE6942E10846B00C0FEE9 /* xcodedark.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = xcodedark.plist; sourceTree = "<group>"; };
-		A96BE6952E10846B00C0FEE9 /* xcodedarkhc.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = xcodedarkhc.plist; sourceTree = "<group>"; };
-		A96BE6962E10846B00C0FEE9 /* xcodewwdc.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = xcodewwdc.plist; sourceTree = "<group>"; };
+		A96BE6942E10846B00C0FEE9 /* xcodeDark.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = xcodeDark.plist; sourceTree = "<group>"; };
+		A96BE6952E10846B00C0FEE9 /* xcodeDarkHC.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = xcodeDarkHC.plist; sourceTree = "<group>"; };
+		A96BE6962E10846B00C0FEE9 /* xcodeWWDC.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = xcodeWWDC.plist; sourceTree = "<group>"; };
 		A96BE6A32E113D9400C0FEE9 /* ThemeCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeCodable.swift; sourceTree = "<group>"; };
 		A96BE6A52E113DB000C0FEE9 /* ColorCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCodable.swift; sourceTree = "<group>"; };
 		A96C6A892E0C0B1100F377FE /* SSHState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHState.swift; sourceTree = "<group>"; };
@@ -275,9 +275,9 @@
 			isa = PBXGroup;
 			children = (
 				A92DDDE12E104CB300A87DB2 /* defaultTheme.plist */,
-				A96BE6942E10846B00C0FEE9 /* xcodedark.plist */,
-				A96BE6952E10846B00C0FEE9 /* xcodedarkhc.plist */,
-				A96BE6962E10846B00C0FEE9 /* xcodewwdc.plist */,
+				A96BE6942E10846B00C0FEE9 /* xcodeDark.plist */,
+				A96BE6952E10846B00C0FEE9 /* xcodeDarkHC.plist */,
+				A96BE6962E10846B00C0FEE9 /* xcodeWWDC.plist */,
 				A96BE6922E10846B00C0FEE9 /* tomorrowNight.plist */,
 				A96BE68B2E10846B00C0FEE9 /* 0x96f.plist */,
 				A96BE6902E10846B00C0FEE9 /* iTerm2SolarizedDark.plist */,
@@ -510,15 +510,15 @@
 				A96BE6972E10846B00C0FEE9 /* catppuccinMocha.plist in Resources */,
 				A96BE6982E10846B00C0FEE9 /* ubuntu.plist in Resources */,
 				A96BE6992E10846B00C0FEE9 /* iTerm2SolarizedDark.plist in Resources */,
-				A96BE69A2E10846B00C0FEE9 /* xcodedark.plist in Resources */,
+				A96BE69A2E10846B00C0FEE9 /* xcodeDark.plist in Resources */,
 				A96BE69B2E10846B00C0FEE9 /* iTerm2SolarizedLight.plist in Resources */,
 				A96BE69C2E10846B00C0FEE9 /* 0x96f.plist in Resources */,
 				A96BE69D2E10846B00C0FEE9 /* gruvboxDark.plist in Resources */,
-				A96BE69E2E10846B00C0FEE9 /* xcodedarkhc.plist in Resources */,
+				A96BE69E2E10846B00C0FEE9 /* xcodeDarkHC.plist in Resources */,
 				A96BE69F2E10846B00C0FEE9 /* tomorrowNight.plist in Resources */,
 				A96BE6A02E10846B00C0FEE9 /* dracula.plist in Resources */,
 				A96BE6A12E10846B00C0FEE9 /* catppuccinFrappe.plist in Resources */,
-				A96BE6A22E10846B00C0FEE9 /* xcodewwdc.plist in Resources */,
+				A96BE6A22E10846B00C0FEE9 /* xcodeWWDC.plist in Resources */,
 				A95FAA472DF3884B00DE2F5A /* Config.xcconfig in Resources */,
 				A92538CA2DEE0742007E0A18 /* Assets.xcassets in Resources */,
 				A92DDDE22E104CB300A87DB2 /* defaultTheme.plist in Resources */,

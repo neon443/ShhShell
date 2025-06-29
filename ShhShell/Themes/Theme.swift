@@ -66,10 +66,7 @@ struct Theme: Hashable, Equatable, Identifiable {
 	
 	static func decodeLocalTheme(fileName: String) -> Theme? {
 		guard let path = Bundle.main.url(forResource: fileName, withExtension: "plist") else { return nil }
-		let themeName = path.lastPathComponent.replacingOccurrences(of: ".plist", with: "")
-		
 		guard let fileContents = try? Data(contentsOf: path) else { return nil }
-		
 		return Theme.decodeTheme(data: fileContents)
 	}
 	
@@ -95,9 +92,9 @@ struct Theme: Hashable, Equatable, Identifiable {
 
 enum ThemesBuiltin: String, CaseIterable, Hashable, Equatable {
 	case defaultTheme = "defaultTheme"
-	case xcodedark = "xcodedark"
-	case xcodedarkhc = "xcodedarkhc"
-	case xcodewwdc = "xcodewwdc"
+	case xcodeDark = "xcodeDark"
+	case xcodeDarkHC = "xcodeDarkHC"
+	case xcodeWWDC = "xcodeWWDC"
 	case tomorrowNight = "tomorrowNight"
 	case zeroXNineSixF = "0x96f"
 	case iTerm2SolarizedDark = "iTerm2SolarizedDark"

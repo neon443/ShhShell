@@ -10,7 +10,7 @@ import LocalAuthentication
 import SwiftUI
 
 class HostsManager: ObservableObject, @unchecked Sendable {
-	private let userDefaults = UserDefaults.standard
+	private let userDefaults = NSUbiquitousKeyValueStore.default
 	
 	@Published var hosts: [Host] = []
 	@Published var themes: [Theme] = []

@@ -74,7 +74,7 @@ extension ThemeCodable {
 extension ThemeCodable {
 	func toTheme() -> Theme {
 		return Theme(
-			id: id ?? UUID().uuidString,
+			id: self.id ?? UUID().uuidString,
 			name: self.name ?? "",
 			ansi: self.ansi,
 			foreground: self.foreground.stColor,
