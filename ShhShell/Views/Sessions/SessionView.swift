@@ -9,20 +9,34 @@ import SwiftUI
 
 struct SessionView: View {
 	@ObservedObject var hostsManager: HostsManager
+	@ObservedObject var container = TerminalViewContainer.shared
+	
 	@State var key: UUID
 	@State var shellPresented: Bool = false
 	
+	var host: Host {
+		container.sessions[key]?.handler.host ?? Host.blank
+	}
+	
     var body: some View {
-		Text(key.uuidString)
-			.onTapGesture {
-				shellPresented.toggle()
-			}
-			.fullScreenCover(isPresented: $shellPresented) {
-				ShellView(
-					handler: TerminalViewContainer.shared[key]!.handler,
-					hostsManager: hostsManager
-				)
-			}
+		HStack {
+			Image(systemName: "apple.terminal")
+				.resizable().scaledToFit()
+				.frame(width: 40, height: 40)
+				.foregroundStyle(.terminalGreen)
+			SymbolPreview(symbol: host.symbol, label: host.label)
+				.frame(width: 40, height: 40)
+			Text(hostsManager.makeLabel(forHost: host))
+		}
+		.onTapGesture {
+			shellPresented.toggle()
+		}
+		.fullScreenCover(isPresented: $shellPresented) {
+			ShellView(
+				handler: container.sessions[key]?.handler ?? SSHHandler(host: Host.blank),
+				hostsManager: hostsManager
+			)
+		}
     }
 }
 

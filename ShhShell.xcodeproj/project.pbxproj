@@ -341,8 +341,8 @@
 		A96C6B042E0C523E00F377FE /* Hosts */ = {
 			isa = PBXGroup;
 			children = (
-				A985545C2E055D4D009051BD /* ConnectionView.swift */,
 				A98554622E0587DF009051BD /* HostsView.swift */,
+				A985545C2E055D4D009051BD /* ConnectionView.swift */,
 			);
 			path = Hosts;
 			sourceTree = "<group>";

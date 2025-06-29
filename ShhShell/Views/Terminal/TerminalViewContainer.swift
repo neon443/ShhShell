@@ -7,10 +7,15 @@
 
 import Foundation
 
-public final class TerminalViewContainer {
-	@MainActor static var shared: [
-		UUID: TerminalContainer
-	] = [:]
+@MainActor
+public final class TerminalViewContainer: ObservableObject {
+	static let shared = TerminalViewContainer()
+	
+	@Published var sessions: [UUID: TerminalContainer] = [:]
+	
+	var sessionIDs: [UUID] {
+		return sessions.map({ $0.key })
+	}
 }
 
 struct TerminalContainer {

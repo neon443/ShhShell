@@ -133,7 +133,8 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		}
 	}
 	
-	func makeLabel(forHost: Host) -> String {
+	func makeLabel(forHost: Host?) -> String {
+		guard let forHost else { return "" }
 		if forHost.name.isEmpty && forHost.address.isEmpty {
 			return forHost.id.uuidString
 		} else if forHost.name.isEmpty {

@@ -11,6 +11,8 @@ struct ShellView: View {
 	@ObservedObject var handler: SSHHandler
 	@ObservedObject var hostsManager: HostsManager
 	
+	@ObservedObject var container = TerminalViewContainer.shared
+	
 	@Environment(\.dismiss) var dismiss
 	
     var body: some View {
@@ -19,7 +21,7 @@ struct ShellView: View {
 				TerminalController(handler: handler, hostsManager: hostsManager)
 					.onAppear {
 						if let sessionID = handler.sessionID {
-							TerminalViewContainer.shared[sessionID]?.terminalView.restoreScrollback()
+							container.sessions[sessionID]?.terminalView.restoreScrollback()
 						}
 					}
 				

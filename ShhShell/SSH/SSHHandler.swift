@@ -15,6 +15,9 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	private var session: ssh_session?
 	private var channel: ssh_channel?
 	
+	@MainActor var container: TerminalViewContainer {
+		TerminalViewContainer.shared
+	}
 	var sessionID: UUID?
 	
 	var scrollback: [String] = []
@@ -140,7 +143,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		
 		if let sessionID {
 			Task { @MainActor in
-				TerminalViewContainer.shared.removeValue(forKey: sessionID)
+				container.sessions.removeValue(forKey: sessionID)
 				self.sessionID = nil
 			}
 		}

@@ -13,10 +13,15 @@ struct SessionsListView: View {
 	@ObservedObject var hostsManager: HostsManager
 	@ObservedObject var keyManager: KeyManager
 	
+	@ObservedObject var container = TerminalViewContainer.shared
+	
     var body: some View {
-		Section("Sessions") {
-			ForEach(TerminalViewContainer.shared.map {$0.key}, id: \.self) { key in
-				SessionView(hostsManager: hostsManager, key: key)
+		if !container.sessions.isEmpty {
+			Section("Sessions") {
+				ForEach(container.sessionIDs, id: \.self) { key in
+					SessionView(hostsManager: hostsManager, key: key)
+						.id(container.sessions[key]!.handler.connected)
+				}
 			}
 		}
     }
