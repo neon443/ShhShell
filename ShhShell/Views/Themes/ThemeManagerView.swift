@@ -19,76 +19,81 @@ struct ThemeManagerView: View {
 	@State var rename: String = ""
 	
 	let grid: GridItem = GridItem(
-		.flexible(minimum: 100, maximum: 200),
+		.flexible(minimum: 150, maximum: 250),
 		spacing: 8,
 		alignment: .center
 	)
 	
 	var body: some View {
-		ScrollView {
-			if hostsManager.themes.isEmpty {
-				VStack(alignment: .leading) {
-					Image(systemName: "paintpalette")
-						.resizable().scaledToFit()
-						.symbolRenderingMode(.multicolor)
-						.frame(width: 50)
-					Text("No themes (yet)")
-						.font(.title)
-						.padding(.vertical, 10)
-						.bold()
-					Text("Tap the Safari icon at the top right to find themes!")
-					Text("Once you find one that you like, copy it's link and enter it here using the link button.")
+		GeometryReader { geo in
+			let columns: Int = Int(geo.size.width)/200
+			let layout = Array(repeating: grid, count: columns)
+			ScrollView {
+				if hostsManager.themes.isEmpty {
+					VStack(alignment: .leading) {
+						Image(systemName: "paintpalette")
+							.resizable().scaledToFit()
+							.symbolRenderingMode(.multicolor)
+							.frame(width: 50)
+						Text("No themes (yet)")
+							.font(.title)
+							.padding(.vertical, 10)
+							.bold()
+						Text("Tap the Safari icon at the top right to find themes!")
+						Text("Once you find one that you like, copy it's link and enter it here using the link button.")
+					}
+				} else {
+					LazyVGrid(columns: layout, alignment: .center, spacing: 8) {
+						ForEach(hostsManager.themes) { theme in
+							ThemePreview(hostsManager: hostsManager, theme: theme, canModify: true)
+						}
+					}
+					.padding(.horizontal)
+					.animation(.default, value: hostsManager.themes)
 				}
-			} else {
-				LazyVGrid(columns: [grid, grid], alignment: .center, spacing: 8) {
-					ForEach(hostsManager.themes) { theme in
-						ThemePreview(hostsManager: hostsManager, theme: theme, canModify: true)
+				
+				HStack {
+					Text("Built-in Themes")
+						.padding(.top)
+						.padding(.horizontal)
+						.font(.headline)
+					Spacer()
+				}
+				LazyVGrid(columns: layout, alignment: .center, spacing: 8) {
+					ForEach(Theme.builtinThemes) { theme in
+						ThemePreview(hostsManager: hostsManager, theme: theme, canModify: false)
 					}
 				}
 				.padding(.horizontal)
 				.animation(.default, value: hostsManager.themes)
 			}
-			
-			HStack {
-				Text("Built-in Themes")
-					.padding(.top)
-					.padding(.horizontal)
-					.font(.headline)
-				Spacer()
-			}
-			LazyVGrid(columns: [grid, grid], alignment: .center, spacing: 8) {
-				ForEach(Theme.builtinThemes) { theme in
-					ThemePreview(hostsManager: hostsManager, theme: theme, canModify: false)
+			.navigationTitle("Themes")
+			.alert("Enter URL", isPresented: $showAlert) {
+				TextField("", text: $importURL, prompt: Text("URL"))
+				Button("Cancel") {}
+				Button() {
+					hostsManager.downloadTheme(fromUrl: URL(string: importURL))
+					importURL = ""
+				} label: {
+					Label("Import", systemImage: "square.and.arrow.down")
+						.bold()
 				}
 			}
-			.padding(.horizontal)
-			.animation(.default, value: hostsManager.themes)
-		}
-		.navigationTitle("Themes")
-		.alert("Enter URL", isPresented: $showAlert) {
-			TextField("", text: $importURL, prompt: Text("URL"))
-			Button("Cancel") {}
-			Button() {
-				hostsManager.downloadTheme(fromUrl: URL(string: importURL))
-				importURL = ""
-			} label: {
-				Label("Import", systemImage: "square.and.arrow.down")
-					.bold()
-			}
-		}
-		.toolbar {
-			ToolbarItem() {
-				Button() {
-					UIApplication.shared.open(URL(string: "https://iterm2colorschemes.com")!)
-				} label: {
-					Label("Open themes site", systemImage: "safari")
+			.toolbar {
+				ToolbarItem() {
+					Button() {
+						UIApplication.shared.open(URL(string: "https://iterm2colorschemes.com")!)
+					} label: {
+						Label("Open themes site", systemImage: "safari")
+					}
 				}
-			}
-			ToolbarItem() {
-				Button() {
-					showAlert.toggle()
-				} label: {
-					Label("From URL", systemImage: "link")
+				ToolbarItem() {
+					Button() {
+						showAlert.toggle()
+					} label: {
+						Label("From URL", systemImage: "link")
+					}
+					
 				}
 			}
 		}
