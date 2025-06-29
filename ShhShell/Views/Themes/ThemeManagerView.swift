@@ -92,13 +92,14 @@ struct ThemeManagerView: View {
 			.navigationTitle("Themes")
 			.alert("Enter URL", isPresented: $showAlert) {
 				TextField("", text: $importURL, prompt: Text("URL"))
+				Button("Cancel") {}
 				Button() {
 					hostsManager.downloadTheme(fromUrl: URL(string: importURL))
 					importURL = ""
 				} label: {
 					Label("Import", systemImage: "square.and.arrow.down")
+						.bold()
 				}
-				Button("Cancel") {}
 			}
 			.toolbar {
 				ToolbarItem() {

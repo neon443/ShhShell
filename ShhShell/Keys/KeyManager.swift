@@ -23,6 +23,7 @@ class KeyManager: ObservableObject {
 	var tags: [String] = []
 	
 	func loadTags() {
+		userdefaults.synchronize()
 		let decoder = JSONDecoder()
 		guard let data = userdefaults.data(forKey: "keyTags") else { return }
 		guard let decoded = try? decoder.decode([String].self, from: data) else { return }

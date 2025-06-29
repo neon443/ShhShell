@@ -11,6 +11,10 @@ struct ThemePreview: View {
 	@ObservedObject var hostsManager: HostsManager
 	@State var theme: Theme
 	
+	var isSelected: Bool {
+		return hostsManager.isThemeSelected(theme)
+	}
+	
     var body: some View {
 		ZStack(alignment: .center) {
 			Rectangle()
@@ -19,12 +23,12 @@ struct ThemePreview: View {
 			Rectangle()
 				.fill(theme.background.suiColor)
 				.frame(
-					width: hostsManager.isThemeSelected(theme) ? 190 : 200,
-					height: hostsManager.isThemeSelected(theme) ? 80 : 90
+					width: isSelected ? 190 : 200,
+					height: isSelected ? 80 : 90
 				)
 				.clipShape(
 					RoundedRectangle(
-						cornerRadius: hostsManager.isThemeSelected(theme) ? 5 : 10
+						cornerRadius: isSelected ? 5 : 10
 					)
 				)
 			VStack(alignment: .leading) {
@@ -51,6 +55,7 @@ struct ThemePreview: View {
 		}
 		.frame(maxWidth: 200, maxHeight: 90)
 		.clipShape(RoundedRectangle(cornerRadius: 10))
+		.animation(.spring, value: isSelected)
 		.onTapGesture {
 			hostsManager.selectTheme(theme)
 		}

@@ -22,6 +22,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	}
 	
 	func loadThemes() {
+		userDefaults.synchronize()
 		guard let dataTheme = userDefaults.data(forKey: "themes") else { return }
 		
 		guard let decodedThemes = try? JSONDecoder().decode([ThemeCodable].self, from: dataTheme) else { return }
