@@ -57,10 +57,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	}
 	
 	func isThemeSelected(_ themeInQuestion: Theme) -> Bool {
-		var themeInQWithSameID = themeInQuestion
-		themeInQWithSameID.id = selectedTheme.id
-		
-		return themeInQWithSameID == self.selectedTheme
+		return themeInQuestion == self.selectedTheme
 	}
 	
 	func renameTheme(_ theme: Theme?, to newName: String) {
