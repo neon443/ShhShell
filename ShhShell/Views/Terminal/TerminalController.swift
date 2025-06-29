@@ -14,13 +14,11 @@ struct TerminalController: UIViewRepresentable {
 	@ObservedObject var handler: SSHHandler
 	@ObservedObject var hostsManager: HostsManager
 	
-	final class TerminalViewContainer {
-		@MainActor static var shared: SSHTerminalDelegate?
-	}
-	
 	func makeUIView(context: Context) -> TerminalView {
-		if let existing = TerminalViewContainer.shared {
-			return existing
+		if let sessionID = handler.sessionID {
+			if let existing = TerminalViewContainer.shared[sessionID] {
+				return existing.terminalView
+			}
 		}
 		
 		let tv = SSHTerminalDelegate(
@@ -31,7 +29,12 @@ struct TerminalController: UIViewRepresentable {
 		tv.translatesAutoresizingMaskIntoConstraints = false
 		tv.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 		
-		TerminalViewContainer.shared = tv
+		if let sessionID = handler.sessionID {
+			TerminalViewContainer.shared[sessionID] = TerminalContainer(
+				handler: handler,
+				terminalView: tv
+			)
+		}
 		
 		return tv
 	}

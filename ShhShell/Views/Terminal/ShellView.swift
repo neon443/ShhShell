@@ -18,7 +18,9 @@ struct ShellView: View {
 			ZStack {
 				TerminalController(handler: handler, hostsManager: hostsManager)
 					.onAppear {
-						TerminalController.TerminalViewContainer.shared?.restoreScrollback()
+						if let sessionID = handler.sessionID {
+							TerminalViewContainer.shared[sessionID]?.terminalView.restoreScrollback()
+						}
 					}
 				
 				Group {

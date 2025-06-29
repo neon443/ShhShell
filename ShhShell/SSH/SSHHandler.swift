@@ -9,10 +9,13 @@ import Foundation
 import LibSSH
 import OSLog
 import SwiftUI
+import SwiftTerm
 
 class SSHHandler: @unchecked Sendable, ObservableObject {
 	private var session: ssh_session?
 	private var channel: ssh_channel?
+	
+	var sessionID: UUID?
 	
 	var scrollback: [String] = []
 	var scrollbackSize = 0.0
@@ -101,6 +104,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	func connect() throws(SSHError) {
 		guard !host.address.isEmpty else { throw .connectionFailed("No address to connect to.") }
 		withAnimation { state = .connecting }
+		sessionID = UUID()
 		
 		var verbosity: Int = 0
 //		var verbosity: Int = SSH_LOG_FUNCTIONS
@@ -134,6 +138,12 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			withAnimation { self.testSuceeded = nil }
 		}
 		
+		if let sessionID {
+			Task { @MainActor in
+				TerminalViewContainer.shared.removeValue(forKey: sessionID)
+				self.sessionID = nil
+			}
+		}
 		scrollback = []
 		scrollbackSize = 0
 		

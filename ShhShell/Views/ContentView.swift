@@ -15,6 +15,12 @@ struct ContentView: View {
 	var body: some View {
 		NavigationStack {
 			List {
+				SessionsListView(
+					handler: handler,
+					hostsManager: hostsManager,
+					keyManager: keyManager
+				)
+				
 				HostsView(
 					handler: handler,
 					hostsManager: hostsManager,

@@ -147,7 +147,6 @@ struct ConnectionView: View {
 					Button() {
 						handler.go()
 						showTerminal = checkShell(handler.state)
-						TerminalController.TerminalViewContainer.shared = nil
 					} label: {
 						Label(
 							handler.connected ? "Disconnect" : "Connect",

@@ -17,17 +17,6 @@ struct HostsView: View {
 			Text("Add your first Host!")
 		}
 		
-		//proves that u can connect to multiple at the same time
-		NavigationLink() {
-			ForEach(hostsManager.hosts) { host in
-				let miniHandler = SSHHandler(host: host)
-				TerminalController(handler: miniHandler, hostsManager: hostsManager)
-					.onAppear { miniHandler.go() }
-			}
-		} label: {
-			Label("multiview", systemImage: "square.split.2x2")
-		}
-		
 		ForEach(hostsManager.hosts) { host in
 			NavigationLink() {
 				ConnectionView(
