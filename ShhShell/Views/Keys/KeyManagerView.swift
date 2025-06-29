@@ -12,32 +12,37 @@ struct KeyManagerView: View {
 	@ObservedObject var keyManager: KeyManager
 	
 	var body: some View {
-		NavigationStack {
-			List {
-				Section {
-					ForEach(hostsManager.getKeys()) { keypair in
-						NavigationLink {
-							KeyDetailView(hostsManager: hostsManager, keypair: keypair)
-						} label: {
-							if let publicKey = keypair.publicKey {
-								Text(String(data: publicKey, encoding: .utf8) ?? "nil")
+		ZStack {
+			hostsManager.selectedTheme.background.suiColor.opacity(0.7)
+				.ignoresSafeArea(.all)
+			NavigationStack {
+				List {
+					Section {
+						ForEach(hostsManager.getKeys()) { keypair in
+							NavigationLink {
+								KeyDetailView(hostsManager: hostsManager, keypair: keypair)
+							} label: {
+								if let publicKey = keypair.publicKey {
+									Text(String(data: publicKey, encoding: .utf8) ?? "nil")
+								}
 							}
 						}
 					}
-				}
-				
-				Button("ed25519") {
-					keyManager.generateEd25519()
-				}
-				Button("rsa") {
-					do {
-						try keyManager.generateRSA()
-					} catch {
-						print(error.localizedDescription)
+					
+					Button("ed25519") {
+						keyManager.generateEd25519()
+					}
+					Button("rsa") {
+						do {
+							try keyManager.generateRSA()
+						} catch {
+							print(error.localizedDescription)
+						}
 					}
 				}
+				.scrollContentBackground(.hidden)
+				.navigationTitle("Keys")
 			}
-			.navigationTitle("Keys")
 		}
 	}
 }

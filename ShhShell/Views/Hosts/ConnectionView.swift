@@ -24,7 +24,9 @@ struct ConnectionView: View {
 	@State var hostKeyChangedAlert: Bool = false
 	
 	var body: some View {
-		NavigationStack {
+		ZStack {
+			hostsManager.selectedTheme.background.suiColor.opacity(0.7)
+				.ignoresSafeArea(.all)
 			List {
 				Section {
 					ScrollView(.horizontal) {
@@ -128,6 +130,34 @@ struct ConnectionView: View {
 					}
 				}
 			}
+			.scrollContentBackground(.hidden)
+			.transition(.opacity)
+			.onChange(of: handler.host.key) { _ in
+				guard let previousKnownHost = hostsManager.getHostMatching(handler.host) else { return }
+				guard handler.host.key == previousKnownHost.key else {
+					hostKeyChangedAlert = true
+					return
+				}
+			}
+			.onDisappear {
+				hostsManager.updateHost(handler.host)
+			}
+			.task {
+				if let publicKeyData = handler.host.publicKey {
+					pubkeyStr = String(data: publicKeyData, encoding: .utf8) ?? ""
+				}
+				if let privateKeyData = handler.host.privateKey {
+					privkeyStr = String(data: privateKeyData, encoding: .utf8) ?? ""
+				}
+			}
+			.onAppear {
+				if shellView == nil {
+					shellView = ShellView(handler: handler, hostsManager: hostsManager)
+				}
+			}
+			.onAppear {
+				hostsManager.addHostIfNeeded(handler.host)
+			}
 			.alert("Hostkey changed", isPresented: $hostKeyChangedAlert) {
 				Button("Accept New Hostkey", role: .destructive) {
 					hostsManager.updateHost(handler.host)
@@ -141,7 +171,6 @@ struct ConnectionView: View {
 			} message: {
 				Text("Expected \(handler.host.key ?? "nil")\nbut recieved \(handler.getHostkey() ?? "nil") from the server")
 			}
-			.transition(.opacity)
 			.toolbar {
 				ToolbarItem() {
 					Button() {
@@ -156,39 +185,13 @@ struct ConnectionView: View {
 					.disabled(handler.hostInvalid())
 				}
 			}
-		}
-		.fullScreenCover(isPresented: $showTerminal) {
-			if let shellView {
-				shellView
-			} else {
-				Text("no shellview")
+			.fullScreenCover(isPresented: $showTerminal) {
+				if let shellView {
+					shellView
+				} else {
+					Text("no shellview")
+				}
 			}
-		}
-		.onChange(of: handler.host.key) { _ in
-			guard let previousKnownHost = hostsManager.getHostMatching(handler.host) else { return }
-			guard handler.host.key == previousKnownHost.key else {
-				hostKeyChangedAlert = true
-				return
-			}
-		}
-		.onDisappear {
-			hostsManager.updateHost(handler.host)
-		}
-		.task {
-			if let publicKeyData = handler.host.publicKey {
-				pubkeyStr = String(data: publicKeyData, encoding: .utf8) ?? ""
-			}
-			if let privateKeyData = handler.host.privateKey {
-				privkeyStr = String(data: privateKeyData, encoding: .utf8) ?? ""
-			}
-		}
-		.onAppear {
-			if shellView == nil {
-				shellView = ShellView(handler: handler, hostsManager: hostsManager)
-			}
-		}
-		.onAppear {
-			hostsManager.addHostIfNeeded(handler.host)
 		}
 	}
 }

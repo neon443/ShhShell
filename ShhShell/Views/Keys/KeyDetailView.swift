@@ -12,63 +12,68 @@ struct KeyDetailView: View {
 	@State var keypair: Keypair
 	@State private var reveal: Bool = false
 	
-    var body: some View {
-		List {
-			VStack(alignment: .leading) {
-				Text("Used on")
-					.bold()
-				ForEach(hostsManager.getHostsKeysUsedOn([keypair])) { host in
-					HStack {
-						SymbolPreview(symbol: host.symbol, label: host.label)
-							.frame(width: 40, height: 40)
-						Text(hostsManager.makeLabel(forHost: host))
-					}
-				}
-			}
-			VStack(alignment: .leading) {
-				Text("Public key")
-					.bold()
-				Text(String(data: keypair.publicKey!, encoding: .utf8) ?? "nil")
-			}
-			VStack(alignment: .leading) {
-				Text("Private key")
-					.bold()
-					.frame(maxWidth: .infinity)
-				ZStack(alignment: .center) {
-					Text(String(data: keypair.privateKey!, encoding: .utf8) ?? "nil")
-						.blur(radius: reveal ? 0 : 5)
-					VStack {
-						Image(systemName: "eye.slash.fill")
-							.resizable().scaledToFit()
-							.frame(width: 50)
-						Text("Tap to reveal")
-					}
-					.opacity(reveal ? 0 : 1)
-				}
-				.frame(maxWidth: .infinity)
-				.onTapGesture {
-					Task {
-						if !reveal {
-							guard await hostsManager.authWithBiometrics() else { return }
+	var body: some View {
+		ZStack {
+			hostsManager.selectedTheme.background.suiColor.opacity(0.7)
+				.ignoresSafeArea(.all)
+			List {
+				VStack(alignment: .leading) {
+					Text("Used on")
+						.bold()
+					ForEach(hostsManager.getHostsKeysUsedOn([keypair])) { host in
+						HStack {
+							SymbolPreview(symbol: host.symbol, label: host.label)
+								.frame(width: 40, height: 40)
+							Text(hostsManager.makeLabel(forHost: host))
 						}
-						withAnimation(.spring) { reveal.toggle() }
 					}
 				}
-			}
-			
-			Button {
-				Task {
-					guard await hostsManager.authWithBiometrics() else { return }
-					if let privateKey = keypair.privateKey {
-						UIPasteboard.general.string = String(data: privateKey, encoding: .utf8)
+				VStack(alignment: .leading) {
+					Text("Public key")
+						.bold()
+					Text(String(data: keypair.publicKey!, encoding: .utf8) ?? "nil")
+				}
+				VStack(alignment: .leading) {
+					Text("Private key")
+						.bold()
+						.frame(maxWidth: .infinity)
+					ZStack(alignment: .center) {
+						Text(String(data: keypair.privateKey!, encoding: .utf8) ?? "nil")
+							.blur(radius: reveal ? 0 : 5)
+						VStack {
+							Image(systemName: "eye.slash.fill")
+								.resizable().scaledToFit()
+								.frame(width: 50)
+							Text("Tap to reveal")
+						}
+						.opacity(reveal ? 0 : 1)
+					}
+					.frame(maxWidth: .infinity)
+					.onTapGesture {
+						Task {
+							if !reveal {
+								guard await hostsManager.authWithBiometrics() else { return }
+							}
+							withAnimation(.spring) { reveal.toggle() }
+						}
 					}
 				}
-			} label: {
-				CenteredLabel(title: "Copy private key", systemName: "document.on.document")
+				
+				Button {
+					Task {
+						guard await hostsManager.authWithBiometrics() else { return }
+						if let privateKey = keypair.privateKey {
+							UIPasteboard.general.string = String(data: privateKey, encoding: .utf8)
+						}
+					}
+				} label: {
+					CenteredLabel(title: "Copy private key", systemName: "document.on.document")
+				}
+				.listRowSeparator(.hidden)
 			}
-			.listRowSeparator(.hidden)
+			.scrollContentBackground(.hidden)
 		}
-    }
+	}
 }
 
 #Preview {

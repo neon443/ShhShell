@@ -14,30 +14,35 @@ struct ContentView: View {
 	
 	var body: some View {
 		NavigationStack {
-			List {
-				SessionsListView(
-					handler: handler,
-					hostsManager: hostsManager,
-					keyManager: keyManager
-				)
-				
-				HostsView(
-					handler: handler,
-					hostsManager: hostsManager,
-					keyManager: keyManager
-				)
-				
-				NavigationLink {
-					KeyManagerView(hostsManager: hostsManager, keyManager: keyManager)
-				} label: {
-					Label("Keys", systemImage: "key.fill")
+			ZStack {
+				hostsManager.selectedTheme.background.suiColor.opacity(0.7)
+					.ignoresSafeArea(.all)
+				List {
+					SessionsListView(
+						handler: handler,
+						hostsManager: hostsManager,
+						keyManager: keyManager
+					)
+					
+					HostsView(
+						handler: handler,
+						hostsManager: hostsManager,
+						keyManager: keyManager
+					)
+					
+					NavigationLink {
+						KeyManagerView(hostsManager: hostsManager, keyManager: keyManager)
+					} label: {
+						Label("Keys", systemImage: "key.fill")
+					}
+					
+					NavigationLink {
+						HostkeysView(hostsManager: hostsManager)
+					} label: {
+						Label("Hostkey Fingerprints", systemImage: "lock.display")
+					}
 				}
-				
-				NavigationLink {
-					HostkeysView(hostsManager: hostsManager)
-				} label: {
-					Label("Hostkey Fingerprints", systemImage: "lock.display")
-				}
+				.scrollContentBackground(.hidden)
 			}
 		}
 	}
