@@ -23,9 +23,11 @@ class KeyManager: ObservableObject {
 	var tags: [String] = []
 	
 	init() {
-		let key = try! Curve25519.Signing.PrivateKey(rawRepresentation: generateEd25519())
-		let pubpem = makeSSHPubkey(pub: key.publicKey.rawRepresentation, comment: "ShhShell Test!")
-		let privpem = makeSSHPrivkey(pub: key.publicKey.rawRepresentation, priv: key.rawRepresentation, comment: "ShhShell Test!")
+		let key = Curve25519.Signing.PrivateKey()
+		let privatekeyData = key.rawRepresentation
+		let publickeyData = key.publicKey.rawRepresentation
+		let pubpem = makeSSHPubkey(pub: publickeyData, comment: "neon443@m")
+		let privpem = makeSSHPrivkey(pub: publickeyData, priv: privatekeyData, comment: "neon443@m")
 		print(String(data: pubpem, encoding: .utf8)!)
 		print()
 		print(String(data: privpem, encoding: .utf8)!)
@@ -51,43 +53,10 @@ class KeyManager: ObservableObject {
 	func generateKey(type: KeyType, SEPKeyTag: String, comment: String, passphrase: String) -> Keypair? {
 		switch type {
 		case .ecdsa(let inSEP):
-			generateEd25519()
-			return nil
+			fatalError("unimplemented")
 		case .rsa(let rsaSize):
-			guard let keyData = try? generateRSA(size: rsaSize) else { return nil }
-			fatalError()
-//			return Keypair(
-//				type: .rsa(rsaSize),
-//				name: comment,
-//				publicKey: keyData.base64EncodedString(),
-//				privateKey: keyData.priv.base64EncodedString(),
-//				passphrase: ""
-//			)
+			fatalError("unimplemented")
 		}
-	}
-	
-	func generateEd25519() -> Data {
-		return Curve25519.Signing.PrivateKey().rawRepresentation
-	}
-	
-	func generateRSA(size: Int) throws -> SecKey {
-		let header = "ssh-ed25519 "
-		let type = kSecAttrKeyTypeRSA
-		let tag = Date().ISO8601Format().data(using: .utf8)!
-		let attributes: [String: Any] =
-		[kSecAttrKeyType as String:			type,
-		 kSecAttrKeySizeInBits as String:	size,
-		 kSecPrivateKeyAttrs as String:
-			[kSecAttrIsPermanent as String: 	true,
-			kSecAttrApplicationTag as String: 	tag]
-		]
-		
-		var error: Unmanaged<CFError>?
-		guard let privateKey = SecKeyCreateRandomKey(attributes as CFDictionary, &error) else {
-			throw error!.takeRetainedValue() as Error
-		}
-		
-		return privateKey
 	}
 	
 	func makeSSHPubkey(pub: Data, comment: String) -> Data {
@@ -114,17 +83,20 @@ class KeyManager: ObservableObject {
 		content += header.data(using: .utf8)!
 		
 		//add the magik prefix
-		blob += encode(str: "openssh-key-v1\0")
+		blob += Data("openssh-key-v1\0".utf8)
 		//add encryption info
 		blob += encode(str: "none")
 		//add kdf info
 		blob += encode(str: "none") + encode(data: Data())
 		//add key count
 		blob += encode(int: 1)
+
 		//add atual key
+		var pubkeyBlob = Data()
 		let keyType = "ssh-ed25519"
-		blob += encode(str: keyType)
-		blob += encode(data: pub)
+		pubkeyBlob += encode(str: keyType)
+		pubkeyBlob += encode(data: pub)
+		blob += encode(data: pubkeyBlob)
 		
 		//priv
 		var privBlob = Data()
@@ -167,7 +139,7 @@ class KeyManager: ObservableObject {
 	}
 	
 	func encode(int: Int) -> Data {
-		var bigEndian = Int32(int).bigEndian
+		var bigEndian = UInt32(int).bigEndian
 		return Data(bytes: &bigEndian, count: 4) // 32bits / 8 bitsperbyte
 	}
 }

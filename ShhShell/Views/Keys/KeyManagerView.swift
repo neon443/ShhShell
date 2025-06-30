@@ -30,13 +30,11 @@ struct KeyManagerView: View {
 					}
 					
 					Button("ed25519") {
-						keyManager.generateEd25519()
+						
 					}
 					
 					Button("genereate rsa") {
-						let key = keyManager.generateKey(type: .rsa(4096), SEPKeyTag: "", comment: "jaklsd", passphrase: "")
-						print(String(data: key!.privateKey!, encoding: .utf8) ?? "asd")
-						print(String(data: key!.publicKey!, encoding: .utf8) ?? "asd")
+						
 					}
 				}
 				.scrollContentBackground(.hidden)
