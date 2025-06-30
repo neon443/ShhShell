@@ -33,7 +33,7 @@ struct ThemeManagerView: View {
 			hostsManager.selectedTheme.background.suiColor.opacity(0.7)
 				.ignoresSafeArea(.all)
 			GeometryReader { geo in
-				let columns: Int = max(1, Int((geo.size.width + 8) / (minColWidth + spacing)))
+				let columns: Int = max(1, Int((geo.size.width - 2*spacing) / (minColWidth + spacing)))
 				let layout = Array(repeating: grid, count: columns)
 				ScrollView {
 					if hostsManager.themes.isEmpty {
