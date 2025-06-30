@@ -22,6 +22,10 @@ class KeyManager: ObservableObject {
 	
 	var tags: [String] = []
 	
+	init() {
+		generateEd25519()
+	}
+	
 	func loadTags() {
 		userdefaults.synchronize()
 		let decoder = JSONDecoder()
@@ -41,30 +45,29 @@ class KeyManager: ObservableObject {
 	func generateKey(type: KeyType, SEPKeyTag: String, comment: String, passphrase: String) -> Keypair? {
 		switch type {
 		case .ecdsa(let inSEP):
-			fatalError()
+			generateEd25519()
+			return nil
 		case .rsa(let rsaSize):
 			guard let keyData = try? generateRSA(size: rsaSize) else { return nil }
-			return Keypair(
-				type: .rsa(rsaSize),
-				name: comment,
-				publicKey: String(data: keyData.pub, encoding: .utf8) ?? "",
-				privateKey: String(data: keyData.priv, encoding: .utf8) ?? "",
-				passphrase: ""
-			)
+			fatalError()
+//			return Keypair(
+//				type: .rsa(rsaSize),
+//				name: comment,
+//				publicKey: keyData.base64EncodedString(),
+//				privateKey: keyData.priv.base64EncodedString(),
+//				passphrase: ""
+//			)
 		}
 	}
 	
-	func generateEd25519() {
-		let privateKey = Curve25519.Signing.PrivateKey()
-		let publicKeyData = privateKey.publicKey
-		dump(privateKey.rawRepresentation)
-		print(publicKeyData.rawRepresentation)
+	func generateEd25519() -> Data {
+		return Curve25519.Signing.PrivateKey().rawRepresentation
 	}
 	
-	func generateRSA(size: Int) throws -> (priv: Data, pub: Data) {
+	func generateRSA(size: Int) throws -> SecKey {
+		let header = "ssh-ed25519 "
 		let type = kSecAttrKeyTypeRSA
-		let label = Date().ISO8601Format()
-		let tag = label.data(using: .utf8)!
+		let tag = Date().ISO8601Format().data(using: .utf8)!
 		let attributes: [String: Any] =
 		[kSecAttrKeyType as String:			type,
 		 kSecAttrKeySizeInBits as String:	size,
@@ -77,26 +80,89 @@ class KeyManager: ObservableObject {
 		guard let privateKey = SecKeyCreateRandomKey(attributes as CFDictionary, &error) else {
 			throw error!.takeRetainedValue() as Error
 		}
-		guard let pubkey = getPubkey(privateKey) else {
-			throw error!.takeRetainedValue() as Error
-		}
-		print(privateKey)
 		
-//		do {
-//			try storeKey(privateKey, label: label)
-//		} catch {
-		//			print(error.localizedDescription)
-		//		}
-		guard let privKeyData = SecKeyCopyExternalRepresentation(privateKey, &error) else {
-			throw error!.takeRetainedValue() as Error
+		return privateKey
+	}
+	
+	func makeSSHPubkey(pub: Data, comment: String) -> Data {
+//		let header = "ssh"
+		var content: Data = Data()
+		//key type bit
+		content += encode(str: "ssh-ed25519")
+		
+		//base64 blob bit
+		content += encode(data: content)
+		
+		//comment bit
+		content += encode(str: comment)
+		return content
+	}
+	
+	func makeSSHPrivkey(pub: Data, priv: Data, comment: String) -> Data {
+		var content: Data = Data()
+		var blob: Data = Data()
+		
+		let header = "-----BEGIN OPENSSH PRIVATE KEY-----\n"
+		let footer = "\n-----END OPENSSH PRIVATE KEY-----\n"
+		
+		//add header
+		content += header.data(using: .utf8)!
+		
+		//add the magik prefix
+		blob += encode(str: "openssh-key-v1\0")
+		//add encryption info
+		blob += encode(str: "none")
+		//add kdf info
+		blob += encode(str: "none") + encode(data: Data())
+		//add key count
+		blob += encode(int: 1)
+		//add atual key
+		let keyType = "ssh-ed25519".data(using: .utf8)!
+		blob += encode(data: keyType)
+		blob += encode(data: pub)
+		
+		//priv
+		var privBlob = Data()
+		let checkint = UInt32.random(in: UInt32.min...UInt32.max)
+		privBlob.append(contentsOf: withUnsafeBytes(of: checkint.bigEndian, Array.init))
+		privBlob.append(contentsOf: withUnsafeBytes(of: checkint.bigEndian, Array.init))
+		privBlob += encode(data: keyType)
+		privBlob += encode(data: pub)
+		privBlob += encode(data: priv + pub)
+		privBlob += encode(str: comment)
+		
+		let padLegth = (8 - (privBlob.count % 8)) % 8
+		if padLegth > 0 {
+			privBlob.append(contentsOf: (1...padLegth).map { UInt8($0) } )
 		}
-		guard let pubKeyData = SecKeyCopyExternalRepresentation(pubkey, &error) else {
-			throw error!.takeRetainedValue() as Error
-		}
-		return (privKeyData as Data, pubKeyData as Data)
+		
+		blob += encode(data: privBlob)
+		
+		content += blob.base64EncodedData(options: .lineLength64Characters)
+		
+		//footer
+		content += footer.data(using: .utf8)!
+		
+		return content
 	}
 	
 	func getPubkey(_ privateKey: SecKey) -> SecKey? {
 		return SecKeyCopyPublicKey(privateKey)
+	}
+	
+	func encode(str: String) -> Data {
+		guard let utf8 = str.data(using: .utf8) else {
+			return Data()
+		}
+		return encode(int: utf8.count) + utf8
+	}
+	
+	func encode(data: Data) -> Data {
+		return encode(int: data.count) + data
+	}
+	
+	func encode(int: Int) -> Data {
+		var bigEndian = Int32(int).bigEndian
+		return Data(bytes: &bigEndian, count: 4) // 32bits / 8 bitsperbyte
 	}
 }
