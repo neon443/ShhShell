@@ -23,7 +23,13 @@ class KeyManager: ObservableObject {
 	var tags: [String] = []
 	
 	init() {
-		generateEd25519()
+		let key = try! Curve25519.Signing.PrivateKey(rawRepresentation: generateEd25519())
+		let pubpem = makeSSHPubkey(pub: key.publicKey.rawRepresentation, comment: "ShhShell Test!")
+		let privpem = makeSSHPrivkey(pub: key.publicKey.rawRepresentation, priv: key.rawRepresentation, comment: "ShhShell Test!")
+		print(String(data: pubpem, encoding: .utf8)!)
+		print()
+		print(String(data: privpem, encoding: .utf8)!)
+		print()
 	}
 	
 	func loadTags() {
@@ -116,8 +122,8 @@ class KeyManager: ObservableObject {
 		//add key count
 		blob += encode(int: 1)
 		//add atual key
-		let keyType = "ssh-ed25519".data(using: .utf8)!
-		blob += encode(data: keyType)
+		let keyType = "ssh-ed25519"
+		blob += encode(str: keyType)
 		blob += encode(data: pub)
 		
 		//priv
@@ -125,7 +131,7 @@ class KeyManager: ObservableObject {
 		let checkint = UInt32.random(in: UInt32.min...UInt32.max)
 		privBlob.append(contentsOf: withUnsafeBytes(of: checkint.bigEndian, Array.init))
 		privBlob.append(contentsOf: withUnsafeBytes(of: checkint.bigEndian, Array.init))
-		privBlob += encode(data: keyType)
+		privBlob += encode(str: keyType)
 		privBlob += encode(data: pub)
 		privBlob += encode(data: priv + pub)
 		privBlob += encode(str: comment)
