@@ -85,17 +85,16 @@ class KeyManager: ObservableObject {
 	}
 	
 	func makeSSHPubkey(pub: Data, comment: String) -> Data {
-//		let header = "ssh"
-		var content: Data = Data()
+		let header = "ssh-ed25519"
+		var keyBlob: Data = Data()
 		//key type bit
-		content += encode(str: "ssh-ed25519")
-		
+		keyBlob += encode(str: header)
 		//base64 blob bit
-		content += encode(data: content)
+		keyBlob += encode(data: pub)
 		
-		//comment bit
-		content += encode(str: comment)
-		return content
+		let b64key = keyBlob.base64EncodedString()
+		let pubkeyline = "\(header) \(b64key) \(comment)\n"
+		return Data(pubkeyline.utf8)
 	}
 	
 	func makeSSHPrivkey(pub: Data, priv: Data, comment: String) -> Data {
