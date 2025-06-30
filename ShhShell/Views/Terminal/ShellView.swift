@@ -47,20 +47,19 @@ struct ShellView: View {
 			.navigationTitle(handler.title)
 			.navigationBarTitleDisplayMode(.inline)
 			.toolbar {
-				ToolbarItem {
-					Button() {
-						handler.disconnect()
-						if !handler.connected { dismiss() }
-					} label: {
-						Label("Disconnect", systemImage: "xmark.app.fill")
-					}
-				}
-				//TODO: FIX
 				ToolbarItem(placement: .cancellationAction) {
 					Button() {
 						dismiss()
 					} label: {
 						Label("Close", systemImage: "arrow.down.right.and.arrow.up.left")
+					}
+				}
+				ToolbarItem(placement: .cancellationAction) {
+					Button() {
+						handler.disconnect()
+						if !handler.connected { dismiss() }
+					} label: {
+						Label("Disconnect", systemImage: "xmark.app.fill")
 					}
 				}
 			}

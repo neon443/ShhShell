@@ -51,43 +51,34 @@ struct ConnectionView: View {
 							.id(handler.host)
 							.frame(width: 60, height: 60)
 						
-						TextField("label", text: $handler.host.label)
-							.textFieldStyle(.roundedBorder)
+						TextBox(label: "Icon Text", text: $handler.host.label)
 					}
 				}
 				Section {
 					Text("\(handler.state)")
 						.foregroundStyle(handler.state.color)
 					
-					TextField("name", text: $handler.host.name)
-						.textFieldStyle(.roundedBorder)
+					TextBox(label: "Name", text: $handler.host.name)
 					
-					TextField("address", text: $handler.host.address)
-						.textFieldStyle(.roundedBorder)
+					TextBox(label: "Address", text: $handler.host.address)
 					
-					TextField(
-						"port",
-						text: Binding(
+					TextBox(label: "Port", text: Binding(
 							get: { String(handler.host.port) },
 							set: {
 								if let input = Int($0) {
 									handler.host.port = input
 								}
-							}
-						)
+							}),
+							keyboardType: .numberPad
 					)
-					.keyboardType(.numberPad)
-					.textFieldStyle(.roundedBorder)
 				}
 				
 				Section {
-					TextField("Username", text: $handler.host.username)
-						.textFieldStyle(.roundedBorder)
+					TextBox(label: "Username", text: $handler.host.username)
 					
-					SecureField("Password", text: $handler.host.password)
-						.textFieldStyle(.roundedBorder)
+					TextBox(label: "Password", text: $handler.host.password, secure: true)
 					
-					TextField("", text: $pubkeyStr, prompt: Text("Public Key"))
+					TextBox(label: "Publickey", text: $pubkeyStr)
 						.onChange(of: pubkeyStr) { _ in
 							let newStr = pubkeyStr.replacingOccurrences(of: "\r\n", with: "")
 							handler.host.publicKey = Data(newStr.utf8)
@@ -97,7 +88,7 @@ struct ConnectionView: View {
 							handler.host.publicKey = Data(newStr.utf8)
 						}
 					
-					SecureField("", text: $privkeyStr, prompt: Text("Private Key"))
+					TextBox(label: "Privatekey", text: $privkeyStr, secure: true)
 						.onSubmit {
 							let newStr = privkeyStr.replacingOccurrences(of: "\r\n", with: "")
 							handler.host.privateKey = Data(newStr.utf8)
@@ -107,7 +98,7 @@ struct ConnectionView: View {
 							handler.host.privateKey = Data(newStr.utf8)
 						}
 					
-					TextField("", text: $handler.host.passphrase, prompt: Text("Passphrase (Optional)"))
+					TextBox(label: "Passphrase", text: $handler.host.passphrase)
 				}
 				
 				Button() {
