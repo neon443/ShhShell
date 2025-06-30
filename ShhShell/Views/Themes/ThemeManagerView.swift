@@ -18,18 +18,22 @@ struct ThemeManagerView: View {
 	@State var themeToRename: Theme?
 	@State var rename: String = ""
 	
-	let grid: GridItem = GridItem(
-		.flexible(minimum: 150, maximum: 250),
-		spacing: 8,
-		alignment: .center
-	)
+	var minColWidth: CGFloat {150}
+	var spacing: CGFloat {8}
+	var grid: GridItem {
+		GridItem(
+			.flexible(minimum: minColWidth, maximum: 250),
+			spacing: spacing,
+			alignment: .center
+		)
+	}
 	
 	var body: some View {
 		ZStack {
 			hostsManager.selectedTheme.background.suiColor.opacity(0.7)
 				.ignoresSafeArea(.all)
 			GeometryReader { geo in
-				let columns: Int = Int(geo.size.width)/200
+				let columns: Int = max(1, Int((geo.size.width + 8) / (minColWidth + spacing)))
 				let layout = Array(repeating: grid, count: columns)
 				ScrollView {
 					if hostsManager.themes.isEmpty {

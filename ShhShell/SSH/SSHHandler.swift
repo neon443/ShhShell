@@ -66,7 +66,11 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			return
 		}
 		
-		try? authWithNone()
+		do {
+			try authWithNone()
+		} catch {
+			
+		}
 		getAuthMethods()
 		
 		if self.host.key != getHostkey() {
@@ -74,20 +78,22 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			return
 		}
 		
-		if !host.password.isEmpty {
-			do { try authWithPw() } catch {
-				print("pw auth error")
-				print(error.localizedDescription)
-			}
-		} else {
-			do {
-				if let publicKey = host.publicKey,
-				   let privateKey = host.privateKey {
-					try authWithPubkey(pub: publicKey, priv: privateKey, pass: host.passphrase)
+		if state != .authorized {
+			if !host.password.isEmpty {
+				do { try authWithPw() } catch {
+					print("pw auth error")
+					print(error.localizedDescription)
 				}
-			} catch {
-				print("error with pubkey auth")
-				print(error.localizedDescription)
+			} else {
+				do {
+					if let publicKey = host.publicKey,
+					   let privateKey = host.privateKey {
+						try authWithPubkey(pub: publicKey, priv: privateKey, pass: host.passphrase)
+					}
+				} catch {
+					print("error with pubkey auth")
+					print(error.localizedDescription)
+				}
 			}
 		}
 		
@@ -342,7 +348,6 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		return
 	}
 	
-	//always unknown idk why
 	func getAuthMethods() {
 		var recievedMethod: CInt
 		recievedMethod = ssh_userauth_list(session, nil)
