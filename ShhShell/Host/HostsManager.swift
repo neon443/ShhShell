@@ -185,8 +185,11 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	func getKeys() -> [Keypair] {
 		var result: [Keypair] = []
 		for host in hosts {
-			guard host.privateKey != nil && host.publicKey != nil else { continue }
-			let keypair = Keypair(publicKey: host.publicKey, privateKey: host.privateKey)
+			guard let publicKey = host.publicKey else { continue }
+			guard let privateKey = host.privateKey else { continue }
+			guard let privKeyStr = String(data: privateKey, encoding: .utf8),
+				  let pubKeyStr = String(data: publicKey, encoding: .utf8) else { continue }
+			let keypair = Keypair(type: .rsa(1), name: UUID().uuidString, publicKey: pubKeyStr, privateKey: privKeyStr)
 			if !result.contains(keypair) {
 				result.append(keypair)
 			}

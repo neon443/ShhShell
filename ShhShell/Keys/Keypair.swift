@@ -8,21 +8,36 @@
 import Foundation
 
 protocol KeypairProtocol: Identifiable, Equatable, Codable, Hashable {
+	var id: UUID { get }
+	var type: KeyType { get set }
+	var name: String { get set }
 	var publicKey: Data? { get set }
 	var privateKey: Data? { get set }
+	var passphrase: String { get set }
 }
 
 struct Keypair: KeypairProtocol {
 	var id = UUID()
+	var type: KeyType = .rsa(4096)
+	var name: String = ""
 	var publicKey: Data?
 	var privateKey: Data?
+	var passphrase: String = ""
 	
 	init(
-		publicKey: Data?,
-		privateKey: Data?
+		id: UUID = UUID(),
+		type: KeyType,
+		name: String,
+		publicKey: String,
+		privateKey: String,
+		passphrase: String = ""
 	) {
-		self.publicKey = publicKey
-		self.privateKey = privateKey
+		self.id = id
+		self.type = type
+		self.name = name
+		self.publicKey = publicKey.data(using: .utf8)
+		self.privateKey = privateKey.data(using: .utf8)
+		self.passphrase = passphrase
 	}
 	
 	static func ==(lhs: Keypair, rhs: Keypair) -> Bool {

@@ -184,9 +184,9 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	
 	func ring() {
 		Task { @MainActor in
-			withAnimation { self.bell = true }
-			try? await Task.sleep(nanoseconds: 250_000_000) // 250ms
-			withAnimation { self.bell = false }
+			withAnimation(.easeIn(duration: 0.1)) { self.bell = true }
+			try? await Task.sleep(nanoseconds: 300_000_000) // 250ms
+			withAnimation(.easeOut(duration: 0.1)) { self.bell = false }
 		}
 	}
 	

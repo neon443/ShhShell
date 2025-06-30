@@ -29,15 +29,8 @@ struct KeyManagerView: View {
 						}
 					}
 					
-					Button("ed25519") {
-						keyManager.generateEd25519()
-					}
-					Button("rsa") {
-						do {
-							try keyManager.generateRSA()
-						} catch {
-							print(error.localizedDescription)
-						}
+					Button("genereate rsa") {
+						keyManager.generateKey(type: .rsa(4096), SEPKeyTag: "", comment: "jaklsd", passphrase: "")
 					}
 				}
 				.scrollContentBackground(.hidden)
