@@ -14,8 +14,6 @@ struct ConnectionView: View {
 	
 	@State private var shellView: ShellView? = nil
 	
-	@State var passphrase: String = ""
-	
 	@State var pubkeyStr: String = ""
 	@State var privkeyStr: String = ""
 	
@@ -109,7 +107,7 @@ struct ConnectionView: View {
 							handler.host.privateKey = Data(newStr.utf8)
 						}
 					
-					TextField("", text: $passphrase, prompt: Text("Passphrase (Optional)"))
+					TextField("", text: $handler.host.passphrase, prompt: Text("Passphrase (Optional)"))
 				}
 				
 				Button() {
