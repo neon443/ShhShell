@@ -12,6 +12,13 @@ struct KeyDetailView: View {
 	@State var keypair: Keypair
 	@State private var reveal: Bool = false
 	
+	var publicKey: Data {
+		return keypair.publicKey ?? "".data(using: .utf8)!
+	}
+	var privateKey: Data {
+		return keypair.privateKey ?? "".data(using: .utf8)!
+	}
+	
 	var body: some View {
 		ZStack {
 			hostsManager.selectedTheme.background.suiColor.opacity(0.7)
@@ -31,14 +38,14 @@ struct KeyDetailView: View {
 				VStack(alignment: .leading) {
 					Text("Public key")
 						.bold()
-					Text(String(data: keypair.publicKey!, encoding: .utf8) ?? "nil")
+					Text(String(data: publicKey, encoding: .utf8) ?? "nil")
 				}
 				VStack(alignment: .leading) {
 					Text("Private key")
 						.bold()
 						.frame(maxWidth: .infinity)
 					ZStack(alignment: .center) {
-						Text(String(data: keypair.privateKey!, encoding: .utf8) ?? "nil")
+						Text(String(data: privateKey, encoding: .utf8) ?? "nil")
 							.blur(radius: reveal ? 0 : 5)
 						VStack {
 							Image(systemName: "eye.slash.fill")
@@ -62,9 +69,7 @@ struct KeyDetailView: View {
 				Button {
 					Task {
 						guard await hostsManager.authWithBiometrics() else { return }
-						if let privateKey = keypair.privateKey {
-							UIPasteboard.general.string = String(data: privateKey, encoding: .utf8)
-						}
+						UIPasteboard.general.string = String(data: privateKey, encoding: .utf8)
 					}
 				} label: {
 					CenteredLabel(title: "Copy private key", systemName: "document.on.document")

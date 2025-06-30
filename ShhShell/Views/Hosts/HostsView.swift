@@ -32,6 +32,24 @@ struct HostsView: View {
 				}
 				.id(host)
 				.animation(.default, value: host)
+				.fullScreenCover(
+					isPresented: Binding(
+						get: { checkShell(handler.state) },
+						set: { newValue in
+							handler.go()
+						}
+					)
+				) {
+					ShellView(handler: handler, hostsManager: hostsManager)
+				}
+				.swipeActions(edge: .leading) {
+					Button() {
+						handler.go()
+					} label: {
+						Label("Quick Connect", systemImage: "power")
+					}
+					.foregroundStyle(.green)
+				}
 				.swipeActions(edge: .trailing) {
 					Button(role: .destructive) {
 						hostsManager.removeHost(host)
@@ -43,6 +61,7 @@ struct HostsView: View {
 					} label: {
 						Label("Duplicate", systemImage: "square.filled.on.square")
 					}
+					.foregroundStyle(.blue)
 				}
 			}
 			.onMove(perform: {

@@ -49,17 +49,17 @@ struct ShellView: View {
 			.toolbar {
 				ToolbarItem(placement: .cancellationAction) {
 					Button() {
-						dismiss()
-					} label: {
-						Label("Close", systemImage: "arrow.down.right.and.arrow.up.left")
-					}
-				}
-				ToolbarItem(placement: .cancellationAction) {
-					Button() {
 						handler.disconnect()
 						if !handler.connected { dismiss() }
 					} label: {
 						Label("Disconnect", systemImage: "xmark.app.fill")
+					}
+				}
+				ToolbarItem(placement: .cancellationAction) {
+					Button() {
+						dismiss()
+					} label: {
+						Label("Close", systemImage: "arrow.down.right.and.arrow.up.left")
 					}
 				}
 			}

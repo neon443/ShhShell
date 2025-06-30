@@ -10,22 +10,24 @@ import SwiftUI
 struct TextBox: View {
 	@State var label: String
 	@Binding var text: String
+	@State var prompt: String
 	@State var secure: Bool = false
 	@State var keyboardType: UIKeyboardType = .default
 	
     var body: some View {
 		HStack {
 			Text(label)
-			Spacer()
 			if secure {
-				SecureField("", text: $text)
+				SecureField("", text: $text, prompt: Text(prompt))
+					.multilineTextAlignment(.trailing)
 			} else {
-				TextField("", text: $text)
+				TextField("", text: $text, prompt: Text(prompt))
+					.multilineTextAlignment(.trailing)
 			}
 		}
     }
 }
 
 #Preview {
-	TextBox(label: "Label", text: .constant("asdflkajsdl"))
+	TextBox(label: "Label", text: .constant("asdflkajsdl"), prompt: "")
 }

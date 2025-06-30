@@ -51,34 +51,35 @@ struct ConnectionView: View {
 							.id(handler.host)
 							.frame(width: 60, height: 60)
 						
-						TextBox(label: "Icon Text", text: $handler.host.label)
+						TextBox(label: "Icon Text", text: $handler.host.label, prompt: "a few letters in the icon")
 					}
 				}
 				Section {
 					Text("\(handler.state)")
 						.foregroundStyle(handler.state.color)
 					
-					TextBox(label: "Name", text: $handler.host.name)
+					TextBox(label: "Name", text: $handler.host.name, prompt: "defaults to host address")
 					
-					TextBox(label: "Address", text: $handler.host.address)
+					TextBox(label: "Address", text: $handler.host.address, prompt: "required")
 					
 					TextBox(label: "Port", text: Binding(
-							get: { String(handler.host.port) },
-							set: {
-								if let input = Int($0) {
-									handler.host.port = input
-								}
-							}),
+						get: { String(handler.host.port) },
+						set: {
+							if let input = Int($0) {
+								handler.host.port = input
+							}
+						}),
+							prompt: "most likely 22",
 							keyboardType: .numberPad
 					)
 				}
 				
 				Section {
-					TextBox(label: "Username", text: $handler.host.username)
+					TextBox(label: "Username", text: $handler.host.username, prompt: "required")
 					
-					TextBox(label: "Password", text: $handler.host.password, secure: true)
+					TextBox(label: "Password", text: $handler.host.password, prompt: "not required if using publickeys", secure: true)
 					
-					TextBox(label: "Publickey", text: $pubkeyStr)
+					TextBox(label: "Publickey", text: $pubkeyStr, prompt: "in openssh format")
 						.onChange(of: pubkeyStr) { _ in
 							let newStr = pubkeyStr.replacingOccurrences(of: "\r\n", with: "")
 							handler.host.publicKey = Data(newStr.utf8)
@@ -88,7 +89,7 @@ struct ConnectionView: View {
 							handler.host.publicKey = Data(newStr.utf8)
 						}
 					
-					TextBox(label: "Privatekey", text: $privkeyStr, secure: true)
+					TextBox(label: "Privatekey", text: $privkeyStr, prompt: "required if using publickeys", secure: true)
 						.onSubmit {
 							let newStr = privkeyStr.replacingOccurrences(of: "\r\n", with: "")
 							handler.host.privateKey = Data(newStr.utf8)
@@ -98,7 +99,7 @@ struct ConnectionView: View {
 							handler.host.privateKey = Data(newStr.utf8)
 						}
 					
-					TextBox(label: "Passphrase", text: $handler.host.passphrase)
+					TextBox(label: "Passphrase", text: $handler.host.passphrase, prompt: "optional")
 				}
 				
 				Button() {
