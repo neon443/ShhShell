@@ -20,7 +20,7 @@ struct KeyDetailView: View {
 				VStack(alignment: .leading) {
 					Text("Used on")
 						.bold()
-					ForEach(hostsManager.getHostsKeysUsedOn([keypair])) { host in
+					ForEach(hostsManager.getHostsUsingKeys([keypair])) { host in
 						HStack {
 							SymbolPreview(symbol: host.symbol, label: host.label)
 								.frame(width: 40, height: 40)

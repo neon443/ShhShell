@@ -200,10 +200,11 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		return result
 	}
 	
-	func getHostsKeysUsedOn(_ keys: [Keypair]) -> [Host] {
+	func getHostsUsingKeys(_ keys: [Keypair]) -> [Host] {
 		var result: [Host] = []
 		for key in keys {
 			let hosts = hosts.filter({
+				$0.privateKeyID == key.id ||
 				$0.publicKey == key.publicKey &&
 				$0.privateKey == key.privateKey
 			})
