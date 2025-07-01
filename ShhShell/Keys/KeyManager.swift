@@ -22,25 +22,6 @@ class KeyManager: ObservableObject {
 	
 	var tags: [String] = []
 	
-	init() {
-		let key = Curve25519.Signing.PrivateKey()
-		let privatekeyData = key.rawRepresentation
-		let publickeyData = key.publicKey.rawRepresentation
-		print(publickeyData.base64EncodedString())
-		let pubpem = KeyManager.makeSSHPubkey(pub: publickeyData, comment: "neon443@m")
-		let privpem = KeyManager.makeSSHPrivkey(pub: publickeyData, priv: privatekeyData, comment: "neon443@m")
-		print(String(data: pubpem, encoding: .utf8)!)
-		print()
-		print(String(data: privpem, encoding: .utf8)!)
-		print()
-		
-		print(KeyManager.importSSHPubkey(pub: String(data: pubpem, encoding: .utf8)!).base64EncodedString())
-		
-		print(privatekeyData.base64EncodedString())
-		print(KeyManager.importSSHPrivkey(priv: String(data: privpem, encoding: .utf8)!).privateKey.base64EncodedString())
-		fatalError()
-	}
-	
 	func loadTags() {
 		userdefaults.synchronize()
 		let decoder = JSONDecoder()
@@ -60,7 +41,7 @@ class KeyManager: ObservableObject {
 	func generateKey(type: KeyType, SEPKeyTag: String, comment: String, passphrase: String) -> Keypair? {
 		switch type {
 		case .ecdsa:
-			fatalError("unimplemented")
+			Keypair(type: .ecdsa, name: comment, privateKey: Curve25519.Signing.PrivateKey().rawRepresentation)
 		case .rsa:
 			fatalError("unimplemented")
 		}
@@ -98,6 +79,7 @@ class KeyManager: ObservableObject {
 		split = split.replacingOccurrences(of: "\n-----END OPENSSH PRIVATE KEY-----", with: "")
 		split = split.replacingOccurrences(of: "-----END OPENSSH PRIVATE KEY-----", with: "")
 		split = split.replacingOccurrences(of: "\r\n", with: "")
+		split = split.replacingOccurrences(of: " ", with: "\n")
 		split = split.replacingOccurrences(of: "\n", with: "")
 
 		var dataBlob = Data(base64Encoded: split.data(using: .utf8)!)!
@@ -127,7 +109,7 @@ class KeyManager: ObservableObject {
 		
 		let comment = String(data: extractField(&dataBlob), encoding: .utf8)!
 		
-		return Keypair(type: .ecdsa, name: comment, publicKey: pubkeyData, privateKey: privatekeyData)
+		return Keypair(type: .ecdsa, name: comment, privateKey: privatekeyData)
 	}
 	
 	static func makeSSHPrivkey(pub: Data, priv: Data, comment: String) -> Data {

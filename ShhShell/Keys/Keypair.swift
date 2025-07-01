@@ -6,12 +6,13 @@
 //
 
 import Foundation
+import CryptoKit
 
 protocol KeypairProtocol: Identifiable, Equatable, Codable, Hashable {
 	var id: UUID { get }
 	var type: KeyType { get set }
 	var name: String { get set }
-	var publicKey: Data { get set }
+	var publicKey: Data { get }
 	var privateKey: Data { get set }
 	var passphrase: String { get set }
 	
@@ -23,7 +24,9 @@ struct Keypair: KeypairProtocol {
 	var id = UUID()
 	var type: KeyType = .ecdsa
 	var name: String = ""
-	var publicKey: Data
+	var publicKey: Data {
+		(try? Curve25519.Signing.PrivateKey(rawRepresentation: privateKey).publicKey.rawRepresentation) ?? Data()
+	}
 	var privateKey: Data
 	var passphrase: String = ""
 	
@@ -39,14 +42,12 @@ struct Keypair: KeypairProtocol {
 		id: UUID = UUID(),
 		type: KeyType,
 		name: String,
-		publicKey: Data,
 		privateKey: Data,
 		passphrase: String = ""
 	) {
 		self.id = id
 		self.type = type
 		self.name = name
-		self.publicKey = publicKey
 		self.privateKey = privateKey
 		self.passphrase = passphrase
 	}

@@ -38,14 +38,14 @@ struct KeyDetailView: View {
 				VStack(alignment: .leading) {
 					Text("Public key")
 						.bold()
-					Text(String(data: publicKey, encoding: .utf8) ?? "nil")
+					Text(keypair.openSshPubkey)
 				}
 				VStack(alignment: .leading) {
 					Text("Private key")
 						.bold()
 						.frame(maxWidth: .infinity)
 					ZStack(alignment: .center) {
-						Text(String(data: privateKey, encoding: .utf8) ?? "nil")
+						Text(keypair.openSshPrivkey)
 							.blur(radius: reveal ? 0 : 5)
 						VStack {
 							Image(systemName: "eye.slash.fill")
@@ -81,21 +81,14 @@ struct KeyDetailView: View {
 	}
 }
 
+import CryptoKit
 #Preview {
 	KeyDetailView(
 		hostsManager: HostsManager(),
 		keypair: Keypair(
-			type: .rsa,
+			type: .ecdsa,
 			name: "previewKey",
-			publicKey: "ssh-ed25519 dskjhfajkdhfjkdashfgjkhadsjkgfbhalkjhfjkhdask user@mac".data(using: .utf8)!,
-			privateKey: """
-						-----BEGIN OPENSSH PRIVATE KEY-----
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit
-						sed do eiusmod tempor incididunt ut labore et dolore magna aliqu
-						Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
-						nisi ut aliquip ex ea commodo consequat
-						-----END OPENSSH PRIVATE KEY-----
-						""".data(using: .utf8)!
+			privateKey: Curve25519.Signing.PrivateKey().rawRepresentation
 		)
 	)
 }

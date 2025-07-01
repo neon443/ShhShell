@@ -185,9 +185,14 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	func getKeys() -> [Keypair] {
 		var result: [Keypair] = []
 		for host in hosts {
-			guard let publicKey = host.publicKey else { continue }
 			guard let privateKey = host.privateKey else { continue }
-			let keypair = Keypair(type: .rsa, name: UUID().uuidString, publicKey: publicKey, privateKey: privateKey)
+			var keypair: Keypair
+			if let string = String(data: privateKey, encoding: .utf8),
+			string.contains("-----") {
+				keypair = KeyManager.importSSHPrivkey(priv: string)
+			} else {
+				keypair = Keypair(type: .ecdsa, name: UUID().uuidString, privateKey: privateKey)
+			}
 			if !result.contains(keypair) {
 				result.append(keypair)
 			}
