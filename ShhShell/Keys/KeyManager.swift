@@ -35,6 +35,10 @@ class KeyManager: ObservableObject {
 		print()
 		
 		print(importSSHPubkey(pub: String(data: pubpem, encoding: .utf8)!).base64EncodedString())
+		
+		print(privatekeyData.base64EncodedString())
+		print(importSSHPrivkey(priv: String(data: privpem, encoding: .utf8)!).base64EncodedString())
+		fatalError()
 	}
 	
 	func loadTags() {
@@ -68,8 +72,7 @@ class KeyManager: ObservableObject {
 		
 		var pubdata = Data(base64Encoded: String(split[1]))!
 		while pubdata.count != 36 {
-			let lengthOfField = Int(pubdata[3])
-			pubdata.removeFirst(4 + lengthOfField)
+			removeField(&pubdata)
 		}
 		pubdata.removeFirst(4)
 		return pubdata
@@ -86,6 +89,27 @@ class KeyManager: ObservableObject {
 		let b64key = keyBlob.base64EncodedString()
 		let pubkeyline = "\(header) \(b64key) \(comment)\n"
 		return Data(pubkeyline.utf8)
+	}
+	
+	func importSSHPrivkey(priv: String) -> Data {
+		var split = priv.replacingOccurrences(of: "-----BEGIN OPENSSH PRIVATE KEY-----\n", with: "")
+		split = split.replacingOccurrences(of: "-----BEGIN OPENSSH PRIVATE KEY-----", with: "")
+		split = split.replacingOccurrences(of: "\n-----END OPENSSH PRIVATE KEY-----\n", with: "")
+		split = split.replacingOccurrences(of: "\n-----END OPENSSH PRIVATE KEY-----", with: "")
+		split = split.replacingOccurrences(of: "-----END OPENSSH PRIVATE KEY-----", with: "")
+		split = split.replacingOccurrences(of: "\r\n", with: "")
+		split = split.replacingOccurrences(of: "\n", with: "")
+
+		var dataBlob = Data(base64Encoded: split.data(using: .utf8)!)!
+		dataBlob.removeFirst(15) //remove magik header
+		
+		for _ in 0..<2 {
+			removeField(&dataBlob)
+		} //remove the 2 nones fro encryption and kdf
+		removeField(&dataBlob) //remove the empty Data()
+		
+
+		return Data()
 	}
 	
 	func makeSSHPrivkey(pub: Data, priv: Data, comment: String) -> Data {
@@ -157,5 +181,16 @@ class KeyManager: ObservableObject {
 	func encode(int: Int) -> Data {
 		var bigEndian = UInt32(int).bigEndian
 		return Data(bytes: &bigEndian, count: 4) // 32bits / 8 bitsperbyte
+	}
+	
+	func removeField(_ data: inout Data) {
+		guard data.count >= 4 else { return }
+		
+		let lengthBytes = data.subdata(in: 0..<4)
+		let length = lengthBytes.withUnsafeBytes { $0.load(as: UInt32.self).bigEndian }
+		guard data.count >= 4 + Int(length) else { return }
+		
+		data.removeFirst(4)
+		data.removeFirst(Int(length))
 	}
 }
