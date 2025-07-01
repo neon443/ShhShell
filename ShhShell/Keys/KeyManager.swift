@@ -59,16 +59,16 @@ class KeyManager: ObservableObject {
 		return pubdata
 	}
 	
-	static func makeSSHPubkey(pub: Data, comment: String) -> Data {
+	static func makeSSHPubkey(_ keypair: Keypair) -> Data {
 		let header = "ssh-ed25519"
 		var keyBlob: Data = Data()
 		//key type bit
 		keyBlob += encode(str: header)
 		//base64 blob bit
-		keyBlob += encode(data: pub)
+		keyBlob += encode(data: keypair.publicKey)
 		
 		let b64key = keyBlob.base64EncodedString()
-		let pubkeyline = "\(header) \(b64key) \(comment)\n"
+		let pubkeyline = "\(header) \(b64key) \(keypair.publicKey)\n"
 		return Data(pubkeyline.utf8)
 	}
 	
@@ -112,7 +112,7 @@ class KeyManager: ObservableObject {
 		return Keypair(type: .ecdsa, name: comment, privateKey: privatekeyData)
 	}
 	
-	static func makeSSHPrivkey(pub: Data, priv: Data, comment: String) -> Data {
+	static func makeSSHPrivkey(_ keypair: Keypair) -> Data {
 		var content: Data = Data()
 		var blob: Data = Data()
 		
@@ -135,7 +135,7 @@ class KeyManager: ObservableObject {
 		var pubkeyBlob = Data()
 		let keyType = "ssh-ed25519"
 		pubkeyBlob += encode(str: keyType)
-		pubkeyBlob += encode(data: pub)
+		pubkeyBlob += encode(data: keypair.publicKey)
 		blob += encode(data: pubkeyBlob)
 		
 		//priv
@@ -144,9 +144,9 @@ class KeyManager: ObservableObject {
 		privBlob.append(contentsOf: withUnsafeBytes(of: checkint.bigEndian, Array.init))
 		privBlob.append(contentsOf: withUnsafeBytes(of: checkint.bigEndian, Array.init))
 		privBlob += encode(str: keyType)
-		privBlob += encode(data: pub)
-		privBlob += encode(data: priv + pub)
-		privBlob += encode(str: comment)
+		privBlob += encode(data: keypair.publicKey)
+		privBlob += encode(data: keypair.privateKey + keypair.publicKey)
+		privBlob += encode(str: keypair.name)
 		
 		let padLegth = (8 - (privBlob.count % 8)) % 8
 		if padLegth > 0 {

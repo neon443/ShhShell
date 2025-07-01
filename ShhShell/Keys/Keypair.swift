@@ -31,11 +31,11 @@ struct Keypair: KeypairProtocol {
 	var passphrase: String = ""
 	
 	var openSshPubkey: String {
-		String(data: KeyManager.makeSSHPubkey(pub: publicKey, comment: name), encoding: .utf8) ?? "OpenSSH key format error"
+		String(data: KeyManager.makeSSHPubkey(self), encoding: .utf8) ?? "OpenSSH key format error"
 	}
 	
 	var openSshPrivkey: String {
-		String(data: KeyManager.makeSSHPrivkey(pub: publicKey, priv: privateKey, comment: name), encoding: .utf8) ?? "OpenSSH key format error"
+		String(data: KeyManager.makeSSHPrivkey(self), encoding: .utf8) ?? "OpenSSH key format error"
 	}
 	
 	init(

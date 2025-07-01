@@ -12,13 +12,6 @@ struct KeyDetailView: View {
 	@State var keypair: Keypair
 	@State private var reveal: Bool = false
 	
-	var publicKey: Data {
-		return keypair.publicKey ?? "".data(using: .utf8)!
-	}
-	var privateKey: Data {
-		return keypair.privateKey ?? "".data(using: .utf8)!
-	}
-	
 	var body: some View {
 		ZStack {
 			hostsManager.selectedTheme.background.suiColor.opacity(0.7)
@@ -67,9 +60,16 @@ struct KeyDetailView: View {
 				}
 				
 				Button {
+					UIPasteboard.general.string = String(data: KeyManager.makeSSHPubkey(keypair), encoding: .utf8) ?? ""
+				} label: {
+					CenteredLabel(title: "Copy private key", systemName: "document.on.document")
+				}
+				.listRowSeparator(.hidden)
+				
+				Button {
 					Task {
 						guard await hostsManager.authWithBiometrics() else { return }
-						UIPasteboard.general.string = String(data: privateKey, encoding: .utf8)
+						UIPasteboard.general.string = String(data: KeyManager.makeSSHPrivkey(keypair), encoding: .utf8) ?? ""
 					}
 				} label: {
 					CenteredLabel(title: "Copy private key", systemName: "document.on.document")
