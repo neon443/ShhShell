@@ -133,19 +133,6 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		}
 	}
 	
-	func makeLabel(forHost: Host?) -> String {
-		guard let forHost else { return "" }
-		if forHost.name.isEmpty && forHost.address.isEmpty {
-			return forHost.id.uuidString
-		} else if forHost.name.isEmpty {
-			return forHost.address
-		} else if forHost.address.isEmpty {
-			return forHost.name
-		} else {
-			return forHost.name
-		}
-	}
-	
 	func moveHost(from: IndexSet, to: Int) {
 		hosts.move(fromOffsets: from, toOffset: to)
 		saveHosts()

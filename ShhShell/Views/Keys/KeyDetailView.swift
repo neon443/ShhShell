@@ -24,7 +24,7 @@ struct KeyDetailView: View {
 						HStack {
 							SymbolPreview(symbol: host.symbol, label: host.label)
 								.frame(width: 40, height: 40)
-							Text(hostsManager.makeLabel(forHost: host))
+							Text(host.description)
 						}
 					}
 				}
@@ -60,7 +60,7 @@ struct KeyDetailView: View {
 				}
 				
 				Button {
-					UIPasteboard.general.string = String(data: KeyManager.makeSSHPubkey(keypair), encoding: .utf8) ?? ""
+					UIPasteboard.general.string = keypair.openSshPubkey
 				} label: {
 					CenteredLabel(title: "Copy private key", systemName: "document.on.document")
 				}

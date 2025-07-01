@@ -22,13 +22,14 @@ class KeyManager: ObservableObject {
 	private let userdefaults = NSUbiquitousKeyValueStore.default
 	
 	@Published var keypairs: [Keypair] = []
-	var keyIDs: [UUID: KeyType] = [:]
+	
+	var keyTypes: [UUID: KeyType] = [:]
 	var keyNames: [UUID: String] = [:]
 	private let baseTag = "com.neon443.ShhShell.keys".data(using: .utf8)!
 	
 	init() {
 		loadKeyIDs()
-		for id in keyIDs.keys {
+		for id in keyTypes.keys {
 			guard let keypair = getFromKeychain(keyID: id) else { continue }
 			keypairs.append(keypair)
 		}
@@ -39,7 +40,7 @@ class KeyManager: ObservableObject {
 		let decoder = JSONDecoder()
 		guard let data = userdefaults.data(forKey: "keyIDs") else { return }
 		guard let decoded = try? decoder.decode([UUID:KeyType].self, from: data) else { return }
-		keyIDs = decoded
+		keyTypes = decoded
 		
 		guard let dataNames = userdefaults.data(forKey: "keyNames") else { return }
 		guard let decodedNames = try? decoder.decode([UUID:String].self, from: dataNames) else { return }
@@ -48,7 +49,7 @@ class KeyManager: ObservableObject {
 	
 	func saveKeyIDs() {
 		let encoder = JSONEncoder()
-		guard let encoded = try? encoder.encode(keyIDs) else { return }
+		guard let encoded = try? encoder.encode(keyTypes) else { return }
 		userdefaults.set(encoded, forKey: "keyIDs")
 
 		guard let encodedNames = try? encoder.encode(keyNames) else { return }
@@ -58,7 +59,7 @@ class KeyManager: ObservableObject {
 	
 	func saveToKeychain(_ keypair: Keypair) {
 		withAnimation {
-			keyIDs.updateValue(keypair.type, forKey: keypair.id)
+			keyTypes.updateValue(keypair.type, forKey: keypair.id)
 			keyNames.updateValue(keypair.name, forKey: keypair.id)
 		}
 		saveKeyIDs()
@@ -77,7 +78,7 @@ class KeyManager: ObservableObject {
 	}
 	
 	func getFromKeychain(keyID: UUID) -> Keypair? {
-		guard let keyType = keyIDs[keyID] else { return nil }
+		guard let keyType = keyTypes[keyID] else { return nil }
 		guard let keyName = keyNames[keyID] else { return nil }
 		if keyType == .ed25519 {
 			var key: Curve25519.Signing.PrivateKey?
@@ -99,6 +100,12 @@ class KeyManager: ObservableObject {
 				privateKey: item as! Data
 			)
 		}
+	}
+	
+	func importKey(type: KeyType, priv: String, name: String) {
+		if type == .ed25519 {
+			saveToKeychain(KeyManager.importSSHPrivkey(priv: priv))
+		} else { fatalError() }
 	}
 	
 	//MARK: generate keys

@@ -39,6 +39,18 @@ struct Host: HostPr {
 	var passphrase: String
 	var key: String?
 	
+	var description: String {
+		if name.isEmpty && address.isEmpty {
+			return id.uuidString
+		} else if name.isEmpty {
+			return address
+		} else if address.isEmpty {
+			return name
+		} else {
+			return name
+		}
+	}
+	
 	init(
 		name: String = "",
 		symbol: HostSymbol = .genericServer,

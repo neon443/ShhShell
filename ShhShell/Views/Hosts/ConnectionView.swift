@@ -79,6 +79,13 @@ struct ConnectionView: View {
 					
 					TextBox(label: "Password", text: $handler.host.password, prompt: "not required if using publickeys", secure: true)
 					
+					Picker("Private key", selection: $handler.host.privateKeyID) {
+						ForEach(keyManager.keypairs) { keypair in
+							Text(keypair.label)
+								.tag(keypair.id)
+						}
+					}
+					
 					TextBox(label: "Publickey", text: $pubkeyStr, prompt: "in openssh format")
 						.onChange(of: pubkeyStr) { _ in
 							let newStr = pubkeyStr.replacingOccurrences(of: "\r\n", with: "")

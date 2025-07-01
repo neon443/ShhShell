@@ -28,7 +28,7 @@ struct HostsView: View {
 				} label: {
 					SymbolPreview(symbol: host.symbol, label: host.label)
 						.frame(width: 40, height: 40)
-					Text(hostsManager.makeLabel(forHost: host))
+					Text(host.description)
 				}
 				.id(host)
 				.animation(.default, value: host)

@@ -11,6 +11,8 @@ struct KeyManagerView: View {
 	@ObservedObject var hostsManager: HostsManager
 	@ObservedObject var keyManager: KeyManager
 	
+	@State var showImporter: Bool = false
+	
 	var body: some View {
 		ZStack {
 			hostsManager.selectedTheme.background.suiColor.opacity(0.7)
@@ -47,9 +49,15 @@ struct KeyManagerView: View {
 						}
 					}
 					
-					Button("ed25519") {
-						
+					Button("Generate a new Ed25519 Key") {
+						let comment = UIDevice().model + " " + Date().formatted()
+						keyManager.generateKey(type: .ed25519, comment: comment)
 					}
+					
+					Button("Import Key") { showImporter.toggle() }
+						.sheet(isPresented: $showImporter) {
+							KeyImporterView(keyManager: keyManager)
+						}
 				}
 				.scrollContentBackground(.hidden)
 				.navigationTitle("Keys")

@@ -69,6 +69,7 @@
 		A9FD37592E143D74005319A8 /* GenericPasswordConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FD37582E143D74005319A8 /* GenericPasswordConvertible.swift */; };
 		A9FD375B2E143D77005319A8 /* GenericPasswordStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FD375A2E143D77005319A8 /* GenericPasswordStore.swift */; };
 		A9FD375D2E143D7E005319A8 /* KeyStoreError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FD375C2E143D7E005319A8 /* KeyStoreError.swift */; };
+		A9FD375F2E14648E005319A8 /* KeyImporterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FD375E2E14648E005319A8 /* KeyImporterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -170,6 +171,7 @@
 		A9FD37582E143D74005319A8 /* GenericPasswordConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericPasswordConvertible.swift; sourceTree = "<group>"; };
 		A9FD375A2E143D77005319A8 /* GenericPasswordStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericPasswordStore.swift; sourceTree = "<group>"; };
 		A9FD375C2E143D7E005319A8 /* KeyStoreError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStoreError.swift; sourceTree = "<group>"; };
+		A9FD375E2E14648E005319A8 /* KeyImporterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyImporterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -366,6 +368,7 @@
 				A96C6AFF2E0C45FE00F377FE /* KeyDetailView.swift */,
 				A98554542E05535F009051BD /* KeyManagerView.swift */,
 				A9D819302E102D8700442D38 /* HostkeysView.swift */,
+				A9FD375E2E14648E005319A8 /* KeyImporterView.swift */,
 			);
 			path = Keys;
 			sourceTree = "<group>";
@@ -602,6 +605,7 @@
 				A96BE6A62E113DB000C0FEE9 /* ColorCodable.swift in Sources */,
 				A92538C82DEE0742007E0A18 /* ContentView.swift in Sources */,
 				A96BE6A42E113D9400C0FEE9 /* ThemeCodable.swift in Sources */,
+				A9FD375F2E14648E005319A8 /* KeyImporterView.swift in Sources */,
 				A93143C02DF61B3200FCD5DB /* Host.swift in Sources */,
 				A9B15A9A2E0ABA0400F66E02 /* DialogView.swift in Sources */,
 				A92538C92DEE0742007E0A18 /* ShhShellApp.swift in Sources */,

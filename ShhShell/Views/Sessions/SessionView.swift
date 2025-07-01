@@ -29,7 +29,7 @@ struct SessionView: View {
 					.foregroundStyle(.terminalGreen)
 				SymbolPreview(symbol: host.symbol, label: host.label)
 					.frame(width: 40, height: 40)
-				Text(hostsManager.makeLabel(forHost: host))
+				Text(host.description)
 			}
 		}
 		.fullScreenCover(isPresented: $shellPresented) {

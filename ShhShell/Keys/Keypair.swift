@@ -25,7 +25,11 @@ struct Keypair: KeypairProtocol {
 	var type: KeyType = .ed25519
 	var name: String = ""
 	var publicKey: Data {
-		(try? Curve25519.Signing.PrivateKey(rawRepresentation: privateKey).publicKey.rawRepresentation) ?? Data()
+		if privateKey.isEmpty {
+			return Data()
+		} else {
+			return (try? Curve25519.Signing.PrivateKey(rawRepresentation: privateKey).publicKey.rawRepresentation) ?? Data()
+		}
 	}
 	var privateKey: Data
 	var passphrase: String = ""
@@ -39,7 +43,12 @@ struct Keypair: KeypairProtocol {
 	}
 	
 	var openSshPubkey: String {
-		String(data: KeyManager.makeSSHPubkey(self), encoding: .utf8) ?? "OpenSSH key format error"
+		if privateKey.isEmpty {
+			return ""
+		} else {
+			return String(data: KeyManager.makeSSHPubkey(self), encoding: .utf8) ?? "OpenSSH key format error"
+		}
+			
 	}
 	
 	var openSshPrivkey: String {
