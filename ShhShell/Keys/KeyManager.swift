@@ -137,7 +137,7 @@ class KeyManager: ObservableObject {
 		keyBlob += encode(data: keypair.publicKey)
 		
 		let b64key = keyBlob.base64EncodedString()
-		let pubkeyline = "\(header) \(b64key) \(keypair.publicKey)\n"
+		let pubkeyline = "\(header) \(b64key) \(keypair.name)\n"
 		return Data(pubkeyline.utf8)
 	}
 	
