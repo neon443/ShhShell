@@ -29,7 +29,21 @@ struct KeyManagerView: View {
 					
 					Section() {
 						ForEach(keyManager.keypairs) { kp in
-							Text(kp.openSshPubkey)
+							NavigationLink {
+								KeyDetailView(hostsManager: hostsManager, keypair: kp)
+							} label: {
+								Image(systemName: "key")
+								Text(kp.label)
+								Spacer()
+								Text(kp.type.description)
+							}
+							.swipeActions(edge: .trailing) {
+								Button(role: .destructive) {
+									
+								} label: {
+									Label("Delete", systemImage: "trash")
+								}
+							}
 						}
 					}
 					

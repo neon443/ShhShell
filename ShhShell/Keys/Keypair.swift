@@ -30,6 +30,14 @@ struct Keypair: KeypairProtocol {
 	var privateKey: Data
 	var passphrase: String = ""
 	
+	var label: String {
+		if name.isEmpty {
+			return openSshPubkey
+		} else {
+			return name
+		}
+	}
+	
 	var openSshPubkey: String {
 		String(data: KeyManager.makeSSHPubkey(self), encoding: .utf8) ?? "OpenSSH key format error"
 	}

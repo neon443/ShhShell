@@ -19,6 +19,7 @@ protocol HostPr: Codable, Identifiable, Equatable, Hashable {
 	var password: String { get set }
 	var publicKey: Data? { get set }
 	var privateKey: Data? { get set }
+	var privateKeyID: UUID? { get set }
 	var passphrase: String { get set }
 	var key: String? { get set }
 }
@@ -34,6 +35,7 @@ struct Host: HostPr {
 	var password: String
 	var publicKey: Data?
 	var privateKey: Data?
+	var privateKeyID: UUID?
 	var passphrase: String
 	var key: String?
 	
