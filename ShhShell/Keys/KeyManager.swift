@@ -27,17 +27,17 @@ class KeyManager: ObservableObject {
 		let privatekeyData = key.rawRepresentation
 		let publickeyData = key.publicKey.rawRepresentation
 		print(publickeyData.base64EncodedString())
-		let pubpem = makeSSHPubkey(pub: publickeyData, comment: "neon443@m")
-		let privpem = makeSSHPrivkey(pub: publickeyData, priv: privatekeyData, comment: "neon443@m")
+		let pubpem = KeyManager.makeSSHPubkey(pub: publickeyData, comment: "neon443@m")
+		let privpem = KeyManager.makeSSHPrivkey(pub: publickeyData, priv: privatekeyData, comment: "neon443@m")
 		print(String(data: pubpem, encoding: .utf8)!)
 		print()
 		print(String(data: privpem, encoding: .utf8)!)
 		print()
 		
-		print(importSSHPubkey(pub: String(data: pubpem, encoding: .utf8)!).base64EncodedString())
+		print(KeyManager.importSSHPubkey(pub: String(data: pubpem, encoding: .utf8)!).base64EncodedString())
 		
 		print(privatekeyData.base64EncodedString())
-		print(importSSHPrivkey(priv: String(data: privpem, encoding: .utf8)!).base64EncodedString())
+		print(KeyManager.importSSHPrivkey(priv: String(data: privpem, encoding: .utf8)!).privateKey.base64EncodedString())
 		fatalError()
 	}
 	
@@ -59,14 +59,14 @@ class KeyManager: ObservableObject {
 	//MARK: generate keys
 	func generateKey(type: KeyType, SEPKeyTag: String, comment: String, passphrase: String) -> Keypair? {
 		switch type {
-		case .ecdsa(let inSEP):
+		case .ecdsa:
 			fatalError("unimplemented")
-		case .rsa(let rsaSize):
+		case .rsa:
 			fatalError("unimplemented")
 		}
 	}
 	
-	func importSSHPubkey(pub: String) -> Data {
+	static func importSSHPubkey(pub: String) -> Data {
 		let split = pub.split(separator: " ")
 		guard split.count == 3 else { return Data() }
 		
@@ -78,7 +78,7 @@ class KeyManager: ObservableObject {
 		return pubdata
 	}
 	
-	func makeSSHPubkey(pub: Data, comment: String) -> Data {
+	static func makeSSHPubkey(pub: Data, comment: String) -> Data {
 		let header = "ssh-ed25519"
 		var keyBlob: Data = Data()
 		//key type bit
@@ -91,7 +91,7 @@ class KeyManager: ObservableObject {
 		return Data(pubkeyline.utf8)
 	}
 	
-	func importSSHPrivkey(priv: String) -> Data {
+	static func importSSHPrivkey(priv: String) -> Keypair {
 		var split = priv.replacingOccurrences(of: "-----BEGIN OPENSSH PRIVATE KEY-----\n", with: "")
 		split = split.replacingOccurrences(of: "-----BEGIN OPENSSH PRIVATE KEY-----", with: "")
 		split = split.replacingOccurrences(of: "\n-----END OPENSSH PRIVATE KEY-----\n", with: "")
@@ -102,17 +102,38 @@ class KeyManager: ObservableObject {
 
 		var dataBlob = Data(base64Encoded: split.data(using: .utf8)!)!
 		dataBlob.removeFirst(15) //remove magik header
+		dataBlob.removeFirst(16) //remove none noen
+		dataBlob.removeFirst(4) //remove lenght header for empty data
+		dataBlob.removeFirst(8) //remove empty data
 		
-		for _ in 0..<2 {
-			removeField(&dataBlob)
-		} //remove the 2 nones fro encryption and kdf
-		removeField(&dataBlob) //remove the empty Data()
+		removeField(&dataBlob) //remove key type for pubkey str
 		
-
-		return Data()
+		let pubkeyData = Data((dataBlob as NSData)[0..<Int((dataBlob as NSData)[3])])
+		removeField(&dataBlob) //remove pubkey field
+		
+		dataBlob.removeFirst(4) //remove lenght header for the privkey data blob
+		
+		guard (dataBlob as NSData).subdata(with: NSRange(0...3)) == (dataBlob as NSData).subdata(with: NSRange(4...7)) else {
+			fatalError("checkints are different")
+		}
+		dataBlob.removeFirst(8) //remove checkints
+		removeField(&dataBlob) // remove pubkey type header
+		removeField(&dataBlob) // remove pubkey
+		
+		let privatekeyData = Data((dataBlob as NSData)[0..<32])
+		dataBlob.removeFirst(4 + 32) //remove privkey
+		
+		guard (dataBlob as NSData).subdata(with: NSRange(0...31)) == pubkeyData else {
+			fatalError("pubkeys dont match")
+		}
+		dataBlob.removeFirst(32) //remove pubkey
+		
+		let comment = String(data: Data((dataBlob as NSData)[0..<Int((dataBlob as NSData)[3])]), encoding: .utf8)!
+		
+		return Keypair(type: .ecdsa, name: comment, publicKey: pubkeyData, privateKey: privatekeyData)
 	}
 	
-	func makeSSHPrivkey(pub: Data, priv: Data, comment: String) -> Data {
+	static func makeSSHPrivkey(pub: Data, priv: Data, comment: String) -> Data {
 		var content: Data = Data()
 		var blob: Data = Data()
 		
@@ -167,27 +188,26 @@ class KeyManager: ObservableObject {
 		return SecKeyCopyPublicKey(privateKey)
 	}
 	
-	func encode(str: String) -> Data {
+	static func encode(str: String) -> Data {
 		guard let utf8 = str.data(using: .utf8) else {
 			return Data()
 		}
 		return encode(int: utf8.count) + utf8
 	}
 	
-	func encode(data: Data) -> Data {
+	static func encode(data: Data) -> Data {
 		return encode(int: data.count) + data
 	}
 	
-	func encode(int: Int) -> Data {
+	static func encode(int: Int) -> Data {
 		var bigEndian = UInt32(int).bigEndian
 		return Data(bytes: &bigEndian, count: 4) // 32bits / 8 bitsperbyte
 	}
 	
-	func removeField(_ data: inout Data) {
+	static func removeField(_ data: inout Data) {
 		guard data.count >= 4 else { return }
 		
-		let lengthBytes = data.subdata(in: 0..<4)
-		let length = lengthBytes.withUnsafeBytes { $0.load(as: UInt32.self).bigEndian }
+		let length = (data as NSData)[3]
 		guard data.count >= 4 + Int(length) else { return }
 		
 		data.removeFirst(4)

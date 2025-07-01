@@ -187,9 +187,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		for host in hosts {
 			guard let publicKey = host.publicKey else { continue }
 			guard let privateKey = host.privateKey else { continue }
-			guard let privKeyStr = String(data: privateKey, encoding: .utf8),
-				  let pubKeyStr = String(data: publicKey, encoding: .utf8) else { continue }
-			let keypair = Keypair(type: .rsa(1), name: UUID().uuidString, publicKey: pubKeyStr, privateKey: privKeyStr)
+			let keypair = Keypair(type: .rsa, name: UUID().uuidString, publicKey: publicKey, privateKey: privateKey)
 			if !result.contains(keypair) {
 				result.append(keypair)
 			}

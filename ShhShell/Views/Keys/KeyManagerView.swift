@@ -22,9 +22,7 @@ struct KeyManagerView: View {
 							NavigationLink {
 								KeyDetailView(hostsManager: hostsManager, keypair: keypair)
 							} label: {
-								if let publicKey = keypair.publicKey {
-									Text(String(data: publicKey, encoding: .utf8) ?? "nil")
-								}
+								Text(String(data: keypair.publicKey, encoding: .utf8) ?? "nil")
 							}
 						}
 					}

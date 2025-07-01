@@ -85,9 +85,9 @@ struct KeyDetailView: View {
 	KeyDetailView(
 		hostsManager: HostsManager(),
 		keypair: Keypair(
-			type: .rsa(4096),
+			type: .rsa,
 			name: "previewKey",
-			publicKey: "ssh-ed25519 dskjhfajkdhfjkdashfgjkhadsjkgfbhalkjhfjkhdask user@mac",
+			publicKey: "ssh-ed25519 dskjhfajkdhfjkdashfgjkhadsjkgfbhalkjhfjkhdask user@mac".data(using: .utf8)!,
 			privateKey: """
 						-----BEGIN OPENSSH PRIVATE KEY-----
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit
@@ -95,7 +95,7 @@ struct KeyDetailView: View {
 						Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
 						nisi ut aliquip ex ea commodo consequat
 						-----END OPENSSH PRIVATE KEY-----
-						"""
+						""".data(using: .utf8)!
 		)
 	)
 }

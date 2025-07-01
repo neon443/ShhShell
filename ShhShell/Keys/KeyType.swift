@@ -10,13 +10,13 @@ import Foundation
 enum KeyType: Codable, Equatable, Hashable, CustomStringConvertible {
 	var description: String {
 		switch self {
-		case .ecdsa(let inSEP):
-			return inSEP ? "ECDSA Secure Enclave" : "ECDSA"
-		case .rsa(let bits):
-			return "RSA \(bits)"
+		case .ecdsa:
+			return "ECDSA"
+		case .rsa:
+			return "RSA"
 		}
 	}
 	
-	case ecdsa(inSEP: Bool)
-	case rsa(Int)
+	case ecdsa
+	case rsa
 }
