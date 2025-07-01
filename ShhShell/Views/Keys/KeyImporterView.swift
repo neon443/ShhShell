@@ -23,12 +23,22 @@ struct KeyImporterView: View {
     var body: some View {
 		List {
 			TextBox(label: "Name", text: $keyName, prompt: "A name for your key")
+			
+			Picker("Key type", selection: $keyType) {
+				ForEach(KeyType.allCases, id: \.self) { type in
+					Text(type.description)
+						.tag(type)
+				}
+			}
+			.pickerStyle(SegmentedPickerStyle())
+			
 			HStack {
 				Text("Private Key")
 				Spacer()
 				Text("Required")
 					.foregroundStyle(.red)
 			}
+			
 			TextEditor(text: $privkeyStr)
 			
 			TextEditor(text: .constant(keypair.openSshPubkey))

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum KeyType: Codable, Equatable, Hashable, CustomStringConvertible {
+enum KeyType: Codable, Equatable, Hashable, CustomStringConvertible, CaseIterable {
 	case ed25519
 	case rsa
 	
