@@ -86,7 +86,7 @@ import CryptoKit
 	KeyDetailView(
 		hostsManager: HostsManager(),
 		keypair: Keypair(
-			type: .ecdsa,
+			type: .ed25519,
 			name: "previewKey",
 			privateKey: Curve25519.Signing.PrivateKey().rawRepresentation
 		)

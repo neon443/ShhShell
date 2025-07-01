@@ -22,16 +22,18 @@ struct KeyManagerView: View {
 							NavigationLink {
 								KeyDetailView(hostsManager: hostsManager, keypair: keypair)
 							} label: {
-								Text(String(data: keypair.publicKey, encoding: .utf8) ?? "nil")
+								Text(keypair.openSshPubkey)
 							}
 						}
 					}
 					
-					Button("ed25519") {
-						
+					Section() {
+						ForEach(keyManager.keypairs) { kp in
+							Text(kp.openSshPubkey)
+						}
 					}
 					
-					Button("genereate rsa") {
+					Button("ed25519") {
 						
 					}
 				}

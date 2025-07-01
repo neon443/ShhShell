@@ -8,15 +8,15 @@
 import Foundation
 
 enum KeyType: Codable, Equatable, Hashable, CustomStringConvertible {
+	case ed25519
+	case rsa
+	
 	var description: String {
 		switch self {
-		case .ecdsa:
-			return "ECDSA"
+		case .ed25519:
+			return "Ed25519"
 		case .rsa:
 			return "RSA"
 		}
 	}
-	
-	case ecdsa
-	case rsa
 }

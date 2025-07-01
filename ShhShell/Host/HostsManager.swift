@@ -191,7 +191,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 			string.contains("-----") {
 				keypair = KeyManager.importSSHPrivkey(priv: string)
 			} else {
-				keypair = Keypair(type: .ecdsa, name: UUID().uuidString, privateKey: privateKey)
+				keypair = Keypair(type: .ed25519, name: UUID().uuidString, privateKey: privateKey)
 			}
 			if !result.contains(keypair) {
 				result.append(keypair)

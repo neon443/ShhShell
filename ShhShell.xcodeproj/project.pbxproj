@@ -52,7 +52,6 @@
 		A98554552E05535F009051BD /* KeyManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554542E05535F009051BD /* KeyManagerView.swift */; };
 		A98554592E0553AA009051BD /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554582E0553AA009051BD /* KeyManager.swift */; };
 		A985545D2E055D4D009051BD /* ConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A985545C2E055D4D009051BD /* ConnectionView.swift */; };
-		A985545F2E056EDD009051BD /* KeychainLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A985545E2E056EDD009051BD /* KeychainLayer.swift */; };
 		A98554612E058433009051BD /* HostsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554602E058433009051BD /* HostsManager.swift */; };
 		A98554632E0587DF009051BD /* HostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554622E0587DF009051BD /* HostsView.swift */; };
 		A9A587202E0BF220006B31E6 /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; productRef = A9A5871F2E0BF220006B31E6 /* SwiftTerm */; };
@@ -65,6 +64,11 @@
 		A9D819312E102D8700442D38 /* HostkeysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D819302E102D8700442D38 /* HostkeysView.swift */; };
 		A9DA97712E0D30ED00142DDC /* HostSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA97702E0D30ED00142DDC /* HostSymbol.swift */; };
 		A9DA97732E0D40C100142DDC /* SymbolPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA97722E0D40C100142DDC /* SymbolPreview.swift */; };
+		A9FD37552E143D23005319A8 /* SecKeyConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FD37542E143D23005319A8 /* SecKeyConvertible.swift */; };
+		A9FD37572E143D5A005319A8 /* SecKeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FD37562E143D5A005319A8 /* SecKeyStore.swift */; };
+		A9FD37592E143D74005319A8 /* GenericPasswordConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FD37582E143D74005319A8 /* GenericPasswordConvertible.swift */; };
+		A9FD375B2E143D77005319A8 /* GenericPasswordStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FD375A2E143D77005319A8 /* GenericPasswordStore.swift */; };
+		A9FD375D2E143D7E005319A8 /* KeyStoreError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FD375C2E143D7E005319A8 /* KeyStoreError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -150,7 +154,6 @@
 		A98554542E05535F009051BD /* KeyManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyManagerView.swift; sourceTree = "<group>"; };
 		A98554582E0553AA009051BD /* KeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
 		A985545C2E055D4D009051BD /* ConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionView.swift; sourceTree = "<group>"; };
-		A985545E2E056EDD009051BD /* KeychainLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainLayer.swift; sourceTree = "<group>"; };
 		A98554602E058433009051BD /* HostsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostsManager.swift; sourceTree = "<group>"; };
 		A98554622E0587DF009051BD /* HostsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostsView.swift; sourceTree = "<group>"; };
 		A9B15A992E0ABA0400F66E02 /* DialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogView.swift; sourceTree = "<group>"; };
@@ -162,6 +165,11 @@
 		A9D819302E102D8700442D38 /* HostkeysView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostkeysView.swift; sourceTree = "<group>"; };
 		A9DA97702E0D30ED00142DDC /* HostSymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostSymbol.swift; sourceTree = "<group>"; };
 		A9DA97722E0D40C100142DDC /* SymbolPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolPreview.swift; sourceTree = "<group>"; };
+		A9FD37542E143D23005319A8 /* SecKeyConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecKeyConvertible.swift; sourceTree = "<group>"; };
+		A9FD37562E143D5A005319A8 /* SecKeyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecKeyStore.swift; sourceTree = "<group>"; };
+		A9FD37582E143D74005319A8 /* GenericPasswordConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericPasswordConvertible.swift; sourceTree = "<group>"; };
+		A9FD375A2E143D77005319A8 /* GenericPasswordStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericPasswordStore.swift; sourceTree = "<group>"; };
+		A9FD375C2E143D7E005319A8 /* KeyStoreError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStoreError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -376,9 +384,9 @@
 		A98554572E055398009051BD /* Keys */ = {
 			isa = PBXGroup;
 			children = (
+				A9FD37532E143D11005319A8 /* KeychainLayer */,
 				A96C90A22E12D53900724253 /* KeyType.swift */,
 				A98554582E0553AA009051BD /* KeyManager.swift */,
-				A985545E2E056EDD009051BD /* KeychainLayer.swift */,
 				A96C6AFD2E0C43B600F377FE /* Keypair.swift */,
 			);
 			path = Keys;
@@ -412,6 +420,18 @@
 				A9D8192E2E0F1BEE00442D38 /* ThemePreview.swift */,
 			);
 			path = Themes;
+			sourceTree = "<group>";
+		};
+		A9FD37532E143D11005319A8 /* KeychainLayer */ = {
+			isa = PBXGroup;
+			children = (
+				A9FD37542E143D23005319A8 /* SecKeyConvertible.swift */,
+				A9FD37562E143D5A005319A8 /* SecKeyStore.swift */,
+				A9FD37582E143D74005319A8 /* GenericPasswordConvertible.swift */,
+				A9FD375A2E143D77005319A8 /* GenericPasswordStore.swift */,
+				A9FD375C2E143D7E005319A8 /* KeyStoreError.swift */,
+			);
+			path = KeychainLayer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -572,9 +592,9 @@
 				A9D8192F2E0F1BEE00442D38 /* ThemePreview.swift in Sources */,
 				A96C6B022E0C49E800F377FE /* CenteredLabel.swift in Sources */,
 				A923172F2E08851200ECE1E6 /* ShellView.swift in Sources */,
-				A985545F2E056EDD009051BD /* KeychainLayer.swift in Sources */,
 				A9D819292E0E904200442D38 /* Theme.swift in Sources */,
 				A9D8192D2E0E9EB500442D38 /* ThemeManagerView.swift in Sources */,
+				A9FD375D2E143D7E005319A8 /* KeyStoreError.swift in Sources */,
 				A93143C62DF61FE300FCD5DB /* ViewModifiers.swift in Sources */,
 				A98554632E0587DF009051BD /* HostsView.swift in Sources */,
 				A96C6A8A2E0C0B1100F377FE /* SSHState.swift in Sources */,
@@ -593,14 +613,18 @@
 				A96C90A32E12D53B00724253 /* KeyType.swift in Sources */,
 				A98554612E058433009051BD /* HostsManager.swift in Sources */,
 				A985545D2E055D4D009051BD /* ConnectionView.swift in Sources */,
+				A9FD37592E143D74005319A8 /* GenericPasswordConvertible.swift in Sources */,
 				A98554592E0553AA009051BD /* KeyManager.swift in Sources */,
 				A9C897EF2DF1A9A400EF9A5F /* SSHHandler.swift in Sources */,
 				A9D819312E102D8700442D38 /* HostkeysView.swift in Sources */,
 				A98554552E05535F009051BD /* KeyManagerView.swift in Sources */,
 				A923172D2E07138000ECE1E6 /* SSHTerminalDelegate.swift in Sources */,
+				A9FD37552E143D23005319A8 /* SecKeyConvertible.swift in Sources */,
 				A96C6AFE2E0C43B600F377FE /* Keypair.swift in Sources */,
 				A9C4140C2E096DB7005E3047 /* SSHError.swift in Sources */,
 				A96BE6AA2E116EC000C0FEE9 /* TerminalViewContainer.swift in Sources */,
+				A9FD375B2E143D77005319A8 /* GenericPasswordStore.swift in Sources */,
+				A9FD37572E143D5A005319A8 /* SecKeyStore.swift in Sources */,
 				A923172A2E07113100ECE1E6 /* TerminalController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -8,6 +8,7 @@
 import Foundation
 import CryptoKit
 import Security
+import SwiftUI
 
 struct Key: Identifiable, Hashable {
 	var id = UUID()
@@ -20,28 +21,96 @@ struct Key: Identifiable, Hashable {
 class KeyManager: ObservableObject {
 	private let userdefaults = NSUbiquitousKeyValueStore.default
 	
-	var tags: [String] = []
+	@Published var keypairs: [Keypair] = []
+	var keyIDs: [UUID: KeyType] = [:]
+	var keyNames: [UUID: String] = [:]
+	private let baseTag = "com.neon443.ShhShell.keys".data(using: .utf8)!
 	
-	func loadTags() {
-		userdefaults.synchronize()
-		let decoder = JSONDecoder()
-		guard let data = userdefaults.data(forKey: "keyTags") else { return }
-		guard let decoded = try? decoder.decode([String].self, from: data) else { return }
-		tags = decoded
+	init() {
+		loadKeyIDs()
+		for id in keyIDs.keys {
+			guard let keypair = getFromKeychain(keyID: id) else { continue }
+			keypairs.append(keypair)
+		}
 	}
 	
-	func saveTags() {
-		let encoder = JSONEncoder()
-		guard let encoded = try? encoder.encode(tags) else { return }
-		userdefaults.set(encoded, forKey: "keyTags")
+	func loadKeyIDs() {
 		userdefaults.synchronize()
+		let decoder = JSONDecoder()
+		guard let data = userdefaults.data(forKey: "keyIDs") else { return }
+		guard let decoded = try? decoder.decode([UUID:KeyType].self, from: data) else { return }
+		keyIDs = decoded
+		
+		guard let dataNames = userdefaults.data(forKey: "keyNames") else { return }
+		guard let decodedNames = try? decoder.decode([UUID:String].self, from: dataNames) else { return }
+		keyNames = decodedNames
+	}
+	
+	func saveKeyIDs() {
+		let encoder = JSONEncoder()
+		guard let encoded = try? encoder.encode(keyIDs) else { return }
+		userdefaults.set(encoded, forKey: "keyIDs")
+
+		guard let encodedNames = try? encoder.encode(keyNames) else { return }
+		userdefaults.set(encodedNames, forKey: "keyNames")
+		userdefaults.synchronize()
+	}
+	
+	func saveToKeychain(_ keypair: Keypair) {
+		withAnimation {
+			keyIDs.updateValue(keypair.type, forKey: keypair.id)
+			keyNames.updateValue(keypair.name, forKey: keypair.id)
+		}
+		saveKeyIDs()
+		if keypair.type == .ed25519 {
+			let curve25519 = try! Curve25519.Signing.PrivateKey(rawRepresentation: keypair.privateKey)
+			try! GenericPasswordStore().storeKey(curve25519.genericKeyRepresentation, account: keypair.id.uuidString)
+		} else {
+			let tag = baseTag+keypair.id.uuidString.data(using: .utf8)!
+			let addQuery: [String: Any] = [kSecClass as String: kSecClassGenericPassword,
+										   kSecAttrApplicationTag as String: tag,
+										   kSecValueRef as String: keypair.privateKey,
+										   kSecAttrSynchronizable as String: kCFBooleanTrue!]
+			let status = SecItemAdd(addQuery as CFDictionary, nil)
+			guard status == errSecSuccess else { fatalError() }
+		}
+	}
+	
+	func getFromKeychain(keyID: UUID) -> Keypair? {
+		guard let keyType = keyIDs[keyID] else { return nil }
+		guard let keyName = keyNames[keyID] else { return nil }
+		if keyType == .ed25519 {
+			var key: Curve25519.Signing.PrivateKey?
+			key = try? GenericPasswordStore().readKey(account: keyID.uuidString)
+			guard let key else { return nil }
+			return Keypair(type: keyType, name: keyName, privateKey: key.rawRepresentation)
+		} else {
+			let tag = baseTag+keyID.uuidString.data(using: .utf8)!
+			let getQuery: [String: Any] = [kSecClass as String: kSecClassKey,
+										   kSecAttrApplicationTag as String: tag,
+										   kSecAttrKeyType as String: kSecAttrKeyTypeEC,
+										   kSecReturnRef as String: true]
+			var item: CFTypeRef?
+			let status = SecItemCopyMatching(getQuery as CFDictionary, &item)
+			guard status == errSecSuccess else { fatalError() }
+			return Keypair(
+				type: keyType,
+				name: keyName,
+				privateKey: item as! Data
+			)
+		}
 	}
 	
 	//MARK: generate keys
-	func generateKey(type: KeyType, SEPKeyTag: String, comment: String, passphrase: String) -> Keypair? {
+	func generateKey(type: KeyType, comment: String) {
 		switch type {
-		case .ecdsa:
-			Keypair(type: .ecdsa, name: comment, privateKey: Curve25519.Signing.PrivateKey().rawRepresentation)
+		case .ed25519:
+			let keypair = Keypair(
+				type: .ed25519,
+				name: comment,
+				privateKey: Curve25519.Signing.PrivateKey().rawRepresentation
+			)
+			saveToKeychain(keypair)
 		case .rsa:
 			fatalError("unimplemented")
 		}
@@ -109,7 +178,7 @@ class KeyManager: ObservableObject {
 		
 		let comment = String(data: extractField(&dataBlob), encoding: .utf8)!
 		
-		return Keypair(type: .ecdsa, name: comment, privateKey: privatekeyData)
+		return Keypair(type: .ed25519, name: comment, privateKey: privatekeyData)
 	}
 	
 	static func makeSSHPrivkey(_ keypair: Keypair) -> Data {

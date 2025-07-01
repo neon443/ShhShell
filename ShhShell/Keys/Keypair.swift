@@ -22,7 +22,7 @@ protocol KeypairProtocol: Identifiable, Equatable, Codable, Hashable {
 
 struct Keypair: KeypairProtocol {
 	var id = UUID()
-	var type: KeyType = .ecdsa
+	var type: KeyType = .ed25519
 	var name: String = ""
 	var publicKey: Data {
 		(try? Curve25519.Signing.PrivateKey(rawRepresentation: privateKey).publicKey.rawRepresentation) ?? Data()
