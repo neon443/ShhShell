@@ -26,12 +26,15 @@ class KeyManager: ObservableObject {
 		let key = Curve25519.Signing.PrivateKey()
 		let privatekeyData = key.rawRepresentation
 		let publickeyData = key.publicKey.rawRepresentation
+		print(publickeyData.base64EncodedString())
 		let pubpem = makeSSHPubkey(pub: publickeyData, comment: "neon443@m")
 		let privpem = makeSSHPrivkey(pub: publickeyData, priv: privatekeyData, comment: "neon443@m")
 		print(String(data: pubpem, encoding: .utf8)!)
 		print()
 		print(String(data: privpem, encoding: .utf8)!)
 		print()
+		
+		print(importSSHPubkey(pub: String(data: pubpem, encoding: .utf8)!).base64EncodedString())
 	}
 	
 	func loadTags() {
@@ -57,6 +60,19 @@ class KeyManager: ObservableObject {
 		case .rsa(let rsaSize):
 			fatalError("unimplemented")
 		}
+	}
+	
+	func importSSHPubkey(pub: String) -> Data {
+		let split = pub.split(separator: " ")
+		guard split.count == 3 else { return Data() }
+		
+		var pubdata = Data(base64Encoded: String(split[1]))!
+		while pubdata.count != 36 {
+			let lengthOfField = Int(pubdata[3])
+			pubdata.removeFirst(4 + lengthOfField)
+		}
+		pubdata.removeFirst(4)
+		return pubdata
 	}
 	
 	func makeSSHPubkey(pub: Data, comment: String) -> Data {
