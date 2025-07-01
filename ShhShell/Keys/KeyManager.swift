@@ -108,8 +108,7 @@ class KeyManager: ObservableObject {
 		
 		removeField(&dataBlob) //remove key type for pubkey str
 		
-		let pubkeyData = Data((dataBlob as NSData)[0..<Int((dataBlob as NSData)[3])])
-		removeField(&dataBlob) //remove pubkey field
+		let pubkeyData = extractField(&dataBlob) //extract pubkey field
 		
 		dataBlob.removeFirst(4) //remove lenght header for the privkey data blob
 		
@@ -120,15 +119,13 @@ class KeyManager: ObservableObject {
 		removeField(&dataBlob) // remove pubkey type header
 		removeField(&dataBlob) // remove pubkey
 		
-		let privatekeyData = Data((dataBlob as NSData)[0..<32])
-		dataBlob.removeFirst(4 + 32) //remove privkey
-		
-		guard (dataBlob as NSData).subdata(with: NSRange(0...31)) == pubkeyData else {
+		var privatekeyData = extractField(&dataBlob) //extract privkey
+		guard Data((privatekeyData as NSData)[32..<64]) == pubkeyData else {
 			fatalError("pubkeys dont match")
 		}
-		dataBlob.removeFirst(32) //remove pubkey
+		privatekeyData.removeLast(32) //remove pubkey from privkey
 		
-		let comment = String(data: Data((dataBlob as NSData)[0..<Int((dataBlob as NSData)[3])]), encoding: .utf8)!
+		let comment = String(data: extractField(&dataBlob), encoding: .utf8)!
 		
 		return Keypair(type: .ecdsa, name: comment, publicKey: pubkeyData, privateKey: privatekeyData)
 	}
@@ -212,5 +209,13 @@ class KeyManager: ObservableObject {
 		
 		data.removeFirst(4)
 		data.removeFirst(Int(length))
+	}
+	
+	static func extractField(_ data: inout Data) -> Data {
+		let nsdata = data as NSData
+		let lenght = Int(nsdata[3])
+		let extracted = Data(nsdata[4..<(lenght+4)])
+		data.removeFirst(4 + lenght)
+		return extracted
 	}
 }
