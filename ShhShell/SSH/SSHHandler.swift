@@ -83,25 +83,25 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		
 		try? authWithPubkey2()
 		
-		fatalError()
-		if state != .authorized {
-			if !host.password.isEmpty {
-				do { try authWithPw() } catch {
-					print("pw auth error")
-					print(error.localizedDescription)
-				}
-			} else {
-				do {
-					if let publicKey = host.publicKey,
-					   let privateKey = host.privateKey {
-						try authWithPubkey(pub: publicKey, priv: privateKey, pass: host.passphrase)
-					}
-				} catch {
-					print("error with pubkey auth")
-					print(error.localizedDescription)
-				}
-			}
-		}
+//		fatalError()
+//		if state != .authorized {
+//			if !host.password.isEmpty {
+//				do { try authWithPw() } catch {
+//					print("pw auth error")
+//					print(error.localizedDescription)
+//				}
+//			} else {
+//				do {
+//					if let publicKey = host.publicKey,
+//					   let privateKey = host.privateKey {
+//						try authWithPubkey()
+//					}
+//				} catch {
+//					print("error with pubkey auth")
+//					print(error.localizedDescription)
+//				}
+//			}
+//		}
 		
 		ssh_channel_request_env(channel, "TERM", "xterm-256color")
 		ssh_channel_request_env(channel, "LANG", "en_US.UTF-8")
@@ -281,13 +281,19 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		}
 		
 		var pubkey: ssh_key?
-		ssh_pki_import_pubkey_base64(keypair.publicKey.base64EncodedString(), SSH_KEYTYPE_ECDSA, &pubkey)
+		if ssh_pki_import_pubkey_base64(keypair.base64Pubkey, SSH_KEYTYPE_ED25519, &pubkey) != 0 {
+			throw .importPubkeyError
+		}
 		ssh_userauth_try_publickey(session, nil, pubkey)
 		
 		var privkey: ssh_key?
-		ssh_pki_import_privkey_base64(keypair.privateKey.base64EncodedString(), keypair.passphrase, nil, nil, &privkey)
+		if ssh_pki_import_privkey_base64(keypair.openSshPrivkey, keypair.passphrase, nil, nil, &privkey) != 0 {
+			throw .privkeyRejected
+		}
 		
-		ssh_userauth_publickey(session, nil, privkey)
+		if ssh_userauth_publickey(session, nil, privkey) != 0 {
+			throw .pubkeyRejected
+		}
 		state = .authorized
 	}
 	

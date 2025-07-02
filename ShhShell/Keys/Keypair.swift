@@ -42,6 +42,19 @@ struct Keypair: KeypairProtocol {
 		}
 	}
 	
+	var base64Pubkey: String {
+		String(openSshPubkey.split(separator: " ")[1])
+	}
+	
+	var base64Privkey: String {
+		var opensshprivkey = openSshPrivkey
+		let header = "-----BEGIN OPENSSH PRIVATE KEY-----\n"
+		let footer = "\n-----END OPENSSH PRIVATE KEY-----\n"
+		opensshprivkey = opensshprivkey.replacingOccurrences(of: header, with: "")
+		opensshprivkey = opensshprivkey.replacingOccurrences(of: footer, with: "")
+		return opensshprivkey
+	}
+	
 	var openSshPubkey: String {
 		if privateKey.isEmpty {
 			return ""
