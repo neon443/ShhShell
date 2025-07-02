@@ -81,27 +81,23 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			return
 		}
 		
-		try? authWithPubkey2()
+		guard state != .authorized else { return }
 		
-//		fatalError()
-//		if state != .authorized {
-//			if !host.password.isEmpty {
-//				do { try authWithPw() } catch {
-//					print("pw auth error")
-//					print(error.localizedDescription)
-//				}
-//			} else {
-//				do {
-//					if let publicKey = host.publicKey,
-//					   let privateKey = host.privateKey {
-//						try authWithPubkey()
-//					}
-//				} catch {
-//					print("error with pubkey auth")
-//					print(error.localizedDescription)
-//				}
-//			}
-//		}
+		if !host.password.isEmpty {
+			do { try authWithPw() } catch {
+				print("pw auth error")
+				print(error.localizedDescription)
+			}
+		} else {
+			do {
+				if host.privateKeyID != nil {
+					try authWithPubkey()
+				}
+			} catch {
+				print("error with pubkey auth")
+				print(error.localizedDescription)
+			}
+		}
 		
 		ssh_channel_request_env(channel, "TERM", "xterm-256color")
 		ssh_channel_request_env(channel, "LANG", "en_US.UTF-8")
@@ -274,7 +270,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	}
 	
 	//MARK: auth
-	func authWithPubkey2() throws(KeyError) {
+	func authWithPubkey() throws(KeyError) {
 		guard let keyID = self.host.privateKeyID else { throw .importPrivkeyError }
 		guard let keypair = keyManager.keypairs.first(where: { $0.id == keyID }) else {
 			throw .importPrivkeyError
@@ -295,66 +291,6 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			throw .pubkeyRejected
 		}
 		state = .authorized
-	}
-	
-	func authWithPubkey(pub pubInp: Data, priv privInp: Data, pass: String) throws(KeyError) {
-		guard session != nil else { throw .notConnected }
-		
-		let fileManager = FileManager.default
-		let tempDir = fileManager.temporaryDirectory
-		let tempPubkey = tempDir.appendingPathComponent("\(UUID())key.pub")
-		let tempKey = tempDir.appendingPathComponent("\(UUID())key")
-		
-		fileManager.createFile(atPath: tempPubkey.path(), contents: nil)
-		fileManager.createFile(atPath: tempKey.path(), contents: nil)
-		
-		do {
-			try pubInp.write(to: tempPubkey, options: .completeFileProtection)
-			try privInp.write(to: tempKey, options: .completeFileProtection)
-		} catch {
-			print("file writing error")
-//			print(error.localizedDescription)
-		}
-		
-		let attributes: [FileAttributeKey: Any] = [.posixPermissions: 0o600]
-		do {
-			try fileManager.setAttributes(attributes, ofItemAtPath: tempPubkey.path())
-			try fileManager.setAttributes(attributes, ofItemAtPath: tempKey.path())
-		} catch {
-//			logCritical("permission settig failed\(error.localizedDescription)")
-		}
-		
-		var pubkey: ssh_key?
-		if ssh_pki_import_pubkey_file(tempPubkey.path(), &pubkey) != 0 {
-			throw .importPrivkeyError
-		}
-		defer { ssh_key_free(pubkey) }
-		
-		if ssh_userauth_try_publickey(session, nil, pubkey) != 0 {
-			throw .pubkeyRejected
-		}
-		
-		var privkey: ssh_key?
-		if ssh_pki_import_privkey_file(tempKey.path(), pass, nil, nil, &privkey) != 0 {
-			throw .importPrivkeyError
-		}
-		defer { ssh_key_free(privkey) }
-		
-		if (ssh_userauth_publickey(session, nil, privkey) != 0) {
-			throw .privkeyRejected
-		}
-		
-		//if u got this far, youre authed!
-		withAnimation { state = .authorized }
-		
-		do {
-			try FileManager.default.removeItem(at: tempPubkey)
-			try FileManager.default.removeItem(at: tempKey)
-		} catch {
-			print("error removing file")
-			print(error.localizedDescription)
-		}
-		return
 	}
 	
 	func authWithPw() throws(AuthError) {

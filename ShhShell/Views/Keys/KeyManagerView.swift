@@ -19,34 +19,32 @@ struct KeyManagerView: View {
 				.ignoresSafeArea(.all)
 			NavigationStack {
 				List {
-					Section {
-						ForEach(hostsManager.getKeys()) { keypair in
-							NavigationLink {
-								KeyDetailView(hostsManager: hostsManager, keypair: keypair)
-							} label: {
-								Text(keypair.openSshPubkey)
-							}
-						}
-					}
-					
 					Section() {
 						ForEach(keyManager.keypairs) { kp in
 							NavigationLink {
-								KeyDetailView(hostsManager: hostsManager, keypair: kp)
+								KeyDetailView(
+									hostsManager: hostsManager,
+									keyManager: keyManager,
+									keypair: kp
+								)
 							} label: {
-								Image(systemName: "key")
-								Text(kp.label)
-								Spacer()
-								Text(kp.type.description)
+								HStack {
+									Image(systemName: "key")
+									Text(kp.label)
+									Spacer()
+									Text(kp.type.description)
+										.foregroundStyle(.gray)
+								}
 							}
 							.swipeActions(edge: .trailing) {
 								Button(role: .destructive) {
-									
+									keyManager.deleteKey(kp)
 								} label: {
 									Label("Delete", systemImage: "trash")
 								}
 							}
 						}
+						.id(keyManager.keypairs)
 					}
 					
 					Button("Generate a new Ed25519 Key") {

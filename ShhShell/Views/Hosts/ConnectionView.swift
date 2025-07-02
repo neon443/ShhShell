@@ -84,31 +84,9 @@ struct ConnectionView: View {
 							.tag(nil as UUID?)
 						ForEach(keyManager.keypairs) { keypair in
 							Text(keypair.label)
-								.tag(keypair.id as UUID?)
+								.tag(keypair.id)
 						}
 					}
-					
-					TextBox(label: "Publickey", text: $pubkeyStr, prompt: "in openssh format")
-						.onChange(of: pubkeyStr) { _ in
-							let newStr = pubkeyStr.replacingOccurrences(of: "\r\n", with: "")
-							handler.host.publicKey = Data(newStr.utf8)
-						}
-						.onSubmit {
-							let newStr = pubkeyStr.replacingOccurrences(of: "\r\n", with: "")
-							handler.host.publicKey = Data(newStr.utf8)
-						}
-					
-					TextBox(label: "Privatekey", text: $privkeyStr, prompt: "required if using publickeys", secure: true)
-						.onSubmit {
-							let newStr = privkeyStr.replacingOccurrences(of: "\r\n", with: "")
-							handler.host.privateKey = Data(newStr.utf8)
-						}
-						.onChange(of: privkeyStr) { _ in
-							let newStr = privkeyStr.replacingOccurrences(of: "\r\n", with: "")
-							handler.host.privateKey = Data(newStr.utf8)
-						}
-					
-					TextBox(label: "Passphrase", text: $handler.host.passphrase, prompt: "optional")
 				}
 				
 				Button() {
@@ -140,14 +118,6 @@ struct ConnectionView: View {
 			}
 			.onDisappear {
 				hostsManager.updateHost(handler.host)
-			}
-			.task {
-				if let publicKeyData = handler.host.publicKey {
-					pubkeyStr = String(data: publicKeyData, encoding: .utf8) ?? ""
-				}
-				if let privateKeyData = handler.host.privateKey {
-					privkeyStr = String(data: privateKeyData, encoding: .utf8) ?? ""
-				}
 			}
 			.onAppear {
 				if shellView == nil {

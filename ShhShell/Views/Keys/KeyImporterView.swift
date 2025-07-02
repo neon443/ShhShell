@@ -41,7 +41,10 @@ struct KeyImporterView: View {
 			
 			TextEditor(text: $privkeyStr)
 			
-			TextEditor(text: .constant(keypair.openSshPubkey))
+			if !keypair.openSshPubkey.isEmpty {
+				TextEditor(text: .constant(keypair.openSshPubkey))
+					.foregroundStyle(.gray)
+			}
 			
 			Button() {
 				keyManager.importKey(type: keyType, priv: privkeyStr, name: keyName)

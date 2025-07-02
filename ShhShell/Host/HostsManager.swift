@@ -172,17 +172,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	func getKeys() -> [Keypair] {
 		var result: [Keypair] = []
 		for host in hosts {
-			guard let privateKey = host.privateKey else { continue }
-			var keypair: Keypair
-			if let string = String(data: privateKey, encoding: .utf8),
-			string.contains("-----") {
-				keypair = KeyManager.importSSHPrivkey(priv: string)
-			} else {
-				keypair = Keypair(type: .ed25519, name: UUID().uuidString, privateKey: privateKey)
-			}
-			if !result.contains(keypair) {
-				result.append(keypair)
-			}
+			guard let keyID = host.privateKeyID else { continue }
 		}
 		return result
 	}
@@ -191,27 +181,10 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		var result: [Host] = []
 		for key in keys {
 			let hosts = hosts.filter({
-				$0.privateKeyID == key.id ||
-				$0.publicKey == key.publicKey &&
-				$0.privateKey == key.privateKey
+				$0.privateKeyID == key.id
 			})
 			result += hosts
 		}
 		return result
-	}
-	
-	func authWithBiometrics() async -> Bool {
-		let context = LAContext()
-		var error: NSError?
-		guard context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) else {
-			return false
-		}
-		
-		let reason = "Authenticate yourself to view private keys"
-		return await withCheckedContinuation { continuation in
-			context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { success, _ in
-				continuation.resume(returning: success)
-			}
-		}
 	}
 }

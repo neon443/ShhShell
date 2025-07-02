@@ -9,30 +9,39 @@ import Foundation
 import CryptoKit
 import Security
 import SwiftUI
-
-struct Key: Identifiable, Hashable {
-	var id = UUID()
-	var privateKey: SecKey
-	var publicKey: SecKey {
-		SecKeyCopyPublicKey(privateKey)!
-	}
-}
+import LocalAuthentication
 
 class KeyManager: ObservableObject {
 	private let userdefaults = NSUbiquitousKeyValueStore.default
+	private let passwordStore = GenericPasswordStore()
 	
 	@Published var keypairs: [Keypair] = []
 	
-	var keyTypes: [UUID: KeyType] = [:]
-	var keyNames: [UUID: String] = [:]
+	@Published var keyTypes: [UUID: KeyType] = [:]
+	@Published var keyNames: [UUID: String] = [:]
 	private let baseTag = "com.neon443.ShhShell.keys".data(using: .utf8)!
 	
 	init() {
+		loadKeypairs()
+	}
+	
+	func loadKeypairs() {
 		loadKeyIDs()
+		keypairs = []
 		for id in keyTypes.keys {
 			guard let keypair = getFromKeychain(keyID: id) else { continue }
 			keypairs.append(keypair)
 		}
+	}
+	
+	func saveKeypairs() {
+		for keypair in keypairs {
+			keyTypes.updateValue(keypair.type, forKey: keypair.id)
+			keyNames.updateValue(keypair.name, forKey: keypair.id)
+			saveToKeychain(keypair)
+		}
+		saveKeyIDs()
+		loadKeypairs()
 	}
 	
 	func loadKeyIDs() {
@@ -55,25 +64,22 @@ class KeyManager: ObservableObject {
 		guard let encodedNames = try? encoder.encode(keyNames) else { return }
 		userdefaults.set(encodedNames, forKey: "keyNames")
 		userdefaults.synchronize()
+		loadKeypairs()
 	}
 	
 	func saveToKeychain(_ keypair: Keypair) {
-		withAnimation {
-			keyTypes.updateValue(keypair.type, forKey: keypair.id)
-			keyNames.updateValue(keypair.name, forKey: keypair.id)
-		}
-		saveKeyIDs()
+		keyTypes.updateValue(keypair.type, forKey: keypair.id)
+		keyNames.updateValue(keypair.name, forKey: keypair.id)
 		if keypair.type == .ed25519 {
 			let curve25519 = try! Curve25519.Signing.PrivateKey(rawRepresentation: keypair.privateKey)
-			try! GenericPasswordStore().storeKey(curve25519.genericKeyRepresentation, account: keypair.id.uuidString)
+			let readKey: Curve25519.Signing.PrivateKey?
+			readKey = try! passwordStore.readKey(account: keypair.id.uuidString)
+			if readKey != nil {
+				try! passwordStore.deleteKey(account: keypair.id.uuidString)
+			}
+			try! passwordStore.storeKey(curve25519.genericKeyRepresentation, account: keypair.id.uuidString)
 		} else {
-			let tag = baseTag+keypair.id.uuidString.data(using: .utf8)!
-			let addQuery: [String: Any] = [kSecClass as String: kSecClassGenericPassword,
-										   kSecAttrApplicationTag as String: tag,
-										   kSecValueRef as String: keypair.privateKey,
-										   kSecAttrSynchronizable as String: kCFBooleanTrue!]
-			let status = SecItemAdd(addQuery as CFDictionary, nil)
-			guard status == errSecSuccess else { fatalError() }
+			
 		}
 	}
 	
@@ -82,9 +88,9 @@ class KeyManager: ObservableObject {
 		guard let keyName = keyNames[keyID] else { return nil }
 		if keyType == .ed25519 {
 			var key: Curve25519.Signing.PrivateKey?
-			key = try? GenericPasswordStore().readKey(account: keyID.uuidString)
+			key = try? passwordStore.readKey(account: keyID.uuidString)
 			guard let key else { return nil }
-			return Keypair(type: keyType, name: keyName, privateKey: key.rawRepresentation)
+			return Keypair(id: keyID, type: keyType, name: keyName, privateKey: key.rawRepresentation)
 		} else {
 			let tag = baseTag+keyID.uuidString.data(using: .utf8)!
 			let getQuery: [String: Any] = [kSecClass as String: kSecClassKey,
@@ -102,9 +108,39 @@ class KeyManager: ObservableObject {
 		}
 	}
 	
+	func removeFromKeycahin(keypair: Keypair) {
+		if keypair.type == .ed25519 {
+			do {
+				try passwordStore.deleteKey(account: keypair.id.uuidString)
+			} catch {
+				fatalError()
+			}
+		}
+		keyNames.removeValue(forKey: keypair.id)
+		keyTypes.removeValue(forKey: keypair.id)
+		saveKeyIDs()
+	}
+	
+	func renameKey(keypair: Keypair, newName: String) {
+		let keyID = keypair.id
+		guard let index = keypairs.firstIndex(where: { $0.id == keyID }) else { return }
+		var keypairWithNewName = keypair
+		keypairWithNewName.name = newName
+		withAnimation { keypairs[index] = keypairWithNewName }
+		saveKeypairs()
+	}
+	
+	func deleteKey(_ keypair: Keypair) {
+		removeFromKeycahin(keypair: keypair)
+		let keyID = keypair.id
+		withAnimation { keypairs.removeAll(where: { $0.id == keyID }) }
+		saveKeypairs()
+	}
+	
 	func importKey(type: KeyType, priv: String, name: String) {
 		if type == .ed25519 {
 			saveToKeychain(KeyManager.importSSHPrivkey(priv: priv))
+			saveKeypairs()
 		} else { fatalError() }
 	}
 	
@@ -118,9 +154,11 @@ class KeyManager: ObservableObject {
 				privateKey: Curve25519.Signing.PrivateKey().rawRepresentation
 			)
 			saveToKeychain(keypair)
+			saveKeypairs()
 		case .rsa:
 			fatalError("unimplemented")
 		}
+		loadKeypairs()
 	}
 	
 	static func importSSHPubkey(pub: String) -> Data {
@@ -275,5 +313,20 @@ class KeyManager: ObservableObject {
 		let extracted = Data(nsdata[4..<(lenght+4)])
 		data.removeFirst(4 + lenght)
 		return extracted
+	}
+}
+
+func authWithBiometrics() async -> Bool {
+	let context = LAContext()
+	var error: NSError?
+	guard context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) else {
+		return false
+	}
+	
+	let reason = "Authenticate yourself to view private keys"
+	return await withCheckedContinuation { continuation in
+		context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { success, _ in
+			continuation.resume(returning: success)
+		}
 	}
 }

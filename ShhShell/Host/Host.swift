@@ -17,10 +17,7 @@ protocol HostPr: Codable, Identifiable, Equatable, Hashable {
 	var port: Int { get set }
 	var username: String { get set }
 	var password: String { get set }
-	var publicKey: Data? { get set }
-	var privateKey: Data? { get set }
 	var privateKeyID: UUID? { get set }
-	var passphrase: String { get set }
 	var key: String? { get set }
 }
 
@@ -33,10 +30,7 @@ struct Host: HostPr {
 	var port: Int
 	var username: String
 	var password: String
-	var publicKey: Data?
-	var privateKey: Data?
 	var privateKeyID: UUID?
-	var passphrase: String
 	var key: String?
 	
 	var description: String {
@@ -59,9 +53,7 @@ struct Host: HostPr {
 		port: Int = 22,
 		username: String = "",
 		password: String = "",
-		publicKey: Data? = nil,
-		privateKey: Data? = nil,
-		passphrase: String = "",
+		privateKeyID: UUID? = nil,
 		hostkey: String? = nil
 	) {
 		self.name = name
@@ -71,9 +63,7 @@ struct Host: HostPr {
 		self.port = port
 		self.username = username
 		self.password = password
-		self.publicKey = publicKey
-		self.privateKey = privateKey
-		self.passphrase = passphrase
+		self.privateKeyID = privateKeyID
 		self.key = hostkey
 	}
 }
@@ -90,9 +80,7 @@ extension Host {
 			port: 22,
 			username: "neon443",
 			password: "password",
-			publicKey: nil,
-			privateKey: nil,
-			passphrase: "",
+			privateKeyID: nil,
 			hostkey: nil
 		)
 	}
