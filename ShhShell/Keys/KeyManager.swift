@@ -122,6 +122,7 @@ class KeyManager: ObservableObject {
 	}
 	
 	func renameKey(keypair: Keypair, newName: String) {
+		guard !newName.isEmpty else { return }
 		let keyID = keypair.id
 		guard let index = keypairs.firstIndex(where: { $0.id == keyID }) else { return }
 		var keypairWithNewName = keypair

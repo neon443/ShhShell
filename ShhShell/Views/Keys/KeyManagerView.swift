@@ -30,7 +30,11 @@ struct KeyManagerView: View {
 							} label: {
 								HStack {
 									Image(systemName: "key")
-									Text(kp.label)
+									if kp.label.isEmpty {
+										Text(kp.id.uuidString)
+									} else {
+										Text(kp.label)
+									}
 									Spacer()
 									Text(kp.type.description)
 										.foregroundStyle(.gray)

@@ -15,13 +15,18 @@ struct KeyDetailView: View {
 	@State var keyname: String = ""
 	@State private var reveal: Bool = false
 	
+	@Environment(\.dismiss) var dismiss
+	
 	var body: some View {
 		ZStack {
 			hostsManager.selectedTheme.background.suiColor.opacity(0.7)
 				.ignoresSafeArea(.all)
 			List {
 				TextBox(label: "Name", text: $keyname, prompt: "A name for your key")
-					.onChange(of: keypair.name) { _ in
+					.onAppear {
+						keyname = keypair.name
+					}
+					.onChange(of: keyname) { _ in
 						keyManager.renameKey(keypair: keypair, newName: keyname)
 					}
 				
@@ -83,6 +88,13 @@ struct KeyDetailView: View {
 					CenteredLabel(title: "Copy private key", systemName: "document.on.document")
 				}
 				.listRowSeparator(.hidden)
+				
+				CenteredLabel(title: "Delete", systemName: "trash")
+					.foregroundStyle(.red)
+					.onTapGesture {
+						keyManager.deleteKey(keypair)
+						dismiss()
+					}
 			}
 			.scrollContentBackground(.hidden)
 		}
