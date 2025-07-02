@@ -81,6 +81,9 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			return
 		}
 		
+		try? authWithPubkey2()
+		
+		fatalError()
 		if state != .authorized {
 			if !host.password.isEmpty {
 				do { try authWithPw() } catch {
@@ -271,6 +274,23 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	}
 	
 	//MARK: auth
+	func authWithPubkey2() throws(KeyError) {
+		guard let keyID = self.host.privateKeyID else { throw .importPrivkeyError }
+		guard let keypair = keyManager.keypairs.first(where: { $0.id == keyID }) else {
+			throw .importPrivkeyError
+		}
+		
+		var pubkey: ssh_key?
+		ssh_pki_import_pubkey_base64(keypair.publicKey.base64EncodedString(), SSH_KEYTYPE_ECDSA, &pubkey)
+		ssh_userauth_try_publickey(session, nil, pubkey)
+		
+		var privkey: ssh_key?
+		ssh_pki_import_privkey_base64(keypair.privateKey.base64EncodedString(), keypair.passphrase, nil, nil, &privkey)
+		
+		ssh_userauth_publickey(session, nil, privkey)
+		state = .authorized
+	}
+	
 	func authWithPubkey(pub pubInp: Data, priv privInp: Data, pass: String) throws(KeyError) {
 		guard session != nil else { throw .notConnected }
 		
