@@ -69,7 +69,7 @@ struct ShellView: View {
 
 #Preview {
 	ShellView(
-		handler: SSHHandler(host: Host.debug),
+		handler: SSHHandler(host: Host.debug, keyManager: nil),
 		hostsManager: HostsManager()
 	)
 }

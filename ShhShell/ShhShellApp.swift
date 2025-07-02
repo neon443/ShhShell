@@ -9,9 +9,16 @@ import SwiftUI
 
 @main
 struct ShhShellApp: App {
-	@StateObject var sshHandler: SSHHandler = SSHHandler(host: Host.blank)
+	@StateObject var sshHandler: SSHHandler
+
 	@StateObject var hostsManager: HostsManager = HostsManager()
-	@StateObject var keyManager: KeyManager = KeyManager()
+	@StateObject var keyManager: KeyManager
+	
+	init() {
+		let keyManager = KeyManager()
+		_sshHandler = StateObject(wrappedValue: SSHHandler(host: Host.blank, keyManager: keyManager))
+		_keyManager = StateObject(wrappedValue: keyManager)
+	}
 	
 	var body: some Scene {
 		WindowGroup {

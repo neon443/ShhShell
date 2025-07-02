@@ -197,9 +197,10 @@ struct ConnectionView: View {
 
 
 #Preview {
+	let keymanager = KeyManager()
 	ConnectionView(
-		handler: SSHHandler(host: Host.debug),
+		handler: SSHHandler(host: Host.debug, keyManager: keymanager),
 		hostsManager: HostsManager(),
-		keyManager: KeyManager()
+		keyManager: keymanager
 	)
 }

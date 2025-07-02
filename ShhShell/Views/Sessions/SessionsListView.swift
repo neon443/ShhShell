@@ -19,7 +19,7 @@ struct SessionsListView: View {
 		if !container.sessions.isEmpty {
 			Section("Sessions") {
 				ForEach(container.sessionIDs, id: \.self) { key in
-					SessionView(hostsManager: hostsManager, key: key)
+					SessionView(hostsManager: hostsManager, keyManager: keyManager, key: key)
 						.id(container.sessions[key]!.handler.connected)
 				}
 			}
@@ -29,7 +29,7 @@ struct SessionsListView: View {
 
 #Preview {
 	SessionsListView(
-		handler: SSHHandler(host: Host.debug),
+		handler: SSHHandler(host: Host.debug, keyManager: nil),
 		hostsManager: HostsManager(),
 		keyManager: KeyManager()
 	)

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SessionView: View {
 	@ObservedObject var hostsManager: HostsManager
+	@ObservedObject var keyManager: KeyManager
 	@ObservedObject var container = TerminalViewContainer.shared
 	
 	@State var key: UUID
@@ -34,7 +35,7 @@ struct SessionView: View {
 		}
 		.fullScreenCover(isPresented: $shellPresented) {
 			ShellView(
-				handler: container.sessions[key]?.handler ?? SSHHandler(host: Host.blank),
+				handler: container.sessions[key]?.handler ?? SSHHandler(host: Host.blank, keyManager: keyManager),
 				hostsManager: hostsManager
 			)
 		}
@@ -44,6 +45,7 @@ struct SessionView: View {
 #Preview {
 	SessionView(
 		hostsManager: HostsManager(),
+		keyManager: KeyManager(),
 		key: UUID()
 	)
 }

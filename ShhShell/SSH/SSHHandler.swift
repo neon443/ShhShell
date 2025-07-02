@@ -15,6 +15,8 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	private var session: ssh_session?
 	private var channel: ssh_channel?
 	
+	var keyManager: KeyManager
+	
 	@MainActor var container: TerminalViewContainer {
 		TerminalViewContainer.shared
 	}
@@ -38,8 +40,9 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	private let userDefaults = NSUbiquitousKeyValueStore.default
 	private let logger = Logger(subsystem: "xy", category: "sshHandler")
 	
-	init(host: Host) {
+	init(host: Host, keyManager: KeyManager?) {
 		self.host = host
+		self.keyManager = keyManager ?? KeyManager()
 	}
 	
 	func getHostkey() -> String? {

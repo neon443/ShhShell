@@ -59,6 +59,6 @@ struct DialogView: View {
 #Preview {
 	ZStack {
 		Color.black
-		DialogView(handler: SSHHandler(host: Host.debug), showDialog: true)
+		DialogView(handler: SSHHandler(host: Host.debug, keyManager: nil), showDialog: true)
 	}
 }

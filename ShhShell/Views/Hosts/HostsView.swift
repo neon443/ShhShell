@@ -21,7 +21,7 @@ struct HostsView: View {
 			ForEach(hostsManager.hosts) { host in
 				NavigationLink() {
 					ConnectionView(
-						handler: SSHHandler(host: host),
+						handler: SSHHandler(host: host, keyManager: keyManager),
 						hostsManager: hostsManager,
 						keyManager: keyManager
 					)
@@ -64,7 +64,7 @@ struct HostsView: View {
 			ToolbarItem(placement: .confirmationAction) {
 				NavigationLink {
 					ConnectionView(
-						handler: SSHHandler(host: Host.blank),
+						handler: SSHHandler(host: Host.blank, keyManager: keyManager),
 						hostsManager: hostsManager,
 						keyManager: keyManager
 					)
@@ -78,7 +78,7 @@ struct HostsView: View {
 
 #Preview {
 	HostsView(
-		handler: SSHHandler(host: Host.debug),
+		handler: SSHHandler(host: Host.debug, keyManager: nil),
 		hostsManager: HostsManager(),
 		keyManager: KeyManager()
 	)

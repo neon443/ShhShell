@@ -49,9 +49,10 @@ struct ContentView: View {
 }
 
 #Preview {
+	let keymanager = KeyManager()
     ContentView(
-		handler: SSHHandler(host: Host.debug),
+		handler: SSHHandler(host: Host.debug, keyManager: keymanager),
 		hostsManager: HostsManager(),
-		keyManager: KeyManager()
+		keyManager: keymanager
 	)
 }
