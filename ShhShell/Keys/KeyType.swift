@@ -9,14 +9,11 @@ import Foundation
 
 enum KeyType: Codable, Equatable, Hashable, CustomStringConvertible, CaseIterable {
 	case ed25519
-	case rsa
 	
 	var description: String {
 		switch self {
 		case .ed25519:
 			return "Ed25519"
-		case .rsa:
-			return "RSA"
 		}
 	}
 }

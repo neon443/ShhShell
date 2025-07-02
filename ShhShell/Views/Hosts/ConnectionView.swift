@@ -35,7 +35,7 @@ struct ConnectionView: View {
 										RoundedRectangle(cornerRadius: 10)
 											.fill(.gray.opacity(0.5))
 									}
-									SymbolPreview(symbol: symbol, label: handler.host.label)
+									HostSymbolPreview(symbol: symbol, label: handler.host.label)
 										.padding(5)
 								}
 								.frame(width: 60, height: 60)
@@ -47,7 +47,7 @@ struct ConnectionView: View {
 					}
 					
 					HStack {
-						SymbolPreview(symbol: handler.host.symbol, label: handler.host.label)
+						HostSymbolPreview(symbol: handler.host.symbol, label: handler.host.label)
 							.id(handler.host)
 							.frame(width: 60, height: 60)
 						

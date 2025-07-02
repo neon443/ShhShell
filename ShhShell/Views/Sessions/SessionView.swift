@@ -28,7 +28,7 @@ struct SessionView: View {
 					.resizable().scaledToFit()
 					.frame(width: 40, height: 40)
 					.foregroundStyle(.terminalGreen)
-				SymbolPreview(symbol: host.symbol, label: host.label)
+				HostSymbolPreview(symbol: host.symbol, label: host.label)
 					.frame(width: 40, height: 40)
 				Text(host.description)
 			}

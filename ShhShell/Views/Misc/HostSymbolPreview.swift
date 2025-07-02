@@ -1,5 +1,5 @@
 //
-//  SymbolPreview.swift
+//  HostSymbolPreview.swift
 //  ShhShell
 //
 //  Created by neon443 on 26/06/2025.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SymbolPreview: View {
+struct HostSymbolPreview: View {
 	@State var symbol: HostSymbol
 	@State var label: String
 	
@@ -30,5 +30,5 @@ struct SymbolPreview: View {
 }
 
 #Preview {
-	SymbolPreview(symbol: HostSymbol.desktopcomputer, label: "lo0")
+	HostSymbolPreview(symbol: HostSymbol.desktopcomputer, label: "lo0")
 }

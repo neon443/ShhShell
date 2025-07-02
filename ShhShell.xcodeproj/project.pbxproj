@@ -63,7 +63,7 @@
 		A9D8192F2E0F1BEE00442D38 /* ThemePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D8192E2E0F1BEE00442D38 /* ThemePreview.swift */; };
 		A9D819312E102D8700442D38 /* HostkeysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D819302E102D8700442D38 /* HostkeysView.swift */; };
 		A9DA97712E0D30ED00142DDC /* HostSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA97702E0D30ED00142DDC /* HostSymbol.swift */; };
-		A9DA97732E0D40C100142DDC /* SymbolPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA97722E0D40C100142DDC /* SymbolPreview.swift */; };
+		A9DA97732E0D40C100142DDC /* HostSymbolPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA97722E0D40C100142DDC /* HostSymbolPreview.swift */; };
 		A9FD37552E143D23005319A8 /* SecKeyConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FD37542E143D23005319A8 /* SecKeyConvertible.swift */; };
 		A9FD37572E143D5A005319A8 /* SecKeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FD37562E143D5A005319A8 /* SecKeyStore.swift */; };
 		A9FD37592E143D74005319A8 /* GenericPasswordConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FD37582E143D74005319A8 /* GenericPasswordConvertible.swift */; };
@@ -165,7 +165,7 @@
 		A9D8192E2E0F1BEE00442D38 /* ThemePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePreview.swift; sourceTree = "<group>"; };
 		A9D819302E102D8700442D38 /* HostkeysView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostkeysView.swift; sourceTree = "<group>"; };
 		A9DA97702E0D30ED00142DDC /* HostSymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostSymbol.swift; sourceTree = "<group>"; };
-		A9DA97722E0D40C100142DDC /* SymbolPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolPreview.swift; sourceTree = "<group>"; };
+		A9DA97722E0D40C100142DDC /* HostSymbolPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostSymbolPreview.swift; sourceTree = "<group>"; };
 		A9FD37542E143D23005319A8 /* SecKeyConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecKeyConvertible.swift; sourceTree = "<group>"; };
 		A9FD37562E143D5A005319A8 /* SecKeyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecKeyStore.swift; sourceTree = "<group>"; };
 		A9FD37582E143D74005319A8 /* GenericPasswordConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericPasswordConvertible.swift; sourceTree = "<group>"; };
@@ -349,6 +349,7 @@
 				A93143C52DF61FE300FCD5DB /* ViewModifiers.swift */,
 				A9B15A992E0ABA0400F66E02 /* DialogView.swift */,
 				A96C90A02E12B87900724253 /* TextBox.swift */,
+				A9DA97722E0D40C100142DDC /* HostSymbolPreview.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -379,7 +380,6 @@
 				A93143BF2DF61B3200FCD5DB /* Host.swift */,
 				A98554602E058433009051BD /* HostsManager.swift */,
 				A9DA97702E0D30ED00142DDC /* HostSymbol.swift */,
-				A9DA97722E0D40C100142DDC /* SymbolPreview.swift */,
 			);
 			path = Host;
 			sourceTree = "<group>";
@@ -601,7 +601,7 @@
 				A93143C62DF61FE300FCD5DB /* ViewModifiers.swift in Sources */,
 				A98554632E0587DF009051BD /* HostsView.swift in Sources */,
 				A96C6A8A2E0C0B1100F377FE /* SSHState.swift in Sources */,
-				A9DA97732E0D40C100142DDC /* SymbolPreview.swift in Sources */,
+				A9DA97732E0D40C100142DDC /* HostSymbolPreview.swift in Sources */,
 				A96BE6A62E113DB000C0FEE9 /* ColorCodable.swift in Sources */,
 				A92538C82DEE0742007E0A18 /* ContentView.swift in Sources */,
 				A96BE6A42E113D9400C0FEE9 /* ThemeCodable.swift in Sources */,

@@ -169,12 +169,10 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		}
 	}
 	
-	func getKeys() -> [Keypair] {
-		var result: [Keypair] = []
-		for host in hosts {
-			guard let keyID = host.privateKeyID else { continue }
-		}
-		return result
+	func set(keypair: Keypair, onHost: Host) {
+		guard let index = hosts.firstIndex(where: { $0.id == onHost.id }) else { return }
+		hosts[index].privateKeyID = keypair.id
+		saveHosts()
 	}
 	
 	func getHostsUsingKeys(_ keys: [Keypair]) -> [Host] {

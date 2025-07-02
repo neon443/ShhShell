@@ -140,7 +140,8 @@ class KeyManager: ObservableObject {
 	
 	func importKey(type: KeyType, priv: String, name: String) {
 		if type == .ed25519 {
-			saveToKeychain(KeyManager.importSSHPrivkey(priv: priv))
+			guard let importedKeypair = KeyManager.importSSHPrivkey(priv: priv) else { return }
+			saveToKeychain(importedKeypair)
 			saveKeypairs()
 		} else { fatalError() }
 	}
@@ -156,8 +157,6 @@ class KeyManager: ObservableObject {
 			)
 			saveToKeychain(keypair)
 			saveKeypairs()
-		case .rsa:
-			fatalError("unimplemented")
 		}
 		loadKeypairs()
 	}
@@ -187,7 +186,8 @@ class KeyManager: ObservableObject {
 		return Data(pubkeyline.utf8)
 	}
 	
-	static func importSSHPrivkey(priv: String) -> Keypair {
+	static func importSSHPrivkey(priv: String) -> Keypair? {
+		guard !priv.isEmpty else { return nil }
 		var split = priv.replacingOccurrences(of: "-----BEGIN OPENSSH PRIVATE KEY-----\n", with: "")
 		split = split.replacingOccurrences(of: "-----BEGIN OPENSSH PRIVATE KEY-----", with: "")
 		split = split.replacingOccurrences(of: "\n-----END OPENSSH PRIVATE KEY-----\n", with: "")

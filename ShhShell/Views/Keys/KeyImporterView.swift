@@ -46,14 +46,18 @@ struct KeyImporterView: View {
 					.foregroundStyle(.gray)
 			}
 			
-			Button() {
-				keyManager.importKey(type: keyType, priv: privkeyStr, name: keyName)
-				dismiss()
-			} label: {
-				Label("Import", systemImage: "key.horizontal")
-			}
-			.buttonStyle(.borderedProminent)
 		}
+		
+		Button() {
+			keyManager.importKey(type: keyType, priv: privkeyStr, name: keyName)
+			dismiss()
+		} label: {
+			Text("Import")
+		}
+		.onTapGesture {
+			UINotificationFeedbackGenerator().notificationOccurred(.success)
+		}
+		.buttonStyle(.borderedProminent)
     }
 }
 
