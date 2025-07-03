@@ -51,7 +51,7 @@ struct KeyDetailView: View {
 							Button() {
 								hostsManager.set(keypair: keypair, onHost: host)
 							} label: {
-								Image(systemName: "plus")
+								host.symbol.image
 									.resizable().scaledToFit()
 									.foregroundStyle(.blue)
 									.frame(width: 20, height: 20)

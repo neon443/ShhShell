@@ -13,15 +13,9 @@ struct HostSymbolPreview: View {
 	
     var body: some View {
 		ZStack(alignment: .center) {
-			if symbol.isCustom {
-				Image(symbol.sf)
-					.resizable().scaledToFit()
-					.symbolRenderingMode(.monochrome)
-			} else {
-				Image(systemName: symbol.sf)
-					.resizable().scaledToFit()
-					.symbolRenderingMode(.monochrome)
-			}
+			symbol.image
+				.resizable().scaledToFit()
+				.symbolRenderingMode(.monochrome)
 			Text(label)
 				.font(.headline)
 				.offset(symbol.offset)

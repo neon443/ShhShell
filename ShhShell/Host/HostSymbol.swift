@@ -18,6 +18,14 @@ enum HostSymbol: Codable, Equatable, Hashable, CaseIterable {
 	case genericServer
 	case genericServerVertical
 	
+	var image: Image {
+		if isCustom {
+			return Image(self.sf)
+		} else {
+			return Image(systemName: self.sf)
+		}
+	}
+	
 	var sf: String {
 		switch self {
 		case .desktopcomputer:
