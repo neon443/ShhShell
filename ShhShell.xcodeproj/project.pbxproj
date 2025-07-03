@@ -70,6 +70,7 @@
 		A9FD375B2E143D77005319A8 /* GenericPasswordStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FD375A2E143D77005319A8 /* GenericPasswordStore.swift */; };
 		A9FD375D2E143D7E005319A8 /* KeyStoreError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FD375C2E143D7E005319A8 /* KeyStoreError.swift */; };
 		A9FD375F2E14648E005319A8 /* KeyImporterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FD375E2E14648E005319A8 /* KeyImporterView.swift */; };
+		A9FD37652E169937005319A8 /* AuthType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FD37642E169937005319A8 /* AuthType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -172,6 +173,7 @@
 		A9FD375A2E143D77005319A8 /* GenericPasswordStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericPasswordStore.swift; sourceTree = "<group>"; };
 		A9FD375C2E143D7E005319A8 /* KeyStoreError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStoreError.swift; sourceTree = "<group>"; };
 		A9FD375E2E14648E005319A8 /* KeyImporterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyImporterView.swift; sourceTree = "<group>"; };
+		A9FD37642E169937005319A8 /* AuthType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -316,6 +318,7 @@
 		A93143C12DF61E8500FCD5DB /* SSH */ = {
 			isa = PBXGroup;
 			children = (
+				A9FD37642E169937005319A8 /* AuthType.swift */,
 				A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */,
 				A9C4140B2E096DB7005E3047 /* SSHError.swift */,
 				A96C6A892E0C0B1100F377FE /* SSHState.swift */,
@@ -613,6 +616,7 @@
 				A96C6B002E0C45FE00F377FE /* KeyDetailView.swift in Sources */,
 				A9DA97712E0D30ED00142DDC /* HostSymbol.swift in Sources */,
 				A96C90A12E12B87A00724253 /* TextBox.swift in Sources */,
+				A9FD37652E169937005319A8 /* AuthType.swift in Sources */,
 				A96BE6A82E116E2B00C0FEE9 /* SessionsListView.swift in Sources */,
 				A96C90A32E12D53B00724253 /* KeyType.swift in Sources */,
 				A98554612E058433009051BD /* HostsManager.swift in Sources */,

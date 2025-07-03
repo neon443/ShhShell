@@ -57,57 +57,48 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	}
 	
 	func go() {
-		guard !connected else {
-			disconnect()
-			return
-		}
+		guard !connected else { disconnect(); return }
 		
-		do {
-			try connect()
-		} catch {
-//			print("error in connect \(error.localizedDescription)")
+		do { try connect() } catch {
+			print("error when connecting \(error.localizedDescription)")
 			return
 		}
 		
 		do {
 			try authWithNone()
-		} catch {
-			
-		}
-		getAuthMethods()
-		
-		if self.host.key != getHostkey() {
-			self.host.key = getHostkey()
-			return
-		}
-		
+		} catch { print("auth with none is not authed") }
 		guard state != .authorized else { return }
 		
-		if !host.password.isEmpty {
-			do { try authWithPw() } catch {
-				state = .authFailed
-				print("pw auth error")
-				print(error.localizedDescription)
-			}
-		} else {
-			do {
-				if host.privateKeyID != nil {
-					try authWithPubkey()
+		//TODO: check hostkey
+		
+		for method in getAuthMethods() {
+			switch method {
+			case .password:
+				do { try authWithPw() } catch {
+					state = .authFailed
+					print("pw auth error")
+					print(error.localizedDescription)
 				}
-			} catch {
-				state = .authFailed
-				print("error with pubkey auth")
-				print(error.localizedDescription)
+			case .publickey:
+				do { try authWithPubkey() } catch {
+					state = .authFailed
+					print("error with pubkey auth")
+					print(error.localizedDescription)
+				}
+			case .hostbased:
+				disconnect()
+			case .interactive:
+				disconnect()
 			}
 		}
+		
+		guard state == .authorized else { return }
 		
 		ssh_channel_request_env(channel, "TERM", "xterm-256color")
 		ssh_channel_request_env(channel, "LANG", "en_US.UTF-8")
 		ssh_channel_request_env(channel, "LC_ALL", "en_US.UTF-8")
 		
-		do {
-			try openShell()
-		} catch {
+		do { try openShell() } catch {
 			print(error.localizedDescription)
 		}
 		
@@ -315,29 +306,16 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		return
 	}
 	
-	func getAuthMethods() {
-		var recievedMethod: CInt
-		recievedMethod = ssh_userauth_list(session, nil)
+	func getAuthMethods() -> [AuthType] {
+		var result: [AuthType] = []
+		let recievedMethod = UInt32(ssh_userauth_list(session, nil))
 		
-		let allAuthDescriptions: [String] = [
-			"password",
-			"publickey",
-			"hostbased",
-			"interactive"
-		]
-		let allAuthRaws: [UInt32] = [
-			SSH_AUTH_METHOD_PASSWORD,
-			SSH_AUTH_METHOD_PUBLICKEY,
-			SSH_AUTH_METHOD_HOSTBASED,
-			SSH_AUTH_METHOD_INTERACTIVE
-		]
-		let allAuths = zip(allAuthDescriptions, allAuthRaws)
-		
-		for authMethod in allAuths {
-			if (recievedMethod & Int32(authMethod.1)) != 0 {
-				print(authMethod.0)
+		for method in AuthType.allCases {
+			if (recievedMethod & method.rawValue) != 0 {
+				result.append(method)
 			}
 		}
+		return result
 	}
 	
 	//MARK: shell
