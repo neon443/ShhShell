@@ -67,6 +67,11 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		task.resume()
 	}
 	
+	func selectAnsi(_ ansi: Int) {
+		withAnimation { selectedAnsi = ansi }
+		saveThemes()
+	}
+	
 	func selectTheme(_ selectedTheme: Theme) {
 		withAnimation { self.selectedTheme = selectedTheme }
 		saveThemes()

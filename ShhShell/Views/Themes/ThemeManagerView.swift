@@ -34,30 +34,7 @@ struct ThemeManagerView: View {
 				.ignoresSafeArea(.all)
 			GeometryReader { geo in
 				VStack {
-					VStack(spacing: 0) {
-						HStack(spacing: 0) {
-							ForEach(0..<8, id: \.self) { index in
-								Rectangle()
-									.fill(hostsManager.selectedTheme.ansi[index].suiColor)
-									.onTapGesture {
-										hostsManager.selectedAnsi = index
-										hostsManager.saveThemes()
-									}
-							}
-						}
-						HStack(spacing: 0) {
-							ForEach(8..<16, id: \.self) { index in
-								Rectangle()
-									.fill(hostsManager.selectedTheme.ansi[index].suiColor)
-									.onTapGesture {
-										hostsManager.selectedAnsi = index
-										hostsManager.saveThemes()
-									}
-							}
-						}
-					}
-					.clipShape(RoundedRectangle(cornerRadius: 15))
-					.frame(maxWidth: geo.size.width, maxHeight: geo.size.height/2)
+					AnsiPickerView(hostsManager: hostsManager)
 					
 					let columns: Int = max(1, Int((geo.size.width - 2*spacing) / (minColWidth + spacing)))
 					let layout = Array(repeating: grid, count: columns)
