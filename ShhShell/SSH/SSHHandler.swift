@@ -71,26 +71,25 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		
 		//TODO: check hostkey
 		
-		while state != .authorized {
-			for method in getAuthMethods() {
-				switch method {
-				case .password:
-					do { try authWithPw() } catch {
-						state = .authFailed
-						print("pw auth error")
-						print(error.localizedDescription)
-					}
-				case .publickey:
-					do { try authWithPubkey() } catch {
-						state = .authFailed
-						print("error with pubkey auth")
-						print(error.localizedDescription)
-					}
-				case .hostbased:
-					disconnect()
-				case .interactive:
-					disconnect()
+		for method in getAuthMethods() {
+			guard state != .authorized else { break }
+			switch method {
+			case .password:
+				do { try authWithPw() } catch {
+					state = .authFailed
+					print("pw auth error")
+					print(error.localizedDescription)
 				}
+			case .publickey:
+				do { try authWithPubkey() } catch {
+					state = .authFailed
+					print("error with pubkey auth")
+					print(error.localizedDescription)
+				}
+			case .hostbased:
+				disconnect()
+			case .interactive:
+				disconnect()
 			}
 		}
 		
