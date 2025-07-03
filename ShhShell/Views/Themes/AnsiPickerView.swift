@@ -20,7 +20,7 @@ struct AnsiPickerView: View {
 							var isSelected: Bool { hostsManager.selectedAnsi == index }
 							ZStack {
 								Rectangle()
-									.fill(Color.blue)
+									.fill(hostsManager.selectedTheme.background.suiColor)
 								Rectangle()
 									.fill(hostsManager.selectedTheme.ansi[index].suiColor)
 									.padding(isSelected ? 5 : 0)

@@ -33,7 +33,7 @@ struct ThemePreview: View {
 		ZStack(alignment: .center) {
 			Rectangle()
 				.fill(Color.accentColor)
-			
+				.opacity(isSelected ? 1 : 0)
 			Rectangle()
 				.fill(theme.background.suiColor)
 				.clipShape(
