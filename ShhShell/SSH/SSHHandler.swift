@@ -85,6 +85,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		
 		if !host.password.isEmpty {
 			do { try authWithPw() } catch {
+				state = .authFailed
 				print("pw auth error")
 				print(error.localizedDescription)
 			}
@@ -94,6 +95,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 					try authWithPubkey()
 				}
 			} catch {
+				state = .authFailed
 				print("error with pubkey auth")
 				print(error.localizedDescription)
 			}
