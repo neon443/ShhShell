@@ -28,6 +28,7 @@ struct ShhShellApp: App {
 				keyManager: keyManager
 			)
 			.colorScheme(.dark)
+			.tint(hostsManager.selectedTheme.ansi[hostsManager.selectedAnsi].suiColor)
 		}
 	}
 }

@@ -15,6 +15,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	@Published var hosts: [Host] = []
 	@Published var themes: [Theme] = []
 	@Published var selectedTheme: Theme = Theme.defaultTheme
+	@Published var selectedAnsi: Int = 1
 	
 	init() {
 		loadHosts()
@@ -33,11 +34,25 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 			self.themes.append(synthedTheme)
 		}
 		
-		
 		guard let dataSelTheme = userDefaults.data(forKey: "selectedTheme") else { return }
 		guard let decodedSelTheme = Theme.decodeTheme(data: dataSelTheme) else { return }
 		//name doesnt matter
 		self.selectedTheme = decodedSelTheme
+		
+		 selectedAnsi = Int(userDefaults.longLong(forKey: "selectedAnsi"))
+	}
+	
+	func saveThemes() {
+		let encoder = JSONEncoder()
+		// map the theme to themecodable
+		guard let encodedThemes = try? encoder.encode(themes.map({$0.themeCodable})) else { return }
+		userDefaults.set(encodedThemes, forKey: "themes")
+		
+		guard let encodedSelectedTheme = try? encoder.encode(selectedTheme.themeCodable) else { return }
+		userDefaults.set(encodedSelectedTheme, forKey: "selectedTheme")
+		
+		userDefaults.set(Int64(selectedAnsi), forKey: "selectedAnsi")
+		userDefaults.synchronize()
 	}
 	
 	func downloadTheme(fromUrl: URL?) {
@@ -85,17 +100,6 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		theme.name = fromUrl?.lastPathComponent.replacingOccurrences(of: ".itermcolors", with: "") ?? ""
 		self.themes.append(theme)
 		saveThemes()
-	}
-	
-	func saveThemes() {
-		let encoder = JSONEncoder()
-		// map the theme to themecodable
-		guard let encodedThemes = try? encoder.encode(themes.map({$0.themeCodable})) else { return }
-		userDefaults.set(encodedThemes, forKey: "themes")
-		
-		guard let encodedSelectedTheme = try? encoder.encode(selectedTheme.themeCodable) else { return }
-		userDefaults.set(encodedSelectedTheme, forKey: "selectedTheme")
-		userDefaults.synchronize()
 	}
 	
 	func getHostIndexMatching(_ hostSearchingFor: Host) -> Int? {

@@ -34,10 +34,7 @@ struct SessionView: View {
 			}
 		}
 		.fullScreenCover(isPresented: $shellPresented) {
-			ShellView(
-				handler: container.sessions[key]?.handler ?? SSHHandler(host: Host.blank, keyManager: keyManager),
-				hostsManager: hostsManager
-			)
+			ShellTabView(handler: nil, hostsManager: hostsManager, selectedID: key)
 		}
 	}
 }

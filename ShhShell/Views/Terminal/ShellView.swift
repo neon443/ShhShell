@@ -37,24 +37,6 @@ struct ShellView: View {
 			.onAppear {
 				handler.applySelectedTheme()
 			}
-			.navigationTitle(handler.title)
-			.navigationBarTitleDisplayMode(.inline)
-			.toolbar {
-				ToolbarItem(placement: .cancellationAction) {
-					Button() {
-						handler.disconnect()
-					} label: {
-						Label("Disconnect", systemImage: "xmark.app.fill")
-					}
-				}
-				ToolbarItem(placement: .cancellationAction) {
-					Button() {
-						dismiss()
-					} label: {
-						Label("Close", systemImage: "arrow.down.right.and.arrow.up.left")
-					}
-				}
-			}
 		}
     }
 }
