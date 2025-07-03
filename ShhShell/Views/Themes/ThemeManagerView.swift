@@ -51,6 +51,13 @@ struct ThemeManagerView: View {
 						}
 						.padding(.horizontal)
 						
+						HStack {
+							Text("Your Themes")
+								.padding(.top)
+								.padding(.horizontal)
+								.font(.headline)
+							Spacer()
+						}
 						if hostsManager.themes.isEmpty {
 							VStack(alignment: .leading) {
 								Image(systemName: "paintpalette")

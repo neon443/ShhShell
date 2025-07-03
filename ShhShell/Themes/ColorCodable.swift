@@ -55,3 +55,12 @@ extension SwiftTerm.Color {
 		return UIColor(red: red, green: green, blue: blue, alpha: 1)
 	}
 }
+
+extension SwiftTerm.Color {
+	var luminance: Double {
+		let r = Double(red)/65535
+		let g = Double(green)/65535
+		let b = Double(blue)/65535
+		return (0.2126*r + 0.7152*g + 0.0722*b)
+	}
+}
