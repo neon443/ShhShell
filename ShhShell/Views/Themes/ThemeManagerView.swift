@@ -46,7 +46,7 @@ struct ThemeManagerView: View {
 						}
 						HStack {
 							AnsiPickerView(hostsManager: hostsManager)
-								.frame(width: 400, height: 100)
+//								.frame(width: 400, height: 100)
 							Spacer()
 						}
 						.padding(.horizontal)
