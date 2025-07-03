@@ -23,32 +23,47 @@ struct KeyDetailView: View {
 				.ignoresSafeArea(.all)
 			List {
 				VStack(alignment: .leading) {
-					Text("Used on")
-						.bold()
-					ForEach(hostsManager.getHostsUsingKeys([keypair])) { host in
+					if hostsManager.hostsUsing(key: keypair).isEmpty {
+						Text("This key is not used on any host.")
+							.bold()
+					} else {
+						Text("Used on")
+							.bold()
+					}
+					ForEach(hostsManager.hostsUsing(key: keypair)) { host in
 						HStack {
 							HostSymbolPreview(symbol: host.symbol, label: host.label)
-								.frame(width: 40, height: 40)
+								.frame(width: 30, height: 30)
+								.foregroundStyle(.gray)
 							Text(host.description)
+							Spacer()
+							Button() {
+								hostsManager.unsetKeypair(onHost: host)
+							} label: {
+								Image(systemName: "minus.circle.fill")
+									.symbolRenderingMode(.multicolor)
+							}
+							.buttonStyle(.plain)
 						}
 					}
-					Menu("Add") {
-						let hostsNotUsingKey = hostsManager.hosts.filter(
-							{
-								hostsManager.getHostsUsingKeys([keypair]).contains($0)
-							})
-						ForEach(hostsNotUsingKey) { host in
+					Menu() {
+						ForEach(hostsManager.hostsNotUsing(key: keypair)) { host in
 							Button() {
 								hostsManager.set(keypair: keypair, onHost: host)
 							} label: {
 								Image(systemName: "plus")
 									.resizable().scaledToFit()
 									.foregroundStyle(.blue)
-									.frame(width: 30, height: 30)
-								Text("Add")
+									.frame(width: 20, height: 20)
+								Text(host.description)
 									.foregroundStyle(.blue)
 							}
 						}
+					} label: {
+						Image(systemName: "plus.circle.fill")
+							.symbolRenderingMode(.multicolor)
+						Text("Add")
+							.foregroundStyle(.green)
 					}
 				}
 				
