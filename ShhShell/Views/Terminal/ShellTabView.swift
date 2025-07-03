@@ -14,7 +14,7 @@ struct ShellTabView: View {
 	@ObservedObject var container = TerminalViewContainer.shared
 	@State var selectedID: UUID?
 	
-	@State var shellView: ShellView? = nil
+	@Environment(\.dismiss) var dismiss
 	
     var body: some View {
 		GeometryReader { geo in
@@ -23,29 +23,46 @@ struct ShellTabView: View {
 				ScrollView(.horizontal, showsIndicators: false) {
 					HStack(spacing: 0) {
 						ForEach(container.sessionIDs, id: \.self) { id in
-							Text(container.sessions[id]!.handler.host.description)
-								.frame(width: oneTabWidth)
-								.background(.blue)
-								.onTapGesture {
-									selectedID = id
-									if let session = container.sessions[selectedID!] {
-										shellView = ShellView(handler: session.handler, hostsManager: hostsManager)
-									}
-								}
+							ZStack {
+								Rectangle()
+									.fill(selectedID == id ? .orange : .gray)
+									.opacity(0.5)
+								Text(container.sessions[id]!.handler.host.description)
+									.frame(width: oneTabWidth)
+							}
+							.ignoresSafeArea(.all)
+							.onTapGesture {
+								withAnimation { selectedID = id }
+							}
 						}
 					}
 				}
+				.frame(height: 30)
 				.onAppear {
-					if shellView == nil {
-						shellView = ShellView(handler: handler, hostsManager: hostsManager)
+					if selectedID == nil {
+						selectedID = handler.sessionID
 					}
 				}
-				.frame(height: 30)
-				if let shellView {
-					shellView
-						.id(selectedID)
+				
+				if let selectedID,
+				   let session = container.sessions[selectedID] {
+					ShellView(
+						handler: session.handler,
+						hostsManager: hostsManager
+					)
+					.onDisappear {
+						if !checkShell(session.handler.state) {
+							if let lastSession = container.sessionIDs.last {
+								withAnimation { self.selectedID = lastSession }
+							} else {
+								dismiss()
+							}
+						}
+					}
+					.id(selectedID)
+					.transition(.opacity)
 				} else {
-					Text("no shellview")
+					ShellView(handler: handler, hostsManager: hostsManager)
 				}
 			}
 		}

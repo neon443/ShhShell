@@ -33,13 +33,6 @@ struct ShellView: View {
 						.shadow(color: .black, radius: 5)
 				}
 				.opacity(handler.bell ? 1 : 0)
-				
-				if !handler.connected {
-					DialogView(handler: handler, showDialog: !handler.connected)
-				}
-			}
-			.onChange(of: handler.connected) { _ in
-				if !handler.connected { dismiss() }
 			}
 			.onAppear {
 				handler.applySelectedTheme()
@@ -50,7 +43,6 @@ struct ShellView: View {
 				ToolbarItem(placement: .cancellationAction) {
 					Button() {
 						handler.disconnect()
-						if !handler.connected { dismiss() }
 					} label: {
 						Label("Disconnect", systemImage: "xmark.app.fill")
 					}
