@@ -19,8 +19,6 @@ class KeyManager: ObservableObject {
 	var keyIDs: [UUID] {
 		keypairs.map { $0.id }
 	}
-//	@Published var keyTypes: [UUID: KeyType] = [:]
-//	@Published var keyNames: [UUID: String] = [:]
 	private let baseTag = "com.neon443.ShhShell.keys".data(using: .utf8)!
 	
 	init() {
@@ -59,9 +57,8 @@ class KeyManager: ObservableObject {
 	}
 	
 	func deleteKey(_ keypair: Keypair) {
+		withAnimation { keypairs.removeAll(where: { $0.id == keypair.id }) }
 		removeFromKeycahin(keypair: keypair)
-		let keyID = keypair.id
-		withAnimation { keypairs.removeAll(where: { $0.id == keyID }) }
 		saveKeypairs()
 	}
 	
