@@ -111,5 +111,4 @@ struct ThemePreview: View {
 		canModify: true
 	)
 	.border(Color.red)
-	.scaleEffect(2)
 }

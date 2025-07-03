@@ -11,10 +11,9 @@ struct AnsiPickerView: View {
 	@ObservedObject var hostsManager: HostsManager
 	
 	var body: some View {
-		ZStack {
+		ZStack(alignment: .center) {
 			RoundedRectangle(cornerRadius: 15)
-				.aspectRatio(CGSize(width: 4, height: 1), contentMode: .fit)
-				.foregroundStyle(hostsManager.selectedTheme.foreground.suiColor.opacity(0.7))
+				.foregroundStyle(hostsManager.selectedTheme.foreground.suiColor.opacity(0.5))
 			GeometryReader { geo in
 				VStack(spacing: 0) {
 					ForEach(0...1, id: \.self) { row in
@@ -32,13 +31,15 @@ struct AnsiPickerView: View {
 											hostsManager.selectAnsi(index)
 										}
 								}
+								.frame(minWidth: 20, minHeight: 20)
+								.aspectRatio(1, contentMode: .fit)
 							}
 						}
 					}
 				}
+				.aspectRatio(4, contentMode: .fit)
+				.clipShape(RoundedRectangle(cornerRadius: 10))
 			}
-			.aspectRatio(CGSize(width: 4, height: 1), contentMode: .fit)
-			.clipShape(RoundedRectangle(cornerRadius: 10))
 			.padding(5)
 		}
 	}
