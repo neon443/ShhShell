@@ -12,7 +12,7 @@ struct ConnectionView: View {
 	@ObservedObject var hostsManager: HostsManager
 	@ObservedObject var keyManager: KeyManager
 	
-	@State private var shellView: ShellView? = nil
+//	@State private var shellView: ShellTabView? = nil
 	
 	@State var pubkeyStr: String = ""
 	@State var privkeyStr: String = ""
@@ -121,11 +121,6 @@ struct ConnectionView: View {
 				hostsManager.updateHost(handler.host)
 			}
 			.onAppear {
-				if shellView == nil {
-					shellView = ShellView(handler: handler, hostsManager: hostsManager)
-				}
-			}
-			.onAppear {
 				hostsManager.addHostIfNeeded(handler.host)
 			}
 			.alert("Hostkey changed", isPresented: $hostKeyChangedAlert) {
@@ -156,12 +151,13 @@ struct ConnectionView: View {
 				}
 			}
 			.fullScreenCover(isPresented: $showTerminal) {
-				if let shellView {
-					shellView
-				} else {
-					Text("no shellview")
-				}
+				ShellTabView(handler: handler, hostsManager: hostsManager)
 			}
+//			.onAppear {
+//				if shellView == nil {
+//					shellView = ShellTabView(handler: handler, hostsManager: hostsManager)
+//				}
+//			}
 		}
 	}
 }

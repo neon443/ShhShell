@@ -71,6 +71,7 @@
 		A9FD375D2E143D7E005319A8 /* KeyStoreError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FD375C2E143D7E005319A8 /* KeyStoreError.swift */; };
 		A9FD375F2E14648E005319A8 /* KeyImporterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FD375E2E14648E005319A8 /* KeyImporterView.swift */; };
 		A9FD37652E169937005319A8 /* AuthType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FD37642E169937005319A8 /* AuthType.swift */; };
+		A9FD37692E16A6BF005319A8 /* ShellTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FD37682E16A6BF005319A8 /* ShellTabView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -174,6 +175,7 @@
 		A9FD375C2E143D7E005319A8 /* KeyStoreError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStoreError.swift; sourceTree = "<group>"; };
 		A9FD375E2E14648E005319A8 /* KeyImporterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyImporterView.swift; sourceTree = "<group>"; };
 		A9FD37642E169937005319A8 /* AuthType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthType.swift; sourceTree = "<group>"; };
+		A9FD37682E16A6BF005319A8 /* ShellTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellTabView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,6 +215,7 @@
 				A923172E2E08851200ECE1E6 /* ShellView.swift */,
 				A923172C2E07138000ECE1E6 /* SSHTerminalDelegate.swift */,
 				A96BE6A92E116EC000C0FEE9 /* TerminalViewContainer.swift */,
+				A9FD37682E16A6BF005319A8 /* ShellTabView.swift */,
 			);
 			path = Terminal;
 			sourceTree = "<group>";
@@ -604,6 +607,7 @@
 				A93143C62DF61FE300FCD5DB /* ViewModifiers.swift in Sources */,
 				A98554632E0587DF009051BD /* HostsView.swift in Sources */,
 				A96C6A8A2E0C0B1100F377FE /* SSHState.swift in Sources */,
+				A9FD37692E16A6BF005319A8 /* ShellTabView.swift in Sources */,
 				A9DA97732E0D40C100142DDC /* HostSymbolPreview.swift in Sources */,
 				A96BE6A62E113DB000C0FEE9 /* ColorCodable.swift in Sources */,
 				A92538C82DEE0742007E0A18 /* ContentView.swift in Sources */,
