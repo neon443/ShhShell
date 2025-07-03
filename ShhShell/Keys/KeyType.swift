@@ -16,4 +16,11 @@ enum KeyType: Codable, Equatable, Hashable, CustomStringConvertible, CaseIterabl
 			return "Ed25519"
 		}
 	}
+	
+	var header: String {
+		switch self {
+		case .ed25519:
+			"ssh-ed25519"
+		}
+	}
 }

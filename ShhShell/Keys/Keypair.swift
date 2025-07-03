@@ -25,10 +25,9 @@ struct Keypair: KeypairProtocol {
 	var type: KeyType = .ed25519
 	var name: String = ""
 	var publicKey: Data {
-		if privateKey.isEmpty {
-			print("not a valid ed25519 key")
-			fatalError()
-		} else {
+		guard !privateKey.isEmpty else { return Data() }
+		switch type {
+		case .ed25519:
 			return (try? Curve25519.Signing.PrivateKey(rawRepresentation: privateKey).publicKey.rawRepresentation) ?? Data()
 		}
 	}

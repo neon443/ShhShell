@@ -52,7 +52,7 @@ struct KeyManagerView: View {
 					}
 					
 					Button("Generate a new Ed25519 Key") {
-						let comment = UIDevice().model + " " + Date().formatted()
+						let comment = UIDevice().model + " at " + Date().formatted(date: .numeric, time: .omitted)
 						keyManager.generateKey(type: .ed25519, comment: comment)
 					}
 					

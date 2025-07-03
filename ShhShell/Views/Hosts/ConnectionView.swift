@@ -82,9 +82,10 @@ struct ConnectionView: View {
 					Picker("Private key", selection: $handler.host.privateKeyID) {
 						Text("None")
 							.tag(nil as UUID?)
+						Divider()
 						ForEach(keyManager.keypairs) { keypair in
 							Text(keypair.label)
-								.tag(keypair.id)
+								.tag(keypair.id as UUID?)
 						}
 					}
 				}

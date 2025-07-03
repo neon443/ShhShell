@@ -12,7 +12,7 @@ struct KeyImporterView: View {
 	
 	@Environment(\.dismiss) var dismiss
 	
-	@State var keyName: String = UIDevice().model + " " + Date().formatted()
+	@State var keyName: String = UIDevice().model + " at " + Date().formatted(date: .numeric, time: .omitted)
 	@State var privkeyStr: String = ""
 	@State var keyType: KeyType = .ed25519
 	
@@ -24,25 +24,33 @@ struct KeyImporterView: View {
 		List {
 			TextBox(label: "Name", text: $keyName, prompt: "A name for your key")
 			
-			Picker("Key type", selection: $keyType) {
-				ForEach(KeyType.allCases, id: \.self) { type in
-					Text(type.description)
-						.tag(type)
-				}
-			}
-			.pickerStyle(SegmentedPickerStyle())
-			
 			HStack {
-				Text("Private Key")
-				Spacer()
-				Text("Required")
-					.foregroundStyle(.red)
+				Text("Key Type")
+				Picker("Key type", selection: $keyType) {
+					ForEach(KeyType.allCases, id: \.self) { type in
+						Text(type.description)
+							.tag(type)
+					}
+				}
+				.pickerStyle(SegmentedPickerStyle())
 			}
 			
-			TextEditor(text: $privkeyStr)
+			Section {
+				HStack {
+					Text("Private Key")
+					Spacer()
+					Text("Required")
+						.foregroundStyle(.red)
+				}
+				.listRowSeparator(.hidden)
+				
+				TextEditor(text: $privkeyStr)
+					.background(.black)
+					.clipShape(RoundedRectangle(cornerRadius: 10))
+			}
 			
 			if !keypair.openSshPubkey.isEmpty {
-				TextEditor(text: .constant(keypair.openSshPubkey))
+				Text(keypair.openSshPubkey.trimmingCharacters(in: .whitespacesAndNewlines))
 					.foregroundStyle(.gray)
 			}
 			
@@ -53,11 +61,14 @@ struct KeyImporterView: View {
 			dismiss()
 		} label: {
 			Text("Import")
+				.font(.title)
+				.bold()
 		}
 		.onTapGesture {
 			UINotificationFeedbackGenerator().notificationOccurred(.success)
 		}
 		.buttonStyle(.borderedProminent)
+		.padding()
     }
 }
 

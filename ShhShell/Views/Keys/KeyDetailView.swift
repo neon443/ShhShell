@@ -90,14 +90,14 @@ struct KeyDetailView: View {
 					VStack(alignment: .leading) {
 						Text("Public key")
 							.bold()
-						Text(keypair.openSshPubkey.dropLast(2))
+						Text(keypair.openSshPubkey.trimmingCharacters(in: .whitespacesAndNewlines))
 					}
 					VStack(alignment: .leading) {
 						Text("Private key")
 							.bold()
 							.frame(maxWidth: .infinity)
 						ZStack(alignment: .center) {
-							Text(keypair.openSshPrivkey.dropLast(2))
+							Text(keypair.openSshPrivkey.trimmingCharacters(in: .whitespacesAndNewlines))
 								.blur(radius: reveal ? 0 : 5)
 							VStack {
 								Image(systemName: "eye.slash.fill")

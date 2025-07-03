@@ -46,11 +46,49 @@ class KeyManager: ObservableObject {
 		for keypair in keypairs {
 			saveToKeychain(keypair)
 		}
+	}
+	
+	func renameKey(keypair: Keypair, newName: String) {
+		guard !newName.isEmpty else { return }
+		let keyID = keypair.id
+		guard let index = keypairs.firstIndex(where: { $0.id == keyID }) else { return }
+		var keypairWithNewName = keypair
+		keypairWithNewName.name = newName
+		withAnimation { keypairs[index] = keypairWithNewName }
+		saveKeypairs()
+	}
+	
+	func deleteKey(_ keypair: Keypair) {
+		removeFromKeycahin(keypair: keypair)
+		let keyID = keypair.id
+		withAnimation { keypairs.removeAll(where: { $0.id == keyID }) }
+		saveKeypairs()
+	}
+	
+	func importKey(type: KeyType, priv: String, name: String) {
+		if type == .ed25519 {
+			guard let importedKeypair = KeyManager.importSSHPrivkey(priv: priv) else { return }
+			saveToKeychain(importedKeypair)
+		} else { fatalError() }
+	}
+	
+	func generateKey(type: KeyType, comment: String) {
+		switch type {
+		case .ed25519:
+			let keypair = Keypair(
+				type: .ed25519,
+				name: comment,
+				privateKey: Curve25519.Signing.PrivateKey().rawRepresentation
+			)
+			saveToKeychain(keypair)
+		}
 		loadKeypairs()
 	}
 	
+	//MARK: keychain
 	func saveToKeychain(_ keypair: Keypair) {
-		if keypair.type == .ed25519 {
+		switch keypair.type {
+		case .ed25519:
 			let curve25519 = try! Curve25519.Signing.PrivateKey(rawRepresentation: keypair.privateKey)
 			let readKey: Curve25519.Signing.PrivateKey?
 			readKey = try! passwordStore.readKey(account: keypair.id.uuidString)
@@ -58,8 +96,10 @@ class KeyManager: ObservableObject {
 				try! passwordStore.deleteKey(account: keypair.id.uuidString)
 			}
 			try! passwordStore.storeKey(curve25519.genericKeyRepresentation, account: keypair.id.uuidString)
-		} else {
-			
+		}
+		if !keypairs.contains(keypair) {
+			keypairs.append(keypair)
+			saveKeypairs()
 		}
 	}
 	
@@ -97,46 +137,7 @@ class KeyManager: ObservableObject {
 		saveKeypairs()
 	}
 	
-	func renameKey(keypair: Keypair, newName: String) {
-		guard !newName.isEmpty else { return }
-		let keyID = keypair.id
-		guard let index = keypairs.firstIndex(where: { $0.id == keyID }) else { return }
-		var keypairWithNewName = keypair
-		keypairWithNewName.name = newName
-		withAnimation { keypairs[index] = keypairWithNewName }
-		saveKeypairs()
-	}
-	
-	func deleteKey(_ keypair: Keypair) {
-		removeFromKeycahin(keypair: keypair)
-		let keyID = keypair.id
-		withAnimation { keypairs.removeAll(where: { $0.id == keyID }) }
-		saveKeypairs()
-	}
-	
-	func importKey(type: KeyType, priv: String, name: String) {
-		if type == .ed25519 {
-			guard let importedKeypair = KeyManager.importSSHPrivkey(priv: priv) else { return }
-			saveToKeychain(importedKeypair)
-			saveKeypairs()
-		} else { fatalError() }
-	}
-	
-	//MARK: generate keys
-	func generateKey(type: KeyType, comment: String) {
-		switch type {
-		case .ed25519:
-			let keypair = Keypair(
-				type: .ed25519,
-				name: comment,
-				privateKey: Curve25519.Signing.PrivateKey().rawRepresentation
-			)
-			saveToKeychain(keypair)
-			saveKeypairs()
-		}
-		loadKeypairs()
-	}
-	
+	//MARK: openssh converters/importers
 	static func importSSHPubkey(pub: String) -> Data {
 		let split = pub.split(separator: " ")
 		guard split.count == 3 else { return Data() }
@@ -150,15 +151,14 @@ class KeyManager: ObservableObject {
 	}
 	
 	static func makeSSHPubkey(_ keypair: Keypair) -> Data {
-		let header = "ssh-ed25519"
 		var keyBlob: Data = Data()
 		//key type bit
-		keyBlob += encode(str: header)
+		keyBlob += encode(str: keypair.type.header)
 		//base64 blob bit
 		keyBlob += encode(data: keypair.publicKey)
 		
 		let b64key = keyBlob.base64EncodedString()
-		let pubkeyline = "\(header) \(b64key) \(keypair.name)\n"
+		let pubkeyline = "\(keypair.type.header) \(b64key) \(keypair.name)\n"
 		return Data(pubkeyline.utf8)
 	}
 	
@@ -254,6 +254,7 @@ class KeyManager: ObservableObject {
 		return content
 	}
 	
+	//MARK: openssh conversion helpers
 	static func encode(str: String) -> Data {
 		guard let utf8 = str.data(using: .utf8) else {
 			return Data()
