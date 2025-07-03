@@ -16,9 +16,11 @@ class KeyManager: ObservableObject {
 	private let passwordStore = GenericPasswordStore()
 	
 	@Published var keypairs: [Keypair] = []
-	
-	@Published var keyTypes: [UUID: KeyType] = [:]
-	@Published var keyNames: [UUID: String] = [:]
+	var keyIDs: [UUID] {
+		keypairs.map { $0.id }
+	}
+//	@Published var keyTypes: [UUID: KeyType] = [:]
+//	@Published var keyNames: [UUID: String] = [:]
 	private let baseTag = "com.neon443.ShhShell.keys".data(using: .utf8)!
 	
 	init() {
@@ -26,50 +28,28 @@ class KeyManager: ObservableObject {
 	}
 	
 	func loadKeypairs() {
-		loadKeyIDs()
-		keypairs = []
-		for id in keyTypes.keys {
-			guard let keypair = getFromKeychain(keyID: id) else { continue }
-			keypairs.append(keypair)
+		userdefaults.synchronize()
+		guard let data = userdefaults.data(forKey: "keypairs") else { return }
+		guard let decoded = try? JSONDecoder().decode([Keypair].self, from: data) else { return }
+		withAnimation { self.keypairs = decoded }
+		for kp in keypairs {
+			guard let KeychainKeypair = getFromKeychain(kp) else { continue }
+			guard let index = keypairs.firstIndex(where: { $0.id == kp.id }) else { continue }
+			withAnimation { keypairs[index] = KeychainKeypair }
 		}
 	}
 	
 	func saveKeypairs() {
+		guard let coded = try? JSONEncoder().encode(keypairs) else { return }
+		userdefaults.set(coded, forKey: "keypairs")
+		userdefaults.synchronize()
 		for keypair in keypairs {
-			keyTypes.updateValue(keypair.type, forKey: keypair.id)
-			keyNames.updateValue(keypair.name, forKey: keypair.id)
 			saveToKeychain(keypair)
 		}
-		saveKeyIDs()
-		loadKeypairs()
-	}
-	
-	func loadKeyIDs() {
-		userdefaults.synchronize()
-		let decoder = JSONDecoder()
-		guard let data = userdefaults.data(forKey: "keyIDs") else { return }
-		guard let decoded = try? decoder.decode([UUID:KeyType].self, from: data) else { return }
-		keyTypes = decoded
-		
-		guard let dataNames = userdefaults.data(forKey: "keyNames") else { return }
-		guard let decodedNames = try? decoder.decode([UUID:String].self, from: dataNames) else { return }
-		keyNames = decodedNames
-	}
-	
-	func saveKeyIDs() {
-		let encoder = JSONEncoder()
-		guard let encoded = try? encoder.encode(keyTypes) else { return }
-		userdefaults.set(encoded, forKey: "keyIDs")
-
-		guard let encodedNames = try? encoder.encode(keyNames) else { return }
-		userdefaults.set(encodedNames, forKey: "keyNames")
-		userdefaults.synchronize()
 		loadKeypairs()
 	}
 	
 	func saveToKeychain(_ keypair: Keypair) {
-		keyTypes.updateValue(keypair.type, forKey: keypair.id)
-		keyNames.updateValue(keypair.name, forKey: keypair.id)
 		if keypair.type == .ed25519 {
 			let curve25519 = try! Curve25519.Signing.PrivateKey(rawRepresentation: keypair.privateKey)
 			let readKey: Curve25519.Signing.PrivateKey?
@@ -83,16 +63,14 @@ class KeyManager: ObservableObject {
 		}
 	}
 	
-	func getFromKeychain(keyID: UUID) -> Keypair? {
-		guard let keyType = keyTypes[keyID] else { return nil }
-		guard let keyName = keyNames[keyID] else { return nil }
-		if keyType == .ed25519 {
+	func getFromKeychain(_ keypair: Keypair) -> Keypair? {
+		if keypair.type == .ed25519 {
 			var key: Curve25519.Signing.PrivateKey?
-			key = try? passwordStore.readKey(account: keyID.uuidString)
+			key = try? passwordStore.readKey(account: keypair.id.uuidString)
 			guard let key else { return nil }
-			return Keypair(id: keyID, type: keyType, name: keyName, privateKey: key.rawRepresentation)
+			return Keypair(id: keypair.id, type: keypair.type, name: keypair.name, privateKey: key.rawRepresentation)
 		} else {
-			let tag = baseTag+keyID.uuidString.data(using: .utf8)!
+			let tag = baseTag+keypair.id.uuidString.data(using: .utf8)!
 			let getQuery: [String: Any] = [kSecClass as String: kSecClassKey,
 										   kSecAttrApplicationTag as String: tag,
 										   kSecAttrKeyType as String: kSecAttrKeyTypeEC,
@@ -101,8 +79,8 @@ class KeyManager: ObservableObject {
 			let status = SecItemCopyMatching(getQuery as CFDictionary, &item)
 			guard status == errSecSuccess else { fatalError() }
 			return Keypair(
-				type: keyType,
-				name: keyName,
+				type: keypair.type,
+				name: keypair.name,
 				privateKey: item as! Data
 			)
 		}
@@ -116,9 +94,7 @@ class KeyManager: ObservableObject {
 				fatalError()
 			}
 		}
-		keyNames.removeValue(forKey: keypair.id)
-		keyTypes.removeValue(forKey: keypair.id)
-		saveKeyIDs()
+		saveKeypairs()
 	}
 	
 	func renameKey(keypair: Keypair, newName: String) {
@@ -276,10 +252,6 @@ class KeyManager: ObservableObject {
 		content += footer.data(using: .utf8)!
 		
 		return content
-	}
-	
-	func getPubkey(_ privateKey: SecKey) -> SecKey? {
-		return SecKeyCopyPublicKey(privateKey)
 	}
 	
 	static func encode(str: String) -> Data {

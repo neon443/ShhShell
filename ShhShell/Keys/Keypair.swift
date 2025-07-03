@@ -26,13 +26,23 @@ struct Keypair: KeypairProtocol {
 	var name: String = ""
 	var publicKey: Data {
 		if privateKey.isEmpty {
-			return Data()
+			print("not a valid ed25519 key")
+			fatalError()
 		} else {
 			return (try? Curve25519.Signing.PrivateKey(rawRepresentation: privateKey).publicKey.rawRepresentation) ?? Data()
 		}
 	}
 	var privateKey: Data
 	var passphrase: String = ""
+	
+	enum CodingKeys: String, CodingKey {
+		case id = "id"
+		case type = "type"
+		case name = "name"
+		
+//		case privateKey = "privateKey"
+//		case passphrase = "passphrase"
+	}
 	
 	var label: String {
 		if name.isEmpty {
@@ -80,6 +90,17 @@ struct Keypair: KeypairProtocol {
 		self.name = name
 		self.privateKey = privateKey
 		self.passphrase = passphrase
+	}
+	
+	init(from decoder: any Decoder) throws {
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		self.id = try container.decode(UUID.self, forKey: .id)
+		self.type = try container.decode(KeyType.self, forKey: .type)
+		self.name = try container.decode(String.self, forKey: .name)
+//		self.privateKey = try container.decode(Data.self, forKey: .privateKey)
+//		self.passphrase = try container.decode(String.self, forKey: .passphrase)
+		self.privateKey = Data()
+		self.passphrase = ""
 	}
 	
 	static func ==(lhs: Keypair, rhs: Keypair) -> Bool {
