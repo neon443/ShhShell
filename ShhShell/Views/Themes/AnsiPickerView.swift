@@ -13,10 +13,10 @@ struct AnsiPickerView: View {
 	var body: some View {
 		GeometryReader { geo in
 			VStack(spacing: 0) {
-				ForEach(1...2, id: \.self) { row in
+				ForEach(0...1, id: \.self) { row in
 					HStack(spacing: 0) {
 						ForEach(1...8, id: \.self) { col in
-							let index = (row * col)-1
+							let index = (col+(row*8))-1
 							var isSelected: Bool { hostsManager.selectedAnsi == index }
 							ZStack {
 								Rectangle()
@@ -37,9 +37,8 @@ struct AnsiPickerView: View {
 					}
 				}
 			}
-			.clipShape(RoundedRectangle(cornerRadius: 15))
-			.frame(width: 400, height: 100)
 		}
+		.clipShape(RoundedRectangle(cornerRadius: 15))
 	}
 }
 

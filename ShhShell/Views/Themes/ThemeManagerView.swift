@@ -34,11 +34,23 @@ struct ThemeManagerView: View {
 				.ignoresSafeArea(.all)
 			GeometryReader { geo in
 				VStack {
-					AnsiPickerView(hostsManager: hostsManager)
-					
 					let columns: Int = max(1, Int((geo.size.width - 2*spacing) / (minColWidth + spacing)))
 					let layout = Array(repeating: grid, count: columns)
 					ScrollView {
+						HStack {
+							Text("Accent Color")
+								.padding(.top)
+								.padding(.horizontal)
+								.font(.headline)
+							Spacer()
+						}
+						HStack {
+							AnsiPickerView(hostsManager: hostsManager)
+								.frame(width: 400, height: 100)
+							Spacer()
+						}
+						.padding(.horizontal)
+						
 						if hostsManager.themes.isEmpty {
 							VStack(alignment: .leading) {
 								Image(systemName: "paintpalette")
