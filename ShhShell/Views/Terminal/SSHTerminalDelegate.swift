@@ -19,38 +19,43 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 		self.handler = handler
 		self.hostsManager = hostsManager
 		
+		print(getTerminal().backgroundColor.colorCodable)
+		print(getTerminal().foregroundColor.colorCodable)
+		
 		applySelectedTheme()
 		
-		DispatchQueue.main.async {
-			Task {
-				guard let handler = self.handler else { return }
-				while handler.connected {
-					if let read = handler.readFromChannel() {
-						await MainActor.run {
-							self.feed(text: read)
-						}
-					} else {
-						try? await Task.sleep(nanoseconds: 10_000_000) //10ms
-					}
-				}
-				handler.disconnect()
-			}
+		Task {
+			await startFeedLoop()
 		}
 	}
 	
-	func restoreScrollback() {
+	func restoreScrollback() async {
 		guard let scrollback = handler?.scrollback else { return }
 		guard !scrollback.isEmpty else { return }
 		
-		DispatchQueue.main.asyncAfter(deadline: .now()+0.01) {
+		try? await Task.sleep(nanoseconds: 10_000_000)
+		await MainActor.run {
 			self.getTerminal().resetToInitialState()
 			for line in scrollback {
-				print("scrollbak \(line)")
 				self.feed(text: line)
 			}
 			self.setNeedsLayout()
 			self.setNeedsDisplay()
 		}
+	}
+	
+	func startFeedLoop() async {
+		guard let handler else { return }
+		while handler.connected {
+			if let read = handler.readFromChannel() {
+				await MainActor.run {
+					self.feed(text: read)
+				}
+			} else {
+				try? await Task.sleep(nanoseconds: 10_000_000) //10ms
+			}
+		}
+		handler.disconnect()
 	}
 	
 	func applySelectedTheme() {
