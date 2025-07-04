@@ -18,6 +18,8 @@ struct ShellView: View {
     var body: some View {
 		NavigationStack {
 			ZStack {
+				hostsManager.selectedTheme.background.suiColor
+					.ignoresSafeArea(.all)
 				TerminalController(handler: handler, hostsManager: hostsManager)
 					.onAppear {
 						if let sessionID = handler.sessionID {

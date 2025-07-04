@@ -19,8 +19,8 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 		self.handler = handler
 		self.hostsManager = hostsManager
 		
-		print(getTerminal().backgroundColor)
-		print(getTerminal().foregroundColor)
+		print(getTerminal().backgroundColor.colorCodable)
+		print(getTerminal().foregroundColor.colorCodable)
 		
 		applySelectedTheme()
 		

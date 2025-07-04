@@ -49,6 +49,7 @@
 		A96C6B022E0C49E800F377FE /* CenteredLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96C6B012E0C49E800F377FE /* CenteredLabel.swift */; };
 		A96C90A12E12B87A00724253 /* TextBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96C90A02E12B87900724253 /* TextBox.swift */; };
 		A96C90A32E12D53B00724253 /* KeyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96C90A22E12D53900724253 /* KeyType.swift */; };
+		A9835C3C2E17CCA500969508 /* TrafficLights.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9835C3B2E17CCA500969508 /* TrafficLights.swift */; };
 		A98554552E05535F009051BD /* KeyManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554542E05535F009051BD /* KeyManagerView.swift */; };
 		A98554592E0553AA009051BD /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554582E0553AA009051BD /* KeyManager.swift */; };
 		A985545D2E055D4D009051BD /* ConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A985545C2E055D4D009051BD /* ConnectionView.swift */; };
@@ -154,6 +155,7 @@
 		A96C6B012E0C49E800F377FE /* CenteredLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenteredLabel.swift; sourceTree = "<group>"; };
 		A96C90A02E12B87900724253 /* TextBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBox.swift; sourceTree = "<group>"; };
 		A96C90A22E12D53900724253 /* KeyType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyType.swift; sourceTree = "<group>"; };
+		A9835C3B2E17CCA500969508 /* TrafficLights.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrafficLights.swift; sourceTree = "<group>"; };
 		A98554542E05535F009051BD /* KeyManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyManagerView.swift; sourceTree = "<group>"; };
 		A98554582E0553AA009051BD /* KeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
 		A985545C2E055D4D009051BD /* ConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionView.swift; sourceTree = "<group>"; };
@@ -355,6 +357,7 @@
 				A93143C52DF61FE300FCD5DB /* ViewModifiers.swift */,
 				A96C90A02E12B87900724253 /* TextBox.swift */,
 				A9DA97722E0D40C100142DDC /* HostSymbolPreview.swift */,
+				A9835C3B2E17CCA500969508 /* TrafficLights.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -604,6 +607,7 @@
 				A9D819292E0E904200442D38 /* Theme.swift in Sources */,
 				A9D8192D2E0E9EB500442D38 /* ThemeManagerView.swift in Sources */,
 				A9FD375D2E143D7E005319A8 /* KeyStoreError.swift in Sources */,
+				A9835C3C2E17CCA500969508 /* TrafficLights.swift in Sources */,
 				A93143C62DF61FE300FCD5DB /* ViewModifiers.swift in Sources */,
 				A98554632E0587DF009051BD /* HostsView.swift in Sources */,
 				A96C6A8A2E0C0B1100F377FE /* SSHState.swift in Sources */,
