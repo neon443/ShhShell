@@ -34,35 +34,17 @@ struct ShellTabView: View {
 								session.handler.disconnect()
 							}
 						} label: {
-							Image(systemName: "xmark.circle.fill")
-								.resizable().scaledToFit()
-								.symbolRenderingMode(.palette)
-								.foregroundStyle(
-									ColorCodable(red: 0.5411764706, green: 0, blue: 0).stColor.suiColor,
-									.red
-								)
+							TrafficLightRed()
 						}
 						Button() {
 							dismiss()
 						} label: {
-							Image(systemName: "minus.circle.fill")
-								.resizable().scaledToFit()
-								.symbolRenderingMode(.palette)
-								.foregroundStyle(
-									ColorCodable(red: 0.5764705882, green: 0.5333333333, blue: 0.2784313725).stColor.suiColor,
-									.yellow
-								)
+							TrafficLightYellow()
 						}
 						Button() {
 							print("get out of fullscreen idk??")
 						} label: {
-							Image(systemName: "minus.circle.fill")
-								.resizable().scaledToFit()
-								.symbolRenderingMode(.palette)
-								.foregroundStyle(
-									ColorCodable(red: 0.5764705882, green: 0.5333333333, blue: 0.2784313725).stColor.suiColor,
-									.yellow
-								)
+							TrafficLightGreen()
 						}
 						Spacer()
 						Text(container.sessions[selectedID ?? UUID()]?.handler.title ?? "title")

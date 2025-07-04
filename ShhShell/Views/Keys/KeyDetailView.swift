@@ -110,7 +110,7 @@ struct KeyDetailView: View {
 					VStack(alignment: .leading) {
 						Text("Private key")
 							.bold()
-							.frame(maxWidth: .infinity)
+							.multilineTextAlignment(.leading)
 						ZStack(alignment: .center) {
 							Text(keypair.openSshPrivkey.trimmingCharacters(in: .whitespacesAndNewlines))
 								.blur(radius: reveal ? 0 : 5)
