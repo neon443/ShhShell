@@ -37,7 +37,6 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 		await MainActor.run {
 			self.getTerminal().resetToInitialState()
 			for line in scrollback {
-				print("scrollbak \(line)")
 				self.feed(text: line)
 			}
 			self.setNeedsLayout()
@@ -50,7 +49,6 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 		while handler.connected {
 			if let read = handler.readFromChannel() {
 				await MainActor.run {
-					print("live \(read)F")
 					self.feed(text: read)
 				}
 			} else {
