@@ -185,8 +185,8 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	}
 	
 	func setTitle(_ newTitle: String) {
-		DispatchQueue.main.async {
-			self.title = newTitle
+		Task { @MainActor in
+			withAnimation { self.title = newTitle }
 		}
 	}
 	
