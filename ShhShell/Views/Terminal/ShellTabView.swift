@@ -16,7 +16,25 @@ struct ShellTabView: View {
 	
 	@Environment(\.dismiss) var dismiss
 	
-	var foreground: Color { hostsManager.selectedTheme.foreground.suiColor }
+	var foreground: Color {
+		let selectedTheme = hostsManager.selectedTheme
+		let foreground = selectedTheme.foreground
+		let background = selectedTheme.background
+		
+		if selectedTheme.ansi[hostsManager.selectedAnsi].luminance > 0.5 {
+			if foreground.luminance > 0.5 {
+				return background.suiColor
+			} else {
+				return foreground.suiColor
+			}
+		} else {
+			if foreground.luminance > 0.5 {
+				return foreground.suiColor
+			} else {
+				return background.suiColor
+			}
+		}
+	}
 	var background: Color { hostsManager.selectedTheme.background.suiColor }
 	
 	var body: some View {
@@ -32,6 +50,7 @@ struct ShellTabView: View {
 							for session in container.sessions.values {
 								session.handler.disconnect()
 							}
+							dismiss()
 						} label: {
 							TrafficLightRed()
 						}
@@ -41,40 +60,51 @@ struct ShellTabView: View {
 							TrafficLightYellow()
 						}
 						Spacer()
-						Text(container.sessions[selectedID ?? UUID()]?.handler.title ?? "title")
-							.bold()
-							.monospaced()
+						VStack {
+							Text(container.sessions[selectedID ?? UUID()]?.handler.title ?? handler?.title ?? "")
+								.bold()
+								.foregroundStyle(foreground)
+								.monospaced()
+								.contentTransition(.numericText())
+							if container.sessionIDs.count == 1 {
+								Text(container.sessions[selectedID ?? UUID()]?.handler.host.description ?? handler?.host.description ?? "")
+									.bold()
+									.foregroundStyle(foreground)
+									.monospaced()
+									.font(.caption2)
+							}
+						}
 						Spacer()
 					}
 					.padding(.horizontal, 10)
 					.padding(.bottom, 10)
-					.background(Color.accentColor, ignoresSafeAreaEdges: .all)
+					.background(hostsManager.tint, ignoresSafeAreaEdges: .all)
 					.frame(height: 30)
 					
-					HStack(alignment: .center, spacing: 0) {
+					if container.sessionIDs.count > 1 {
 						ScrollView(.horizontal, showsIndicators: false) {
 							HStack(spacing: 0) {
 								ForEach(container.sessionIDs, id: \.self) { id in
 									let selected: Bool = selectedID == id
 									ZStack {
 										Rectangle()
-											.fill(selected ? .accentColor : background)
+											.fill(selected ? hostsManager.tint : background)
 										HStack {
 											Spacer()
 											VStack {
 												if !selected {
 													Text(container.sessions[id]!.handler.title)
 														.monospaced()
-														.foregroundStyle(foreground)
+														.foregroundStyle(selected ? foreground : hostsManager.tint)
 														.opacity(0.7)
 														.font(.callout)
 												}
 												Text(container.sessions[id]!.handler.host.description)
-													.foregroundStyle(foreground)
+													.foregroundStyle(selected ? foreground : hostsManager.tint)
 													.opacity(selected ? 1 : 0.7)
 													.monospaced()
 													.bold(selected)
-													.font(.caption)
+													.font(.caption2)
 											}
 											Spacer()
 										}
@@ -86,14 +116,14 @@ struct ShellTabView: View {
 								}
 							}
 						}
-					}
-					.frame(height: 30)
-					.onAppear {
-						if selectedID == nil {
-							if let handler {
-								selectedID = handler.sessionID
-							} else {
-								dismiss()
+						.frame(height: 30)
+						.onAppear {
+							if selectedID == nil {
+								if let handler {
+									selectedID = handler.sessionID
+								} else {
+									dismiss()
+								}
 							}
 						}
 					}
@@ -105,6 +135,7 @@ struct ShellTabView: View {
 							handler: session.handler,
 							hostsManager: hostsManager
 						)
+						.border(.blue)
 						.onDisappear {
 							if !checkShell(session.handler.state) {
 								if let lastSession = container.sessionIDs.last {
@@ -119,6 +150,12 @@ struct ShellTabView: View {
 					} else {
 						if let handler {
 							ShellView(handler: handler, hostsManager: hostsManager)
+								.onAppear {
+									if selectedID == nil {
+										selectedID = handler.sessionID
+									}
+								}
+								.border(.red)
 						} else {
 							Text("No SSH Handler")
 						}

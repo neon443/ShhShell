@@ -17,6 +17,10 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	@Published var selectedTheme: Theme = Theme.defaultTheme
 	@Published var selectedAnsi: Int = 1
 	
+	var tint: SwiftUI.Color {
+		selectedTheme.ansi[selectedAnsi].suiColor
+	}
+	
 	init() {
 		loadHosts()
 		loadThemes()
