@@ -135,7 +135,6 @@ struct ShellTabView: View {
 							handler: session.handler,
 							hostsManager: hostsManager
 						)
-						.border(.blue)
 						.onDisappear {
 							if !checkShell(session.handler.state) {
 								if let lastSession = container.sessionIDs.last {
@@ -148,17 +147,12 @@ struct ShellTabView: View {
 						.id(selectedID)
 						.transition(.opacity)
 					} else {
-						if let handler {
-							ShellView(handler: handler, hostsManager: hostsManager)
-								.onAppear {
-									if selectedID == nil {
-										selectedID = handler.sessionID
-									}
+						Text("No Session")
+							.onAppear {
+								if selectedID == nil {
+									selectedID = handler?.sessionID
 								}
-								.border(.red)
-						} else {
-							Text("No SSH Handler")
-						}
+							}
 					}
 				}
 			}
