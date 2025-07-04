@@ -147,19 +147,12 @@ struct ShellTabView: View {
 						.id(selectedID)
 						.transition(.opacity)
 					} else {
-						if let handler {
-							ShellView(
-								handler: handler,
-								hostsManager: hostsManager
-							)
+						Text("No Session")
 							.onAppear {
 								if selectedID == nil {
-									selectedID = handler.sessionID
+									selectedID = handler?.sessionID
 								}
 							}
-						} else {
-							Text("No Session")
-						}
 					}
 				}
 			}
