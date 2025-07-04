@@ -16,16 +16,10 @@ struct TrafficLightRed: View {
 	).stColor.suiColor
 	
 	var body: some View {
-		ZStack {
-			Image(systemName: "circle.fill")
-				.resizable().scaledToFit()
-				.foregroundStyle(background)
-			Image(systemName: "xmark")
-				.resizable().scaledToFit()
-				.bold()
-				.scaleEffect(0.6)
-				.foregroundStyle(foreground)
-		}
+		Image(systemName: "xmark.circle.fill")
+			.resizable().scaledToFit()
+			.symbolRenderingMode(.palette)
+			.foregroundStyle(foreground, background)
 	}
 }
 
@@ -38,16 +32,10 @@ struct TrafficLightYellow: View {
 	).stColor.suiColor
 	
 	var body: some View {
-		ZStack(alignment: .center) {
-			Image(systemName: "circle.fill")
-				.resizable().scaledToFit()
-				.foregroundStyle(background)
-			Image(systemName: "minus")
-				.resizable().scaledToFit()
-				.bold()
-				.scaleEffect(0.7)
-				.foregroundStyle(foreground)
-		}
+		Image(systemName: "minus.circle.fill")
+			.resizable().scaledToFit()
+			.symbolRenderingMode(.palette)
+			.foregroundStyle(foreground, background)
 	}
 }
 

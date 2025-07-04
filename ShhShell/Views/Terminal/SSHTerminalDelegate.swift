@@ -30,6 +30,7 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 				while handler.connected {
 					if let read = handler.readFromChannel() {
 						await MainActor.run {
+							print(read)
 							self.feed(text: read)
 						}
 					} else {
@@ -48,6 +49,7 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 		DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
 			self.getTerminal().resetToInitialState()
 			for line in scrollback {
+				print(line)
 				self.feed(text: line)
 			}
 			self.setNeedsLayout()

@@ -25,7 +25,7 @@ struct ShellTabView: View {
 			background
 				.ignoresSafeArea(.all)
 			GeometryReader { geo in
-				VStack {
+				VStack(spacing: 0) {
 					let oneTabWidth = max(60, (geo.size.width)/CGFloat(container.sessionIDs.count))
 					
 					HStack(alignment: .center, spacing: 10) {
@@ -41,17 +41,16 @@ struct ShellTabView: View {
 						} label: {
 							TrafficLightYellow()
 						}
-						Button() {
-							print("get out of fullscreen idk??")
-						} label: {
-							TrafficLightGreen()
-						}
 						Spacer()
 						Text(container.sessions[selectedID ?? UUID()]?.handler.title ?? "title")
+							.bold()
+							.monospaced()
 						Spacer()
 					}
+					.padding(.horizontal, 10)
+					.padding(.bottom, 10)
+					.background(ansi7, ignoresSafeAreaEdges: .all)
 					.frame(height: 30)
-					.padding(.horizontal)
 					
 					HStack(alignment: .center, spacing: 0) {
 						ScrollView(.horizontal, showsIndicators: false) {
@@ -64,14 +63,18 @@ struct ShellTabView: View {
 										HStack {
 											Spacer()
 											VStack {
-												Text(container.sessions[id]!.handler.title)
-													.monospaced()
-													.foregroundStyle(foreground)
-													.bold(selected)
+												if !selected {
+													Text(container.sessions[id]!.handler.title)
+														.monospaced()
+														.foregroundStyle(foreground)
+														.opacity(0.7)
+														.font(.caption)
+												}
 												Text(container.sessions[id]!.handler.host.description)
-													.foregroundStyle(foreground.opacity(0.7))
+													.foregroundStyle(foreground)
+													.opacity(selected ? 1 : 0.7)
 													.monospaced()
-													.font(.caption)
+													.bold(selected)
 											}
 											Spacer()
 										}
