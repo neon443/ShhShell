@@ -52,8 +52,6 @@ struct TrafficLightYellow: View {
 }
 
 struct TrafficLightGreen: View {
-	@State var enabled: Bool = true
-	
 	var body: some View {
 		let background: Color = .green
 		let foreground: Color = ColorCodable(
@@ -66,46 +64,16 @@ struct TrafficLightGreen: View {
 				.resizable().scaledToFit()
 				.symbolRenderingMode(.palette)
 				.foregroundStyle(background)
-			if !enabled {
-				RoundedRectangle(cornerRadius: 5)
-					.foregroundStyle(foreground)
-					.scaleEffect(0.6)
-					.aspectRatio(1, contentMode: .fit)
-					.clipShape(RoundedRectangle(cornerRadius: 5))
-				Rectangle()
-					.foregroundStyle(background)
-					.scaleEffect(0.8)
-					.aspectRatio(0.2, contentMode: .fit)
-					.rotationEffect(.degrees(45))
-			} else {
-				ZStack(alignment: .center) {
-					Group {
-						Rectangle()
-							.foregroundStyle(foreground)
-							.scaleEffect(0.6)
-							.rotationEffect(.degrees(45))
-							.aspectRatio(1, contentMode: .fit)
-							.clipShape(RoundedRectangle(cornerRadius: 5))
-					}
-					VStack(spacing: 0) {
-						VStack(alignment: .trailing) {
-							Rectangle()
-								.scaleEffect(0.7, anchor: .bottomTrailing)
-								.aspectRatio(1, contentMode: .fit)
-						}
-						.aspectRatio(2, contentMode: .fit)
-						.border(.red)
-						VStack(alignment: .leading) {
-							Rectangle()
-								.scaleEffect(0.7, anchor: .topLeading)
-								.aspectRatio(1, contentMode: .fit)
-						}
-						.aspectRatio(2, contentMode: .fit)
-						.border(.red)
-					}
-					.border(.blue)
-				}
-			}
+			RoundedRectangle(cornerRadius: 5)
+				.foregroundStyle(foreground)
+				.scaleEffect(0.6)
+				.aspectRatio(1, contentMode: .fit)
+				.clipShape(RoundedRectangle(cornerRadius: 5))
+			Rectangle()
+				.foregroundStyle(background)
+				.scaleEffect(0.8)
+				.aspectRatio(0.2, contentMode: .fit)
+				.rotationEffect(.degrees(45))
 		}
 	}
 }
