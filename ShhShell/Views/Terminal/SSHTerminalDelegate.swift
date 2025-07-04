@@ -25,7 +25,6 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 		applySelectedTheme()
 		
 		Task {
-//			await restoreScrollback()
 			await startFeedLoop()
 		}
 	}
@@ -34,6 +33,7 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 		guard let scrollback = handler?.scrollback else { return }
 		guard !scrollback.isEmpty else { return }
 		
+		try? await Task.sleep(nanoseconds: 10_000_000)
 		await MainActor.run {
 			self.getTerminal().resetToInitialState()
 			for line in scrollback {
