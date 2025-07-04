@@ -17,7 +17,6 @@ struct ShellTabView: View {
 	@Environment(\.dismiss) var dismiss
 	
 	var foreground: Color { hostsManager.selectedTheme.foreground.suiColor }
-	var ansi7: Color { hostsManager.selectedTheme.ansi[6].suiColor.opacity(0.7) }
 	var background: Color { hostsManager.selectedTheme.background.suiColor }
 	
 	var body: some View {
@@ -49,7 +48,7 @@ struct ShellTabView: View {
 					}
 					.padding(.horizontal, 10)
 					.padding(.bottom, 10)
-					.background(ansi7, ignoresSafeAreaEdges: .all)
+					.background(Color.accentColor, ignoresSafeAreaEdges: .all)
 					.frame(height: 30)
 					
 					HStack(alignment: .center, spacing: 0) {
@@ -59,7 +58,7 @@ struct ShellTabView: View {
 									let selected: Bool = selectedID == id
 									ZStack {
 										Rectangle()
-											.fill(selected ? ansi7 : background)
+											.fill(selected ? .accentColor : background)
 										HStack {
 											Spacer()
 											VStack {
@@ -68,13 +67,14 @@ struct ShellTabView: View {
 														.monospaced()
 														.foregroundStyle(foreground)
 														.opacity(0.7)
-														.font(.caption)
+														.font(.callout)
 												}
 												Text(container.sessions[id]!.handler.host.description)
 													.foregroundStyle(foreground)
 													.opacity(selected ? 1 : 0.7)
 													.monospaced()
 													.bold(selected)
+													.font(.caption)
 											}
 											Spacer()
 										}
