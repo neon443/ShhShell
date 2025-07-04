@@ -147,22 +147,19 @@ struct ShellTabView: View {
 						.id(selectedID)
 						.transition(.opacity)
 					} else {
-						Text("No Session")
+						if let handler {
+							ShellView(
+								handler: handler,
+								hostsManager: hostsManager
+							)
 							.onAppear {
 								if selectedID == nil {
-									guard let handler,
-										  let handlerID = handler.sessionID else { return }
-									selectedID = handlerID
-									container.sessions[handlerID] = TerminalContainer(
-										handler: handler,
-										terminalView: SSHTerminalDelegate(
-											frame: CGRect(origin: CGPoint(x: 0, y: 0), size: .zero),
-											handler: handler,
-											hostsManager: hostsManager
-										)
-									)
+									selectedID = handler.sessionID
 								}
 							}
+						} else {
+							Text("No Session")
+						}
 					}
 				}
 			}

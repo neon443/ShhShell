@@ -15,19 +15,12 @@ struct ShellView: View {
 	
 	@Environment(\.dismiss) var dismiss
 	
-    var body: some View {
+	var body: some View {
 		NavigationStack {
 			ZStack {
 				hostsManager.selectedTheme.background.suiColor
 					.ignoresSafeArea(.all)
 				TerminalController(handler: handler, hostsManager: hostsManager)
-//					.onAppear {
-//						if let sessionID = handler.sessionID {
-//							Task {
-//								await container.sessions[sessionID]?.terminalView.restoreScrollback()
-//							}
-//						}
-//					}
 				
 				Group {
 					Color.gray.opacity(0.2)
@@ -42,7 +35,7 @@ struct ShellView: View {
 				handler.applySelectedTheme()
 			}
 		}
-    }
+	}
 }
 
 #Preview {

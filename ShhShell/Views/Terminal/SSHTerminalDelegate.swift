@@ -88,7 +88,7 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 	required init?(coder: NSCoder) {
 		fatalError("unimplemented")
 	}
-
+	
 	nonisolated public func scrolled(source: TerminalView, position: Double) {}
 	
 	nonisolated public func setTerminalTitle(source: TerminalView, title: String) {

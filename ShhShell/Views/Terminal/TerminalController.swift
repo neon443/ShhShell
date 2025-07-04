@@ -31,14 +31,14 @@ struct TerminalController: UIViewRepresentable {
 		tv.translatesAutoresizingMaskIntoConstraints = false
 		tv.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 		
-//		if let sessionID = handler.sessionID {
-//			Task { @MainActor in
-//				container.sessions[sessionID] = TerminalContainer(
-//					handler: handler,
-//					terminalView: tv
-//				)
-//			}
-//		}
+		if let sessionID = handler.sessionID {
+			Task { @MainActor in
+				container.sessions[sessionID] = TerminalContainer(
+					handler: handler,
+					terminalView: tv
+				)
+			}
+		}
 		
 		return tv
 	}
