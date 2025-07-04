@@ -21,6 +21,11 @@ struct ShellView: View {
 				hostsManager.selectedTheme.background.suiColor
 					.ignoresSafeArea(.all)
 				TerminalController(handler: handler, hostsManager: hostsManager)
+					.onAppear {
+						if let sessionID = handler.sessionID {
+							container.sessions[sessionID]?.terminalView.restoreScrollback()
+						}
+					}
 				
 				Group {
 					Color.gray.opacity(0.2)
