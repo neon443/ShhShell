@@ -60,6 +60,11 @@ struct ShellTabView: View {
 								withAnimation { selectedID = id }
 							}
 						}
+						Button() {
+							dismiss()
+						} label: {
+							Image(systemName: "arrow.down.right.and.arrow.up.left")
+						}
 					}
 				}
 				.frame(height: 30)
