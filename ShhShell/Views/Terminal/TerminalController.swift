@@ -19,6 +19,9 @@ struct TerminalController: UIViewRepresentable {
 	func makeUIView(context: Context) -> TerminalView {
 		if let sessionID = handler.sessionID {
 			if let existing = container.sessions[sessionID] {
+				Task {
+					await existing.terminalView.restoreScrollback()
+				}
 				return existing.terminalView
 			}
 		}

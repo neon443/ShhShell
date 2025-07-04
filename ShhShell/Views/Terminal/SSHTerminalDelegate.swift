@@ -25,7 +25,7 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 		applySelectedTheme()
 		
 		Task {
-			await restoreScrollback()
+//			await restoreScrollback()
 			await startFeedLoop()
 		}
 	}
