@@ -23,10 +23,6 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 		print(getTerminal().foregroundColor.colorCodable)
 		
 		applySelectedTheme()
-		
-		Task {
-			await startFeedLoop()
-		}
 	}
 	
 	func restoreScrollback() async {
@@ -72,6 +68,16 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 		selectedTextBackgroundColor = theme.selection.uiColor
 		
 		// TODO: selectedtext and cursor colors
+	}
+	
+	override func didMoveToWindow() {
+		super.didMoveToWindow()
+		if window != nil {
+			Task {
+				await restoreScrollback()
+				await startFeedLoop()
+			}
+		}
 	}
 	
 	public override init(frame: CGRect) {
