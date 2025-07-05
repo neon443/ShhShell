@@ -10,6 +10,8 @@ import SwiftUI
 struct AnsiPickerView: View {
 	@ObservedObject var hostsManager: HostsManager
 	
+	@Environment(\.colorScheme) var colorScheme
+	
 	var body: some View {
 		ZStack(alignment: .center) {
 			RoundedRectangle(cornerRadius: 15)
@@ -26,6 +28,10 @@ struct AnsiPickerView: View {
 								RoundedRectangle(cornerRadius: isSelected ? 5 : 0)
 									.fill(hostsManager.selectedTheme.ansi[index].suiColor)
 									.padding(isSelected ? 5 : 0)
+									.shadow(
+										color: colorScheme == .dark ? .white : .black,
+										radius: isSelected ? 2 : 0
+									)
 									.onTapGesture {
 										hostsManager.selectAnsi(index)
 									}

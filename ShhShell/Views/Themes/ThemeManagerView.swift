@@ -53,7 +53,6 @@ struct ThemeManagerView: View {
 						
 						HStack {
 							Text("Your Themes")
-								.padding(.top)
 								.padding(.horizontal)
 								.font(.headline)
 							Spacer()
@@ -94,6 +93,7 @@ struct ThemeManagerView: View {
 							}
 						}
 						.padding(.horizontal)
+						.padding(.bottom)
 						.animation(.default, value: hostsManager.themes)
 					}
 					.navigationTitle("Themes")
