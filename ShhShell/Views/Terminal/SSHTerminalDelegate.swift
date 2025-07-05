@@ -19,14 +19,7 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 		self.handler = handler
 		self.hostsManager = hostsManager
 		
-		print(getTerminal().backgroundColor.colorCodable)
-		print(getTerminal().foregroundColor.colorCodable)
-		
 		applySelectedTheme()
-		Task {
-			await restoreScrollback()
-//			await startFeedLoop()
-		}
 	}
 	
 	func restoreScrollback() {
@@ -46,7 +39,7 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 	func startFeedLoop() {
 		Task {
 			guard let handler else { return }
-			while handler.connected {
+			while checkShell(handler.state) {
 				if let read = handler.readFromChannel() {
 					await MainActor.run {
 						self.feed(text: read)
@@ -55,7 +48,7 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 					try? await Task.sleep(nanoseconds: 10_000_000) //10ms
 				}
 			}
-			handler.disconnect()
+			print("task end?")
 		}
 	}
 	
