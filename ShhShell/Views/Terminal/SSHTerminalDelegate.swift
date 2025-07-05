@@ -23,14 +23,17 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 		print(getTerminal().foregroundColor.colorCodable)
 		
 		applySelectedTheme()
+		Task {
+			await restoreScrollback()
+//			await startFeedLoop()
+		}
 	}
 	
-	func restoreScrollback() async {
+	func restoreScrollback() {
 		guard let scrollback = handler?.scrollback else { return }
 		guard !scrollback.isEmpty else { return }
 		
-		try? await Task.sleep(nanoseconds: 10_000_000)
-		await MainActor.run {
+		DispatchQueue.main.async {
 			self.getTerminal().resetToInitialState()
 			for line in scrollback {
 				self.feed(text: line)
@@ -40,18 +43,20 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 		}
 	}
 	
-	func startFeedLoop() async {
-		guard let handler else { return }
-		while handler.connected {
-			if let read = handler.readFromChannel() {
-				await MainActor.run {
-					self.feed(text: read)
+	func startFeedLoop() {
+		Task {
+			guard let handler else { return }
+			while handler.connected {
+				if let read = handler.readFromChannel() {
+					await MainActor.run {
+						self.feed(text: read)
+					}
+				} else {
+					try? await Task.sleep(nanoseconds: 10_000_000) //10ms
 				}
-			} else {
-				try? await Task.sleep(nanoseconds: 10_000_000) //10ms
 			}
+			handler.disconnect()
 		}
-		handler.disconnect()
 	}
 	
 	func applySelectedTheme() {
@@ -73,10 +78,7 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 	override func didMoveToWindow() {
 		super.didMoveToWindow()
 		if window != nil {
-			Task {
-				await restoreScrollback()
-				await startFeedLoop()
-			}
+			restoreScrollback()
 		}
 	}
 	
