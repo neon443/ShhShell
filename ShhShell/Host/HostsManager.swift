@@ -31,9 +31,12 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	}
 	
 	func loadFonts() {
+		var customFonts: [UIFont] = []
 		for family in UIFont.familyNames.sorted() {
 			let names = UIFont.fontNames(forFamilyName: family)
-			print("family: \(family), name: \(names)")
+			if Fonts.fontNames.contains(names) {
+				print(family)
+			}
 			guard let customFont = UIFont(name: names[0], size: UIFont.systemFontSize) else {
 				fatalError()
 			}

@@ -7,12 +7,16 @@
 
 import Foundation
 
-enum FontFamilies: String, CaseIterable/*, CustomStringConvertible*/ {
-	case mesloLGSNF = "MesloLGS NF"
-	case sfMono = "SF Mono"
-	case cascadiaMono
-	case geistMonoNF
-	case jetbrainsMonoNF
-	case comicSans
-	case comicMono
+enum Fonts: String, CaseIterable/*, CustomStringConvertible*/ {
+	case mesloLGSNF = "MesloLGS-NF-Regular"
+	case sfMono = "SFMono-Regular"
+	case cascadiaMono = "CascadiaMono-Regular"
+	case geistMonoNF = "GeistMonoNFM-Regular"
+	case jetbrainsMonoNF = "JetBrainsMonoNFM-Regular"
+	case comicSans = "ComicSansMS"
+	case comicMono = "ComicMono"
+	
+	static var fontNames: [String] {
+		return Fonts.allCases.map { $0.rawValue }
+	}
 }
