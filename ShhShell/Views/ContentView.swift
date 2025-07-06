@@ -57,6 +57,19 @@ struct ContentView: View {
 				}
 				.scrollContentBackground(.hidden)
 			}
+			.toolbar {
+				ToolbarItem(placement: .confirmationAction) {
+					NavigationLink {
+						ConnectionView(
+							handler: SSHHandler(host: Host.blank, keyManager: keyManager),
+							hostsManager: hostsManager,
+							keyManager: keyManager
+						)
+					} label: {
+						Label("Add", systemImage: "plus")
+					}
+				}
+			}
 		}
 	}
 }

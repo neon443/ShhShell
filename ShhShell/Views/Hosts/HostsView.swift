@@ -53,19 +53,6 @@ struct HostsView: View {
 		}
 		.transition(.opacity)
 		.navigationTitle("ShhShell")
-		.toolbar {
-			ToolbarItem(placement: .confirmationAction) {
-				NavigationLink {
-					ConnectionView(
-						handler: SSHHandler(host: Host.blank, keyManager: keyManager),
-						hostsManager: hostsManager,
-						keyManager: keyManager
-					)
-				} label: {
-					Label("Add", systemImage: "plus")
-				}
-			}
-		}
 	}
 }
 
