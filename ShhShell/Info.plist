@@ -5,12 +5,15 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>MesloLGS NF Regular.ttf</string>
+		<string>MesloLGS NF Italic.ttf</string>
+		<string>MesloLGS NF Bold.ttf</string>
+		<string>MesloLGS NF Bold Italic.ttf</string>
 		<string>SF-Mono-Regular.otf</string>
 		<string>CascadiaMono.ttf</string>
-		<string>GeistMonoNerdFontMono-Regular.otf</string>
 		<string>JetBrainsMonoNerdFontMono-Regular.ttf</string>
-		<string>ComicMono.ttf</string>
-		<string>Comic Sans MS.ttf</string>
+		<string>JetBrainsMonoNerdFontMono-Bold.ttf</string>
+		<string>JetBrainsMonoNerdFontMono-Italic.ttf</string>
+		<string>JetBrainsMonoNerdFontMono-BoldItalic.ttf</string>
 	</array>
 </dict>
 </plist>

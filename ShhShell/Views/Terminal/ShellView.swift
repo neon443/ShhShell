@@ -31,9 +31,6 @@ struct ShellView: View {
 				}
 				.opacity(handler.bell ? 1 : 0)
 			}
-			.onAppear {
-				handler.applySelectedTheme()
-			}
 		}
 	}
 }

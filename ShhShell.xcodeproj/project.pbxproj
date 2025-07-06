@@ -8,14 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		A9083E402DF2226F0042906E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A9083E3F2DF2225A0042906E /* libz.tbd */; };
-		A90936842E1AC31B00856059 /* MesloLGS NF Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A90936832E1AC31B00856059 /* MesloLGS NF Regular.ttf */; };
 		A90936882E1AC51100856059 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90936872E1AC51100856059 /* Fonts.swift */; };
-		A909368A2E1AC5CA00856059 /* SF-Mono-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = A90936892E1AC5CA00856059 /* SF-Mono-Regular.otf */; };
-		A909368C2E1AC64400856059 /* Comic Sans MS.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A909368B2E1AC64400856059 /* Comic Sans MS.ttf */; };
-		A909368E2E1AC8A500856059 /* CascadiaMono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A909368D2E1AC8A500856059 /* CascadiaMono.ttf */; };
-		A90936902E1AC96100856059 /* GeistMonoNerdFontMono-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = A909368F2E1AC96100856059 /* GeistMonoNerdFontMono-Regular.otf */; };
-		A90936922E1AC98E00856059 /* ComicMono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A90936912E1AC98E00856059 /* ComicMono.ttf */; };
-		A90936942E1AC9AF00856059 /* JetBrainsMonoNerdFontMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A90936932E1AC9AF00856059 /* JetBrainsMonoNerdFontMono-Regular.ttf */; };
+		A90936A72E1AE9AB00856059 /* CascadiaMono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A90936952E1AE9AB00856059 /* CascadiaMono.ttf */; };
+		A90936A92E1AE9AB00856059 /* SF-Mono-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = A90936A42E1AE9AB00856059 /* SF-Mono-Regular.otf */; };
+		A90936AA2E1AE9AB00856059 /* SF-Mono-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = A90936A52E1AE9AB00856059 /* SF-Mono-RegularItalic.otf */; };
+		A90936AB2E1AE9AB00856059 /* MesloLGS NF Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A90936A22E1AE9AB00856059 /* MesloLGS NF Regular.ttf */; };
+		A90936AC2E1AE9AB00856059 /* MesloLGS NF Bold Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A90936A02E1AE9AB00856059 /* MesloLGS NF Bold Italic.ttf */; };
+		A90936AE2E1AE9AB00856059 /* JetBrainsMonoNerdFontMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A909369D2E1AE9AB00856059 /* JetBrainsMonoNerdFontMono-Regular.ttf */; };
+		A90936AF2E1AE9AB00856059 /* MesloLGS NF Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A909369F2E1AE9AB00856059 /* MesloLGS NF Bold.ttf */; };
+		A90936B02E1AE9AB00856059 /* MesloLGS NF Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A90936A12E1AE9AB00856059 /* MesloLGS NF Italic.ttf */; };
 		A923172A2E07113100ECE1E6 /* TerminalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92317292E07113100ECE1E6 /* TerminalController.swift */; };
 		A923172D2E07138000ECE1E6 /* SSHTerminalDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A923172C2E07138000ECE1E6 /* SSHTerminalDelegate.swift */; };
 		A923172F2E08851200ECE1E6 /* ShellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A923172E2E08851200ECE1E6 /* ShellView.swift */; };
@@ -29,6 +30,9 @@
 		A93143BE2DF4D0B300FCD5DB /* libpthread.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A93143BD2DF4D0A700FCD5DB /* libpthread.tbd */; };
 		A93143C02DF61B3200FCD5DB /* Host.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93143BF2DF61B3200FCD5DB /* Host.swift */; };
 		A93143C62DF61FE300FCD5DB /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93143C52DF61FE300FCD5DB /* ViewModifiers.swift */; };
+		A9485C712E1AECD000209824 /* JetBrainsMonoNerdFontMono-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9485C702E1AECD000209824 /* JetBrainsMonoNerdFontMono-Italic.ttf */; };
+		A9485C722E1AECD000209824 /* JetBrainsMonoNerdFontMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9485C6E2E1AECD000209824 /* JetBrainsMonoNerdFontMono-Bold.ttf */; };
+		A9485C732E1AECD000209824 /* JetBrainsMonoNerdFontMono-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9485C6F2E1AECD000209824 /* JetBrainsMonoNerdFontMono-BoldItalic.ttf */; };
 		A95FAA472DF3884B00DE2F5A /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A95FAA462DF3884B00DE2F5A /* Config.xcconfig */; };
 		A95FAA542DF4B62900DE2F5A /* LibSSH.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A95FAA502DF4B62100DE2F5A /* LibSSH.xcframework */; };
 		A95FAA552DF4B62900DE2F5A /* LibSSH.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A95FAA502DF4B62100DE2F5A /* LibSSH.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -118,15 +122,16 @@
 
 /* Begin PBXFileReference section */
 		A9083E3F2DF2225A0042906E /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		A90936832E1AC31B00856059 /* MesloLGS NF Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MesloLGS NF Regular.ttf"; sourceTree = "<group>"; };
 		A90936852E1AC33C00856059 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A90936872E1AC51100856059 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
-		A90936892E1AC5CA00856059 /* SF-Mono-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Mono-Regular.otf"; sourceTree = "<group>"; };
-		A909368B2E1AC64400856059 /* Comic Sans MS.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Comic Sans MS.ttf"; sourceTree = "<group>"; };
-		A909368D2E1AC8A500856059 /* CascadiaMono.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = CascadiaMono.ttf; sourceTree = "<group>"; };
-		A909368F2E1AC96100856059 /* GeistMonoNerdFontMono-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GeistMonoNerdFontMono-Regular.otf"; sourceTree = "<group>"; };
-		A90936912E1AC98E00856059 /* ComicMono.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ComicMono.ttf; sourceTree = "<group>"; };
-		A90936932E1AC9AF00856059 /* JetBrainsMonoNerdFontMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JetBrainsMonoNerdFontMono-Regular.ttf"; sourceTree = "<group>"; };
+		A90936952E1AE9AB00856059 /* CascadiaMono.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = CascadiaMono.ttf; sourceTree = "<group>"; };
+		A909369D2E1AE9AB00856059 /* JetBrainsMonoNerdFontMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JetBrainsMonoNerdFontMono-Regular.ttf"; sourceTree = "<group>"; };
+		A909369F2E1AE9AB00856059 /* MesloLGS NF Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MesloLGS NF Bold.ttf"; sourceTree = "<group>"; };
+		A90936A02E1AE9AB00856059 /* MesloLGS NF Bold Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MesloLGS NF Bold Italic.ttf"; sourceTree = "<group>"; };
+		A90936A12E1AE9AB00856059 /* MesloLGS NF Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MesloLGS NF Italic.ttf"; sourceTree = "<group>"; };
+		A90936A22E1AE9AB00856059 /* MesloLGS NF Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MesloLGS NF Regular.ttf"; sourceTree = "<group>"; };
+		A90936A42E1AE9AB00856059 /* SF-Mono-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Mono-Regular.otf"; sourceTree = "<group>"; };
+		A90936A52E1AE9AB00856059 /* SF-Mono-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Mono-RegularItalic.otf"; sourceTree = "<group>"; };
 		A92317292E07113100ECE1E6 /* TerminalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalController.swift; sourceTree = "<group>"; };
 		A923172C2E07138000ECE1E6 /* SSHTerminalDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHTerminalDelegate.swift; sourceTree = "<group>"; };
 		A923172E2E08851200ECE1E6 /* ShellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShellView.swift; path = ShhShell/Views/Terminal/ShellView.swift; sourceTree = SOURCE_ROOT; };
@@ -144,6 +149,9 @@
 		A93143BF2DF61B3200FCD5DB /* Host.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Host.swift; sourceTree = "<group>"; };
 		A93143C22DF61F5700FCD5DB /* ShhShell.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShhShell.entitlements; sourceTree = "<group>"; };
 		A93143C52DF61FE300FCD5DB /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
+		A9485C6E2E1AECD000209824 /* JetBrainsMonoNerdFontMono-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JetBrainsMonoNerdFontMono-Bold.ttf"; sourceTree = "<group>"; };
+		A9485C6F2E1AECD000209824 /* JetBrainsMonoNerdFontMono-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JetBrainsMonoNerdFontMono-BoldItalic.ttf"; sourceTree = "<group>"; };
+		A9485C702E1AECD000209824 /* JetBrainsMonoNerdFontMono-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JetBrainsMonoNerdFontMono-Italic.ttf"; sourceTree = "<group>"; };
 		A95FAA462DF3884B00DE2F5A /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = SOURCE_ROOT; };
 		A95FAA502DF4B62100DE2F5A /* LibSSH.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = LibSSH.xcframework; path = Frameworks/LibSSH.xcframework; sourceTree = "<group>"; };
 		A95FAA512DF4B62100DE2F5A /* openssl.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = openssl.xcframework; path = Frameworks/openssl.xcframework; sourceTree = "<group>"; };
@@ -232,13 +240,10 @@
 		A90936822E1AC31100856059 /* fonts */ = {
 			isa = PBXGroup;
 			children = (
-				A90936832E1AC31B00856059 /* MesloLGS NF Regular.ttf */,
-				A90936892E1AC5CA00856059 /* SF-Mono-Regular.otf */,
-				A909368D2E1AC8A500856059 /* CascadiaMono.ttf */,
-				A909368F2E1AC96100856059 /* GeistMonoNerdFontMono-Regular.otf */,
-				A90936932E1AC9AF00856059 /* JetBrainsMonoNerdFontMono-Regular.ttf */,
-				A90936912E1AC98E00856059 /* ComicMono.ttf */,
-				A909368B2E1AC64400856059 /* Comic Sans MS.ttf */,
+				A90936962E1AE9AB00856059 /* cascadiaMono */,
+				A909369E2E1AE9AB00856059 /* jetbrainsMonoNF */,
+				A90936A32E1AE9AB00856059 /* mesloLGSNF */,
+				A90936A62E1AE9AB00856059 /* sfMono */,
 			);
 			path = fonts;
 			sourceTree = "<group>";
@@ -249,6 +254,45 @@
 				A90936872E1AC51100856059 /* Fonts.swift */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		A90936962E1AE9AB00856059 /* cascadiaMono */ = {
+			isa = PBXGroup;
+			children = (
+				A90936952E1AE9AB00856059 /* CascadiaMono.ttf */,
+			);
+			path = cascadiaMono;
+			sourceTree = "<group>";
+		};
+		A909369E2E1AE9AB00856059 /* jetbrainsMonoNF */ = {
+			isa = PBXGroup;
+			children = (
+				A909369D2E1AE9AB00856059 /* JetBrainsMonoNerdFontMono-Regular.ttf */,
+				A9485C6E2E1AECD000209824 /* JetBrainsMonoNerdFontMono-Bold.ttf */,
+				A9485C6F2E1AECD000209824 /* JetBrainsMonoNerdFontMono-BoldItalic.ttf */,
+				A9485C702E1AECD000209824 /* JetBrainsMonoNerdFontMono-Italic.ttf */,
+			);
+			path = jetbrainsMonoNF;
+			sourceTree = "<group>";
+		};
+		A90936A32E1AE9AB00856059 /* mesloLGSNF */ = {
+			isa = PBXGroup;
+			children = (
+				A90936A22E1AE9AB00856059 /* MesloLGS NF Regular.ttf */,
+				A909369F2E1AE9AB00856059 /* MesloLGS NF Bold.ttf */,
+				A90936A02E1AE9AB00856059 /* MesloLGS NF Bold Italic.ttf */,
+				A90936A12E1AE9AB00856059 /* MesloLGS NF Italic.ttf */,
+			);
+			path = mesloLGSNF;
+			sourceTree = "<group>";
+		};
+		A90936A62E1AE9AB00856059 /* sfMono */ = {
+			isa = PBXGroup;
+			children = (
+				A90936A42E1AE9AB00856059 /* SF-Mono-Regular.otf */,
+				A90936A52E1AE9AB00856059 /* SF-Mono-RegularItalic.otf */,
+			);
+			path = sfMono;
 			sourceTree = "<group>";
 		};
 		A923172B2E0712F200ECE1E6 /* Terminal */ = {
@@ -610,25 +654,29 @@
 				A96BE6972E10846B00C0FEE9 /* catppuccinMocha.plist in Resources */,
 				A96BE6982E10846B00C0FEE9 /* ubuntu.plist in Resources */,
 				A96BE6992E10846B00C0FEE9 /* iTerm2SolarizedDark.plist in Resources */,
-				A909368A2E1AC5CA00856059 /* SF-Mono-Regular.otf in Resources */,
 				A96BE69A2E10846B00C0FEE9 /* xcodeDark.plist in Resources */,
 				A96BE69B2E10846B00C0FEE9 /* iTerm2SolarizedLight.plist in Resources */,
 				A96BE69C2E10846B00C0FEE9 /* 0x96f.plist in Resources */,
 				A96BE69D2E10846B00C0FEE9 /* gruvboxDark.plist in Resources */,
 				A96BE69E2E10846B00C0FEE9 /* xcodeDarkHC.plist in Resources */,
-				A909368E2E1AC8A500856059 /* CascadiaMono.ttf in Resources */,
 				A96BE69F2E10846B00C0FEE9 /* tomorrowNight.plist in Resources */,
 				A96BE6A02E10846B00C0FEE9 /* dracula.plist in Resources */,
 				A96BE6A12E10846B00C0FEE9 /* catppuccinFrappe.plist in Resources */,
+				A90936A72E1AE9AB00856059 /* CascadiaMono.ttf in Resources */,
+				A90936A92E1AE9AB00856059 /* SF-Mono-Regular.otf in Resources */,
+				A90936AA2E1AE9AB00856059 /* SF-Mono-RegularItalic.otf in Resources */,
+				A90936AB2E1AE9AB00856059 /* MesloLGS NF Regular.ttf in Resources */,
+				A90936AC2E1AE9AB00856059 /* MesloLGS NF Bold Italic.ttf in Resources */,
+				A90936AE2E1AE9AB00856059 /* JetBrainsMonoNerdFontMono-Regular.ttf in Resources */,
+				A90936AF2E1AE9AB00856059 /* MesloLGS NF Bold.ttf in Resources */,
+				A90936B02E1AE9AB00856059 /* MesloLGS NF Italic.ttf in Resources */,
+				A9485C712E1AECD000209824 /* JetBrainsMonoNerdFontMono-Italic.ttf in Resources */,
+				A9485C722E1AECD000209824 /* JetBrainsMonoNerdFontMono-Bold.ttf in Resources */,
+				A9485C732E1AECD000209824 /* JetBrainsMonoNerdFontMono-BoldItalic.ttf in Resources */,
 				A96BE6A22E10846B00C0FEE9 /* xcodeWWDC.plist in Resources */,
 				A95FAA472DF3884B00DE2F5A /* Config.xcconfig in Resources */,
 				A92538CA2DEE0742007E0A18 /* Assets.xcassets in Resources */,
-				A90936942E1AC9AF00856059 /* JetBrainsMonoNerdFontMono-Regular.ttf in Resources */,
-				A909368C2E1AC64400856059 /* Comic Sans MS.ttf in Resources */,
 				A92DDDE22E104CB300A87DB2 /* defaultTheme.plist in Resources */,
-				A90936842E1AC31B00856059 /* MesloLGS NF Regular.ttf in Resources */,
-				A90936902E1AC96100856059 /* GeistMonoNerdFontMono-Regular.otf in Resources */,
-				A90936922E1AC98E00856059 /* ComicMono.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -18,9 +18,19 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 		self.init(frame: frame)
 		self.handler = handler
 		self.hostsManager = hostsManager
-		
-		applySelectedTheme()
 		//fonts here yayy
+	}
+	
+	override func didMoveToWindow() {
+		super.didMoveToWindow()
+		if window != nil {
+			restoreScrollback()
+			if let hostsManager {
+//				font = hostsManager.fonts.randomElement() ?? UIFont.systemFont(ofSize: UIFont.systemFontSize)
+				font = UIFont(name: "JetBrainsMono Nerd Font Mono", size: UIFont.systemFontSize)!
+			}
+			applySelectedTheme()
+		}
 	}
 	
 	func restoreScrollback() {
@@ -67,13 +77,6 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 		selectedTextBackgroundColor = theme.selection.uiColor
 		
 		// TODO: selectedtext and cursor colors
-	}
-	
-	override func didMoveToWindow() {
-		super.didMoveToWindow()
-		if window != nil {
-			restoreScrollback()
-		}
 	}
 	
 	public override init(frame: CGRect) {

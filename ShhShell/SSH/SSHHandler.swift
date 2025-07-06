@@ -168,14 +168,6 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		
 	}
 	
-	func applySelectedTheme() {
-		Task { @MainActor in
-			guard let sessionID else { return }
-			guard let session = container.sessions[sessionID] else { return }
-			session.terminalView.applySelectedTheme()
-		}
-	}
-	
 	func ring() {
 		Task { @MainActor in
 			withAnimation(.easeIn(duration: 0.1)) { self.bell = true }
