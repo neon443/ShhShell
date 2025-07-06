@@ -30,6 +30,19 @@ struct ContentView: View {
 						keyManager: keyManager
 					)
 					
+					Section() {
+						NavigationLink {
+							ThemeManagerView(hostsManager: hostsManager)
+						} label: {
+							Label("Themes", systemImage: "swatchpalette")
+						}
+						NavigationLink {
+							FontManagerView(hostsManager: hostsManager)
+						} label: {
+							Label("Fonts", systemImage: "textformat")
+						}
+					}
+					
 					NavigationLink {
 						KeyManagerView(hostsManager: hostsManager, keyManager: keyManager)
 					} label: {

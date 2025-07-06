@@ -38,25 +38,18 @@ struct HostsView: View {
 					} label: {
 						Label("Delete", systemImage: "trash")
 					}
+					.tint(.red)
 					Button() {
 						hostsManager.duplicateHost(host)
 					} label: {
 						Label("Duplicate", systemImage: "square.filled.on.square")
 					}
-					.foregroundStyle(.blue)
+					.tint(.blue)
 				}
 			}
 			.onMove(perform: {
 				hostsManager.moveHost(from: $0, to: $1)
 			})
-		}
-		
-		Section() {
-			NavigationLink {
-				ThemeManagerView(hostsManager: hostsManager)
-			} label: {
-				Label("Themes", systemImage: "swatchpalette")
-			}
 		}
 		.transition(.opacity)
 		.navigationTitle("ShhShell")

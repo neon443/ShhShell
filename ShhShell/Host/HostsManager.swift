@@ -19,6 +19,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	@Published var selectedAnsi: Int = 1
 	
 	@Published var fonts: [UIFont] = []
+	@Published var selectedFont: String = "Menlo"
 	
 	var tint: SwiftUI.Color {
 		selectedTheme.ansi[selectedAnsi].suiColor
@@ -34,15 +35,24 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		var customFonts: [UIFont] = []
 		for family in UIFont.familyNames.sorted() {
 			if FontFamilies.allCasesRaw.contains(family) {
-				if let family = FontFamilies(rawValue: family) {
-					if let customFont = UIFont(name: family.description, size: UIFont.systemFontSize) {
-						customFonts.append(customFont)
-					}
-				}
+				guard let family = FontFamilies(rawValue: family) else { return }
+				guard let customFont = UIFont(name: family.description, size: UIFont.systemFontSize) else { return }
+				customFonts.append(customFont)
 			}
 		}
-		print(customFonts)
 		self.fonts = customFonts
+		
+		self.selectedFont = userDefaults.string(forKey: "selectedFontName") ?? "Menlo"
+	}
+	
+	func selectFont(_ fontName: String) {
+		guard fonts.map({ $0.familyName }).contains(fontName) else { return }
+		withAnimation { selectedFont = fontName }
+		saveFonts()
+	}
+	
+	func saveFonts() {
+		userDefaults.set(selectedFont, forKey: "selectedFontName")
 	}
 	
 	func loadThemes() {

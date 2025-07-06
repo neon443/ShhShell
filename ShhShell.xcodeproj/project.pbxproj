@@ -33,6 +33,7 @@
 		A9485C712E1AECD000209824 /* JetBrainsMonoNerdFontMono-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9485C702E1AECD000209824 /* JetBrainsMonoNerdFontMono-Italic.ttf */; };
 		A9485C722E1AECD000209824 /* JetBrainsMonoNerdFontMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9485C6E2E1AECD000209824 /* JetBrainsMonoNerdFontMono-Bold.ttf */; };
 		A9485C732E1AECD000209824 /* JetBrainsMonoNerdFontMono-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9485C6F2E1AECD000209824 /* JetBrainsMonoNerdFontMono-BoldItalic.ttf */; };
+		A9485C762E1AF59F00209824 /* FontManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9485C752E1AF59F00209824 /* FontManagerView.swift */; };
 		A95FAA472DF3884B00DE2F5A /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A95FAA462DF3884B00DE2F5A /* Config.xcconfig */; };
 		A95FAA542DF4B62900DE2F5A /* LibSSH.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A95FAA502DF4B62100DE2F5A /* LibSSH.xcframework */; };
 		A95FAA552DF4B62900DE2F5A /* LibSSH.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A95FAA502DF4B62100DE2F5A /* LibSSH.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -152,6 +153,7 @@
 		A9485C6E2E1AECD000209824 /* JetBrainsMonoNerdFontMono-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JetBrainsMonoNerdFontMono-Bold.ttf"; sourceTree = "<group>"; };
 		A9485C6F2E1AECD000209824 /* JetBrainsMonoNerdFontMono-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JetBrainsMonoNerdFontMono-BoldItalic.ttf"; sourceTree = "<group>"; };
 		A9485C702E1AECD000209824 /* JetBrainsMonoNerdFontMono-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JetBrainsMonoNerdFontMono-Italic.ttf"; sourceTree = "<group>"; };
+		A9485C752E1AF59F00209824 /* FontManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManagerView.swift; sourceTree = "<group>"; };
 		A95FAA462DF3884B00DE2F5A /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = SOURCE_ROOT; };
 		A95FAA502DF4B62100DE2F5A /* LibSSH.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = LibSSH.xcframework; path = Frameworks/LibSSH.xcframework; sourceTree = "<group>"; };
 		A95FAA512DF4B62100DE2F5A /* openssl.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = openssl.xcframework; path = Frameworks/openssl.xcframework; sourceTree = "<group>"; };
@@ -368,6 +370,7 @@
 			isa = PBXGroup;
 			children = (
 				A92538C52DEE0742007E0A18 /* ContentView.swift */,
+				A9485C742E1AF58C00209824 /* Fonts */,
 				A96BE6AB2E11824B00C0FEE9 /* Sessions */,
 				A9D8192B2E0E9EA400442D38 /* Themes */,
 				A98554532E05534F009051BD /* Keys */,
@@ -417,6 +420,14 @@
 				A96C6A892E0C0B1100F377FE /* SSHState.swift */,
 			);
 			path = SSH;
+			sourceTree = "<group>";
+		};
+		A9485C742E1AF58C00209824 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				A9485C752E1AF59F00209824 /* FontManagerView.swift */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		A95FAA582DF4B71F00DE2F5A /* ci_scripts */ = {
@@ -730,6 +741,7 @@
 				A98554612E058433009051BD /* HostsManager.swift in Sources */,
 				A985545D2E055D4D009051BD /* ConnectionView.swift in Sources */,
 				A9FD37592E143D74005319A8 /* GenericPasswordConvertible.swift in Sources */,
+				A9485C762E1AF59F00209824 /* FontManagerView.swift in Sources */,
 				A9835C3E2E17E9C100969508 /* invert.metal in Sources */,
 				A98554592E0553AA009051BD /* KeyManager.swift in Sources */,
 				A9C897EF2DF1A9A400EF9A5F /* SSHHandler.swift in Sources */,

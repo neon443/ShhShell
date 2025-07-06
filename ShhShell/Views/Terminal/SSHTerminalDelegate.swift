@@ -26,8 +26,7 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 		if window != nil {
 			restoreScrollback()
 			if let hostsManager {
-//				font = hostsManager.fonts.randomElement() ?? UIFont.systemFont(ofSize: UIFont.systemFontSize)
-				font = UIFont(name: "JetBrainsMono Nerd Font Mono", size: UIFont.systemFontSize)!
+				font = UIFont(name: hostsManager.selectedFont, size: UIFont.systemFontSize)!
 			}
 			applySelectedTheme()
 		}
