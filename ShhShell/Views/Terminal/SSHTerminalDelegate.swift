@@ -20,6 +20,7 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 		self.hostsManager = hostsManager
 		
 		applySelectedTheme()
+		//fonts here yayy
 	}
 	
 	func restoreScrollback() {

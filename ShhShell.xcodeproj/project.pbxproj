@@ -3,11 +3,19 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		A9083E402DF2226F0042906E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A9083E3F2DF2225A0042906E /* libz.tbd */; };
+		A90936842E1AC31B00856059 /* MesloLGS NF Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A90936832E1AC31B00856059 /* MesloLGS NF Regular.ttf */; };
+		A90936882E1AC51100856059 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90936872E1AC51100856059 /* Fonts.swift */; };
+		A909368A2E1AC5CA00856059 /* SF-Mono-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = A90936892E1AC5CA00856059 /* SF-Mono-Regular.otf */; };
+		A909368C2E1AC64400856059 /* Comic Sans MS.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A909368B2E1AC64400856059 /* Comic Sans MS.ttf */; };
+		A909368E2E1AC8A500856059 /* CascadiaMono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A909368D2E1AC8A500856059 /* CascadiaMono.ttf */; };
+		A90936902E1AC96100856059 /* GeistMonoNerdFontMono-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = A909368F2E1AC96100856059 /* GeistMonoNerdFontMono-Regular.otf */; };
+		A90936922E1AC98E00856059 /* ComicMono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A90936912E1AC98E00856059 /* ComicMono.ttf */; };
+		A90936942E1AC9AF00856059 /* JetBrainsMonoNerdFontMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A90936932E1AC9AF00856059 /* JetBrainsMonoNerdFontMono-Regular.ttf */; };
 		A923172A2E07113100ECE1E6 /* TerminalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92317292E07113100ECE1E6 /* TerminalController.swift */; };
 		A923172D2E07138000ECE1E6 /* SSHTerminalDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A923172C2E07138000ECE1E6 /* SSHTerminalDelegate.swift */; };
 		A923172F2E08851200ECE1E6 /* ShellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A923172E2E08851200ECE1E6 /* ShellView.swift */; };
@@ -110,6 +118,15 @@
 
 /* Begin PBXFileReference section */
 		A9083E3F2DF2225A0042906E /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		A90936832E1AC31B00856059 /* MesloLGS NF Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MesloLGS NF Regular.ttf"; sourceTree = "<group>"; };
+		A90936852E1AC33C00856059 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		A90936872E1AC51100856059 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		A90936892E1AC5CA00856059 /* SF-Mono-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Mono-Regular.otf"; sourceTree = "<group>"; };
+		A909368B2E1AC64400856059 /* Comic Sans MS.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Comic Sans MS.ttf"; sourceTree = "<group>"; };
+		A909368D2E1AC8A500856059 /* CascadiaMono.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = CascadiaMono.ttf; sourceTree = "<group>"; };
+		A909368F2E1AC96100856059 /* GeistMonoNerdFontMono-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GeistMonoNerdFontMono-Regular.otf"; sourceTree = "<group>"; };
+		A90936912E1AC98E00856059 /* ComicMono.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ComicMono.ttf; sourceTree = "<group>"; };
+		A90936932E1AC9AF00856059 /* JetBrainsMonoNerdFontMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JetBrainsMonoNerdFontMono-Regular.ttf"; sourceTree = "<group>"; };
 		A92317292E07113100ECE1E6 /* TerminalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalController.swift; sourceTree = "<group>"; };
 		A923172C2E07138000ECE1E6 /* SSHTerminalDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHTerminalDelegate.swift; sourceTree = "<group>"; };
 		A923172E2E08851200ECE1E6 /* ShellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShellView.swift; path = ShhShell/Views/Terminal/ShellView.swift; sourceTree = SOURCE_ROOT; };
@@ -212,6 +229,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A90936822E1AC31100856059 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				A90936832E1AC31B00856059 /* MesloLGS NF Regular.ttf */,
+				A90936892E1AC5CA00856059 /* SF-Mono-Regular.otf */,
+				A909368D2E1AC8A500856059 /* CascadiaMono.ttf */,
+				A909368F2E1AC96100856059 /* GeistMonoNerdFontMono-Regular.otf */,
+				A90936932E1AC9AF00856059 /* JetBrainsMonoNerdFontMono-Regular.ttf */,
+				A90936912E1AC98E00856059 /* ComicMono.ttf */,
+				A909368B2E1AC64400856059 /* Comic Sans MS.ttf */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
+		A90936862E1AC4C600856059 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				A90936872E1AC51100856059 /* Fonts.swift */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		A923172B2E0712F200ECE1E6 /* Terminal */ = {
 			isa = PBXGroup;
 			children = (
@@ -251,8 +290,10 @@
 		A92538C72DEE0742007E0A18 /* ShhShell */ = {
 			isa = PBXGroup;
 			children = (
+				A90936852E1AC33C00856059 /* Info.plist */,
 				A92538C62DEE0742007E0A18 /* ShhShellApp.swift */,
 				A93143C22DF61F5700FCD5DB /* ShhShell.entitlements */,
+				A90936862E1AC4C600856059 /* Fonts */,
 				A9D8192A2E0E904900442D38 /* Themes */,
 				A98554572E055398009051BD /* Keys */,
 				A98554562E055394009051BD /* Host */,
@@ -296,6 +337,7 @@
 		A92538D42DEE0756007E0A18 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A90936822E1AC31100856059 /* fonts */,
 				A92DDDE02E104CA400A87DB2 /* themes */,
 				A92538C42DEE0742007E0A18 /* Assets.xcassets */,
 			);
@@ -537,6 +579,7 @@
 				};
 			};
 			buildConfigurationList = A92538952DEE06DC007E0A18 /* Build configuration list for PBXProject "ShhShell" */;
+			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -548,7 +591,6 @@
 			packageReferences = (
 				A9A5871E2E0BF220006B31E6 /* XCRemoteSwiftPackageReference "SwiftTerm" */,
 			);
-			preferredProjectObjectVersion = 77;
 			productRefGroup = A925389B2DEE06DC007E0A18 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -568,18 +610,25 @@
 				A96BE6972E10846B00C0FEE9 /* catppuccinMocha.plist in Resources */,
 				A96BE6982E10846B00C0FEE9 /* ubuntu.plist in Resources */,
 				A96BE6992E10846B00C0FEE9 /* iTerm2SolarizedDark.plist in Resources */,
+				A909368A2E1AC5CA00856059 /* SF-Mono-Regular.otf in Resources */,
 				A96BE69A2E10846B00C0FEE9 /* xcodeDark.plist in Resources */,
 				A96BE69B2E10846B00C0FEE9 /* iTerm2SolarizedLight.plist in Resources */,
 				A96BE69C2E10846B00C0FEE9 /* 0x96f.plist in Resources */,
 				A96BE69D2E10846B00C0FEE9 /* gruvboxDark.plist in Resources */,
 				A96BE69E2E10846B00C0FEE9 /* xcodeDarkHC.plist in Resources */,
+				A909368E2E1AC8A500856059 /* CascadiaMono.ttf in Resources */,
 				A96BE69F2E10846B00C0FEE9 /* tomorrowNight.plist in Resources */,
 				A96BE6A02E10846B00C0FEE9 /* dracula.plist in Resources */,
 				A96BE6A12E10846B00C0FEE9 /* catppuccinFrappe.plist in Resources */,
 				A96BE6A22E10846B00C0FEE9 /* xcodeWWDC.plist in Resources */,
 				A95FAA472DF3884B00DE2F5A /* Config.xcconfig in Resources */,
 				A92538CA2DEE0742007E0A18 /* Assets.xcassets in Resources */,
+				A90936942E1AC9AF00856059 /* JetBrainsMonoNerdFontMono-Regular.ttf in Resources */,
+				A909368C2E1AC64400856059 /* Comic Sans MS.ttf in Resources */,
 				A92DDDE22E104CB300A87DB2 /* defaultTheme.plist in Resources */,
+				A90936842E1AC31B00856059 /* MesloLGS NF Regular.ttf in Resources */,
+				A90936902E1AC96100856059 /* GeistMonoNerdFontMono-Regular.otf in Resources */,
+				A90936922E1AC98E00856059 /* ComicMono.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -639,6 +688,7 @@
 				A9D819312E102D8700442D38 /* HostkeysView.swift in Sources */,
 				A98554552E05535F009051BD /* KeyManagerView.swift in Sources */,
 				A923172D2E07138000ECE1E6 /* SSHTerminalDelegate.swift in Sources */,
+				A90936882E1AC51100856059 /* Fonts.swift in Sources */,
 				A9FD37552E143D23005319A8 /* SecKeyConvertible.swift in Sources */,
 				A96C6AFE2E0C43B600F377FE /* Keypair.swift in Sources */,
 				A9C4140C2E096DB7005E3047 /* SSHError.swift in Sources */,
@@ -816,9 +866,10 @@
 				DEVELOPMENT_TEAM = 8JGND254B7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ShhShell/Info.plist;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "ShhShell uses Face ID to verify your identity";
-				INFOPLIST_KEY_NSLocalNetworkUsageDescription = _;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Needed to communicate with SSH Servers";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -853,9 +904,10 @@
 				DEVELOPMENT_TEAM = 8JGND254B7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ShhShell/Info.plist;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "ShhShell uses Face ID to verify your identity";
-				INFOPLIST_KEY_NSLocalNetworkUsageDescription = _;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Needed to communicate with SSH Servers";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -961,7 +1013,7 @@
 				A92538BA2DEE06DE007E0A18 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		A92538BB2DEE06DE007E0A18 /* Build configuration list for PBXNativeTarget "ShhShell" */ = {
 			isa = XCConfigurationList;
@@ -970,7 +1022,7 @@
 				A92538BD2DEE06DE007E0A18 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		A92538BE2DEE06DE007E0A18 /* Build configuration list for PBXNativeTarget "ShhShellTests" */ = {
 			isa = XCConfigurationList;
@@ -979,7 +1031,7 @@
 				A92538C02DEE06DE007E0A18 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		A92538C12DEE06DE007E0A18 /* Build configuration list for PBXNativeTarget "ShhShellUITests" */ = {
 			isa = XCConfigurationList;
@@ -988,7 +1040,7 @@
 				A92538C32DEE06DE007E0A18 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 

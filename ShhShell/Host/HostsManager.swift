@@ -13,9 +13,12 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	private let userDefaults = NSUbiquitousKeyValueStore.default
 	
 	@Published var hosts: [Host] = []
+	
 	@Published var themes: [Theme] = []
 	@Published var selectedTheme: Theme = Theme.defaultTheme
 	@Published var selectedAnsi: Int = 1
+	
+	@Published var fonts: [UIFont] = []
 	
 	var tint: SwiftUI.Color {
 		selectedTheme.ansi[selectedAnsi].suiColor
@@ -24,6 +27,17 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	init() {
 		loadHosts()
 		loadThemes()
+		loadFonts()
+	}
+	
+	func loadFonts() {
+		for family in UIFont.familyNames.sorted() {
+			let names = UIFont.fontNames(forFamilyName: family)
+			print("family: \(family), name: \(names)")
+			guard let customFont = UIFont(name: names[0], size: UIFont.systemFontSize) else {
+				fatalError()
+			}
+		}
 	}
 	
 	func loadThemes() {
