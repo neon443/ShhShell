@@ -9,27 +9,45 @@ import SwiftUI
 import SwiftTerm
 
 struct ThemeEditorView: View {
-	@State var theme: Theme
+//	@State var theme: Theme
+	@State var themeCodable: ThemeCodable
+	
+	init(theme: Theme) {
+//		self.theme = theme
+		self.themeCodable = theme.themeCodable
+	}
 	
 	var body: some View {
 		NavigationStack {
 //			List {
+//			TextField("Name", text: $themeCodable.name)
+			
+			ThemePreview(hostsManager: HostsManager(), theme: themeCodable.toTheme(), canModify: false)
+				.id(themeCodable)
+			
+			Group {
+				Rectangle()
+					.fill(themeCodable.foreground.stColor.suiColor)
+				Rectangle()
+					.fill(themeCodable.background.stColor.suiColor)
+				Rectangle()
+					.fill(themeCodable.bold.stColor.suiColor)
+				Rectangle()
+					.fill(themeCodable.cursor.stColor.suiColor)
+				Rectangle()
+					.fill(themeCodable.cursorText.stColor.suiColor)
+				Rectangle()
+					.fill(themeCodable.selection.stColor.suiColor)
+				Rectangle()
+					.fill(themeCodable.selectedText.stColor.suiColor)
+			}
+			.frame(width: 100)
+			
 				ForEach(0...1, id: \.self) { row in
 					HStack {
 						ForEach(1...8, id: \.self) { col in
 							let index = (col + (row * 8)) - 1
-							ColorPicker(
-								selection: Binding(
-									get: { theme.ansi[index].suiColor },
-									set: { newValue in
-										let cc = SwiftTerm.Color(newValue).colorCodable
-										theme.ansi[index] = cc.stColor
-									}
-								)
-							) {
-								RoundedRectangle(cornerRadius: 5)
-									.fill(theme.ansi[index].suiColor)
-							}
+							ColorPicker("Ansi \(index+1)", selection: $themeCodable[ansiIndex: index])
 						}
 					}
 				}

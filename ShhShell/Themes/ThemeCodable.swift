@@ -7,8 +7,9 @@
 
 import Foundation
 import SwiftTerm
+import SwiftUI
 
-struct ThemeCodable: Codable {
+struct ThemeCodable: Codable, Hashable, Equatable {
 	var id: String?
 	var name: String?
 	var ansi0: ColorCodable
@@ -85,5 +86,52 @@ extension ThemeCodable {
 			selectedText: self.selectedText.stColor,
 			selection: self.selection.stColor
 		)
+	}
+}
+
+extension ThemeCodable {
+	subscript(ansiIndex index: Int) -> SwiftUI.Color {
+		get {
+			switch index {
+			case 0: return ansi0.stColor.suiColor
+			case 1: return ansi1.stColor.suiColor
+			case 2: return ansi2.stColor.suiColor
+			case 3: return ansi3.stColor.suiColor
+			case 4: return ansi4.stColor.suiColor
+			case 5: return ansi5.stColor.suiColor
+			case 6: return ansi6.stColor.suiColor
+			case 7: return ansi7.stColor.suiColor
+			case 8: return ansi8.stColor.suiColor
+			case 9: return ansi9.stColor.suiColor
+			case 10: return ansi10.stColor.suiColor
+			case 11: return ansi11.stColor.suiColor
+			case 12: return ansi12.stColor.suiColor
+			case 13: return ansi13.stColor.suiColor
+			case 14: return ansi14.stColor.suiColor
+			case 15: return ansi15.stColor.suiColor
+			default: fatalError()
+			}
+		}
+		set {
+			switch index {
+			case 0: ansi0 = ColorCodable(color: newValue)
+			case 1: ansi1 = ColorCodable(color: newValue)
+			case 2: ansi2 = ColorCodable(color: newValue)
+			case 3: ansi3 = ColorCodable(color: newValue)
+			case 4: ansi4 = ColorCodable(color: newValue)
+			case 5: ansi5 = ColorCodable(color: newValue)
+			case 6: ansi6 = ColorCodable(color: newValue)
+			case 7: ansi7 = ColorCodable(color: newValue)
+			case 8: ansi8 = ColorCodable(color: newValue)
+			case 9: ansi9 = ColorCodable(color: newValue)
+			case 10: ansi10 = ColorCodable(color: newValue)
+			case 11: ansi11 = ColorCodable(color: newValue)
+			case 12: ansi12 = ColorCodable(color: newValue)
+			case 13: ansi13 = ColorCodable(color: newValue)
+			case 14: ansi14 = ColorCodable(color: newValue)
+			case 15: ansi15 = ColorCodable(color: newValue)
+			default: fatalError()
+			}
+		}
 	}
 }

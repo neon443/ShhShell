@@ -9,7 +9,7 @@ import Foundation
 import SwiftTerm
 import SwiftUI
 
-struct ColorCodable: Codable {
+struct ColorCodable: Codable, Hashable, Equatable {
 	var red: Double
 	var green: Double
 	var blue: Double
@@ -19,11 +19,35 @@ struct ColorCodable: Codable {
 		case green = "Green Component"
 		case blue = "Blue Component"
 	}
+	
+	init(red: Double, green: Double, blue: Double) {
+		self.red = red
+		self.green = green
+		self.blue = blue
+	}
+	
+	init(color: SwiftUI.Color) {
+		let uiColor = UIColor(color)
+		var r: CGFloat = 0
+		var g: CGFloat = 0
+		var b: CGFloat = 0
+		uiColor.getRed(&r, green: &g, blue: &b, alpha: nil)
+		self.red = r
+		self.green = g
+		self.blue = b
+	}
 }
 
 extension ColorCodable {
 	var stColor: SwiftTerm.Color {
 		return SwiftTerm.Color(self)
+	}
+	
+	var suiColor: SwiftUI.Color {
+		let red = CGFloat(self.red)/65535
+		let green = CGFloat(self.green)/65535
+		let blue = CGFloat(self.blue)/65535
+		return Color(UIColor(red: red, green: green, blue: blue, alpha: 1))
 	}
 }
 
@@ -37,9 +61,17 @@ extension SwiftTerm.Color {
 	}
 	
 	convenience init(_ colorCodable: ColorCodable) {
-		let red = UInt16(colorCodable.red * 65535)
-		let green = UInt16(colorCodable.green * 65535)
-		let blue = UInt16(colorCodable.blue * 65535)
+		var cc = colorCodable
+		if cc.red < 0 { cc.red.negate() }
+		if cc.green < 0 { cc.green.negate() }
+		if cc.blue < 0 { cc.blue.negate() }
+		if cc.red > 1 { cc.red = 1 }
+		if cc.green > 1 { cc.green = 1 }
+		if cc.blue > 1 { cc.blue = 1 }
+		
+		let red = UInt16(cc.red * 65535)
+		let green = UInt16(cc.green * 65535)
+		let blue = UInt16(cc.blue * 65535)
 		self.init(red: red, green: green, blue: blue)
 	}
 	
