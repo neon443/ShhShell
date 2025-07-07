@@ -28,6 +28,14 @@ extension ColorCodable {
 }
 
 extension SwiftTerm.Color {
+	convenience init(_ color: SwiftUI.Color) {
+		var r: CGFloat = 0; var g: CGFloat = 0; var b: CGFloat = 0; var a: CGFloat = 0
+		let uiColor = UIColor(color)
+		uiColor.getRed(&r, green: &g, blue: &b, alpha: &a)
+		
+		self.init(red: UInt16(r*65535), green: UInt16(g*65535), blue: UInt16(b*65535))
+	}
+	
 	convenience init(_ colorCodable: ColorCodable) {
 		let red = UInt16(colorCodable.red * 65535)
 		let green = UInt16(colorCodable.green * 65535)
@@ -41,9 +49,7 @@ extension SwiftTerm.Color {
 		let blue = Double(self.blue)/65535
 		return ColorCodable(red: red, green: green, blue: blue)
 	}
-}
-
-extension SwiftTerm.Color {
+	
 	var suiColor: SwiftUI.Color {
 		return Color(uiColor: self.uiColor)
 	}
@@ -54,9 +60,7 @@ extension SwiftTerm.Color {
 		let blue = CGFloat(self.blue)/65535
 		return UIColor(red: red, green: green, blue: blue, alpha: 1)
 	}
-}
-
-extension SwiftTerm.Color {
+	
 	var luminance: Double {
 		let r = Double(red)/65535
 		let g = Double(green)/65535

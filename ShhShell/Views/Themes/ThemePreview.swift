@@ -78,11 +78,16 @@ struct ThemePreview: View {
 		.clipShape(RoundedRectangle(cornerRadius: outerR))
 		.contextMenu {
 			if canModify {
+				NavigationLink {
+					ThemeEditorView(theme: theme)
+				} label: {
+					Label("Edit", systemImage: "pencil")
+				}
 				Button() {
 					rename = theme.name
 					showRenameAlert.toggle()
 				} label: {
-					Label("Rename", systemImage: "pencil")
+					Label("Rename", systemImage: "text.cursor")
 				}
 				Button(role: .destructive) {
 					hostsManager.deleteTheme(theme)
