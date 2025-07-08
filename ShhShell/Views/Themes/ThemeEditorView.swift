@@ -11,63 +11,60 @@ import SwiftTerm
 struct ThemeEditorView: View {
 	@ObservedObject var hostsManager: HostsManager
 	
-	//	@State var theme: Theme
-	@State var themeCodable: ThemeCodable
+	@Binding var theme: Theme
 	
-	init(hostsManager: HostsManager, theme: Theme) {
-		self.hostsManager = hostsManager
-		//		self.theme = theme
-		self.themeCodable = theme.themeCodable
-	}
+	@Environment(\.dismiss) var dismiss
 	
 	var body: some View {
 		NavigationStack {
 			List {
-				TextField(
-					"Name",
-					text: Binding(get: { themeCodable.name ?? "Theme" }, set: { themeCodable.name = $0 })
-				)
-				.textFieldStyle(.roundedBorder)
 				
-				ThemePreview(hostsManager: HostsManager(), theme: themeCodable.toTheme(), canModify: false)
-					.id(themeCodable)
-				
-				Group {
-					HStack {
-						Rectangle()
-							.fill(themeCodable.foreground.suiColor)
-						Text("Foreground")
-						Spacer()
-						ColorPicker("", selection: $themeCodable.foreground.suiColor, supportsOpacity: false)
-							.labelsHidden()
-					}
-					Rectangle()
-						.fill(themeCodable.background.suiColor)
-					Rectangle()
-						.fill(themeCodable.bold.suiColor)
-					Rectangle()
-						.fill(themeCodable.cursor.suiColor)
-					Rectangle()
-						.fill(themeCodable.cursorText.suiColor)
-					Rectangle()
-						.fill(themeCodable.selection.suiColor)
-					Rectangle()
-						.fill(themeCodable.selectedText.suiColor)
+				Section("Preview") {
+//					ThemePreview(hostsManager: HostsManager(), theme: themeCodable.toTheme(), canModify: false)
+//						.id(themeCodable)
 				}
 				
-				ForEach(0...1, id: \.self) { row in
-					HStack {
-						ForEach(1...8, id: \.self) { col in
-							let index = (col + (row * 8)) - 1
-							ColorPicker("Ansi \(index+1)", selection: $themeCodable[ansiIndex: index], supportsOpacity: false)
+				Section("Name") {
+					TextField("Name", text: $theme.name)
+					.textFieldStyle(.roundedBorder)
+				}
+				
+				Section("Main Colors") {
+					
+					ColorPicker("Text", selection: $theme.foreground.suiColor, supportsOpacity: false)
+						.labelsHidden()
+					ColorPicker("Background", selection: $theme.background.suiColor, supportsOpacity: false)
+						.labelsHidden()
+					ColorPicker("Cursor", selection: $theme.cursor.suiColor, supportsOpacity: false)
+						.labelsHidden()
+					ColorPicker("Cusor Text", selection: $theme.cursorText.suiColor, supportsOpacity: false)
+						.labelsHidden()
+					ColorPicker("Bold Text", selection: $theme.bold.suiColor, supportsOpacity: false)
+						.labelsHidden()
+					ColorPicker("Selection", selection: $theme.selection.suiColor, supportsOpacity: false)
+						.labelsHidden()
+					ColorPicker("Selected Text", selection: $theme.selectedText.suiColor, supportsOpacity: false)
+						.labelsHidden()
+				}
+				
+				Section("Ansi Colors") {
+					ForEach(0...1, id: \.self) { row in
+						HStack {
+							ForEach(1...8, id: \.self) { col in
+								let index = (col + (row * 8)) - 1
+								ColorPicker("", selection: $theme.ansi[index].suiColor, supportsOpacity: false)
+									.labelsHidden()
+							}
 						}
 					}
 				}
 			}
 			.navigationTitle("Edit Theme")
+			.navigationBarTitleDisplayMode(.inline)
 			.toolbar {
 				Button() {
-					hostsManager.updateTheme(themeCodable.toTheme())
+					hostsManager.updateTheme(theme)
+					dismiss()
 				} label: {
 					Label("Done", systemImage: "checkmark")
 				}
@@ -77,5 +74,5 @@ struct ThemeEditorView: View {
 }
 
 #Preview {
-	ThemeEditorView(hostsManager: HostsManager(), theme: Theme.defaultTheme)
+	ThemeEditorView(hostsManager: HostsManager(), theme: .constant(Theme.defaultTheme))
 }

@@ -14,10 +14,6 @@ struct ThemeManagerView: View {
 	@State var importURL: String = ""
 	@State var toImportName: String = ""
 	
-	@State var showRenameAlert: Bool = false
-	@State var themeToRename: Theme?
-	@State var rename: String = ""
-	
 	var minColWidth: CGFloat {150}
 	var spacing: CGFloat {8}
 	var grid: GridItem {
@@ -72,8 +68,8 @@ struct ThemeManagerView: View {
 							}
 						} else {
 							LazyVGrid(columns: layout, alignment: .center, spacing: 8) {
-								ForEach(hostsManager.themes) { theme in
-									ThemePreview(hostsManager: hostsManager, theme: theme, canModify: true)
+								ForEach($hostsManager.themes) { $theme in
+									ThemePreview(hostsManager: hostsManager, theme: $theme, canModify: true)
 								}
 							}
 							.padding(.horizontal)
@@ -89,7 +85,7 @@ struct ThemeManagerView: View {
 						}
 						LazyVGrid(columns: layout, alignment: .center, spacing: 8) {
 							ForEach(Theme.builtinThemes) { theme in
-								ThemePreview(hostsManager: hostsManager, theme: theme, canModify: false)
+								ThemePreview(hostsManager: hostsManager, theme: .constant(theme), canModify: false)
 							}
 						}
 						.padding(.horizontal)

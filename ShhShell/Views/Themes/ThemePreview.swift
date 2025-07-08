@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ThemePreview: View {
 	@ObservedObject var hostsManager: HostsManager
-	@State var theme: Theme
+	@Binding var theme: Theme
 	@State var canModify: Bool
 	
 	@State private var showRenameAlert: Bool = false
@@ -79,7 +79,7 @@ struct ThemePreview: View {
 		.contextMenu {
 			if canModify {
 				NavigationLink {
-					ThemeEditorView(hostsManager: hostsManager, theme: theme)
+					ThemeEditorView(hostsManager: hostsManager, theme: $theme)
 				} label: {
 					Label("Edit", systemImage: "pencil")
 				}
@@ -107,12 +107,9 @@ struct ThemePreview: View {
 }
 
 #Preview {
-	let url = URL(string:  "https://raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/schemes/catppuccin-frappe.itermcolors")!
-	let data = try! Data(contentsOf: url)
-	
 	ThemePreview(
 		hostsManager: HostsManager(),
-		theme: Theme.decodeTheme(data: data)!,
+		theme: .constant(Theme.defaultTheme),
 		canModify: true
 	)
 	.border(Color.red)
