@@ -9,10 +9,13 @@ import SwiftUI
 import SwiftTerm
 
 struct ThemeEditorView: View {
+	@ObservedObject var hostsManager: HostsManager
+	
 //	@State var theme: Theme
 	@State var themeCodable: ThemeCodable
 	
-	init(theme: Theme) {
+	init(hostsManager: HostsManager, theme: Theme) {
+		self.hostsManager = hostsManager
 //		self.theme = theme
 		self.themeCodable = theme.themeCodable
 	}
@@ -42,6 +45,13 @@ struct ThemeEditorView: View {
 					.fill(themeCodable.selectedText.stColor.suiColor)
 			}
 			.frame(width: 100)
+			.toolbar {
+				Button() {
+					
+				} label: {
+					Label("Donw", systemImage: "checkmark")
+				}
+			}
 			
 				ForEach(0...1, id: \.self) { row in
 					HStack {
@@ -57,5 +67,5 @@ struct ThemeEditorView: View {
 }
 
 #Preview {
-	ThemeEditorView(theme: Theme.defaultTheme)
+	ThemeEditorView(hostsManager: HostsManager(), theme: Theme.defaultTheme)
 }

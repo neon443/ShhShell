@@ -114,6 +114,11 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		return themeInQuestion == self.selectedTheme
 	}
 	
+	func updateTheme(_ theme: Theme) {
+		guard let index = themes.firstIndex(where: { $0.id == theme.id }) else { return }
+		themes[index] = theme
+	}
+	
 	func renameTheme(_ theme: Theme?, to newName: String) {
 		guard let theme else { return }
 		guard theme.name != newName else { return }

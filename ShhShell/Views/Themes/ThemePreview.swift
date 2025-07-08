@@ -79,7 +79,7 @@ struct ThemePreview: View {
 		.contextMenu {
 			if canModify {
 				NavigationLink {
-					ThemeEditorView(theme: theme)
+					ThemeEditorView(hostsManager: hostsManager, theme: theme)
 				} label: {
 					Label("Edit", systemImage: "pencil")
 				}

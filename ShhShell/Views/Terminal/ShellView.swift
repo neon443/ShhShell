@@ -21,10 +21,6 @@ struct ShellView: View {
 				hostsManager.selectedTheme.background.suiColor
 					.ignoresSafeArea(.all)
 				TerminalController(handler: handler, hostsManager: hostsManager)
-					.frame(
-						width: container.sessions[handler.sessionID ?? UUID()]?.terminalView.getOptimalFrameSize().width,
-						height: container.sessions[handler.sessionID ?? UUID()]?.terminalView.getOptimalFrameSize().width
-					)
 				
 				Group {
 					Color.gray.opacity(0.2)
