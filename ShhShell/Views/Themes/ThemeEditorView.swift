@@ -20,8 +20,8 @@ struct ThemeEditorView: View {
 			List {
 				
 				Section("Preview") {
-//					ThemePreview(hostsManager: HostsManager(), theme: themeCodable.toTheme(), canModify: false)
-//						.id(themeCodable)
+//					ThemePreview(hostsManager: HostsManager(), theme: .constant(theme), canModify: false)
+//						.id(theme)
 				}
 				
 				Section("Name") {
@@ -32,19 +32,12 @@ struct ThemeEditorView: View {
 				Section("Main Colors") {
 					
 					ColorPicker("Text", selection: $theme.foreground.suiColor, supportsOpacity: false)
-						.labelsHidden()
 					ColorPicker("Background", selection: $theme.background.suiColor, supportsOpacity: false)
-						.labelsHidden()
 					ColorPicker("Cursor", selection: $theme.cursor.suiColor, supportsOpacity: false)
-						.labelsHidden()
 					ColorPicker("Cusor Text", selection: $theme.cursorText.suiColor, supportsOpacity: false)
-						.labelsHidden()
 					ColorPicker("Bold Text", selection: $theme.bold.suiColor, supportsOpacity: false)
-						.labelsHidden()
 					ColorPicker("Selection", selection: $theme.selection.suiColor, supportsOpacity: false)
-						.labelsHidden()
 					ColorPicker("Selected Text", selection: $theme.selectedText.suiColor, supportsOpacity: false)
-						.labelsHidden()
 				}
 				
 				Section("Ansi Colors") {
