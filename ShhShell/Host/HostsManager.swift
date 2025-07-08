@@ -61,16 +61,12 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		
 		guard let decodedThemes = try? JSONDecoder().decode([ThemeCodable].self, from: dataTheme) else { return }
 		
-		print(themes.count)
 		self.themes = []
-		print(themes.count)
-		objectWillChange.send()
 		for index in 0..<decodedThemes.count {
 			guard let encoded = try? JSONEncoder().encode(decodedThemes[index]) else { return }
 			guard let synthedTheme = Theme.decodeTheme(data: encoded) else { return }
 			self.themes.append(synthedTheme)
 		}
-		objectWillChange.send()
 		
 		guard let dataSelTheme = userDefaults.data(forKey: "selectedTheme") else { return }
 		guard let decodedSelTheme = Theme.decodeTheme(data: dataSelTheme) else { return }

@@ -18,10 +18,6 @@ extension SwiftTerm.Color {
 			self.red = newOne.red
 			self.green = newOne.green
 			self.blue = newOne.blue
-//			let uiColor = UIColor(newValue)
-//			var r: CGFloat = 0; var g: CGFloat = 0; var b: CGFloat = 0
-//			uiColor.getRed(&r, green: &g, blue: &b, alpha: nil)
-//			self.red = r*65535
 		}
 	}
 }
