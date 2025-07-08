@@ -61,6 +61,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		
 		guard let decodedThemes = try? JSONDecoder().decode([ThemeCodable].self, from: dataTheme) else { return }
 		
+		self.themes = []
 		for index in 0..<decodedThemes.count {
 			guard let encoded = try? JSONEncoder().encode(decodedThemes[index]) else { return }
 			guard let synthedTheme = Theme.decodeTheme(data: encoded) else { return }
@@ -117,6 +118,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	func updateTheme(_ theme: Theme) {
 		guard let index = themes.firstIndex(where: { $0.id == theme.id }) else { return }
 		themes[index] = theme
+		saveThemes()
 	}
 	
 	func renameTheme(_ theme: Theme?, to newName: String) {

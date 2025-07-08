@@ -113,23 +113,72 @@ extension ThemeCodable {
 			}
 		}
 		set {
+			let cc = ColorCodable(color: newValue)
 			switch index {
-			case 0: ansi0 = ColorCodable(color: newValue)
-			case 1: ansi1 = ColorCodable(color: newValue)
-			case 2: ansi2 = ColorCodable(color: newValue)
-			case 3: ansi3 = ColorCodable(color: newValue)
-			case 4: ansi4 = ColorCodable(color: newValue)
-			case 5: ansi5 = ColorCodable(color: newValue)
-			case 6: ansi6 = ColorCodable(color: newValue)
-			case 7: ansi7 = ColorCodable(color: newValue)
-			case 8: ansi8 = ColorCodable(color: newValue)
-			case 9: ansi9 = ColorCodable(color: newValue)
-			case 10: ansi10 = ColorCodable(color: newValue)
-			case 11: ansi11 = ColorCodable(color: newValue)
-			case 12: ansi12 = ColorCodable(color: newValue)
-			case 13: ansi13 = ColorCodable(color: newValue)
-			case 14: ansi14 = ColorCodable(color: newValue)
-			case 15: ansi15 = ColorCodable(color: newValue)
+			case 0:
+				ansi0.red = cc.red
+				ansi0.green = cc.green
+				ansi0.blue = cc.blue
+			case 1:
+				ansi1.red = cc.red
+				ansi1.green = cc.green
+				ansi1.blue = cc.blue
+			case 2:
+				ansi2.red = cc.red
+				ansi2.green = cc.green
+				ansi2.blue = cc.blue
+			case 3:
+				ansi3.red = cc.red
+				ansi3.green = cc.green
+				ansi3.blue = cc.blue
+			case 4:
+				ansi4.red = cc.red
+				ansi4.green = cc.green
+				ansi4.blue = cc.blue
+			case 5:
+				ansi5.red = cc.red
+				ansi5.green = cc.green
+				ansi5.blue = cc.blue
+			case 6:
+				ansi6.red = cc.red
+				ansi6.green = cc.green
+				ansi6.blue = cc.blue
+			case 7:
+				ansi7.red = cc.red
+				ansi7.green = cc.green
+				ansi7.blue = cc.blue
+			case 8:
+				ansi8.red = cc.red
+				ansi8.green = cc.green
+				ansi8.blue = cc.blue
+			case 9:
+				ansi9.red = cc.red
+				ansi9.green = cc.green
+				ansi9.blue = cc.blue
+			case 10:
+				ansi10.red = cc.red
+				ansi10.green = cc.green
+				ansi10.blue = cc.blue
+			case 11:
+				ansi11.red = cc.red
+				ansi11.green = cc.green
+				ansi11.blue = cc.blue
+			case 12:
+				ansi12.red = cc.red
+				ansi12.green = cc.green
+				ansi12.blue = cc.blue
+			case 13:
+				ansi13.red = cc.red
+				ansi13.green = cc.green
+				ansi13.blue = cc.blue
+			case 14:
+				ansi14.red = cc.red
+				ansi14.green = cc.green
+				ansi14.blue = cc.blue
+			case 15:
+				ansi15.red = cc.red
+				ansi15.green = cc.green
+				ansi15.blue = cc.blue
 			default: fatalError()
 			}
 		}

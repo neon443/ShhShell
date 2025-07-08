@@ -39,15 +39,25 @@ struct ColorCodable: Codable, Hashable, Equatable {
 }
 
 extension ColorCodable {
+	var suiColor: SwiftUI.Color {
+		get {
+			let red = CGFloat(self.red)
+			let green = CGFloat(self.green)
+			let blue = CGFloat(self.blue)
+			return Color(UIColor(red: red, green: green, blue: blue, alpha: 1))
+		}
+		set {
+			let cc = ColorCodable(color: newValue)
+			self.red = cc.red
+			self.green = cc.green
+			self.blue = cc.blue
+		}
+	}
+}
+
+extension ColorCodable {
 	var stColor: SwiftTerm.Color {
 		return SwiftTerm.Color(self)
-	}
-	
-	var suiColor: SwiftUI.Color {
-		let red = CGFloat(self.red)/65535
-		let green = CGFloat(self.green)/65535
-		let blue = CGFloat(self.blue)/65535
-		return Color(UIColor(red: red, green: green, blue: blue, alpha: 1))
 	}
 }
 
