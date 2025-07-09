@@ -25,7 +25,7 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 		if window != nil {
 			restoreScrollback()
 			if let hostsManager {
-				font = UIFont(name: hostsManager.selectedFont, size: UIFont.systemFontSize)!
+				font = UIFont(name: hostsManager.selectedFont, size: hostsManager.fontSize)!
 			}
 			applySelectedTheme()
 			startFeedLoop()

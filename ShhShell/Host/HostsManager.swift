@@ -20,7 +20,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	
 	@Published var fonts: [UIFont] = []
 	@Published var selectedFont: String = "SF Mono"
-	@Published var fontSize: CGFloat = 12
+	@Published var fontSize: CGFloat = UIFont.systemFontSize
 	
 	var tint: SwiftUI.Color {
 		selectedTheme.ansi[selectedAnsi].suiColor
