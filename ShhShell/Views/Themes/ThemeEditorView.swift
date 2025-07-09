@@ -20,17 +20,15 @@ struct ThemeEditorView: View {
 			hostsManager.selectedTheme.background.suiColor.opacity(0.7)
 				.ignoresSafeArea(.all)
 			NavigationStack {
-				ThemePreview(theme: $theme, padding: 10, paletteR: 20)
+				ThemeButton(hostsManager: hostsManager, theme: $theme, canModify: false)
 					.id(theme)
 					.padding(.bottom)
 					.fixedSize(horizontal: false, vertical: true)
-				
-				List {
-					Section("Name") {
-						TextField("Name", text: $theme.name)
-							.textFieldStyle(.roundedBorder)
+					.onChange(of: theme) { _ in
+						print(theme)
 					}
-					
+				
+				List {					
 					Section("Main Colors") {
 						ColorPicker("Text", selection: $theme.foreground.suiColor, supportsOpacity: false)
 						ColorPicker("Background", selection: $theme.background.suiColor, supportsOpacity: false)
