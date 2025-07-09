@@ -14,6 +14,16 @@ struct FontManagerView: View {
 	
 	var body: some View {
 		List {
+			Slider(value: $hostsManager.fontSize, in: 1...15, step: 1) {
+				Label("Size", systemImage: "textformat.size")
+			} minimumValueLabel: {
+				Label("1", systemImage: "textformat.size.smaller")
+			} maximumValueLabel: {
+				Label("15", systemImage: "textformat.size.larger")
+			} onEditingChanged: { bool in
+				hostsManager.saveFonts()
+			}
+			
 			ForEach(FontFamilies.allCasesRaw, id: \.self) { fontName in
 				let selected = hostsManager.selectedFont == fontName
 				Button() {

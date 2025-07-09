@@ -20,6 +20,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	
 	@Published var fonts: [UIFont] = []
 	@Published var selectedFont: String = "SF Mono"
+	@Published var fontSize: CGFloat = 12
 	
 	var tint: SwiftUI.Color {
 		selectedTheme.ansi[selectedAnsi].suiColor
@@ -36,13 +37,15 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		for family in UIFont.familyNames.sorted() {
 			if FontFamilies.allCasesRaw.contains(family) {
 				guard let family = FontFamilies(rawValue: family) else { return }
-				guard let customFont = UIFont(name: family.description, size: UIFont.systemFontSize) else { return }
+				guard let customFont = UIFont(name: family.description, size: fontSize) else { return }
 				customFonts.append(customFont)
 			}
 		}
 		self.fonts = customFonts
 		
+		userDefaults.synchronize()
 		self.selectedFont = userDefaults.string(forKey: "selectedFontName") ?? "Menlo"
+		self.fontSize = CGFloat(userDefaults.double(forKey: "fontSize"))
 	}
 	
 	func selectFont(_ fontName: String) {
@@ -53,6 +56,8 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	
 	func saveFonts() {
 		userDefaults.set(selectedFont, forKey: "selectedFontName")
+		userDefaults.set(fontSize, forKey: "fontSize")
+		userDefaults.synchronize()
 	}
 	
 	func loadThemes() {
