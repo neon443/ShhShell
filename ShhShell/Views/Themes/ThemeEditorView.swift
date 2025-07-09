@@ -20,7 +20,7 @@ struct ThemeEditorView: View {
 			hostsManager.selectedTheme.background.suiColor.opacity(0.7)
 				.ignoresSafeArea(.all)
 			NavigationStack {
-				ThemePreview(theme: theme, padding: 10, paletteR: 20)
+				ThemePreview(theme: $theme, padding: 10, paletteR: 20)
 					.id(theme)
 					.padding(.bottom)
 					.fixedSize(horizontal: false, vertical: true)
@@ -32,7 +32,6 @@ struct ThemeEditorView: View {
 					}
 					
 					Section("Main Colors") {
-						
 						ColorPicker("Text", selection: $theme.foreground.suiColor, supportsOpacity: false)
 						ColorPicker("Background", selection: $theme.background.suiColor, supportsOpacity: false)
 						ColorPicker("Cursor", selection: $theme.cursor.suiColor, supportsOpacity: false)

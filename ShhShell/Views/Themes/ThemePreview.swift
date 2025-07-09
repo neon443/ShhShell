@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ThemePreview: View {
-	@State var theme: Theme
+	@Binding var theme: Theme
 	@State var padding: CGFloat
 	@State var paletteR: CGFloat
 	
@@ -45,5 +45,5 @@ struct ThemePreview: View {
 }
 
 #Preview {
-	ThemePreview(theme: Theme.defaultTheme, padding: 5, paletteR: 10)
+	ThemePreview(theme: .constant(Theme.defaultTheme), padding: 5, paletteR: 10)
 }

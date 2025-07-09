@@ -43,7 +43,7 @@ struct ThemeButton: View {
 				)
 				.padding(isSelected ? innerPadding : 0)
 			
-			ThemePreview(theme: theme, padding: padding, paletteR: paletteR)
+			ThemePreview(theme: $theme, padding: padding, paletteR: paletteR)
 		}
 		.onTapGesture {
 			hostsManager.selectTheme(theme)
