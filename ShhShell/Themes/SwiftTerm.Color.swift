@@ -40,10 +40,21 @@ extension SwiftTerm.Color {
 
 extension SwiftTerm.Color {
 	convenience init(_ color: SwiftUI.Color) {
-		var r: CGFloat = 0; var g: CGFloat = 0; var b: CGFloat = 0; var a: CGFloat = 0
 		let uiColor = UIColor(color)
-		uiColor.getRed(&r, green: &g, blue: &b, alpha: &a)
-		
+		guard let rgbColor = uiColor.cgColor.converted(
+			to: CGColorSpace(name: CGColorSpace.sRGB)!,
+			intent: .defaultIntent,
+			options: nil
+		),
+		let components = rgbColor.components
+		else {
+			self.init(red: 0, green: 0, blue: 0)
+			return
+		}
+		let r = components[0] ?? 0
+		let g = components[1] ?? 0
+		let b = components[2] ?? 0
+		print(r,g,b)
 		self.init(red: UInt16(r*65535), green: UInt16(g*65535), blue: UInt16(b*65535))
 	}
 	

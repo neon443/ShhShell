@@ -120,6 +120,9 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	func updateTheme(_ theme: Theme) {
 		guard let index = themes.firstIndex(where: { $0.id == theme.id }) else { return }
 		themes[index] = theme
+		if selectedTheme.id == theme.id {
+			selectedTheme = theme
+		}
 		saveThemes()
 	}
 	
