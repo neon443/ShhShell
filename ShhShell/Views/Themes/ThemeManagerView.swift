@@ -14,6 +14,9 @@ struct ThemeManagerView: View {
 	@State var importURL: String = ""
 	@State var toImportName: String = ""
 	
+	@State private var newTheme: Theme = Theme.defaultTheme
+	@State private var showNewThemeEditor: Bool = false
+	
 	var minColWidth: CGFloat {150}
 	var spacing: CGFloat {8}
 	var grid: GridItem {
@@ -121,6 +124,17 @@ struct ThemeManagerView: View {
 							}
 							
 						}
+						ToolbarItem() {
+							Button() {
+								newTheme = Theme.defaultTheme
+								showNewThemeEditor = true
+							} label: {
+								Label("New", systemImage: "plus")
+							}
+						}
+					}
+					.navigationDestination(isPresented: $showNewThemeEditor) {
+						ThemeEditorView(hostsManager: hostsManager, theme: $newTheme)
 					}
 				}
 			}
