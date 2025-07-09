@@ -77,7 +77,7 @@ struct ShellTabView: View {
 						Spacer()
 					}
 					.padding(.horizontal, 10)
-					.padding(.bottom, 10)
+					.padding(.vertical, 5)
 					.background(hostsManager.tint, ignoresSafeAreaEdges: .all)
 					.frame(height: 30)
 					

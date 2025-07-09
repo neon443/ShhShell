@@ -19,7 +19,6 @@ struct TerminalController: UIViewRepresentable {
 	func makeUIView(context: Context) -> TerminalView {
 		if let sessionID = handler.sessionID {
 			if let existing = container.sessions[sessionID] {
-				existing.terminalView.startFeedLoop()
 				return existing.terminalView
 			}
 		}

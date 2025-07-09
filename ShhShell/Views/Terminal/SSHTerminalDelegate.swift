@@ -18,7 +18,6 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 		self.init(frame: frame)
 		self.handler = handler
 		self.hostsManager = hostsManager
-		//fonts here yayy
 	}
 	
 	override func didMoveToWindow() {
@@ -29,9 +28,7 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 				font = UIFont(name: hostsManager.selectedFont, size: UIFont.systemFontSize)!
 			}
 			applySelectedTheme()
-			
-//			self.frame.size = getOptimalFrameSize().size
-//			getOptimalFrameSize().width.
+			startFeedLoop()
 		}
 	}
 	
