@@ -29,7 +29,7 @@ struct FontManagerView: View {
 								.foregroundStyle(.green)
 								.animation(.spring, value: selected)
 								.transition(.scale)
-							Text("the lazy bronw fox jumps over the lazy dog")
+							Text(testLine)
 								.font(.custom(fontName, size: 15))
 								.bold(selected)
 								.opacity(selected ? 1 : 0.8)
