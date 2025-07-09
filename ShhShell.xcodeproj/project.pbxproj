@@ -72,6 +72,8 @@
 		A98554632E0587DF009051BD /* HostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554622E0587DF009051BD /* HostsView.swift */; };
 		A9A587202E0BF220006B31E6 /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; productRef = A9A5871F2E0BF220006B31E6 /* SwiftTerm */; };
 		A9BA1D192E1D9AE1005BDCEF /* SwiftTerm.Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BA1D182E1D9AE1005BDCEF /* SwiftTerm.Color.swift */; };
+		A9BA1D1E2E1EAD51005BDCEF /* SF-Mono-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A9BA1D1C2E1EAD51005BDCEF /* SF-Mono-Bold.otf */; };
+		A9BA1D1F2E1EAD51005BDCEF /* SF-Mono-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = A9BA1D1D2E1EAD51005BDCEF /* SF-Mono-BoldItalic.otf */; };
 		A9C4140C2E096DB7005E3047 /* SSHError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4140B2E096DB7005E3047 /* SSHError.swift */; };
 		A9C897EF2DF1A9A400EF9A5F /* SSHHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */; };
 		A9D819292E0E904200442D38 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D819282E0E904200442D38 /* Theme.swift */; };
@@ -194,6 +196,8 @@
 		A98554602E058433009051BD /* HostsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostsManager.swift; sourceTree = "<group>"; };
 		A98554622E0587DF009051BD /* HostsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostsView.swift; sourceTree = "<group>"; };
 		A9BA1D182E1D9AE1005BDCEF /* SwiftTerm.Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftTerm.Color.swift; sourceTree = "<group>"; };
+		A9BA1D1C2E1EAD51005BDCEF /* SF-Mono-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Mono-Bold.otf"; sourceTree = "<group>"; };
+		A9BA1D1D2E1EAD51005BDCEF /* SF-Mono-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Mono-BoldItalic.otf"; sourceTree = "<group>"; };
 		A9C4140B2E096DB7005E3047 /* SSHError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHError.swift; sourceTree = "<group>"; };
 		A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHHandler.swift; sourceTree = "<group>"; };
 		A9D819282E0E904200442D38 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
@@ -297,6 +301,8 @@
 			children = (
 				A90936A42E1AE9AB00856059 /* SF-Mono-Regular.otf */,
 				A90936A52E1AE9AB00856059 /* SF-Mono-RegularItalic.otf */,
+				A9BA1D1C2E1EAD51005BDCEF /* SF-Mono-Bold.otf */,
+				A9BA1D1D2E1EAD51005BDCEF /* SF-Mono-BoldItalic.otf */,
 			);
 			path = sfMono;
 			sourceTree = "<group>";
@@ -669,6 +675,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A96BE6972E10846B00C0FEE9 /* catppuccinMocha.plist in Resources */,
+				A9BA1D1E2E1EAD51005BDCEF /* SF-Mono-Bold.otf in Resources */,
+				A9BA1D1F2E1EAD51005BDCEF /* SF-Mono-BoldItalic.otf in Resources */,
 				A96BE6982E10846B00C0FEE9 /* ubuntu.plist in Resources */,
 				A96BE6992E10846B00C0FEE9 /* iTerm2SolarizedDark.plist in Resources */,
 				A96BE69A2E10846B00C0FEE9 /* xcodeDark.plist in Resources */,
