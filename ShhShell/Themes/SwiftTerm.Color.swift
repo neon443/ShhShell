@@ -51,10 +51,9 @@ extension SwiftTerm.Color {
 			self.init(red: 0, green: 0, blue: 0)
 			return
 		}
-		let r = components[0] ?? 0
-		let g = components[1] ?? 0
-		let b = components[2] ?? 0
-		print(r,g,b)
+		let r = components[0]
+		let g = components[1]
+		let b = components[2]
 		self.init(red: UInt16(r*65535), green: UInt16(g*65535), blue: UInt16(b*65535))
 	}
 	

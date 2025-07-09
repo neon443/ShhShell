@@ -43,10 +43,12 @@ struct ThemeEditorView: View {
 				Section("Ansi Colors") {
 					ForEach(0...1, id: \.self) { row in
 						HStack {
+							Spacer()
 							ForEach(1...8, id: \.self) { col in
 								let index = (col + (row * 8)) - 1
 								ColorPicker("", selection: $theme.ansi[index].suiColor, supportsOpacity: false)
 									.labelsHidden()
+								Spacer()
 							}
 						}
 					}
