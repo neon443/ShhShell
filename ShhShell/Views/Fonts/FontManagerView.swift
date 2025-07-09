@@ -10,19 +10,28 @@ import SwiftUI
 struct FontManagerView: View {
 	@ObservedObject var hostsManager: HostsManager
 	
-	@State var testLine: String = "the lazy bronw fox jumps over the lazy dog"
+	@State var testLine: String = "the lazy brown fox jumps over the lazy dog"
 	
 	var body: some View {
 		List {
-			Slider(value: $hostsManager.fontSize, in: 1...15, step: 1) {
-				Text("\(Int(hostsManager.fontSize))")
-//				Label("\(Int(hostsManager.fontSize))", systemImage: "textformat.size")
-			} minimumValueLabel: {
-				Label("", systemImage: "textformat.size.smaller")
-			} maximumValueLabel: {
-				Label("", systemImage: "textformat.size.larger")
-			} onEditingChanged: { bool in
-				hostsManager.saveFonts()
+			VStack {
+				HStack {
+					Text("Font Size")
+					Spacer()
+					Text("\(Int(hostsManager.fontSize))")
+						.contentTransition(.numericText())
+				}
+				.padding(.horizontal)
+				
+				Slider(value: $hostsManager.fontSize, in: 1...20, step: 1) {
+					
+				} minimumValueLabel: {
+					Label("", systemImage: "textformat.size.smaller")
+				} maximumValueLabel: {
+					Label("", systemImage: "textformat.size.larger")
+				} onEditingChanged: { bool in
+					hostsManager.saveFonts()
+				}
 			}
 			
 			ForEach(FontFamilies.allCasesRaw, id: \.self) { fontName in
