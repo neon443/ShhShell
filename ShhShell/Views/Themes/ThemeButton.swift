@@ -43,7 +43,34 @@ struct ThemeButton: View {
 				)
 				.padding(isSelected ? innerPadding : 0)
 			
-			ThemePreview(theme: $theme, padding: padding, paletteR: paletteR)
+			VStack {
+				Text(theme.name)
+					.foregroundStyle(theme.foreground.suiColor)
+					.font(.headline)
+					.lineLimit(1)
+				
+				Spacer()
+				
+				VStack(spacing: 0) {
+					HStack(spacing: 0) {
+						ForEach(0..<8, id: \.self) { index in
+							Rectangle()
+								.aspectRatio(CGSize(width: 1, height: 1), contentMode: .fit)
+								.foregroundStyle(theme.ansi[index].suiColor)
+						}
+					}
+					
+					HStack(spacing: 0) {
+						ForEach(8..<16, id: \.self) { index in
+							Rectangle()
+								.aspectRatio(CGSize(width: 1, height: 1), contentMode: .fit)
+								.foregroundStyle(theme.ansi[index].suiColor)
+						}
+					}
+				}
+				.clipShape(RoundedRectangle(cornerRadius: paletteR))
+			}
+			.padding(padding)
 		}
 		.onTapGesture {
 			hostsManager.selectTheme(theme)
