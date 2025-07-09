@@ -117,6 +117,17 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		return themeInQuestion == self.selectedTheme
 	}
 	
+	func duplicateTheme(_ theme: Theme) {
+		var newTheme = theme
+		newTheme.id = UUID().uuidString
+		if let index = themes.firstIndex(where: { $0.id == theme.id }) {
+			themes.insert(newTheme, at: index)
+		} else {
+			themes.append(newTheme)
+		}
+		saveThemes()
+	}
+	
 	func updateTheme(_ theme: Theme) {
 		guard let index = themes.firstIndex(where: { $0.id == theme.id }) else { return }
 		themes[index] = theme

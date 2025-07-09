@@ -90,6 +90,17 @@ struct ThemeButton: View {
 				} label: {
 					Label("Rename", systemImage: "text.cursor")
 				}
+				Divider()
+			}
+			
+			Button() {
+				hostsManager.duplicateTheme(theme)
+			} label: {
+				Label("Duplicate", systemImage: "square.filled.on.square")
+			}
+			
+			if canModify {
+				Divider()
 				Button(role: .destructive) {
 					hostsManager.deleteTheme(theme)
 				} label: {
