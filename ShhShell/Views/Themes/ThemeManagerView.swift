@@ -50,6 +50,7 @@ struct ThemeManagerView: View {
 						HStack {
 							Text("Your Themes")
 								.padding(.horizontal)
+								.padding(.vertical)
 								.font(.headline)
 							Spacer()
 						}
@@ -69,7 +70,7 @@ struct ThemeManagerView: View {
 						} else {
 							LazyVGrid(columns: layout, alignment: .center, spacing: 8) {
 								ForEach($hostsManager.themes) { $theme in
-									ThemePreview(hostsManager: hostsManager, theme: $theme, canModify: true)
+									ThemeButton(hostsManager: hostsManager, theme: $theme, canModify: true)
 								}
 							}
 							.padding(.horizontal)
@@ -85,7 +86,7 @@ struct ThemeManagerView: View {
 						}
 						LazyVGrid(columns: layout, alignment: .center, spacing: 8) {
 							ForEach(Theme.builtinThemes) { theme in
-								ThemePreview(hostsManager: hostsManager, theme: .constant(theme), canModify: false)
+								ThemeButton(hostsManager: hostsManager, theme: .constant(theme), canModify: false)
 							}
 						}
 						.padding(.horizontal)
