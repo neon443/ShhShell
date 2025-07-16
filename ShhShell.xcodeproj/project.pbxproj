@@ -64,7 +64,6 @@
 		A96C90A12E12B87A00724253 /* TextBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96C90A02E12B87900724253 /* TextBox.swift */; };
 		A96C90A32E12D53B00724253 /* KeyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96C90A22E12D53900724253 /* KeyType.swift */; };
 		A9835C3C2E17CCA500969508 /* TrafficLights.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9835C3B2E17CCA500969508 /* TrafficLights.swift */; };
-		A9835C3E2E17E9C100969508 /* invert.metal in Sources */ = {isa = PBXBuildFile; fileRef = A9835C3D2E17E9C100969508 /* invert.metal */; };
 		A98554552E05535F009051BD /* KeyManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554542E05535F009051BD /* KeyManagerView.swift */; };
 		A98554592E0553AA009051BD /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554582E0553AA009051BD /* KeyManager.swift */; };
 		A985545D2E055D4D009051BD /* ConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A985545C2E055D4D009051BD /* ConnectionView.swift */; };
@@ -189,7 +188,6 @@
 		A96C90A02E12B87900724253 /* TextBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBox.swift; sourceTree = "<group>"; };
 		A96C90A22E12D53900724253 /* KeyType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyType.swift; sourceTree = "<group>"; };
 		A9835C3B2E17CCA500969508 /* TrafficLights.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrafficLights.swift; sourceTree = "<group>"; };
-		A9835C3D2E17E9C100969508 /* invert.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = invert.metal; sourceTree = "<group>"; };
 		A98554542E05535F009051BD /* KeyManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyManagerView.swift; sourceTree = "<group>"; };
 		A98554582E0553AA009051BD /* KeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
 		A985545C2E055D4D009051BD /* ConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionView.swift; sourceTree = "<group>"; };
@@ -467,7 +465,6 @@
 				A96C90A02E12B87900724253 /* TextBox.swift */,
 				A9DA97722E0D40C100142DDC /* HostSymbolPreview.swift */,
 				A9835C3B2E17CCA500969508 /* TrafficLights.swift */,
-				A9835C3D2E17E9C100969508 /* invert.metal */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -758,7 +755,6 @@
 				A985545D2E055D4D009051BD /* ConnectionView.swift in Sources */,
 				A9FD37592E143D74005319A8 /* GenericPasswordConvertible.swift in Sources */,
 				A9485C762E1AF59F00209824 /* FontManagerView.swift in Sources */,
-				A9835C3E2E17E9C100969508 /* invert.metal in Sources */,
 				A98554592E0553AA009051BD /* KeyManager.swift in Sources */,
 				A9C897EF2DF1A9A400EF9A5F /* SSHHandler.swift in Sources */,
 				A9D819312E102D8700442D38 /* HostkeysView.swift in Sources */,

@@ -17,42 +17,44 @@ struct HostsView: View {
 			Text("Add your first Host!")
 		}
 		
-		Section("Hosts") {
-			ForEach(hostsManager.hosts) { host in
-				NavigationLink() {
-					ConnectionView(
-						handler: SSHHandler(host: host, keyManager: keyManager),
-						hostsManager: hostsManager,
-						keyManager: keyManager
-					)
-				} label: {
-					HostSymbolPreview(symbol: host.symbol, label: host.label)
-						.frame(width: 40, height: 40)
-					Text(host.description)
-				}
-				.id(host)
-				.animation(.default, value: host)
-				.swipeActions(edge: .trailing) {
-					Button(role: .destructive) {
-						hostsManager.removeHost(host)
+		if !hostsManager.hosts.isEmpty {
+			Section("Hosts") {
+				ForEach(hostsManager.hosts) { host in
+					NavigationLink() {
+						ConnectionView(
+							handler: SSHHandler(host: host, keyManager: keyManager),
+							hostsManager: hostsManager,
+							keyManager: keyManager
+						)
 					} label: {
-						Label("Delete", systemImage: "trash")
+						HostSymbolPreview(symbol: host.symbol, label: host.label)
+							.frame(width: 40, height: 40)
+						Text(host.description)
 					}
-					.tint(.red)
-					Button() {
-						hostsManager.duplicateHost(host)
-					} label: {
-						Label("Duplicate", systemImage: "square.filled.on.square")
+					.id(host)
+					.animation(.default, value: host)
+					.swipeActions(edge: .trailing) {
+						Button(role: .destructive) {
+							hostsManager.removeHost(host)
+						} label: {
+							Label("Delete", systemImage: "trash")
+						}
+						.tint(.red)
+						Button() {
+							hostsManager.duplicateHost(host)
+						} label: {
+							Label("Duplicate", systemImage: "square.filled.on.square")
+						}
+						.tint(.blue)
 					}
-					.tint(.blue)
 				}
+				.onMove(perform: {
+					hostsManager.moveHost(from: $0, to: $1)
+				})
 			}
-			.onMove(perform: {
-				hostsManager.moveHost(from: $0, to: $1)
-			})
+			.transition(.opacity)
+			.navigationTitle("ShhShell")
 		}
-		.transition(.opacity)
-		.navigationTitle("ShhShell")
 	}
 }
 
