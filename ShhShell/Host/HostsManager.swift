@@ -46,6 +46,9 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		userDefaults.synchronize()
 		self.selectedFont = userDefaults.string(forKey: "selectedFontName") ?? "SF Mono"
 		self.fontSize = CGFloat(userDefaults.double(forKey: "fontSize"))
+		if self.fontSize == 0 {
+			self.fontSize = 12
+		}
 	}
 	
 	func selectFont(_ fontName: String) {
