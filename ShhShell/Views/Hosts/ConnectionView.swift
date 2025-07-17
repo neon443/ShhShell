@@ -120,9 +120,6 @@ struct ConnectionView: View {
 			.onDisappear {
 				hostsManager.updateHost(handler.host)
 			}
-			.onAppear {
-				hostsManager.addHostIfNeeded(handler.host)
-			}
 			.alert("Hostkey changed", isPresented: $hostKeyChangedAlert) {
 				Button("Accept New Hostkey", role: .destructive) {
 					hostsManager.updateHost(handler.host)

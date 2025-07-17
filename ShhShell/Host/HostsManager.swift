@@ -198,6 +198,8 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 			updateHostWithNewID.id = oldID
 			withAnimation { hosts[index] = updateHostWithNewID }
 			saveHosts()
+		} else {
+			withAnimation { hosts.append(updatedHost) }slack
 		}
 	}
 	
@@ -229,12 +231,6 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		if let encoded = try? encoder.encode(hosts) {
 			userDefaults.set(encoded, forKey: "savedHosts")
 			userDefaults.synchronize()
-		}
-	}
-	
-	func addHostIfNeeded(_ hostToAdd: Host) {
-		if !hosts.contains(hostToAdd) {
-			hosts.append(hostToAdd)
 		}
 	}
 	
