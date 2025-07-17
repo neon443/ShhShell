@@ -44,7 +44,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		self.fonts = customFonts
 		
 		userDefaults.synchronize()
-		self.selectedFont = userDefaults.string(forKey: "selectedFontName") ?? "Menlo"
+		self.selectedFont = userDefaults.string(forKey: "selectedFontName") ?? "SF Mono"
 		self.fontSize = CGFloat(userDefaults.double(forKey: "fontSize"))
 	}
 	

@@ -23,6 +23,7 @@ struct TextBox: View {
 			} else {
 				TextField("", text: $text, prompt: Text(prompt))
 					.multilineTextAlignment(.trailing)
+					.disableAutocorrection(true)
 			}
 		}
     }
