@@ -24,6 +24,7 @@ struct TextBox: View {
 				TextField("", text: $text, prompt: Text(prompt))
 					.multilineTextAlignment(.trailing)
 					.disableAutocorrection(true)
+					.textInputAutocapitalization(.never)
 			}
 		}
     }
