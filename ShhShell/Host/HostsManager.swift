@@ -199,7 +199,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 			withAnimation { hosts[index] = updateHostWithNewID }
 			saveHosts()
 		} else {
-			withAnimation { hosts.append(updatedHost) }slack
+			withAnimation { hosts.append(updatedHost) }
 		}
 	}
 	
