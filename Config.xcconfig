@@ -6,7 +6,7 @@
 //
 
 VERSION = 1.6
-BUILD = 51
+BUILD = 54
 
 // Configuration settings file format documentation can be found at:
 // https://developer.apple.com/documentation/xcode/adding-a-build-configuration-file-to-your-project
