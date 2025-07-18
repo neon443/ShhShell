@@ -22,6 +22,8 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	@Published var selectedFont: String = "SF Mono"
 	@Published var fontSize: CGFloat = UIFont.systemFontSize
 	
+	@Published var snippets: [Snippet] = []
+	
 	var tint: SwiftUI.Color {
 		selectedTheme.ansi[selectedAnsi].suiColor
 	}
@@ -30,6 +32,20 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		loadHosts()
 		loadThemes()
 		loadFonts()
+		loadSnippets()
+	}
+	
+	func loadSnippets() {
+		userDefaults.synchronize()
+		guard let data = userDefaults.data(forKey: "snippets") else { return }
+		guard let decoded = try? JSONDecoder().decode([Snippet].self, from: data) else { return }
+		self.snippets = decoded
+	}
+	
+	func saveSnippets() {
+		guard let encoded = try? JSONEncoder().encode(snippets) else { return }
+		userDefaults.set(encoded, forKey: "snippets")
+		userDefaults.synchronize()
 	}
 	
 	func loadFonts() {

@@ -30,6 +30,8 @@
 		A93143BE2DF4D0B300FCD5DB /* libpthread.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A93143BD2DF4D0A700FCD5DB /* libpthread.tbd */; };
 		A93143C02DF61B3200FCD5DB /* Host.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93143BF2DF61B3200FCD5DB /* Host.swift */; };
 		A93143C62DF61FE300FCD5DB /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93143C52DF61FE300FCD5DB /* ViewModifiers.swift */; };
+		A93F283D2E2A5DCB0092B8D5 /* SnippetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93F283C2E2A5DCB0092B8D5 /* SnippetManager.swift */; };
+		A93F28412E2A5EEA0092B8D5 /* Snippet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93F28402E2A5EEA0092B8D5 /* Snippet.swift */; };
 		A9485C712E1AECD000209824 /* JetBrainsMonoNerdFontMono-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9485C702E1AECD000209824 /* JetBrainsMonoNerdFontMono-Italic.ttf */; };
 		A9485C722E1AECD000209824 /* JetBrainsMonoNerdFontMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9485C6E2E1AECD000209824 /* JetBrainsMonoNerdFontMono-Bold.ttf */; };
 		A9485C732E1AECD000209824 /* JetBrainsMonoNerdFontMono-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9485C6F2E1AECD000209824 /* JetBrainsMonoNerdFontMono-BoldItalic.ttf */; };
@@ -126,7 +128,7 @@
 
 /* Begin PBXFileReference section */
 		A9083E3F2DF2225A0042906E /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		A90936852E1AC33C00856059 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		A90936852E1AC33C00856059 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A90936872E1AC51100856059 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		A90936952E1AE9AB00856059 /* CascadiaMono.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = CascadiaMono.ttf; sourceTree = "<group>"; };
 		A909369D2E1AE9AB00856059 /* JetBrainsMonoNerdFontMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JetBrainsMonoNerdFontMono-Regular.ttf"; sourceTree = "<group>"; };
@@ -153,6 +155,8 @@
 		A93143BF2DF61B3200FCD5DB /* Host.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Host.swift; sourceTree = "<group>"; };
 		A93143C22DF61F5700FCD5DB /* ShhShell.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShhShell.entitlements; sourceTree = "<group>"; };
 		A93143C52DF61FE300FCD5DB /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
+		A93F283C2E2A5DCB0092B8D5 /* SnippetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnippetManager.swift; sourceTree = "<group>"; };
+		A93F28402E2A5EEA0092B8D5 /* Snippet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Snippet.swift; sourceTree = "<group>"; };
 		A9485C6E2E1AECD000209824 /* JetBrainsMonoNerdFontMono-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JetBrainsMonoNerdFontMono-Bold.ttf"; sourceTree = "<group>"; };
 		A9485C6F2E1AECD000209824 /* JetBrainsMonoNerdFontMono-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JetBrainsMonoNerdFontMono-BoldItalic.ttf"; sourceTree = "<group>"; };
 		A9485C702E1AECD000209824 /* JetBrainsMonoNerdFontMono-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JetBrainsMonoNerdFontMono-Italic.ttf"; sourceTree = "<group>"; };
@@ -344,15 +348,16 @@
 		A92538C72DEE0742007E0A18 /* ShhShell */ = {
 			isa = PBXGroup;
 			children = (
-				A90936852E1AC33C00856059 /* Info.plist */,
 				A92538C62DEE0742007E0A18 /* ShhShellApp.swift */,
-				A93143C22DF61F5700FCD5DB /* ShhShell.entitlements */,
-				A90936862E1AC4C600856059 /* Fonts */,
-				A9D8192A2E0E904900442D38 /* Themes */,
-				A98554572E055398009051BD /* Keys */,
-				A98554562E055394009051BD /* Host */,
 				A93143C12DF61E8500FCD5DB /* SSH */,
+				A98554562E055394009051BD /* Host */,
+				A98554572E055398009051BD /* Keys */,
+				A9D8192A2E0E904900442D38 /* Themes */,
+				A90936862E1AC4C600856059 /* Fonts */,
+				A93F283F2E2A5EC80092B8D5 /* Snippets */,
 				A92538D32DEE0749007E0A18 /* Views */,
+				A90936852E1AC33C00856059 /* Info.plist */,
+				A93143C22DF61F5700FCD5DB /* ShhShell.entitlements */,
 			);
 			path = ShhShell;
 			sourceTree = "<group>";
@@ -378,12 +383,13 @@
 			isa = PBXGroup;
 			children = (
 				A92538C52DEE0742007E0A18 /* ContentView.swift */,
-				A9485C742E1AF58C00209824 /* Fonts */,
+				A923172B2E0712F200ECE1E6 /* Terminal */,
+				A96C6B042E0C523E00F377FE /* Hosts */,
+				A98554532E05534F009051BD /* Keys */,
 				A96BE6AB2E11824B00C0FEE9 /* Sessions */,
 				A9D8192B2E0E9EA400442D38 /* Themes */,
-				A98554532E05534F009051BD /* Keys */,
-				A96C6B042E0C523E00F377FE /* Hosts */,
-				A923172B2E0712F200ECE1E6 /* Terminal */,
+				A9485C742E1AF58C00209824 /* Fonts */,
+				A93F283E2E2A5DDE0092B8D5 /* Snippets */,
 				A96C6B032E0C523600F377FE /* Misc */,
 			);
 			path = Views;
@@ -428,6 +434,22 @@
 				A96C6A892E0C0B1100F377FE /* SSHState.swift */,
 			);
 			path = SSH;
+			sourceTree = "<group>";
+		};
+		A93F283E2E2A5DDE0092B8D5 /* Snippets */ = {
+			isa = PBXGroup;
+			children = (
+				A93F283C2E2A5DCB0092B8D5 /* SnippetManager.swift */,
+			);
+			path = Snippets;
+			sourceTree = "<group>";
+		};
+		A93F283F2E2A5EC80092B8D5 /* Snippets */ = {
+			isa = PBXGroup;
+			children = (
+				A93F28402E2A5EEA0092B8D5 /* Snippet.swift */,
+			);
+			path = Snippets;
 			sourceTree = "<group>";
 		};
 		A9485C742E1AF58C00209824 /* Fonts */ = {
@@ -744,6 +766,7 @@
 				A93143C02DF61B3200FCD5DB /* Host.swift in Sources */,
 				A92538C92DEE0742007E0A18 /* ShhShellApp.swift in Sources */,
 				A9BA1D192E1D9AE1005BDCEF /* SwiftTerm.Color.swift in Sources */,
+				A93F28412E2A5EEA0092B8D5 /* Snippet.swift in Sources */,
 				A96BE6AD2E11825800C0FEE9 /* SessionView.swift in Sources */,
 				A96C6B002E0C45FE00F377FE /* KeyDetailView.swift in Sources */,
 				A9DA97712E0D30ED00142DDC /* HostSymbol.swift in Sources */,
@@ -756,6 +779,7 @@
 				A9FD37592E143D74005319A8 /* GenericPasswordConvertible.swift in Sources */,
 				A9485C762E1AF59F00209824 /* FontManagerView.swift in Sources */,
 				A98554592E0553AA009051BD /* KeyManager.swift in Sources */,
+				A93F283D2E2A5DCB0092B8D5 /* SnippetManager.swift in Sources */,
 				A9C897EF2DF1A9A400EF9A5F /* SSHHandler.swift in Sources */,
 				A9D819312E102D8700442D38 /* HostkeysView.swift in Sources */,
 				A98554552E05535F009051BD /* KeyManagerView.swift in Sources */,
