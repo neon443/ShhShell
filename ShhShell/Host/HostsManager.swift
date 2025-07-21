@@ -144,8 +144,9 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	func duplicateTheme(_ theme: Theme) {
 		var newTheme = theme
 		newTheme.id = UUID().uuidString
+		newTheme.name.append(" copy")
 		if let index = themes.firstIndex(where: { $0.id == theme.id }) {
-			themes.insert(newTheme, at: index)
+			themes.insert(newTheme, at: index+1)
 		} else {
 			themes.append(newTheme)
 		}

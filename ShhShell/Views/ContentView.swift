@@ -43,7 +43,11 @@ struct ContentView: View {
 						}
 					}
 					
-					
+					NavigationLink {
+						SnippetManagerView(hostsManager: hostsManager)
+					} label: {
+						Label("Snippets", systemImage: "paperclip")
+					}
 					
 					NavigationLink {
 						KeyManagerView(hostsManager: hostsManager, keyManager: keyManager)
