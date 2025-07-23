@@ -35,11 +35,27 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		loadSnippets()
 	}
 	
+	func addSnippet(_ toAdd: Snippet) {
+		snippets.append(toAdd)
+		saveSnippets()
+	}
+	
+	func duplicateSnippet(_ snip: Snippet) {
+		guard let index = snippets.firstIndex(where: { $0.id == snip.id }) else { return }
+		withAnimation { snippets.insert(snip, at: index+1) }
+	}
+	
+	func deleteSnippet(_ toDel: Snippet) {
+		guard let index = snippets.firstIndex(where: { $0.id == toDel.id }) else { return }
+		snippets.remove(at: index)
+		saveSnippets()
+	}
+	
 	func loadSnippets() {
 		userDefaults.synchronize()
 		guard let data = userDefaults.data(forKey: "snippets") else { return }
 		guard let decoded = try? JSONDecoder().decode([Snippet].self, from: data) else { return }
-		self.snippets = decoded
+		withAnimation { self.snippets = decoded }
 	}
 	
 	func saveSnippets() {
