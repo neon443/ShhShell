@@ -80,13 +80,13 @@ struct ConnectionView: View {
 					TextBox(label: "Password", text: $handler.host.password, prompt: "not required if using publickeys", secure: true)
 					
 					Picker("Private key", selection: $handler.host.privateKeyID) {
-						Text("None")
-							.tag(nil as UUID?)
-						Divider()
 						ForEach(keyManager.keypairs) { keypair in
 							Text(keypair.label)
 								.tag(keypair.id as UUID?)
 						}
+						Divider()
+						Text("None")
+							.tag(nil as UUID?)
 					}
 				}
 				

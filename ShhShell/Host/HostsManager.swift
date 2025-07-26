@@ -188,12 +188,14 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		var newTheme = themes[index]
 		newTheme.name = newName
 		newTheme.id = UUID().uuidString
+		Haptic.medium.trigger()
 		withAnimation { themes[index] = newTheme }
 		saveThemes()
 	}
 	
 	func deleteTheme(_ themeToDel: Theme) {
 		guard let index = themes.firstIndex(where: {$0 == themeToDel}) else { return }
+		Haptic.medium.trigger()
 		themes.remove(at: index)
 		saveThemes()
 	}
@@ -204,6 +206,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		guard var theme = Theme.decodeTheme(data: data) else { return }
 		theme.name = fromUrl?.lastPathComponent.replacingOccurrences(of: ".itermcolors", with: "") ?? ""
 		self.themes.append(theme)
+		Haptic.success.trigger()
 		saveThemes()
 	}
 	
@@ -234,6 +237,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		} else {
 			withAnimation { hosts.append(updatedHost) }
 		}
+		Haptic.medium.trigger()
 	}
 	
 	func duplicateHost(_ hostToDup: Host) {
@@ -241,6 +245,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		hostNewID.id = UUID()
 		if let index = hosts.firstIndex(where: { $0 == hostToDup }) {
 			hosts.insert(hostNewID, at: index+1)
+			Haptic.medium.trigger()
 		}
 	}
 	
@@ -270,6 +275,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	func removeHost(_ host: Host) {
 		if let index = hosts.firstIndex(where: { $0.id == host.id }) {
 			let _ = withAnimation { hosts.remove(at: index) }
+			Haptic.medium.trigger()
 			saveHosts()
 		}
 	}

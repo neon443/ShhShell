@@ -17,12 +17,31 @@ struct SnippetManagerView: View {
 				.ignoresSafeArea(.all)
 			NavigationStack {
 				List {
+					if hostsManager.snippets.isEmpty {
+						VStack(alignment: .leading) {
+							Image(systemName: "questionmark.square.dashed")
+								.resizable().scaledToFit()
+								.frame(width: 50)
+								.foregroundStyle(hostsManager.tint)
+								.shadow(color: hostsManager.tint, radius: 2)
+							Text("No Snippets")
+								.font(.title)
+								.monospaced()
+								.padding(.bottom)
+							Text("Snippets are strings of commands that can be run at once in a terminal.")
+								.padding(.bottom)
+								.foregroundStyle(.gray)
+								.foregroundStyle(.foreground.opacity(0.7))
+						}
+					}
 					ForEach(hostsManager.snippets) { snip in
-						Group {
+						VStack(alignment: .leading) {
 							Text(snip.name)
 								.bold()
+								.foregroundStyle(.gray)
 								.font(.subheadline)
 							Text(snip.content)
+								.lineLimit(3)
 						}
 						.swipeActions(edge: .trailing) {
 							Button(role: .destructive) {
@@ -35,6 +54,12 @@ struct SnippetManagerView: View {
 								hostsManager.duplicateSnippet(snip)
 							} label: {
 								Label("Duplicate", systemImage: "square.filled.on.square")
+							}
+							.tint(.blue)
+							Button {
+								UIPasteboard().string = snip.content
+							} label: {
+								Label("Copy", systemImage: "doc.on.clipboard")
 							}
 							.tint(.blue)
 						}

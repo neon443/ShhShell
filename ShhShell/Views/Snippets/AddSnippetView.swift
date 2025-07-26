@@ -30,6 +30,7 @@ struct AddSnippetView: View {
 						.foregroundStyle(.gray)
 						.listRowSeparator(.hidden)
 						.multilineTextAlignment(.leading)
+						.frame(alignment: .leading)
 					TextEditor(text: $content)
 						.autocorrectionDisabled()
 						.textInputAutocapitalization(.never)

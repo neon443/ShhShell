@@ -76,6 +76,7 @@
 		A9BA1D192E1D9AE1005BDCEF /* SwiftTerm.Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BA1D182E1D9AE1005BDCEF /* SwiftTerm.Color.swift */; };
 		A9BA1D1E2E1EAD51005BDCEF /* SF-Mono-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A9BA1D1C2E1EAD51005BDCEF /* SF-Mono-Bold.otf */; };
 		A9BA1D1F2E1EAD51005BDCEF /* SF-Mono-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = A9BA1D1D2E1EAD51005BDCEF /* SF-Mono-BoldItalic.otf */; };
+		A9C060EB2E357FD300CA9374 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C060EA2E357FD300CA9374 /* Haptics.swift */; };
 		A9C4140C2E096DB7005E3047 /* SSHError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4140B2E096DB7005E3047 /* SSHError.swift */; };
 		A9C897EF2DF1A9A400EF9A5F /* SSHHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */; };
 		A9D819292E0E904200442D38 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D819282E0E904200442D38 /* Theme.swift */; };
@@ -202,6 +203,7 @@
 		A9BA1D182E1D9AE1005BDCEF /* SwiftTerm.Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftTerm.Color.swift; sourceTree = "<group>"; };
 		A9BA1D1C2E1EAD51005BDCEF /* SF-Mono-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Mono-Bold.otf"; sourceTree = "<group>"; };
 		A9BA1D1D2E1EAD51005BDCEF /* SF-Mono-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Mono-BoldItalic.otf"; sourceTree = "<group>"; };
+		A9C060EA2E357FD300CA9374 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
 		A9C4140B2E096DB7005E3047 /* SSHError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHError.swift; sourceTree = "<group>"; };
 		A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHHandler.swift; sourceTree = "<group>"; };
 		A9D819282E0E904200442D38 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
@@ -357,6 +359,7 @@
 				A9D8192A2E0E904900442D38 /* Themes */,
 				A90936862E1AC4C600856059 /* Fonts */,
 				A93F283F2E2A5EC80092B8D5 /* Snippets */,
+				A9C060E92E357FC400CA9374 /* Misc */,
 				A92538D32DEE0749007E0A18 /* Views */,
 				A90936852E1AC33C00856059 /* Info.plist */,
 				A93143C22DF61F5700FCD5DB /* ShhShell.entitlements */,
@@ -533,6 +536,14 @@
 				A96C6AFD2E0C43B600F377FE /* Keypair.swift */,
 			);
 			path = Keys;
+			sourceTree = "<group>";
+		};
+		A9C060E92E357FC400CA9374 /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				A9C060EA2E357FD300CA9374 /* Haptics.swift */,
+			);
+			path = Misc;
 			sourceTree = "<group>";
 		};
 		A9C8976F2DF1980900EF9A5F /* Frameworks */ = {
@@ -783,6 +794,7 @@
 				A9485C762E1AF59F00209824 /* FontManagerView.swift in Sources */,
 				A98554592E0553AA009051BD /* KeyManager.swift in Sources */,
 				A93F283D2E2A5DCB0092B8D5 /* SnippetManagerView.swift in Sources */,
+				A9C060EB2E357FD300CA9374 /* Haptics.swift in Sources */,
 				A9C897EF2DF1A9A400EF9A5F /* SSHHandler.swift in Sources */,
 				A9D819312E102D8700442D38 /* HostkeysView.swift in Sources */,
 				A98554552E05535F009051BD /* KeyManagerView.swift in Sources */,
