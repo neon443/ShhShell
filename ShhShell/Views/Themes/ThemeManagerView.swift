@@ -68,7 +68,7 @@ struct ThemeManagerView: View {
 										.resizable().scaledToFit()
 										.symbolRenderingMode(.multicolor)
 								}
-								.frame(width: 50, height: 50)
+								.frame(width: 75, height: 75)
 								Text("No themes (yet)")
 									.font(.title)
 									.padding(.vertical, 10)

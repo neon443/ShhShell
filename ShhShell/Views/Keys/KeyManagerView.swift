@@ -51,12 +51,16 @@ struct KeyManagerView: View {
 						.id(keyManager.keypairs)
 					}
 					
-					Button("Generate a new Ed25519 Key") {
-						let comment = UIDevice().model + " at " + Date().formatted(date: .numeric, time: .omitted)
-						keyManager.generateKey(type: .ed25519, comment: comment)
-					}
+					CenteredLabel(title: "Generate a key", systemName: "plus")
+						.onTapGesture {
+							let comment = UIDevice().model + " at " + Date().formatted(date: .numeric, time: .omitted)
+							keyManager.generateKey(type: .ed25519, comment: comment)
+						}
 					
-					Button("Import Key") { showImporter.toggle() }
+					CenteredLabel(title: "Import a key", systemName: "square.and.arrow.down")
+						.onTapGesture {
+							showImporter.toggle()
+						}
 						.sheet(isPresented: $showImporter) {
 							KeyImporterView(keyManager: keyManager)
 						}

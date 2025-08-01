@@ -21,7 +21,7 @@ struct SnippetManagerView: View {
 						VStack(alignment: .leading) {
 							Image(systemName: "questionmark.square.dashed")
 								.resizable().scaledToFit()
-								.frame(width: 50)
+								.frame(width: 75)
 								.foregroundStyle(hostsManager.tint)
 								.shadow(color: hostsManager.tint, radius: 2)
 							Text("No Snippets")

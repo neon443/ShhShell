@@ -95,7 +95,7 @@ class KeyManager: ObservableObject {
 			try! passwordStore.storeKey(curve25519.genericKeyRepresentation, account: keypair.id.uuidString)
 		}
 		if !keypairs.contains(keypair) {
-			keypairs.append(keypair)
+			withAnimation { keypairs.append(keypair) } 
 			saveKeypairs()
 		}
 	}
