@@ -16,6 +16,10 @@ struct HostSymbolPreview: View {
 			symbol.image
 				.resizable().scaledToFit()
 				.symbolRenderingMode(.monochrome)
+				.blur(radius: 1)
+			symbol.image
+				.resizable().scaledToFit()
+				.symbolRenderingMode(.monochrome)
 			Text(label)
 				.font(.headline)
 				.offset(symbol.offset)

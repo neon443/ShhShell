@@ -61,7 +61,7 @@ enum HostSymbol: Codable, Equatable, Hashable, CaseIterable {
 		case .desktopcomputer:
 			deltaHeight = -6
 		case .laptopcomputer:
-			deltaHeight = -2
+			deltaHeight = -1.5
 		case .genericPC:
 			deltaHeight = -6
 		default:

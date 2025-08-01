@@ -59,10 +59,16 @@ struct ThemeManagerView: View {
 						}
 						if hostsManager.themes.isEmpty {
 							VStack(alignment: .leading) {
-								Image(systemName: "paintpalette")
-									.resizable().scaledToFit()
-									.symbolRenderingMode(.multicolor)
-									.frame(width: 50)
+								ZStack {
+									Image(systemName: "paintpalette")
+										.resizable().scaledToFit()
+										.symbolRenderingMode(.multicolor)
+										.blur(radius: 2)
+									Image(systemName: "paintpalette")
+										.resizable().scaledToFit()
+										.symbolRenderingMode(.multicolor)
+								}
+								.frame(width: 50, height: 50)
 								Text("No themes (yet)")
 									.font(.title)
 									.padding(.vertical, 10)
