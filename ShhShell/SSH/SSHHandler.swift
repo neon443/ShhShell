@@ -36,6 +36,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	@Published var bell: Bool = false
 	
 	@Published var host: Host
+	@Published var hostkeyChanged: Bool = false
 	
 	private let userDefaults = NSUbiquitousKeyValueStore.default
 	private let logger = Logger(subsystem: "xy", category: "sshHandler")
@@ -64,12 +65,15 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			return
 		}
 		
+		checkHostkey(recieved: getHostkey())
+		guard hostkeyChanged == false else { return }
+		
 		do {
 			try authWithNone()
 		} catch { print("auth with none is not authed") }
 		guard state != .authorized else { return }
 		
-		//TODO: check hostkey
+		
 		
 		for method in getAuthMethods() {
 			guard state != .authorized else { break }
@@ -164,8 +168,11 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		self.session = nil
 	}
 	
-	func checkHostkey() {
-		
+	func checkHostkey(recieved: String?) {
+		guard host.key == recieved else {
+			self.hostkeyChanged = true
+			return
+		}
 	}
 	
 	func ring() {

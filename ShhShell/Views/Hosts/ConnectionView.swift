@@ -19,8 +19,6 @@ struct ConnectionView: View {
 	
 	@State var showTerminal: Bool = false
 	
-	@State var hostKeyChangedAlert: Bool = false
-	
 	var body: some View {
 		ZStack {
 			hostsManager.selectedTheme.background.suiColor.opacity(0.7)
@@ -110,28 +108,36 @@ struct ConnectionView: View {
 			}
 			.scrollContentBackground(.hidden)
 			.transition(.opacity)
-			.onChange(of: handler.host.key) { _ in
-				guard let previousKnownHost = hostsManager.getHostMatching(handler.host) else { return }
-				guard handler.host.key == previousKnownHost.key else {
-					hostKeyChangedAlert = true
-					return
-				}
-			}
 			.onDisappear {
 				hostsManager.updateHost(handler.host)
 			}
-			.alert("Hostkey changed", isPresented: $hostKeyChangedAlert) {
-				Button("Accept New Hostkey", role: .destructive) {
+			.alert("Hostkey changed", isPresented: $handler.hostkeyChanged) {
+				Button(role: .destructive) {
+					handler.host.key = handler.getHostkey()
 					hostsManager.updateHost(handler.host)
 					handler.go()
+				} label: {
+					Text("Accept Hostkey")
 				}
 				
-				Button("Disconnect", role: .cancel) {
+				Button(role: .cancel) {
 					handler.disconnect()
-					handler.host.key = hostsManager.getHostMatching(handler.host)?.key
+				} label: {
+					Text("Disconnect")
+						.tint(.blue)
+						.foregroundStyle(.blue)
 				}
+				.tint(.blue)
+				.foregroundStyle(.blue)
 			} message: {
-				Text("Expected \(handler.host.key ?? "nil")\nbut recieved \(handler.getHostkey() ?? "nil") from the server")
+				if let expectedKey = handler.host.key {
+					Text("Expected \(expectedKey)\nbut recieved\n \(handler.getHostkey() ?? "nil") from server")
+				} else {
+					Text("""
+The authenticity of \(handler.host.description) can't be established.
+Hostkey fingerprint is \(handler.getHostkey() ?? "nil")
+""")
+				}
 			}
 			.toolbar {
 				ToolbarItem() {

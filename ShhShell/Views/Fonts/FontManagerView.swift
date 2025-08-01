@@ -60,6 +60,7 @@ struct FontManagerView: View {
 			
 			Section("Test String") {
 				TextEditor(text: $testLine)
+					.fixedSize()
 			}
 		}
 	}

@@ -56,6 +56,7 @@ struct KeyManagerView: View {
 							let comment = UIDevice().model + " at " + Date().formatted(date: .numeric, time: .omitted)
 							keyManager.generateKey(type: .ed25519, comment: comment)
 						}
+						.listRowSeparator(.hidden)
 					
 					CenteredLabel(title: "Import a key", systemName: "square.and.arrow.down")
 						.onTapGesture {
