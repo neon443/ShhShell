@@ -17,6 +17,8 @@
 		A90936AE2E1AE9AB00856059 /* JetBrainsMonoNerdFontMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A909369D2E1AE9AB00856059 /* JetBrainsMonoNerdFontMono-Regular.ttf */; };
 		A90936AF2E1AE9AB00856059 /* MesloLGS NF Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A909369F2E1AE9AB00856059 /* MesloLGS NF Bold.ttf */; };
 		A90936B02E1AE9AB00856059 /* MesloLGS NF Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A90936A12E1AE9AB00856059 /* MesloLGS NF Italic.ttf */; };
+		A90B38322E3E8FC9002B56FC /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90B38312E3E8FC9002B56FC /* AboutView.swift */; };
+		A90B38342E3EA046002B56FC /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90B38332E3EA046002B56FC /* Bundle.swift */; };
 		A923172A2E07113100ECE1E6 /* TerminalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92317292E07113100ECE1E6 /* TerminalController.swift */; };
 		A923172D2E07138000ECE1E6 /* SSHTerminalDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A923172C2E07138000ECE1E6 /* SSHTerminalDelegate.swift */; };
 		A923172F2E08851200ECE1E6 /* ShellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A923172E2E08851200ECE1E6 /* ShellView.swift */; };
@@ -140,6 +142,8 @@
 		A90936A22E1AE9AB00856059 /* MesloLGS NF Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MesloLGS NF Regular.ttf"; sourceTree = "<group>"; };
 		A90936A42E1AE9AB00856059 /* SF-Mono-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Mono-Regular.otf"; sourceTree = "<group>"; };
 		A90936A52E1AE9AB00856059 /* SF-Mono-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Mono-RegularItalic.otf"; sourceTree = "<group>"; };
+		A90B38312E3E8FC9002B56FC /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		A90B38332E3EA046002B56FC /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		A92317292E07113100ECE1E6 /* TerminalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalController.swift; sourceTree = "<group>"; };
 		A923172C2E07138000ECE1E6 /* SSHTerminalDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHTerminalDelegate.swift; sourceTree = "<group>"; };
 		A923172E2E08851200ECE1E6 /* ShellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShellView.swift; path = ShhShell/Views/Terminal/ShellView.swift; sourceTree = SOURCE_ROOT; };
@@ -313,6 +317,14 @@
 			path = sfMono;
 			sourceTree = "<group>";
 		};
+		A90B38302E3E8FBA002B56FC /* About */ = {
+			isa = PBXGroup;
+			children = (
+				A90B38312E3E8FC9002B56FC /* AboutView.swift */,
+			);
+			path = About;
+			sourceTree = "<group>";
+		};
 		A923172B2E0712F200ECE1E6 /* Terminal */ = {
 			isa = PBXGroup;
 			children = (
@@ -395,6 +407,7 @@
 				A9D8192B2E0E9EA400442D38 /* Themes */,
 				A9485C742E1AF58C00209824 /* Fonts */,
 				A93F283E2E2A5DDE0092B8D5 /* Snippets */,
+				A90B38302E3E8FBA002B56FC /* About */,
 				A96C6B032E0C523600F377FE /* Misc */,
 			);
 			path = Views;
@@ -542,6 +555,7 @@
 			isa = PBXGroup;
 			children = (
 				A9C060EA2E357FD300CA9374 /* Haptics.swift */,
+				A90B38332E3EA046002B56FC /* Bundle.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -772,6 +786,7 @@
 				A96C6A8A2E0C0B1100F377FE /* SSHState.swift in Sources */,
 				A9FD37692E16A6BF005319A8 /* ShellTabView.swift in Sources */,
 				A9DA97732E0D40C100142DDC /* HostSymbolPreview.swift in Sources */,
+				A90B38342E3EA046002B56FC /* Bundle.swift in Sources */,
 				A9FD376B2E16DABF005319A8 /* AnsiPickerView.swift in Sources */,
 				A96BE6A62E113DB000C0FEE9 /* ColorCodable.swift in Sources */,
 				A92538C82DEE0742007E0A18 /* ContentView.swift in Sources */,
@@ -803,6 +818,7 @@
 				A90936882E1AC51100856059 /* Fonts.swift in Sources */,
 				A9FD37552E143D23005319A8 /* SecKeyConvertible.swift in Sources */,
 				A96C6AFE2E0C43B600F377FE /* Keypair.swift in Sources */,
+				A90B38322E3E8FC9002B56FC /* AboutView.swift in Sources */,
 				A9C4140C2E096DB7005E3047 /* SSHError.swift in Sources */,
 				A96BE6AA2E116EC000C0FEE9 /* TerminalViewContainer.swift in Sources */,
 				A9FD375B2E143D77005319A8 /* GenericPasswordStore.swift in Sources */,

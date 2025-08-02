@@ -43,22 +43,32 @@ struct ContentView: View {
 						}
 					}
 					
-					NavigationLink {
-						SnippetManagerView(hostsManager: hostsManager)
-					} label: {
-						Label("Snippets", systemImage: "paperclip")
+					Section {
+						NavigationLink {
+							SnippetManagerView(hostsManager: hostsManager)
+						} label: {
+							Label("Snippets", systemImage: "paperclip")
+						}
+						
+						NavigationLink {
+							KeyManagerView(hostsManager: hostsManager, keyManager: keyManager)
+						} label: {
+							Label("Keys", systemImage: "key.fill")
+						}
+						
+						NavigationLink {
+							HostkeysView(hostsManager: hostsManager)
+						} label: {
+							Label("Hostkey Fingerprints", systemImage: "lock.display")
+						}
 					}
 					
-					NavigationLink {
-						KeyManagerView(hostsManager: hostsManager, keyManager: keyManager)
-					} label: {
-						Label("Keys", systemImage: "key.fill")
-					}
-					
-					NavigationLink {
-						HostkeysView(hostsManager: hostsManager)
-					} label: {
-						Label("Hostkey Fingerprints", systemImage: "lock.display")
+					Section {
+						NavigationLink {
+							AboutView()
+						} label: {
+							Label("About", systemImage: "info.square")
+						}
 					}
 				}
 				.scrollContentBackground(.hidden)
