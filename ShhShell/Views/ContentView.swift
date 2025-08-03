@@ -65,7 +65,7 @@ struct ContentView: View {
 					
 					Section {
 						NavigationLink {
-							AboutView()
+							AboutView(hostsManager: hostsManager)
 						} label: {
 							Label("About", systemImage: "info.square")
 						}

@@ -8,15 +8,26 @@
 import SwiftUI
 
 struct AboutView: View {
+	@ObservedObject var hostsManager: HostsManager
+	
     var body: some View {
-		HStack {
-			UIImage().appIcon
-			Image(uiImage: UIImage(named: "AppIcon") ?? UIImage())
-			Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+		ZStack {
+			hostsManager.selectedTheme.background.suiColor.opacity(0.7)
+							.ignoresSafeArea(.all)
+			List {
+				HStack {
+					UIImage().appIcon
+						.resizable().scaledToFit()
+						.frame(width: 100)
+						.clipShape(RoundedRectangle(cornerRadius: 26))
+					Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+				}
+			}
+			.scrollContentBackground(.hidden)
 		}
     }
 }
 
 #Preview {
-    AboutView()
+    AboutView(hostsManager: HostsManager())
 }

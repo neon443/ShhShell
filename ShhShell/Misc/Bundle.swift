@@ -22,9 +22,10 @@ extension Bundle {
 
 extension UIImage {
 	var appIcon: Image {
-		let fallback = Image(uiImage: UIImage())
-		guard let filename = Bundle.main.iconFilename else { return fallback }
-		guard let uiImage = UIImage(named: filename) else { return fallback }
-		return Image(uiImage: uiImage)
+//		let fallback = Image(uiImage: UIImage())
+//		guard let filename = Bundle.main.iconFilename else { return fallback }
+//		guard let uiImage = UIImage(named: filename) else { return fallback }
+//		return uiImage
+		return Image("Icon")
 	}
 }
