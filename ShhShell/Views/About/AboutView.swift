@@ -14,16 +14,35 @@ struct AboutView: View {
 		ZStack {
 			hostsManager.selectedTheme.background.suiColor.opacity(0.7)
 							.ignoresSafeArea(.all)
-			List {
+//			List {
+			VStack(alignment: .leading) {
+				UIImage().appIcon
+					.resizable().scaledToFit()
+					.frame(width: 100)
+					.clipShape(RoundedRectangle(cornerRadius: 26))
+				Text("ShhShell")
+					.font(.largeTitle.monospaced())
 				HStack {
-					UIImage().appIcon
-						.resizable().scaledToFit()
-						.frame(width: 100)
-						.clipShape(RoundedRectangle(cornerRadius: 26))
-					Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+					Text(Bundle.main.appVersion)
+						.monospaced()
+						.font(.subheadline)
+					Text(Bundle.main.appBuild)
+						.monospaced()
+						.font(.callout)
+				}
+				.padding(.bottom)
+				
+				Section("Thanks to") {
+					Link(destination: URL(string: "https://libssh.org")!) {
+						Text("LibSSH")
+							.background(.red)
+					}
 				}
 			}
-			.scrollContentBackground(.hidden)
+			.frame(maxWidth: .infinity)
+			.padding()
+//			}
+//			.scrollContentBackground(.hidden)
 		}
     }
 }

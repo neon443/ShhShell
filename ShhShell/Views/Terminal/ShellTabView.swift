@@ -14,6 +14,8 @@ struct ShellTabView: View {
 	@ObservedObject var container = TerminalViewContainer.shared
 	@State var selectedID: UUID?
 	
+	@State var showSnippetPicker: Bool = false
+	
 	@Environment(\.dismiss) var dismiss
 	
 	var foreground: Color {
@@ -75,11 +77,22 @@ struct ShellTabView: View {
 							}
 						}
 						Spacer()
+						Button() {
+							showSnippetPicker.toggle()
+						} label: {
+							Image(systemName: "paperclip")
+						}
+						.foregroundStyle(foreground)
+						.sheet(isPresented: $showSnippetPicker) {
+							SnippetPicker(hostsManager: hostsManager) {
+								container.sessions[selectedID ?? UUID()]?.handler.writeToChannel($0.content)
+							}
+						}
 					}
 					.padding(.horizontal, 10)
-					.padding(.vertical, 5)
+					.padding(.vertical, 10)
 					.background(hostsManager.tint, ignoresSafeAreaEdges: .all)
-					.frame(height: 30)
+					.frame(height: 40)
 					
 					if container.sessionIDs.count > 1 {
 						ScrollView(.horizontal, showsIndicators: false) {

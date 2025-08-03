@@ -79,6 +79,7 @@
 		A9BA1D1E2E1EAD51005BDCEF /* SF-Mono-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A9BA1D1C2E1EAD51005BDCEF /* SF-Mono-Bold.otf */; };
 		A9BA1D1F2E1EAD51005BDCEF /* SF-Mono-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = A9BA1D1D2E1EAD51005BDCEF /* SF-Mono-BoldItalic.otf */; };
 		A9C060EB2E357FD300CA9374 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C060EA2E357FD300CA9374 /* Haptics.swift */; };
+		A9C060ED2E3FBCD000CA9374 /* SnippetPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C060EC2E3FBCD000CA9374 /* SnippetPicker.swift */; };
 		A9C4140C2E096DB7005E3047 /* SSHError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4140B2E096DB7005E3047 /* SSHError.swift */; };
 		A9C897EF2DF1A9A400EF9A5F /* SSHHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */; };
 		A9D819292E0E904200442D38 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D819282E0E904200442D38 /* Theme.swift */; };
@@ -208,6 +209,7 @@
 		A9BA1D1C2E1EAD51005BDCEF /* SF-Mono-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Mono-Bold.otf"; sourceTree = "<group>"; };
 		A9BA1D1D2E1EAD51005BDCEF /* SF-Mono-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Mono-BoldItalic.otf"; sourceTree = "<group>"; };
 		A9C060EA2E357FD300CA9374 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
+		A9C060EC2E3FBCD000CA9374 /* SnippetPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnippetPicker.swift; sourceTree = "<group>"; };
 		A9C4140B2E096DB7005E3047 /* SSHError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHError.swift; sourceTree = "<group>"; };
 		A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHHandler.swift; sourceTree = "<group>"; };
 		A9D819282E0E904200442D38 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
@@ -458,6 +460,7 @@
 			isa = PBXGroup;
 			children = (
 				A93F283C2E2A5DCB0092B8D5 /* SnippetManagerView.swift */,
+				A9C060EC2E3FBCD000CA9374 /* SnippetPicker.swift */,
 				A9A2F4F52E3001D300D0AE9B /* AddSnippetView.swift */,
 			);
 			path = Snippets;
@@ -788,6 +791,7 @@
 				A9DA97732E0D40C100142DDC /* HostSymbolPreview.swift in Sources */,
 				A90B38342E3EA046002B56FC /* Bundle.swift in Sources */,
 				A9FD376B2E16DABF005319A8 /* AnsiPickerView.swift in Sources */,
+				A9C060ED2E3FBCD000CA9374 /* SnippetPicker.swift in Sources */,
 				A96BE6A62E113DB000C0FEE9 /* ColorCodable.swift in Sources */,
 				A92538C82DEE0742007E0A18 /* ContentView.swift in Sources */,
 				A96BE6A42E113D9400C0FEE9 /* ThemeCodable.swift in Sources */,

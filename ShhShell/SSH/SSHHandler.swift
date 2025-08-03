@@ -47,6 +47,8 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	}
 	
 	func getHostkey() -> String? {
+		guard connected else { return nil }
+		
 		var hostkey: ssh_key?
 		ssh_get_server_publickey(session, &hostkey)
 		
