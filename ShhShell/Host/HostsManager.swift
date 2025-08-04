@@ -114,7 +114,6 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		self.selectedTheme = decodedSelTheme
 		
 		selectedAnsi = Int(userDefaults.longLong(forKey: "selectedAnsi"))
-		print(themes.count)
 	}
 	
 	func saveThemes() {
@@ -144,7 +143,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	}
 	
 	func selectAnsi(_ ansi: Int) {
-		withAnimation { selectedAnsi = ansi }
+		withAnimation(.bouncy) { selectedAnsi = ansi }
 		saveThemes()
 	}
 	
