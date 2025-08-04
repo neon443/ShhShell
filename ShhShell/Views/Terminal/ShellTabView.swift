@@ -81,14 +81,18 @@ struct ShellTabView: View {
 							showSnippetPicker.toggle()
 						} label: {
 							Image(systemName: "paperclip")
+								.resizable().scaledToFit()
+								.frame(width: 20, height: 20)
 						}
 						.foregroundStyle(foreground)
-						.sheet(isPresented: $showSnippetPicker) {
+						.popover(isPresented: $showSnippetPicker) {
 							SnippetPicker(hostsManager: hostsManager) {
 								container.sessions[selectedID ?? UUID()]?.handler.writeToChannel($0.content)
 							}
-							.presentationDragIndicator(.visible)
-							.presentationDetents([.fraction(0.4), .large])
+							.frame(minWidth: 300, minHeight: 400)
+							.modifier(presentationCompactPopover())
+//							.presentationDragIndicator(.visible)
+//							.presentationDetents([.fraction(0.4), .large])
 						}
 					}
 					.padding(.horizontal, 10)

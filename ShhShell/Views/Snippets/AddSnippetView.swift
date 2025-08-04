@@ -50,6 +50,7 @@ struct AddSnippetView: View {
 					ToolbarItem(placement: .topBarTrailing) {
 						Button {
 							hostsManager.addSnippet(snippet)
+							dismiss()
 						} label: {
 							Label("Add", systemImage: "plus")
 						}

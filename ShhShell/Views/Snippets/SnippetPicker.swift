@@ -11,6 +11,8 @@ struct SnippetPicker: View {
 	@ObservedObject var hostsManager: HostsManager
 	var callback: ((Snippet) -> Void)?
 	
+	@State var showAdder: Bool = false
+	
 	@Environment(\.dismiss) var dismiss
 	
     var body: some View {
@@ -20,6 +22,11 @@ struct SnippetPicker: View {
 					Text("No Snippets")
 						.font(.headline)
 						.monospaced()
+					Button() {
+						showAdder.toggle()
+					} label: {
+						Label("Add", systemImage: "plus.circle.fill")
+					}
 				}
 				ForEach(hostsManager.snippets) { snip in
 					Button(snip.name) {
@@ -27,6 +34,9 @@ struct SnippetPicker: View {
 						callback?(snip)
 					}
 				}
+			}
+			.sheet(isPresented: $showAdder) {
+				AddSnippetView(hostsManager: hostsManager)
 			}
 			.toolbar {
 				ToolbarItem(placement: .topBarLeading) {

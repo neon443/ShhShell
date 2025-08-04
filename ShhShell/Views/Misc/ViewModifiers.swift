@@ -24,6 +24,16 @@ struct foregroundColorStyle: ViewModifier {
 	}
 }
 
+struct presentationCompactPopover: ViewModifier {
+	func body(content: Content) -> some View {
+		if #available(iOS 16.4, *) {
+			content.presentationCompactAdaptation(.popover)
+		} else {
+			content
+		}
+	}
+}
+
 struct scrollPaging: ViewModifier {
 	func body(content: Content) -> some View {
 		if #available(iOS 17, *) {
