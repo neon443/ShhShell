@@ -19,7 +19,7 @@ struct AboutView: View {
 				UIImage().appIcon
 					.resizable().scaledToFit()
 					.frame(width: 100)
-					.clipShape(RoundedRectangle(cornerRadius: 26))
+					.clipShape(RoundedRectangle(cornerRadius: 22))
 				Text("ShhShell")
 					.font(.largeTitle.monospaced())
 				HStack {
@@ -35,7 +35,10 @@ struct AboutView: View {
 				Section("Thanks to") {
 					Link(destination: URL(string: "https://libssh.org")!) {
 						Text("LibSSH")
-							.background(.red)
+							.padding(10)
+							.background(hostsManager.selectedTheme.background.suiColor)
+							.clipShape(RoundedRectangle(cornerRadius: 5))
+							.shadow(radius: 2)
 					}
 				}
 			}

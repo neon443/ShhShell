@@ -16,6 +16,11 @@ struct SnippetPicker: View {
     var body: some View {
 		NavigationStack {
 			List {
+				if hostsManager.snippets.isEmpty {
+					Text("No Snippets")
+						.font(.headline)
+						.monospaced()
+				}
 				ForEach(hostsManager.snippets) { snip in
 					Text(snip.name)
 						.onTapGesture {
@@ -23,12 +28,12 @@ struct SnippetPicker: View {
 							callback?(snip)
 						}
 				}
-				.toolbar {
-					Button() {
-						dismiss()
-					} label: {
-						Image(systemName: "xmark")
-					}
+			}
+			.toolbar {
+				Button() {
+					dismiss()
+				} label: {
+					Image(systemName: "xmark")
 				}
 			}
 			.listStyle(.grouped)

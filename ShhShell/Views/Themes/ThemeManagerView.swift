@@ -68,10 +68,10 @@ struct ThemeManagerView: View {
 										.resizable().scaledToFit()
 										.symbolRenderingMode(.multicolor)
 								}
+								.padding(.bottom, 10)
 								.frame(width: 75, height: 75)
 								Text("No themes (yet)")
 									.font(.title)
-									.padding(.vertical, 10)
 									.bold()
 								Text("Tap the Safari icon at the top right to find themes!")
 								Text("Once you find one that you like, copy it's link and enter it here using the link button.")
