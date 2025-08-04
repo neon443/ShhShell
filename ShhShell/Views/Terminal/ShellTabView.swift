@@ -87,6 +87,8 @@ struct ShellTabView: View {
 							SnippetPicker(hostsManager: hostsManager) {
 								container.sessions[selectedID ?? UUID()]?.handler.writeToChannel($0.content)
 							}
+							.presentationDragIndicator(.visible)
+							.presentationDetents([.fraction(0.4), .large])
 						}
 					}
 					.padding(.horizontal, 10)

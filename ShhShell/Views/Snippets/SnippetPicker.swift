@@ -22,18 +22,19 @@ struct SnippetPicker: View {
 						.monospaced()
 				}
 				ForEach(hostsManager.snippets) { snip in
-					Text(snip.name)
-						.onTapGesture {
-							dismiss()
-							callback?(snip)
-						}
+					Button(snip.name) {
+						dismiss()
+						callback?(snip)
+					}
 				}
 			}
 			.toolbar {
-				Button() {
-					dismiss()
-				} label: {
-					Image(systemName: "xmark")
+				ToolbarItem(placement: .topBarLeading) {
+					Button() {
+						dismiss()
+					} label: {
+						Image(systemName: "xmark")
+					}
 				}
 			}
 			.listStyle(.grouped)
