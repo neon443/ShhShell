@@ -12,8 +12,6 @@ struct ConnectionView: View {
 	@ObservedObject var hostsManager: HostsManager
 	@ObservedObject var keyManager: KeyManager
 	
-//	@State private var shellView: ShellTabView? = nil
-	
 	@State var pubkeyStr: String = ""
 	@State var privkeyStr: String = ""
 	
@@ -142,6 +140,7 @@ Hostkey fingerprint is \(handler.getHostkey() ?? "nil")
 			.toolbar {
 				ToolbarItem() {
 					Button() {
+						hostsManager.updateHost(handler.host)
 						handler.go()
 						showTerminal = checkShell(handler.state)
 					} label: {
@@ -156,11 +155,6 @@ Hostkey fingerprint is \(handler.getHostkey() ?? "nil")
 			.fullScreenCover(isPresented: $showTerminal) {
 				ShellTabView(handler: handler, hostsManager: hostsManager)
 			}
-//			.onAppear {
-//				if shellView == nil {
-//					shellView = ShellTabView(handler: handler, hostsManager: hostsManager)
-//				}
-//			}
 		}
 	}
 }

@@ -11,6 +11,7 @@ struct AboutView: View {
 	@ObservedObject var hostsManager: HostsManager
 	
     var body: some View {
+		
 		ZStack {
 			hostsManager.selectedTheme.background.suiColor.opacity(0.7)
 							.ignoresSafeArea(.all)
@@ -36,12 +37,22 @@ struct AboutView: View {
 					Link(destination: URL(string: "https://libssh.org")!) {
 						Text("LibSSH")
 							.padding(10)
-							.background(hostsManager.selectedTheme.background.suiColor)
-							.clipShape(RoundedRectangle(cornerRadius: 5))
+							.background(.gray.opacity(0.7))
+							.foregroundStyle(.black)
+							.clipShape(RoundedRectangle(cornerRadius: 7.5))
+							.shadow(radius: 2)
+					}
+					Link(destination: URL(string: "https://github.com/migueldeicaza/SwiftTerm")!) {
+						Text("SwiftTerm")
+							.padding(10)
+							.background(.gray.opacity(0.7))
+							.foregroundStyle(.black)
+							.clipShape(RoundedRectangle(cornerRadius: 7.5))
 							.shadow(radius: 2)
 					}
 				}
 			}
+			.transition(.scale)
 			.frame(maxWidth: .infinity)
 			.padding()
 //			}
