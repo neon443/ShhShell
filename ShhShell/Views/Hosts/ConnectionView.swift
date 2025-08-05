@@ -77,7 +77,6 @@ struct ConnectionView: View {
 					}
 				}
 			}
-			.blur(radius: showIconPicker ? 5 : 0)
 			.scrollContentBackground(.hidden)
 			.transition(.opacity)
 			.onDisappear {
