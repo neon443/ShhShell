@@ -1,5 +1,5 @@
 //
-//  HostIconPicker.swift
+//  HostSymbolPicker.swift
 //  ShhShell
 //
 //  Created by neon443 on 05/08/2025.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HostIconPicker: View {
+struct HostSymbolPicker: View {
 	@Binding var host: Host
 	
     var body: some View {
@@ -36,5 +36,5 @@ struct HostIconPicker: View {
 }
 
 #Preview {
-	HostIconPicker(host: .constant(Host.debug))
+	HostSymbolPicker(host: .constant(Host.debug))
 }
