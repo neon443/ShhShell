@@ -111,7 +111,7 @@ Hostkey fingerprint is \(handler.getHostkey() ?? "nil")
 """)
 				}
 			}
-			.popover(isPresented: $showIconPicker, attachmentAnchor: .point(.center), arrowEdge: .bottom) {
+			.popover(isPresented: $showIconPicker, attachmentAnchor: .point(.topTrailing), arrowEdge: .top) {
 				HostIconPicker(host: $handler.host)
 					.frame(minWidth: 300, minHeight: 200)
 					.modifier(presentationCompactPopover())
