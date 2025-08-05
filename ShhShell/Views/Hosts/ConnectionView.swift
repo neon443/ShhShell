@@ -77,6 +77,7 @@ struct ConnectionView: View {
 					}
 				}
 			}
+			.blur(radius: showIconPicker ? 5 : 0)
 			.scrollContentBackground(.hidden)
 			.transition(.opacity)
 			.onDisappear {
@@ -114,14 +115,14 @@ Hostkey fingerprint is \(handler.getHostkey() ?? "nil")
 			.toolbar {
 				ToolbarItem {
 					Button() {
-						showIconPicker.toggle()
+						withAnimation { showIconPicker.toggle() }
 					} label: {
 						HostSymbolPreview(symbol: handler.host.symbol, label: handler.host.label, small: true)
 							.id(handler.host)
 					}
 					.popover(isPresented: $showIconPicker) {
 						HostSymbolPicker(host: $handler.host)
-							.frame(minWidth: 300, minHeight: 200)
+							.frame(minWidth: 275, minHeight: 125)
 							.modifier(presentationCompactPopover())
 					}
 				}

@@ -17,15 +17,9 @@ struct HostSymbolPreview: View {
 			HStack(alignment: .center, spacing: 5) {
 				Text(label)
 					.font(.headline)
-				ZStack(alignment: .center) {
-					symbol.image
-						.resizable().scaledToFit()
-						.symbolRenderingMode(.monochrome)
-						.blur(radius: 1)
-					symbol.image
-						.resizable().scaledToFit()
-						.symbolRenderingMode(.monochrome)
-				}
+				symbol.image
+					.resizable().scaledToFit()
+					.symbolRenderingMode(.monochrome)
 			}
 		} else {
 			ZStack(alignment: .center) {
