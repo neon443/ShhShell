@@ -73,6 +73,7 @@
 		A985545D2E055D4D009051BD /* ConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A985545C2E055D4D009051BD /* ConnectionView.swift */; };
 		A98554612E058433009051BD /* HostsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554602E058433009051BD /* HostsManager.swift */; };
 		A98554632E0587DF009051BD /* HostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554622E0587DF009051BD /* HostsView.swift */; };
+		A98CAB442E4229F7005E4C42 /* HostIconPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98CAB432E4229F7005E4C42 /* HostIconPicker.swift */; };
 		A9A2F4F62E3001D300D0AE9B /* AddSnippetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A2F4F52E3001D300D0AE9B /* AddSnippetView.swift */; };
 		A9A587202E0BF220006B31E6 /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; productRef = A9A5871F2E0BF220006B31E6 /* SwiftTerm */; };
 		A9BA1D192E1D9AE1005BDCEF /* SwiftTerm.Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BA1D182E1D9AE1005BDCEF /* SwiftTerm.Color.swift */; };
@@ -204,6 +205,7 @@
 		A985545C2E055D4D009051BD /* ConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionView.swift; sourceTree = "<group>"; };
 		A98554602E058433009051BD /* HostsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostsManager.swift; sourceTree = "<group>"; };
 		A98554622E0587DF009051BD /* HostsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostsView.swift; sourceTree = "<group>"; };
+		A98CAB432E4229F7005E4C42 /* HostIconPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostIconPicker.swift; sourceTree = "<group>"; };
 		A9A2F4F52E3001D300D0AE9B /* AddSnippetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSnippetView.swift; sourceTree = "<group>"; };
 		A9BA1D182E1D9AE1005BDCEF /* SwiftTerm.Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftTerm.Color.swift; sourceTree = "<group>"; };
 		A9BA1D1C2E1EAD51005BDCEF /* SF-Mono-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Mono-Bold.otf"; sourceTree = "<group>"; };
@@ -518,6 +520,7 @@
 			children = (
 				A98554622E0587DF009051BD /* HostsView.swift */,
 				A985545C2E055D4D009051BD /* ConnectionView.swift */,
+				A98CAB432E4229F7005E4C42 /* HostIconPicker.swift */,
 			);
 			path = Hosts;
 			sourceTree = "<group>";
@@ -804,6 +807,7 @@
 				A96C6B002E0C45FE00F377FE /* KeyDetailView.swift in Sources */,
 				A9DA97712E0D30ED00142DDC /* HostSymbol.swift in Sources */,
 				A96C90A12E12B87A00724253 /* TextBox.swift in Sources */,
+				A98CAB442E4229F7005E4C42 /* HostIconPicker.swift in Sources */,
 				A9FD37652E169937005319A8 /* AuthType.swift in Sources */,
 				A96BE6A82E116E2B00C0FEE9 /* SessionsListView.swift in Sources */,
 				A96C90A32E12D53B00724253 /* KeyType.swift in Sources */,

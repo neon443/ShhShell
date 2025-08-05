@@ -16,40 +16,13 @@ struct ConnectionView: View {
 	@State var privkeyStr: String = ""
 	
 	@State var showTerminal: Bool = false
+	@State var showIconPicker: Bool = false
 	
 	var body: some View {
 		ZStack {
 			hostsManager.selectedTheme.background.suiColor.opacity(0.7)
 				.ignoresSafeArea(.all)
 			List {
-				Section {
-					ScrollView(.horizontal) {
-						HStack {
-							ForEach(HostSymbol.allCases, id: \.self) { symbol in
-								ZStack {
-									if handler.host.symbol == symbol {
-										RoundedRectangle(cornerRadius: 10)
-											.fill(.gray.opacity(0.5))
-									}
-									HostSymbolPreview(symbol: symbol, label: handler.host.label)
-										.padding(5)
-								}
-								.frame(width: 60, height: 60)
-								.onTapGesture {
-									withAnimation { handler.host.symbol = symbol }
-								}
-							}
-						}
-					}
-					
-					HStack {
-						HostSymbolPreview(symbol: handler.host.symbol, label: handler.host.label)
-							.id(handler.host)
-							.frame(width: 60, height: 60)
-						
-						TextBox(label: "Icon Text", text: $handler.host.label, prompt: "a few letters in the icon")
-					}
-				}
 				Section {
 					Text("\(handler.state)")
 						.foregroundStyle(handler.state.color)
@@ -138,7 +111,21 @@ Hostkey fingerprint is \(handler.getHostkey() ?? "nil")
 """)
 				}
 			}
+			.popover(isPresented: $showIconPicker, attachmentAnchor: .point(.center), arrowEdge: .bottom) {
+				HostIconPicker(host: $handler.host)
+					.frame(minWidth: 300, minHeight: 200)
+					.modifier(presentationCompactPopover())
+			}
 			.toolbar {
+				ToolbarItem {
+					Button() {
+						showIconPicker.toggle()
+					} label: {
+						HostSymbolPreview(symbol: handler.host.symbol, label: handler.host.label, small: true)
+							.id(handler.host)
+					}
+				}
+				
 				ToolbarItem() {
 					Button() {
 						handler.go()

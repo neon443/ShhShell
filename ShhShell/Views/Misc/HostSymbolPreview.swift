@@ -10,21 +10,38 @@ import SwiftUI
 struct HostSymbolPreview: View {
 	@State var symbol: HostSymbol
 	@State var label: String
+	@State var small: Bool = false
 	
-    var body: some View {
-		ZStack(alignment: .center) {
-			symbol.image
-				.resizable().scaledToFit()
-				.symbolRenderingMode(.monochrome)
-				.blur(radius: 1)
-			symbol.image
-				.resizable().scaledToFit()
-				.symbolRenderingMode(.monochrome)
-			Text(label)
-				.font(.headline)
-				.offset(symbol.offset)
+	var body: some View {
+		if small {
+			HStack(alignment: .center, spacing: 5) {
+				Text(label)
+					.font(.headline)
+				ZStack(alignment: .center) {
+					symbol.image
+						.resizable().scaledToFit()
+						.symbolRenderingMode(.monochrome)
+						.blur(radius: 1)
+					symbol.image
+						.resizable().scaledToFit()
+						.symbolRenderingMode(.monochrome)
+				}
+			}
+		} else {
+			ZStack(alignment: .center) {
+				symbol.image
+					.resizable().scaledToFit()
+					.symbolRenderingMode(.monochrome)
+					.blur(radius: 1)
+				symbol.image
+					.resizable().scaledToFit()
+					.symbolRenderingMode(.monochrome)
+				Text(label)
+					.font(.headline)
+					.offset(symbol.offset)
+			}
 		}
-    }
+	}
 }
 
 #Preview {
