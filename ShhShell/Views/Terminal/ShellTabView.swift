@@ -52,6 +52,7 @@ struct ShellTabView: View {
 							for session in container.sessions.values {
 								session.handler.disconnect()
 							}
+							container.sessions.removeAll()
 							dismiss()
 						} label: {
 							TrafficLightRed()

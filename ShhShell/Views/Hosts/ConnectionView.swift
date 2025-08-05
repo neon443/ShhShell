@@ -113,8 +113,8 @@ struct ConnectionView: View {
 				Button(role: .destructive) {
 					handler.host.key = handler.getHostkey()
 					handler.disconnect()
-					handler.go()
-					showTerminal = checkShell(handler.state)
+//					handler.go()
+//					showTerminal = checkShell(handler.state)
 				} label: {
 					Text("Accept Hostkey")
 				}
