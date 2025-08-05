@@ -16,6 +16,7 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 	
 	public convenience init(frame: CGRect, handler: SSHHandler, hostsManager: HostsManager) {
 		self.init(frame: frame)
+		
 		self.handler = handler
 		self.hostsManager = hostsManager
 	}
@@ -80,6 +81,7 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 	
 	public override init(frame: CGRect) {
 		super.init(frame: frame)
+		getTerminal().options.scrollback = 10_0000
 		terminalDelegate = self
 	}
 	

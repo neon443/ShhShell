@@ -23,7 +23,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	var sessionID: UUID?
 	
 	var scrollback: [String] = []
-	var scrollbackSize = 0.0
+//	var scrollbackSize = 0.0
 	
 	@Published var title: String = ""
 	@Published var state: SSHState = .idle
@@ -142,9 +142,11 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	}
 	
 	func disconnect() {
-		self.hostkeyChanged = false
-		withAnimation { self.state = .idle }
-		withAnimation { self.testSuceeded = nil }
+		Task { @MainActor in
+			self.hostkeyChanged = false
+			withAnimation { self.state = .idle }
+			withAnimation { self.testSuceeded = nil }
+		}
 		
 		if let sessionID {
 			Task { @MainActor in
@@ -153,7 +155,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			}
 		}
 		scrollback = []
-		scrollbackSize = 0
+//		scrollbackSize = 0
 		
 		//send eof if open
 		if ssh_channel_is_open(channel) == 1 {
@@ -371,11 +373,11 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			#endif
 			Task { @MainActor in
 				scrollback.append(string)
-				if scrollbackSize/1024/1024 > 10 {
-					scrollback.remove(at: 0)
-				} else {
-					scrollbackSize += Double(string.lengthOfBytes(using: .utf8))
-				}
+//				if scrollbackSize/1024/1024 > 10 {
+//					scrollback.remove(at: 0)
+//				} else {
+//					scrollbackSize += Double(string.lengthOfBytes(using: .utf8))
+//				}
 			}
 			return string
 		}
@@ -408,15 +410,15 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 //		print("resized tty to \(toRows)rows and \(toCols)cols")
 	}
 	
-	func prettyScrollbackSize() -> String {
-		if (scrollbackSize/1024/1024) > 1 {
-			return "\(scrollbackSize/1024/1024) MiB scrollback"
-		} else if scrollbackSize/1024 > 1 {
-			return "\(scrollbackSize/1024) KiB scrollback"
-		} else {
-			return "\(scrollbackSize) B scrollback"
-		}
-	}
+//	func prettyScrollbackSize() -> String {
+//		if (scrollbackSize/1024/1024) > 1 {
+//			return "\(scrollbackSize/1024/1024) MiB scrollback"
+//		} else if scrollbackSize/1024 > 1 {
+//			return "\(scrollbackSize/1024) KiB scrollback"
+//		} else {
+//			return "\(scrollbackSize) B scrollback"
+//		}
+//	}
 	
 	private func logSshGetError() {
 		guard var session = self.session else { return }
