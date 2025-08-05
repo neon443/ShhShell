@@ -25,7 +25,7 @@ struct HostkeysView: View {
 							VStack(alignment: .leading) {
 								Text("Connect to some hosts to collect more hostkeys!")
 									.padding(.bottom)
-								Text("ShhShell remembers hostkey fingerprints for you, and can alert you if they change.")
+								Text("ShhShell remembers hostkey fingerprints for you, and will alert you if they change.")
 									.font(.subheadline)
 								Text("This could be due a man in the middle attack, where a bad actor tries to impersonate your server.")
 									.font(.subheadline)
@@ -33,7 +33,7 @@ struct HostkeysView: View {
 						}
 					}
 					
-					ForEach(hostsManager.hosts) { host in
+					ForEach($hostsManager.hosts) { $host in
 						VStack(alignment: .leading) {
 							if !host.name.isEmpty {
 								Text("name")
@@ -48,6 +48,14 @@ struct HostkeysView: View {
 							Text(host.address)
 								.bold()
 							Text(host.key ?? "nil")
+						}
+						.swipeActions(edge: .trailing, allowsFullSwipe: true) {
+							Button(/*role: .destructive*/) {
+								host.key = nil
+								hostsManager.updateHost(host)
+							} label: {
+								Label("Forget", systemImage: "trash")
+							}
 						}
 					}
 				}

@@ -112,8 +112,9 @@ struct ConnectionView: View {
 			.alert("Hostkey changed", isPresented: $handler.hostkeyChanged) {
 				Button(role: .destructive) {
 					handler.host.key = handler.getHostkey()
-					hostsManager.updateHost(handler.host)
+					handler.disconnect()
 					handler.go()
+					showTerminal = checkShell(handler.state)
 				} label: {
 					Text("Accept Hostkey")
 				}
@@ -140,7 +141,6 @@ Hostkey fingerprint is \(handler.getHostkey() ?? "nil")
 			.toolbar {
 				ToolbarItem() {
 					Button() {
-						hostsManager.updateHost(handler.host)
 						handler.go()
 						showTerminal = checkShell(handler.state)
 					} label: {

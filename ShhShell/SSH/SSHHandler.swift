@@ -142,10 +142,9 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	}
 	
 	func disconnect() {
-		DispatchQueue.main.async {
-			withAnimation { self.state = .idle }
-			withAnimation { self.testSuceeded = nil }
-		}
+		self.hostkeyChanged = false
+		withAnimation { self.state = .idle }
+		withAnimation { self.testSuceeded = nil }
 		
 		if let sessionID {
 			Task { @MainActor in
