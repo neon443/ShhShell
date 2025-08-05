@@ -91,8 +91,6 @@ struct ShellTabView: View {
 							}
 							.frame(minWidth: 300, minHeight: 400)
 							.modifier(presentationCompactPopover())
-//							.presentationDragIndicator(.visible)
-//							.presentationDetents([.fraction(0.4), .large])
 						}
 					}
 					.padding(.horizontal, 10)

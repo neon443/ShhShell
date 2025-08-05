@@ -111,11 +111,6 @@ Hostkey fingerprint is \(handler.getHostkey() ?? "nil")
 """)
 				}
 			}
-			.popover(isPresented: $showIconPicker, attachmentAnchor: .point(.topTrailing), arrowEdge: .top) {
-				HostIconPicker(host: $handler.host)
-					.frame(minWidth: 300, minHeight: 200)
-					.modifier(presentationCompactPopover())
-			}
 			.toolbar {
 				ToolbarItem {
 					Button() {
@@ -123,6 +118,11 @@ Hostkey fingerprint is \(handler.getHostkey() ?? "nil")
 					} label: {
 						HostSymbolPreview(symbol: handler.host.symbol, label: handler.host.label, small: true)
 							.id(handler.host)
+					}
+					.popover(isPresented: $showIconPicker) {
+						HostIconPicker(host: $handler.host)
+							.frame(minWidth: 300, minHeight: 200)
+							.modifier(presentationCompactPopover())
 					}
 				}
 				
