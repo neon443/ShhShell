@@ -57,6 +57,28 @@ struct ConnectionView: View {
 						Text("None")
 							.tag(nil as UUID?)
 					}
+					.onAppear {
+						guard keyManager.keyIDs.contains(where: { $0 == handler.host.privateKeyID }) else {
+							handler.host.privateKeyID = nil
+							return
+						}
+					}
+				}
+				
+				Section() {
+					Picker("Startup Snippet", selection: $handler.host.startupSnippetID) {
+						ForEach(hostsManager.snippets) { snip in
+							Text(snip.name).tag(snip.id as UUID?)
+						}
+						Divider()
+						Text("None").tag(nil as UUID?)
+					}
+					.onAppear {
+						guard hostsManager.snippets.contains(where: { $0.id == handler.host.startupSnippetID }) else {
+							handler.host.startupSnippetID = nil
+							return
+						}
+					}
 				}
 				
 				Button() {
@@ -130,6 +152,9 @@ Hostkey fingerprint is \(handler.getHostkey() ?? "nil")
 					Button() {
 						handler.go()
 						showTerminal = checkShell(handler.state)
+						if showTerminal {
+							handler.writeToChannel(hostsManager.snippets.first(where: { $0.id == handler.host.startupSnippetID })?.content)
+						}
 					} label: {
 						Label(
 							handler.connected ? "Disconnect" : "Connect",

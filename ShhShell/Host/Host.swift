@@ -32,6 +32,7 @@ struct Host: HostPr {
 	var password: String
 	var privateKeyID: UUID?
 	var key: String?
+	var startupSnippetID: UUID?
 	
 	var description: String {
 		if name.isEmpty && address.isEmpty {

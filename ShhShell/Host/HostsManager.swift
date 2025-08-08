@@ -239,6 +239,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	func duplicateHost(_ hostToDup: Host) {
 		var hostNewID = hostToDup
 		hostNewID.id = UUID()
+		hostNewID.name.append(" copy")
 		if let index = hosts.firstIndex(where: { $0 == hostToDup }) {
 			hosts.insert(hostNewID, at: index+1)
 			Haptic.medium.trigger()

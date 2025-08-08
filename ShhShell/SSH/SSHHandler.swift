@@ -75,8 +75,6 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		} catch { print("auth with none is not authed") }
 		guard state != .authorized else { return }
 		
-		
-		
 		for method in getAuthMethods() {
 			guard state != .authorized else { break }
 			switch method {
