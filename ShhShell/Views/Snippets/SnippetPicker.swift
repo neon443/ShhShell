@@ -22,16 +22,19 @@ struct SnippetPicker: View {
 					Text("No Snippets")
 						.font(.headline)
 						.monospaced()
-					Button() {
-						showAdder.toggle()
-					} label: {
-						Label("Add", systemImage: "plus.circle.fill")
-					}
 				}
 				ForEach(hostsManager.snippets) { snip in
 					Button(snip.name) {
 						dismiss()
 						callback?(snip)
+					}
+				}
+				
+				Section {
+					Button() {
+						showAdder.toggle()
+					} label: {
+						Label("Add", systemImage: "plus.circle.fill")
 					}
 				}
 			}

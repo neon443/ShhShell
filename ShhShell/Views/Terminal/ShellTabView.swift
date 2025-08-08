@@ -13,6 +13,9 @@ struct ShellTabView: View {
 	
 	@ObservedObject var container = TerminalViewContainer.shared
 	@State var selectedID: UUID?
+	var selectedHandler: SSHHandler {
+		container.sessions[selectedID ?? UUID()]?.handler ?? handler!
+	}
 	
 	@State var showSnippetPicker: Bool = false
 	
@@ -63,13 +66,13 @@ struct ShellTabView: View {
 						}
 						Spacer()
 						VStack {
-							Text(container.sessions[selectedID ?? UUID()]?.handler.title ?? handler?.title ?? "")
+							Text(selectedHandler.title)
 								.bold()
 								.foregroundStyle(foreground)
 								.monospaced()
 								.contentTransition(.numericText())
 							if container.sessionIDs.count == 1 {
-								Text(container.sessions[selectedID ?? UUID()]?.handler.host.description ?? handler?.host.description ?? "")
+								Text(selectedHandler.host.description)
 									.bold()
 									.foregroundStyle(foreground)
 									.monospaced()
@@ -87,10 +90,24 @@ struct ShellTabView: View {
 						.foregroundStyle(foreground)
 						.popover(isPresented: $showSnippetPicker) {
 							SnippetPicker(hostsManager: hostsManager) {
-								container.sessions[selectedID ?? UUID()]?.handler.writeToChannel($0.content)
+								selectedHandler.writeToChannel($0.content)
 							}
+							.frame(minWidth: 200, minHeight: 300)
 							.modifier(presentationCompactPopover())
 						}
+						Menu {
+							Button() {
+								UIPasteboard.general.string = selectedHandler.scrollback.joined()
+								Haptic.success.trigger()
+							} label: {
+								Label("Copy Scrollback", systemImage: "document.on.document")
+							}
+						} label: {
+							Image(systemName: "ellipsis")
+								.resizable().scaledToFit()
+								.frame(width: 20, height: 20)
+						}
+						.foregroundStyle(foreground)
 					}
 					.padding(.horizontal, 10)
 					.padding(.vertical, 10)
