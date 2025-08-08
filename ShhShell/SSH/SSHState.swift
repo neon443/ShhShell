@@ -12,6 +12,7 @@ enum SSHState {
 	case idle
 	case connecting
 	case authorizing
+	case authorizingKbint
 	case authorized
 	case shellOpen
 	
@@ -23,7 +24,7 @@ enum SSHState {
 		case .idle:
 			return .gray
 			
-		case .connecting, .authorizing:
+		case .connecting, .authorizing, .authorizingKbint:
 			return .orange
 			
 		case .authorized, .shellOpen:
