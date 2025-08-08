@@ -54,6 +54,7 @@ struct AddSnippetView: View {
 						} label: {
 							Label("Add", systemImage: "plus")
 						}
+						.disabled(name.isEmpty || content.isEmpty)
 					}
 				}
 			}

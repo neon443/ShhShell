@@ -89,7 +89,6 @@ struct ShellTabView: View {
 							SnippetPicker(hostsManager: hostsManager) {
 								container.sessions[selectedID ?? UUID()]?.handler.writeToChannel($0.content)
 							}
-							.frame(minWidth: 300, minHeight: 400)
 							.modifier(presentationCompactPopover())
 						}
 					}

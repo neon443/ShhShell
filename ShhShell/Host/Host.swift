@@ -72,6 +72,7 @@ extension Host {
 	static var blank: Host {
 		Host(address: "")
 	}
+	
 	static var debug: Host {
 		Host(
 			name: "name for localhost",

@@ -73,6 +73,7 @@ struct ContentView: View {
 				}
 				.scrollContentBackground(.hidden)
 			}
+			.navigationTitle("ShhShell")
 			.toolbar {
 				ToolbarItem(placement: .confirmationAction) {
 					NavigationLink {

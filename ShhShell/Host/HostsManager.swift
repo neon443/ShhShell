@@ -15,7 +15,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	@Published var hosts: [Host] = []
 	
 	@Published var themes: [Theme] = []
-	@Published var selectedTheme: Theme = Theme.defaultTheme
+	@Published var selectedTheme: Theme = Theme.decodeLocalTheme(fileName: "xcodeDarkHC") ?? Theme.defaultTheme
 	@Published var selectedAnsi: Int = 1
 	
 	@Published var fonts: [UIFont] = []
@@ -223,16 +223,12 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	}
 	
 	func updateHost(_ updatedHost: Host) {
-//		let oldID = updatedHost.id
+		var blankHost = Host.blank
+		blankHost.id = updatedHost.id
+		guard updatedHost != blankHost else { return }
 		
 		if let index = hosts.firstIndex(where: { $0.id == updatedHost.id }) {
 			withAnimation { hosts[index] = updatedHost }
-//			var updateHostWithNewID = updatedHost
-//			updateHostWithNewID.id = UUID()
-//			withAnimation { hosts[index] = updateHostWithNewID }
-//			
-//			updateHostWithNewID.id = oldID
-//			withAnimation { hosts[index] = updateHostWithNewID }
 			saveHosts()
 		} else {
 			withAnimation { hosts.append(updatedHost) }
