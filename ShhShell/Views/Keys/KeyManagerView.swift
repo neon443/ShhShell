@@ -64,6 +64,7 @@ struct KeyManagerView: View {
 						}
 						.sheet(isPresented: $showImporter) {
 							KeyImporterView(keyManager: keyManager)
+								.colorScheme(hostsManager.selectedTheme.background.luminance > 0.5 ? .light : .dark)
 						}
 				}
 				.scrollContentBackground(.hidden)
