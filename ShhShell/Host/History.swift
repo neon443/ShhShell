@@ -12,4 +12,5 @@ struct History: Identifiable, Codable {
 	
 	var host: Host
 	var count: Int
+	var lastConnect: Date = .now
 }

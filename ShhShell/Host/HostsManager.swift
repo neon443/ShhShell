@@ -47,6 +47,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	func addToHistory(_ host: Host) {
 		history.append(History(host: host, count: 1))
 		formatHistory()
+		saveHistory()
 	}
 	
 	func formatHistory() {
@@ -55,6 +56,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 			if result.last?.host == item.host {
 				guard var lastOne = result.popLast() else { continue }
 				lastOne.count += 1
+				lastOne.lastConnect = .now
 				result.append(lastOne)
 			} else {
 				result.append(History(host: item.host, count: 1))
@@ -68,7 +70,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		userDefaults.set(data, forKey: "history")
 	}
 	
-	func removeFromHistory(_ toRemove: Host) {
+	func removeFromHistory(_ toRemove: History) {
 		history.removeAll(where: { $0.id == toRemove.id })
 		saveHistory()
 	}
