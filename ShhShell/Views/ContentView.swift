@@ -24,6 +24,11 @@ struct ContentView: View {
 						keyManager: keyManager
 					)
 					
+					RecentsView(
+						hostsManager: hostsManager,
+						keyManager: keyManager
+					)
+					
 					HostsView(
 						handler: handler,
 						hostsManager: hostsManager,

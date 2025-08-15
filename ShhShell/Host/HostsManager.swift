@@ -24,6 +24,8 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	
 	@Published var snippets: [Snippet] = []
 	
+	@Published var history: [Host] = []
+	
 	var tint: SwiftUI.Color {
 		selectedTheme.ansi[selectedAnsi].suiColor
 	}
@@ -33,6 +35,37 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		loadThemes()
 		loadFonts()
 		loadSnippets()
+		loadHistory()
+	}
+	
+	func loadHistory() {
+		guard let data = userDefaults.data(forKey: "history") else { return }
+		guard let decoded = try? JSONDecoder().decode([Host].self, from: data) else { return }
+		withAnimation { self.history = decoded }
+	}
+	
+	func formatHistory() -> [History] {
+		var result: [History] = []
+		for host in history {
+			if result.last?.host == host {
+				guard var lastOne = result.popLast() else { return  result }
+				lastOne.count += 1
+				result.append(lastOne)
+			} else {
+				result.append(History(host: host, count: 1))
+			}
+		}
+		return result
+	}
+	
+	func saveHistory() {
+		let data = try? JSONEncoder().encode(history)
+		userDefaults.set(data, forKey: "history")
+	}
+	
+	func removeFromHistory(_ toRemove: Host) {
+		history.removeAll(where: { $0.id == toRemove.id })
+		saveHistory()
 	}
 	
 	func addSnippet(_ toAdd: Snippet) {
@@ -239,7 +272,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	func duplicateHost(_ hostToDup: Host) {
 		var hostNewID = hostToDup
 		hostNewID.id = UUID()
-		hostNewID.name.append(" copy")
+		hostNewID.name = hostToDup.description.appending(" copy")
 		if let index = hosts.firstIndex(where: { $0 == hostToDup }) {
 			hosts.insert(hostNewID, at: index+1)
 			Haptic.medium.trigger()

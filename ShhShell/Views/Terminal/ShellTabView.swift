@@ -14,7 +14,7 @@ struct ShellTabView: View {
 	@ObservedObject var container = TerminalViewContainer.shared
 	@State var selectedID: UUID?
 	var selectedHandler: SSHHandler {
-		container.sessions[selectedID ?? UUID()]?.handler ?? handler!
+		container.sessions[selectedID ?? UUID()]?.handler ?? handler ?? SSHHandler(host: Host.blank, keyManager: nil)
 	}
 	
 	@State var showSnippetPicker: Bool = false

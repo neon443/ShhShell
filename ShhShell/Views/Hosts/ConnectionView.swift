@@ -82,13 +82,6 @@ struct ConnectionView: View {
 				}
 				
 				Button() {
-					showTerminal.toggle()
-				} label: {
-					Label("Show Terminal", systemImage: "apple.terminal")
-				}
-				.disabled(!checkShell(handler.state))
-				
-				Button() {
 					handler.testExec()
 				} label: {
 					if let testResult = handler.testSuceeded {
@@ -153,6 +146,7 @@ Hostkey fingerprint is \(handler.getHostkey() ?? "nil")
 						handler.go()
 						showTerminal = checkShell(handler.state)
 						if showTerminal {
+							hostsManager.history.append(handler.host)
 							handler.writeToChannel(hostsManager.snippets.first(where: { $0.id == handler.host.startupSnippetID })?.content)
 						}
 					} label: {
