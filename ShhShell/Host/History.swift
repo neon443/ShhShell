@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct History: Identifiable {
+struct History: Identifiable, Codable {
 	var id: UUID = UUID()
 	
 	var host: Host

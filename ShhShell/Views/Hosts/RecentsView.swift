@@ -14,7 +14,7 @@ struct RecentsView: View {
     var body: some View {
 		if !hostsManager.history.isEmpty {
 			Section("Recents") {
-				ForEach(hostsManager.formatHistory()) { history in
+				ForEach(hostsManager.history) { history in
 					NavigationLink() {
 						ConnectionView(
 							handler: SSHHandler(

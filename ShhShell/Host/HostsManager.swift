@@ -24,7 +24,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	
 	@Published var snippets: [Snippet] = []
 	
-	@Published var history: [Host] = []
+	@Published var history: [History] = []
 	
 	var tint: SwiftUI.Color {
 		selectedTheme.ansi[selectedAnsi].suiColor
@@ -40,22 +40,27 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	
 	func loadHistory() {
 		guard let data = userDefaults.data(forKey: "history") else { return }
-		guard let decoded = try? JSONDecoder().decode([Host].self, from: data) else { return }
+		guard let decoded = try? JSONDecoder().decode([History].self, from: data) else { return }
 		withAnimation { self.history = decoded }
 	}
 	
-	func formatHistory() -> [History] {
+	func addToHistory(_ host: Host) {
+		history.append(History(host: host, count: 1))
+		formatHistory()
+	}
+	
+	func formatHistory() {
 		var result: [History] = []
-		for host in history {
-			if result.last?.host == host {
-				guard var lastOne = result.popLast() else { return  result }
+		for item in history {
+			if result.last?.host == item.host {
+				guard var lastOne = result.popLast() else { continue }
 				lastOne.count += 1
 				result.append(lastOne)
 			} else {
-				result.append(History(host: host, count: 1))
+				result.append(History(host: item.host, count: 1))
 			}
 		}
-		return result
+		withAnimation { self.history = result }
 	}
 	
 	func saveHistory() {

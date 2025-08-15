@@ -146,7 +146,7 @@ Hostkey fingerprint is \(handler.getHostkey() ?? "nil")
 						handler.go()
 						showTerminal = checkShell(handler.state)
 						if showTerminal {
-							hostsManager.history.append(handler.host)
+							hostsManager.addToHistory(handler.host)
 							handler.writeToChannel(hostsManager.snippets.first(where: { $0.id == handler.host.startupSnippetID })?.content)
 						}
 					} label: {
