@@ -45,8 +45,10 @@ struct KeyImporterView: View {
 				.listRowSeparator(.hidden)
 				
 				TextEditor(text: $privkeyStr)
-					.background(.black)
-					.clipShape(RoundedRectangle(cornerRadius: 10))
+					.background(.gray.opacity(0.5))
+					.clipShape(RoundedRectangle(cornerRadius: 8))
+					.padding(.bottom, 5)
+					.padding(.horizontal, -8)
 			}
 			
 			if !keypair.openSshPubkey.isEmpty {
@@ -55,20 +57,21 @@ struct KeyImporterView: View {
 			}
 			
 		}
-		
-		Button() {
-			keyManager.importKey(type: keyType, priv: privkeyStr, name: keyName)
-			dismiss()
-		} label: {
-			Text("Import")
-				.font(.title)
-				.bold()
+		.overlay(alignment: .bottom) {
+			Button() {
+				keyManager.importKey(type: keyType, priv: privkeyStr, name: keyName)
+				dismiss()
+			} label: {
+				Text("Import")
+					.font(.title)
+					.bold()
+			}
+			.onTapGesture {
+				UINotificationFeedbackGenerator().notificationOccurred(.success)
+			}
+			.buttonStyle(.borderedProminent)
+			.padding(.bottom, 15)
 		}
-		.onTapGesture {
-			UINotificationFeedbackGenerator().notificationOccurred(.success)
-		}
-		.buttonStyle(.borderedProminent)
-		.padding()
     }
 }
 

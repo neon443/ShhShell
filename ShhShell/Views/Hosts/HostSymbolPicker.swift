@@ -57,6 +57,7 @@ struct HostSymbolPicker: View {
 			}
 			.padding(10)
 		}
+		.preferredColorScheme(.dark)
 		.scrollDisabled(true)
     }
 }
