@@ -15,10 +15,7 @@ struct HostSymbolPreview: View {
 	var body: some View {
 		if small {
 			HStack(alignment: .center, spacing: 5) {
-				if !label.isEmpty {
-					Text(label)
-						.font(.headline)
-				}
+				Text(label)
 				symbol.image
 					.resizable().scaledToFit()
 					.symbolRenderingMode(.monochrome)
@@ -32,11 +29,9 @@ struct HostSymbolPreview: View {
 				symbol.image
 					.resizable().scaledToFit()
 					.symbolRenderingMode(.monochrome)
-				if !label.isEmpty {
-					Text(label)
-						.font(.headline)
-						.offset(symbol.offset)
-				}
+				Text(label)
+					.font(.headline)
+					.offset(symbol.offset)
 			}
 		}
 	}
