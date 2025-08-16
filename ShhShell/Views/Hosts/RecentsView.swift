@@ -47,10 +47,14 @@ struct RecentsView: View {
 						.tint(.red)
 					}
 				}
-				if historyCount != hostsManager.history.count {
+				if historyCount <= hostsManager.history.count {
 					HStack(alignment: .center) {
 						Button() {
-							withAnimation { historyCount += 2 }
+							var increment = 2
+							if historyCount+2 > hostsManager.history.count {
+								increment = 1
+							}
+							withAnimation { historyCount += increment }
 						} label: {
 							Image(systemName: "chevron.down")
 								.resizable().scaledToFit()
@@ -58,14 +62,17 @@ struct RecentsView: View {
 								.foregroundStyle(hostsManager.tint)
 						}
 						.buttonStyle(.plain)
+						.disabled(historyCount == hostsManager.history.count)
+						
 						Spacer()
 						Text("\(historyCount)/\(hostsManager.history.count)")
 							.foregroundStyle(.gray)
 							.font(.caption)
 							.contentTransition(.numericText())
 						Spacer()
+						
 						Button {
-							withAnimation { historyCount = 2 }
+							withAnimation { historyCount = 0 }
 						} label: {
 							Image(systemName: "chevron.up.2")
 								.resizable().scaledToFit()
@@ -73,10 +80,12 @@ struct RecentsView: View {
 								.foregroundStyle(hostsManager.tint)
 						}
 						.buttonStyle(.plain)
+						.disabled(historyCount == 0)
 					}
 				}
 				
 			}
+			.transition(.opacity)
 		}
     }
 }
