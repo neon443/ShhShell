@@ -65,10 +65,14 @@ struct RecentsView: View {
 						.disabled(historyCount == hostsManager.history.count)
 						
 						Spacer()
-						Text("\(historyCount)/\(hostsManager.history.count)")
-							.foregroundStyle(.gray)
-							.font(.caption)
-							.contentTransition(.numericText())
+						Text(
+							historyCount == 0 ?
+							"\(hostsManager.history.count) item\(plural(hostsManager.history.count))" :
+								"\(historyCount)/\(hostsManager.history.count)"
+						)
+						.foregroundStyle(.gray)
+						.font(.caption)
+						.contentTransition(.numericText())
 						Spacer()
 						
 						Button {
@@ -95,4 +99,8 @@ struct RecentsView: View {
 		hostsManager: HostsManager(),
 		keyManager: KeyManager()
 	)
+}
+
+func plural(_ num: Int) -> String {
+	return num == 1 ? "" : "s"
 }
