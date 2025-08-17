@@ -35,9 +35,16 @@ struct HostsView: View {
 					.animation(.default, value: host)
 					.contextMenu {
 						Button() {
+							hostsManager.duplicateHost(host)
+						} label: {
+							Label("Duplicate", systemImage: "square.filled.on.square")
+						}
+						Button(role: .destructive) {
 							hostsManager.removeHost(host)
-						} label: { Label("Delete", systemImage: "trash") }
-							.tint(.red)
+						} label: {
+							Label("Delete", systemImage: "trash")
+						}
+						.tint(.red)
 					} preview: {
 						HostPreview(hostsManager: hostsManager, keyManager: keyManager, host: host)
 					}
