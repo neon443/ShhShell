@@ -78,9 +78,6 @@ struct ContentView: View {
 				}
 				.scrollContentBackground(.hidden)
 			}
-			
-			.colorScheme(hostsManager.selectedTheme.background.luminance > 0.5 ? .light : .dark)
-			.tint(hostsManager.tint)
 			.navigationTitle("ShhShell")
 			.toolbar {
 				ToolbarItem(placement: .confirmationAction) {

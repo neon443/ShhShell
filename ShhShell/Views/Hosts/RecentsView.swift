@@ -54,7 +54,7 @@ struct RecentsView: View {
 							if historyCount+2 > hostsManager.history.count {
 								increment = 1
 							}
-							withAnimation { historyCount += increment }
+							withAnimation(.spring) { historyCount += increment }
 						} label: {
 							Image(systemName: "chevron.down")
 								.resizable().scaledToFit()
@@ -76,7 +76,7 @@ struct RecentsView: View {
 						Spacer()
 						
 						Button {
-							withAnimation { historyCount = 0 }
+							withAnimation(.spring) { historyCount = 0 }
 						} label: {
 							Image(systemName: "chevron.up.2")
 								.resizable().scaledToFit()
