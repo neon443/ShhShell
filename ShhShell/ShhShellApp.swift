@@ -27,8 +27,6 @@ struct ShhShellApp: App {
 				hostsManager: hostsManager,
 				keyManager: keyManager
 			)
-			.colorScheme(hostsManager.selectedTheme.background.luminance > 0.5 ? .light : .dark)
-			.tint(hostsManager.tint)
 		}
 	}
 }

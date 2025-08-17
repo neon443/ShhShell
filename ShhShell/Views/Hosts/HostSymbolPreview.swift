@@ -39,4 +39,7 @@ struct HostSymbolPreview: View {
 
 #Preview {
 	HostSymbolPreview(symbol: HostSymbol.desktopcomputer, label: "lo0")
+		.border(.red)
+	HostSymbolPreview(symbol: HostSymbol.laptopcomputer, label: "lo1", horizontal: true)
+		.border(.blue)
 }

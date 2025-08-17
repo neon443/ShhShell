@@ -53,13 +53,15 @@ struct FontManagerView: View {
 								.font(.custom(fontName, size: 15))
 								.bold(selected)
 								.opacity(selected ? 1 : 0.8)
+								.contentTransition(.numericText())
+								.animation(.default, value: testLine)
 						}
 					}
 				}
 			}
 			
 			Section("Test String") {
-				TextEditor(text: $testLine)
+				TextField("", text: $testLine)
 					.fixedSize()
 			}
 		}
