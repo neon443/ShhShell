@@ -131,7 +131,7 @@ Hostkey fingerprint is \(handler.getHostkey() ?? "nil")
 					Button() {
 						withAnimation { showIconPicker.toggle() }
 					} label: {
-						HostSymbolPreview(symbol: handler.host.symbol, label: handler.host.label, small: true)
+						HostSymbolPreview(symbol: handler.host.symbol, label: handler.host.label, horizontal: true)
 							.id(handler.host)
 					}
 					.popover(isPresented: $showIconPicker) {

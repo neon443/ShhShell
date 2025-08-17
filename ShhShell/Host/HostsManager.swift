@@ -30,12 +30,18 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		selectedTheme.ansi[selectedAnsi].suiColor
 	}
 	
-	init() {
+	init(previews: Bool = false) {
 		loadHosts()
 		loadThemes()
 		loadFonts()
 		loadSnippets()
 		loadHistory()
+		if previews {
+			self.hosts = [Host.debug, Host.blank]
+			self.themes = [Theme.defaultTheme]
+			self.snippets = [Snippet(name: "kys", content: "ls\npwd\n")]
+			self.history = [History(host: Host.debug, count: 3)]
+		}
 	}
 	
 	func loadHistory() {

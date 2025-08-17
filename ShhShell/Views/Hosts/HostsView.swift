@@ -33,6 +33,14 @@ struct HostsView: View {
 					}
 					.id(host)
 					.animation(.default, value: host)
+					.contextMenu {
+						Button() {
+							hostsManager.removeHost(host)
+						} label: { Label("Delete", systemImage: "trash") }
+							.tint(.red)
+					} preview: {
+						HostPreview(hostsManager: hostsManager, keyManager: keyManager, host: host)
+					}
 					.swipeActions(edge: .trailing) {
 						Button(role: .destructive) {
 							hostsManager.removeHost(host)
@@ -61,7 +69,7 @@ struct HostsView: View {
 #Preview {
 	HostsView(
 		handler: SSHHandler(host: Host.debug, keyManager: nil),
-		hostsManager: HostsManager(),
+		hostsManager: HostsManager(previews: true),
 		keyManager: KeyManager()
 	)
 }

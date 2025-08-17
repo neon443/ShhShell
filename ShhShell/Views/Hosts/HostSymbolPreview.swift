@@ -10,15 +10,15 @@ import SwiftUI
 struct HostSymbolPreview: View {
 	@State var symbol: HostSymbol
 	@State var label: String
-	@State var small: Bool = false
+	@State var horizontal: Bool = false
 	
 	var body: some View {
-		if small {
+		if horizontal {
 			HStack(alignment: .center, spacing: 5) {
-				Text(label)
 				symbol.image
 					.resizable().scaledToFit()
 					.symbolRenderingMode(.monochrome)
+				Text(label)
 			}
 		} else {
 			ZStack(alignment: .center) {
