@@ -13,8 +13,6 @@ struct RecentsView: View {
 	
 	@State var historyCount: Int = 1
 	
-//	@State var displayedHistory: [History] = []
-	
     var body: some View {
 		if !hostsManager.history.isEmpty {
 			Section("Recents") {
