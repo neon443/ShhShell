@@ -13,11 +13,12 @@ struct RecentsView: View {
 	
 	@State var historyCount: Int = 1
 	
+//	@State var displayedHistory: [History] = []
+	
     var body: some View {
 		if !hostsManager.history.isEmpty {
 			Section("Recents") {
-				ForEach(0..<historyCount, id: \.self) { index in
-					let history = hostsManager.history[index]
+				ForEach(hostsManager.history.reversed().prefix(historyCount)) { history in
 					NavigationLink() {
 						ConnectionView(
 							handler: SSHHandler(
@@ -47,7 +48,7 @@ struct RecentsView: View {
 						.tint(.red)
 					}
 				}
-				if historyCount <= hostsManager.history.count {
+//				if historyCount <= hostsManager.history.count {
 					HStack(alignment: .center) {
 						Button() {
 							var increment = 2
@@ -86,7 +87,7 @@ struct RecentsView: View {
 						.buttonStyle(.plain)
 						.disabled(historyCount == 0)
 					}
-				}
+//				}
 				
 			}
 			.transition(.opacity)

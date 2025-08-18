@@ -51,6 +51,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	}
 	
 	func addToHistory(_ host: Host) {
+		history = [History(host: host, count: 1)] + history
 		history.append(History(host: host, count: 1))
 		formatHistory()
 		saveHistory()
