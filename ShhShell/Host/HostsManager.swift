@@ -51,24 +51,15 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	}
 	
 	func addToHistory(_ host: Host) {
-		history.append(History(host: host, count: 1))
-		formatHistory()
-		saveHistory()
-	}
-	
-	func formatHistory() {
-		var result: [History] = []
-		for item in history {
-			if result.last?.host == item.host {
-				guard var lastOne = result.popLast() else { continue }
-				lastOne.count += 1
-				lastOne.lastConnect = .now
-				result.append(lastOne)
-			} else {
-				result.append(History(host: item.host, count: 1))
-			}
+		if history.last?.host == host {
+			guard var lastOne = history.popLast() else { return }
+			lastOne.count += 1
+			lastOne.lastConnect = .now
+			history.append(lastOne)
+		} else {
+			history.append(History(host: host, count: 1))
 		}
-		withAnimation { self.history = result }
+		saveHistory()
 	}
 	
 	func saveHistory() {
