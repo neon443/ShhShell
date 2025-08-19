@@ -32,6 +32,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	
 	init(previews: Bool = false) {
 		loadHosts()
+		exportHosts()
 		loadThemes()
 		loadFonts()
 		loadSnippets()
@@ -304,6 +305,16 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 			userDefaults.set(encoded, forKey: "savedHosts")
 			userDefaults.synchronize()
 		}
+	}
+	
+	func exportHosts() {
+		guard let encoded = try? JSONEncoder().encode(hosts) else { return }
+		print(encoded.base64EncodedString())
+	}
+	
+	func importHosts(_ data: Data) {
+		guard let decoedd = try? JSONDecoder().decode([Host].self, from: data) else { return }
+		hosts = decoedd
 	}
 	
 	func removeHost(_ host: Host) {

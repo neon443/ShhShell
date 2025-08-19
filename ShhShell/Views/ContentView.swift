@@ -70,6 +70,11 @@ struct ContentView: View {
 					
 					Section {
 						NavigationLink {
+							SettingsView(hostsManager: hostsManager, keyManager: keyManager)
+						} label: {
+							Label("Settings", systemImage: "gear")
+						}
+						NavigationLink {
 							AboutView(hostsManager: hostsManager)
 						} label: {
 							Label("About", systemImage: "info.square")

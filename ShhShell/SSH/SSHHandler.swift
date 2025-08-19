@@ -381,16 +381,8 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		
 		let data = Data(bytes: buffer, count: Int(nbytes))
 		if let string = String(data: data, encoding: .utf8) {
-			#if DEBUG
-//			print(String(data: Data(bytes: buffer, count: Int(nbytes)), encoding: .utf8)!)
-			#endif
 			Task { @MainActor in
 				scrollback.append(string)
-//				if scrollbackSize/1024/1024 > 10 {
-//					scrollback.remove(at: 0)
-//				} else {
-//					scrollbackSize += Double(string.lengthOfBytes(using: .utf8))
-//				}
 			}
 			return string
 		}
@@ -420,18 +412,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		guard ssh_channel_is_eof(channel) == 0 else { throw .backendError("Channel is EOF") }
 		
 		ssh_channel_change_pty_size(channel, Int32(toCols), Int32(toRows))
-//		print("resized tty to \(toRows)rows and \(toCols)cols")
 	}
-	
-//	func prettyScrollbackSize() -> String {
-//		if (scrollbackSize/1024/1024) > 1 {
-//			return "\(scrollbackSize/1024/1024) MiB scrollback"
-//		} else if scrollbackSize/1024 > 1 {
-//			return "\(scrollbackSize/1024) KiB scrollback"
-//		} else {
-//			return "\(scrollbackSize) B scrollback"
-//		}
-//	}
 	
 	private func logSshGetError() {
 		guard var session = self.session else { return }
