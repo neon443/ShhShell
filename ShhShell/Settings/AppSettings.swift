@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct AppSettings: Codable, Sendable {
 	var scrollback: Int = 1_000
@@ -18,17 +19,26 @@ struct AppSettings: Codable, Sendable {
 	var appIcon: AppIcon = .regular
 }
 
-enum CursorStyle: Codable {
+enum CursorStyle: Codable, CaseIterable {
 	case block
 	case bar
 }
 
-enum TerminalFilter: Codable {
+enum TerminalFilter: Codable, CaseIterable {
 	case none
 	case crt
 }
 
-enum AppIcon: Codable {
+enum AppIcon: Codable, CaseIterable {
 	case regular
 	case blueprint
+	
+	var image: Image {
+		switch self {
+		case .regular:
+			Image("Icon")
+		case .blueprint:
+			Image(uiImage: UIImage())
+		}
+	}
 }

@@ -20,9 +20,37 @@ struct SettingsView: View {
 					Label("Scrollback", systemImage: "scroll")
 					HStack {
 						Slider(value: .constant(0), in: 1_000...50_000, step: 1_000)
-						Text("\()")
+						Text("hi")
+					}
+					
+					Picker("Cursor", selection: .constant(CursorStyle.bar)) {
+						ForEach(CursorStyle.allCases, id: \.self) { type in
+							Text("\(type)").tag(type)
+						}
+					}
+					
+					
+					
+				}
+				Toggle("location persistence", isOn: .constant(false))
+				
+				Toggle("bell sound", isOn: .constant(false))
+				Toggle("bell haptic", isOn: .constant(false))
+				
+				Toggle("keep screen awake", isOn: .constant(false))
+				
+				Picker("terminal filter", selection: .constant(TerminalFilter.crt)) {
+					ForEach(TerminalFilter.allCases, id: \.self) { filter in
+						Text("\(filter)").tag(filter)
 					}
 				}
+				
+				Picker("appicon", selection: .constant(AppIcon.regular)) {
+					ForEach(AppIcon.allCases, id: \.self) { icon in
+						Text("\(icon)").tag(icon)
+						icon.image
+					}
+				}.pickerStyle(.menu)
 			}
 			.listStyle(.sidebar)
 			.scrollContentBackground(.hidden)
