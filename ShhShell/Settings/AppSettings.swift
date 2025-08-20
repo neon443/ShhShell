@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct AppSettings: Codable, Sendable {
+struct AppSettings: Codable, Sendable, Equatable {
 	var scrollback: CGFloat = 1_000
 	var cursorStyle: CursorStyle = .block
 	var locationPersist: Bool = false
@@ -19,17 +19,17 @@ struct AppSettings: Codable, Sendable {
 	var appIcon: AppIcon = .regular
 }
 
-enum CursorStyle: Codable, CaseIterable {
+enum CursorStyle: Codable, CaseIterable, Equatable {
 	case block
 	case bar
 }
 
-enum TerminalFilter: Codable, CaseIterable {
+enum TerminalFilter: Codable, CaseIterable, Equatable {
 	case none
 	case crt
 }
 
-enum AppIcon: Codable, CaseIterable {
+enum AppIcon: Codable, CaseIterable, Equatable {
 	case regular
 	case blueprint
 	

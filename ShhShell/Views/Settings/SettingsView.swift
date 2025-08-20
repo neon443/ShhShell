@@ -51,17 +51,30 @@ struct SettingsView: View {
 						Text("\(filter)").tag(filter)
 					}
 				}
+				.pickerStyle(.inline)
 				
-				Picker("appicon", selection: $hostsManager.settings.appIcon) {
-					ForEach(AppIcon.allCases, id: \.self) { icon in
-						Text("\(icon)").tag(icon)
-						icon.image
+				Section("App Icon") {
+					HStack {
+						ForEach(AppIcon.allCases, id: \.self) { icon in
+							VStack(alignment: .center) {
+								icon.image
+									.resizable().scaledToFit()
+									.frame(maxWidth: 50)
+									.clipShape(RoundedRectangle(cornerRadius: 11))
+								Text("\(icon)").tag(icon)
+							}
+							.onTapGesture {
+								hostsManager.settings.appIcon = icon
+							}
+						}
 					}
 				}
-				.pickerStyle(.inline)
 			}
 			.listStyle(.sidebar)
 			.scrollContentBackground(.hidden)
+			.onChange(of: hostsManager.settings) { _ in
+				hostsManager.saveSettings()
+			}
 		}
     }
 }
