@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct AppSettings: Codable, Sendable {
-	var scrollback: Int = 1_000
+	var scrollback: CGFloat = 1_000
 	var cursorStyle: CursorStyle = .block
 	var locationPersist: Bool = false
 	var bellSound: Bool = false

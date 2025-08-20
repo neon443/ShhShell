@@ -25,12 +25,14 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	@Published var snippets: [Snippet] = []
 	
 	@Published var history: [History] = []
+	@Published var settings: AppSettings = AppSettings()
 	
 	var tint: SwiftUI.Color {
 		selectedTheme.ansi[selectedAnsi].suiColor
 	}
 	
 	init(previews: Bool = false) {
+		loadSettings()
 		loadHosts()
 		exportHosts()
 		loadThemes()
@@ -43,6 +45,17 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 			self.snippets = [Snippet(name: "kys", content: "ls\npwd\n")]
 			self.history = [History(host: Host.debug, count: 3)]
 		}
+	}
+	
+	func loadSettings() {
+		guard let data = userDefaults.data(forKey: "settings") else { return }
+		guard let decoded = try? JSONDecoder().decode(AppSettings.self, from: data) else { return }
+		self.settings = decoded
+	}
+	
+	func saveSettings() {
+		guard let encoded = try? JSONEncoder().encode(settings) else { return }
+		userDefaults.set(encoded, forKey: "settings")
 	}
 	
 	func loadHistory() {

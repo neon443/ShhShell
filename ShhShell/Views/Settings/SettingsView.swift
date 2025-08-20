@@ -17,40 +17,48 @@ struct SettingsView: View {
 				.ignoresSafeArea(.all)
 			List {
 				Section("Terminal") {
-					Label("Scrollback", systemImage: "scroll")
-					HStack {
-						Slider(value: .constant(0), in: 1_000...50_000, step: 1_000)
-						Text("hi")
+					VStack(alignment: .leading) {
+						HStack {
+							Label("Scrollback", systemImage: "scroll")
+							Spacer()
+							Text("\(Int(hostsManager.settings.scrollback))")
+								.contentTransition(.numericText())
+						}
+						Slider(
+							value: $hostsManager.settings.scrollback,
+							in: 1_000...50_000,
+							step: 1_000.0
+						)
 					}
 					
-					Picker("Cursor", selection: .constant(CursorStyle.bar)) {
+					Picker("Cursor", selection: $hostsManager.settings.cursorStyle) {
 						ForEach(CursorStyle.allCases, id: \.self) { type in
 							Text("\(type)").tag(type)
 						}
 					}
-					
-					
-					
+					.pickerStyle(.inline)
 				}
-				Toggle("location persistence", isOn: .constant(false))
 				
-				Toggle("bell sound", isOn: .constant(false))
-				Toggle("bell haptic", isOn: .constant(false))
+				Toggle("location persistence", systemImage: "location.fill", isOn: $hostsManager.settings.locationPersist)
 				
-				Toggle("keep screen awake", isOn: .constant(false))
+				Toggle("bell sound", systemImage: "bell.and.waves.left.and.right", isOn: $hostsManager.settings.bellSound)
+				Toggle("bell haptic",systemImage: "iphone.homebutton.radiowaves.left.and.right", isOn: $hostsManager.settings.bellHaptic)
 				
-				Picker("terminal filter", selection: .constant(TerminalFilter.crt)) {
+				Toggle("keep screen awake", systemImage: "cup.and.saucer.fill", isOn: $hostsManager.settings.caffeinate)
+				
+				Picker("terminal filter", selection: $hostsManager.settings.filter) {
 					ForEach(TerminalFilter.allCases, id: \.self) { filter in
 						Text("\(filter)").tag(filter)
 					}
 				}
 				
-				Picker("appicon", selection: .constant(AppIcon.regular)) {
+				Picker("appicon", selection: $hostsManager.settings.appIcon) {
 					ForEach(AppIcon.allCases, id: \.self) { icon in
 						Text("\(icon)").tag(icon)
 						icon.image
 					}
-				}.pickerStyle(.menu)
+				}
+				.pickerStyle(.inline)
 			}
 			.listStyle(.sidebar)
 			.scrollContentBackground(.hidden)
