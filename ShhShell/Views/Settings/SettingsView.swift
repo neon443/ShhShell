@@ -67,10 +67,11 @@ struct SettingsView: View {
 										.frame(maxWidth: 85)
 										.clipShape(RoundedRectangle(cornerRadius: 16.5))
 										.padding(5)
-									Spacer(minLength: 10)
+									Spacer()
 									Text("\(icon)").tag(icon)
 										.font(.caption)
 										.padding(5)
+									Spacer()
 								}
 							}
 							.frame(maxWidth: 85)

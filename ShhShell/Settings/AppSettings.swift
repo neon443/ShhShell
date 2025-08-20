@@ -35,10 +35,8 @@ enum AppIcon: Codable, CaseIterable, Equatable {
 	
 	var image: Image {
 		switch self {
-		case .regular:
-			Image("Icon")
-		case .blueprint:
-			Image(uiImage: UIImage())
+		case .regular, .blueprint:
+			Image("\(self)")
 		}
 	}
 }
