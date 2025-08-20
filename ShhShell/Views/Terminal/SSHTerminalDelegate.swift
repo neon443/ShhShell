@@ -79,9 +79,20 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 		// TODO: selectedtext and cursor colors
 	}
 	
+	func applyScrollbackLength() {
+		guard let scrollback = hostsManager?.settings.scrollback else {
+			print("hey!")
+			print("scrollback not found, setting to 1,000")
+			getTerminal().options.scrollback = 1_000
+			return
+		}
+		getTerminal().options.scrollback = Int(scrollback)
+		print("set scrollback to \(Int(scrollback))")
+	}
+	
 	public override init(frame: CGRect) {
 		super.init(frame: frame)
-		getTerminal().options.scrollback = 10_0000
+		applyScrollbackLength()
 		terminalDelegate = self
 	}
 	
