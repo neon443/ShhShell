@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "ShhShell 3.png",
+      "filename" : "ShhShell@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "ShhShell 2.png",
+      "filename" : "ShhShell@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "ShhShell 1.png",
+      "filename" : "ShhShell@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

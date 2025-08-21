@@ -31,11 +31,12 @@ enum TerminalFilter: Codable, CaseIterable, Equatable {
 
 enum AppIcon: Codable, CaseIterable, Equatable {
 	case regular
-	case blueprint
+	case beta
+	case betaBlueprint
 	
 	var image: Image {
 		switch self {
-		case .regular, .blueprint:
+		case .regular, .beta, .betaBlueprint:
 			Image("\(self)")
 		}
 	}
