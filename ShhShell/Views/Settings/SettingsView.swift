@@ -69,9 +69,10 @@ struct SettingsView: View {
 										.padding(5)
 									Spacer()
 									Text("\(icon)").tag(icon)
-										.font(.caption)
+										.font(.callout)
 										.padding(5)
-									Spacer()
+										.padding(.bottom, 5)
+//									Spacer()
 								}
 							}
 							.frame(maxWidth: 85)
