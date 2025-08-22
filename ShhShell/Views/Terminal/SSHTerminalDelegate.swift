@@ -30,7 +30,9 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 			}
 			applySelectedTheme()
 			applyScrollbackLength()
+			applyCursorType()
 			startFeedLoop()
+			self.becomeFirstResponder()
 		}
 	}
 	
@@ -67,6 +69,11 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 	func applySelectedTheme() {
 		guard let hostsManager else { return }
 		applyTheme(hostsManager.selectedTheme)
+	}
+	
+	func applyCursorType() {
+		guard let hostsManager else { return }
+		getTerminal().setCursorStyle(hostsManager.settings.cursorType.stCursorStyle)
 	}
 	
 	func applyTheme(_ theme: Theme) {

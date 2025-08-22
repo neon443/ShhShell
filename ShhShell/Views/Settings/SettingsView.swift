@@ -27,7 +27,7 @@ struct SettingsView: View {
 						Slider(
 							value: $hostsManager.settings.scrollback,
 							in: 100...10_000,
-							step: 1_000.0
+							step: 100
 						)
 					}
 					
