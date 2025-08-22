@@ -42,7 +42,7 @@ struct SettingsView: View {
 				Toggle("location persistence", systemImage: "location.fill", isOn: $hostsManager.settings.locationPersist)
 				
 				Toggle("bell sound", systemImage: "bell.and.waves.left.and.right", isOn: $hostsManager.settings.bellSound)
-				Toggle("bell haptic",systemImage: "iphone.homebutton.radiowaves.left.and.right", isOn: $hostsManager.settings.bellHaptic)
+				Toggle("bell haptic",systemImage: "iphone.radiowaves.left.and.right", isOn: $hostsManager.settings.bellHaptic)
 				
 				Toggle("keep screen awake", systemImage: "cup.and.saucer.fill", isOn: $hostsManager.settings.caffeinate)
 				
@@ -54,31 +54,32 @@ struct SettingsView: View {
 				.pickerStyle(.inline)
 				
 				Section("App Icon") {
-					HStack {
-						ForEach(AppIcon.allCases, id: \.self) { icon in
-							let isSelected = hostsManager.settings.appIcon == icon
-							ZStack(alignment: .top) {
-								RoundedRectangle(cornerRadius: 21.5)
-									.foregroundStyle(.gray.opacity(0.5))
-									.opacity(isSelected ? 1 : 0)
-								VStack(spacing: 0) {
-									icon.image
-										.resizable().scaledToFit()
-										.clipShape(RoundedRectangle(cornerRadius: 16.5))
-										.padding(5)
-									Text(icon.description).tag(icon)
-										.font(.caption)
-										.padding(.bottom, 5)
-										.padding(.horizontal, 5)
-										.border(.red)
-										.multilineTextAlignment(.center)
+					ScrollView(.horizontal) {
+						HStack {
+							ForEach(AppIcon.allCases, id: \.self) { icon in
+								let isSelected = hostsManager.settings.appIcon == icon
+								ZStack(alignment: .top) {
+									RoundedRectangle(cornerRadius: 21.5)
+										.foregroundStyle(.gray.opacity(0.5))
+										.opacity(isSelected ? 1 : 0)
+									VStack(spacing: 0) {
+										icon.image
+											.resizable().scaledToFit()
+											.clipShape(RoundedRectangle(cornerRadius: 16.5))
+											.padding(5)
+										Text(icon.description).tag(icon)
+											.font(.caption)
+											.padding(.bottom, 5)
+											.padding(.horizontal, 5)
+											.multilineTextAlignment(.center)
+									}
 								}
-							}
-							.frame(maxWidth: 85, maxHeight: 110)
-							.onTapGesture {
-								withAnimation {
-									hostsManager.settings.appIcon = icon
-									hostsManager.setAppIcon()
+								.frame(maxWidth: 85, maxHeight: 110)
+								.onTapGesture {
+									withAnimation {
+										hostsManager.settings.appIcon = icon
+										hostsManager.setAppIcon()
+									}
 								}
 							}
 						}
