@@ -32,6 +32,13 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	}
 	
 	init(previews: Bool = false) {
+		if previews {
+			self.hosts = [Host.debug, Host.blank]
+			self.themes = [Theme.defaultTheme]
+			self.snippets = [Snippet(name: "kys", content: "ls\npwd\n")]
+			self.history = [History(host: Host.debug, count: 3)]
+			return
+		}
 		loadSettings()
 		loadHosts()
 		exportHosts()
@@ -39,12 +46,6 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		loadFonts()
 		loadSnippets()
 		loadHistory()
-		if previews {
-			self.hosts = [Host.debug, Host.blank]
-			self.themes = [Theme.defaultTheme]
-			self.snippets = [Snippet(name: "kys", content: "ls\npwd\n")]
-			self.history = [History(host: Host.debug, count: 3)]
-		}
 	}
 	
 	func setAppIcon() {

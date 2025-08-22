@@ -74,7 +74,7 @@ enum AppIcon: Codable, CaseIterable, Equatable, CustomStringConvertible {
 		case .beta:
 			return "Beta"
 		case .betaBlueprint:
-			return "Beta Blueprint"
+			return "Blueprint"
 		}
 	}
 }

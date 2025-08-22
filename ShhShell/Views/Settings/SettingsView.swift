@@ -57,25 +57,24 @@ struct SettingsView: View {
 					HStack {
 						ForEach(AppIcon.allCases, id: \.self) { icon in
 							let isSelected = hostsManager.settings.appIcon == icon
-							ZStack {
+							ZStack(alignment: .top) {
 								RoundedRectangle(cornerRadius: 21.5)
 									.foregroundStyle(.gray.opacity(0.5))
 									.opacity(isSelected ? 1 : 0)
-								VStack(alignment: .center) {
+								VStack(spacing: 0) {
 									icon.image
 										.resizable().scaledToFit()
-										.frame(maxWidth: 85)
 										.clipShape(RoundedRectangle(cornerRadius: 16.5))
 										.padding(5)
-									Spacer()
 									Text(icon.description).tag(icon)
-										.font(.callout)
-										.padding(5)
+										.font(.caption)
 										.padding(.bottom, 5)
-//									Spacer()
+										.padding(.horizontal, 5)
+										.border(.red)
+										.multilineTextAlignment(.center)
 								}
 							}
-							.frame(maxWidth: 85)
+							.frame(maxWidth: 85, maxHeight: 110)
 							.onTapGesture {
 								withAnimation {
 									hostsManager.settings.appIcon = icon
@@ -97,7 +96,7 @@ struct SettingsView: View {
 
 #Preview {
 	SettingsView(
-		hostsManager: HostsManager(),
+		hostsManager: HostsManager(previews: true),
 		keyManager: KeyManager()
 	)
 }
