@@ -78,7 +78,6 @@
 		A98554632E0587DF009051BD /* HostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554622E0587DF009051BD /* HostsView.swift */; };
 		A98CAB442E4229F7005E4C42 /* HostSymbolPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98CAB432E4229F7005E4C42 /* HostSymbolPicker.swift */; };
 		A9A2F4F62E3001D300D0AE9B /* AddSnippetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A2F4F52E3001D300D0AE9B /* AddSnippetView.swift */; };
-		A9A587202E0BF220006B31E6 /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; productRef = A9A5871F2E0BF220006B31E6 /* SwiftTerm */; };
 		A9BA1D192E1D9AE1005BDCEF /* SwiftTerm.Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BA1D182E1D9AE1005BDCEF /* SwiftTerm.Color.swift */; };
 		A9BA1D1E2E1EAD51005BDCEF /* SF-Mono-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A9BA1D1C2E1EAD51005BDCEF /* SF-Mono-Bold.otf */; };
 		A9BA1D1F2E1EAD51005BDCEF /* SF-Mono-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = A9BA1D1D2E1EAD51005BDCEF /* SF-Mono-BoldItalic.otf */; };
@@ -94,6 +93,7 @@
 		A9D819312E102D8700442D38 /* HostkeysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D819302E102D8700442D38 /* HostkeysView.swift */; };
 		A9DA97712E0D30ED00142DDC /* HostSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA97702E0D30ED00142DDC /* HostSymbol.swift */; };
 		A9DA97732E0D40C100142DDC /* HostSymbolPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA97722E0D40C100142DDC /* HostSymbolPreview.swift */; };
+		A9E78F422E58BD770079F3CC /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; productRef = A9E78F412E58BD770079F3CC /* SwiftTerm */; };
 		A9FD37552E143D23005319A8 /* SecKeyConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FD37542E143D23005319A8 /* SecKeyConvertible.swift */; };
 		A9FD37572E143D5A005319A8 /* SecKeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FD37562E143D5A005319A8 /* SecKeyStore.swift */; };
 		A9FD37592E143D74005319A8 /* GenericPasswordConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FD37582E143D74005319A8 /* GenericPasswordConvertible.swift */; };
@@ -247,7 +247,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A95FAA542DF4B62900DE2F5A /* LibSSH.xcframework in Frameworks */,
-				A9A587202E0BF220006B31E6 /* SwiftTerm in Frameworks */,
+				A9E78F422E58BD770079F3CC /* SwiftTerm in Frameworks */,
 				A93143BE2DF4D0B300FCD5DB /* libpthread.tbd in Frameworks */,
 				A9083E402DF2226F0042906E /* libz.tbd in Frameworks */,
 				A95FAA562DF4B62A00DE2F5A /* openssl.xcframework in Frameworks */,
@@ -660,7 +660,7 @@
 			);
 			name = ShhShell;
 			packageProductDependencies = (
-				A9A5871F2E0BF220006B31E6 /* SwiftTerm */,
+				A9E78F412E58BD770079F3CC /* SwiftTerm */,
 			);
 			productName = ShhShell;
 			productReference = A925389A2DEE06DC007E0A18 /* ShhShell.app */;
@@ -740,7 +740,7 @@
 			mainGroup = A92538912DEE06DC007E0A18;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				A9A5871E2E0BF220006B31E6 /* XCRemoteSwiftPackageReference "SwiftTerm" */,
+				A9E78F402E58BD770079F3CC /* XCRemoteSwiftPackageReference "SwiftTerm" */,
 			);
 			productRefGroup = A925389B2DEE06DC007E0A18 /* Products */;
 			projectDirPath = "";
@@ -1221,20 +1221,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		A9A5871E2E0BF220006B31E6 /* XCRemoteSwiftPackageReference "SwiftTerm" */ = {
+		A9E78F402E58BD770079F3CC /* XCRemoteSwiftPackageReference "SwiftTerm" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/migueldeicaza/SwiftTerm";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = revision;
+				revision = b48ebbbffee544df3f5dc8f43258f44f95d75c6f;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A9A5871F2E0BF220006B31E6 /* SwiftTerm */ = {
+		A9E78F412E58BD770079F3CC /* SwiftTerm */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A9A5871E2E0BF220006B31E6 /* XCRemoteSwiftPackageReference "SwiftTerm" */;
+			package = A9E78F402E58BD770079F3CC /* XCRemoteSwiftPackageReference "SwiftTerm" */;
 			productName = SwiftTerm;
 		};
 /* End XCSwiftPackageProductDependency section */

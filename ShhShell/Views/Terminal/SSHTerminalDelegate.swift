@@ -29,6 +29,7 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 				font = UIFont(name: hostsManager.selectedFont, size: hostsManager.fontSize)!
 			}
 			applySelectedTheme()
+			applyScrollbackLength()
 			startFeedLoop()
 		}
 	}
@@ -92,7 +93,6 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 	
 	public override init(frame: CGRect) {
 		super.init(frame: frame)
-		applyScrollbackLength()
 		terminalDelegate = self
 	}
 	

@@ -7,10 +7,11 @@
 
 import Foundation
 import SwiftUI
+import SwiftTerm
 
 struct AppSettings: Codable, Sendable, Equatable {
 	var scrollback: CGFloat = 10_000
-	var cursorStyle: CursorStyle = .block
+	var cursorStyle: CursorShape = .block
 	var locationPersist: Bool = false
 	var bellSound: Bool = false
 	var bellHaptic: Bool = true
@@ -19,7 +20,7 @@ struct AppSettings: Codable, Sendable, Equatable {
 	var appIcon: AppIcon = .regular
 }
 
-enum CursorStyle: Codable, CaseIterable, Equatable, CustomStringConvertible {
+enum CursorShape: Codable, CaseIterable, Equatable, CustomStringConvertible {
 	case block
 	case bar
 	

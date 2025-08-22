@@ -32,7 +32,7 @@ struct SettingsView: View {
 					}
 					
 					Picker("Cursor", selection: $hostsManager.settings.cursorStyle) {
-						ForEach(CursorStyle.allCases, id: \.self) { type in
+						ForEach(CursorShape.allCases, id: \.self) { type in
 							Text(type.description).tag(type)
 						}
 					}
