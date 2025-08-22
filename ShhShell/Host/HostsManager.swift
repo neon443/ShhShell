@@ -47,6 +47,17 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		}
 	}
 	
+	func setAppIcon() {
+		Task { @MainActor in
+			guard UIApplication.shared.supportsAlternateIcons else { return }
+			guard settings.appIcon.name != "regular" else {
+				UIApplication.shared.setAlternateIconName(nil)
+				return
+			}
+			UIApplication.shared.setAlternateIconName("\(settings.appIcon.name)")
+		}
+	}
+	
 	func loadSettings() {
 		guard let data = userDefaults.data(forKey: "settings") else { return }
 		guard let decoded = try? JSONDecoder().decode(AppSettings.self, from: data) else { return }

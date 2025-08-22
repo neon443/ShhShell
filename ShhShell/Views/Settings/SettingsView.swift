@@ -33,7 +33,7 @@ struct SettingsView: View {
 					
 					Picker("Cursor", selection: $hostsManager.settings.cursorStyle) {
 						ForEach(CursorStyle.allCases, id: \.self) { type in
-							Text("\(type)").tag(type)
+							Text(type.description).tag(type)
 						}
 					}
 					.pickerStyle(.inline)
@@ -48,7 +48,7 @@ struct SettingsView: View {
 				
 				Picker("terminal filter", selection: $hostsManager.settings.filter) {
 					ForEach(TerminalFilter.allCases, id: \.self) { filter in
-						Text("\(filter)").tag(filter)
+						Text(filter.description).tag(filter)
 					}
 				}
 				.pickerStyle(.inline)
@@ -68,7 +68,7 @@ struct SettingsView: View {
 										.clipShape(RoundedRectangle(cornerRadius: 16.5))
 										.padding(5)
 									Spacer()
-									Text("\(icon)").tag(icon)
+									Text(icon.description).tag(icon)
 										.font(.callout)
 										.padding(5)
 										.padding(.bottom, 5)
@@ -77,7 +77,10 @@ struct SettingsView: View {
 							}
 							.frame(maxWidth: 85)
 							.onTapGesture {
-								withAnimation { hostsManager.settings.appIcon = icon }
+								withAnimation {
+									hostsManager.settings.appIcon = icon
+									hostsManager.setAppIcon()
+								}
 							}
 						}
 					}
