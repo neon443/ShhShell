@@ -11,7 +11,7 @@ import SwiftTerm
 
 struct AppSettings: Codable, Sendable, Equatable {
 	var scrollback: CGFloat = 10_000
-	var cursorStyle: CursorShape = .block
+	var cursorType: CursorType = CursorType()
 	var locationPersist: Bool = false
 	var bellSound: Bool = false
 	var bellHaptic: Bool = true
@@ -23,6 +23,7 @@ struct AppSettings: Codable, Sendable, Equatable {
 enum CursorShape: Codable, CaseIterable, Equatable, CustomStringConvertible {
 	case block
 	case bar
+	case underline
 	
 	var description: String {
 		switch self {
@@ -30,7 +31,29 @@ enum CursorShape: Codable, CaseIterable, Equatable, CustomStringConvertible {
 			return "Block"
 		case .bar:
 			return "Bar"
+		case .underline:
+			return "Underline"
 		}
+	}
+}
+
+struct CursorType: Codable, Equatable, CustomStringConvertible {
+	var cursorShape: CursorShape = .block
+	var blink: Bool = true
+	
+	var stCursorStyle: SwiftTerm.CursorStyle {
+		switch cursorShape {
+		case .block:
+			return blink ? .blinkBlock : .steadyBlock
+		case .bar:
+			return blink ? .blinkBar : .steadyBar
+		case .underline:
+			return blink ? .blinkUnderline : .steadyUnderline
+		}
+	}
+	
+	var description: String {
+		return (blink ? "Blinking" : "Steady") + " " + cursorShape.description
 	}
 }
 

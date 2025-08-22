@@ -26,12 +26,18 @@ struct SettingsView: View {
 						}
 						Slider(
 							value: $hostsManager.settings.scrollback,
-							in: 1_000...50_000,
+							in: 100...10_000,
 							step: 1_000.0
 						)
 					}
 					
-					Picker("Cursor", selection: $hostsManager.settings.cursorStyle) {
+					Picker("Blink", selection: $hostsManager.settings.cursorType.blink) {
+						Text("Blink").tag(true)
+						Text("Steady").tag(false)
+					}
+					.pickerStyle(.segmented)
+					
+					Picker("Cursor", selection: $hostsManager.settings.cursorType.cursorShape) {
 						ForEach(CursorShape.allCases, id: \.self) { type in
 							Text(type.description).tag(type)
 						}
