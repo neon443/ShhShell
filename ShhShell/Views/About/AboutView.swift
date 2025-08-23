@@ -17,7 +17,7 @@ struct AboutView: View {
 							.ignoresSafeArea(.all)
 //			List {
 			VStack(alignment: .leading) {
-				UIImage().appIcon
+				hostsManager.settings.appIcon.image
 					.resizable().scaledToFit()
 					.frame(width: 100)
 					.clipShape(RoundedRectangle(cornerRadius: 22))
