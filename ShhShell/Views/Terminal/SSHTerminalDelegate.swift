@@ -31,8 +31,10 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 			applySelectedTheme()
 			applyScrollbackLength()
 			applyCursorType()
-			startFeedLoop()
-			self.becomeFirstResponder()
+//			DispatchQueue.main.asyncAfter(deadline: .now()+0.01) {
+				self.startFeedLoop()
+				let _ = self.becomeFirstResponder()
+//			}
 		}
 	}
 	

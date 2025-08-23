@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftTerm
 
 struct SettingsView: View {
 	@ObservedObject var hostsManager: HostsManager
@@ -37,6 +38,9 @@ struct SettingsView: View {
 					}
 					.pickerStyle(.segmented)
 					
+					ForEach(CursorShape.allCases, id: \.self) { type in
+						
+					}
 					Picker("Cursor", selection: $hostsManager.settings.cursorType.cursorShape) {
 						ForEach(CursorShape.allCases, id: \.self) { type in
 							Text(type.description).tag(type)

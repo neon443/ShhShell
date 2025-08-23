@@ -77,6 +77,7 @@
 		A98554612E058433009051BD /* HostsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554602E058433009051BD /* HostsManager.swift */; };
 		A98554632E0587DF009051BD /* HostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554622E0587DF009051BD /* HostsView.swift */; };
 		A98CAB442E4229F7005E4C42 /* HostSymbolPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98CAB432E4229F7005E4C42 /* HostSymbolPicker.swift */; };
+		A99604432E5A0E8F007CA460 /* MiniTerminalDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99604422E5A0E8F007CA460 /* MiniTerminalDelegate.swift */; };
 		A9A2F4F62E3001D300D0AE9B /* AddSnippetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A2F4F52E3001D300D0AE9B /* AddSnippetView.swift */; };
 		A9BA1D192E1D9AE1005BDCEF /* SwiftTerm.Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BA1D182E1D9AE1005BDCEF /* SwiftTerm.Color.swift */; };
 		A9BA1D1E2E1EAD51005BDCEF /* SF-Mono-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A9BA1D1C2E1EAD51005BDCEF /* SF-Mono-Bold.otf */; };
@@ -214,6 +215,7 @@
 		A98554602E058433009051BD /* HostsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostsManager.swift; sourceTree = "<group>"; };
 		A98554622E0587DF009051BD /* HostsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostsView.swift; sourceTree = "<group>"; };
 		A98CAB432E4229F7005E4C42 /* HostSymbolPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostSymbolPicker.swift; sourceTree = "<group>"; };
+		A99604422E5A0E8F007CA460 /* MiniTerminalDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniTerminalDelegate.swift; sourceTree = "<group>"; };
 		A9A2F4F52E3001D300D0AE9B /* AddSnippetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSnippetView.swift; sourceTree = "<group>"; };
 		A9BA1D182E1D9AE1005BDCEF /* SwiftTerm.Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftTerm.Color.swift; sourceTree = "<group>"; };
 		A9BA1D1C2E1EAD51005BDCEF /* SF-Mono-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Mono-Bold.otf"; sourceTree = "<group>"; };
@@ -355,6 +357,7 @@
 				A923172C2E07138000ECE1E6 /* SSHTerminalDelegate.swift */,
 				A96BE6A92E116EC000C0FEE9 /* TerminalViewContainer.swift */,
 				A9FD37682E16A6BF005319A8 /* ShellTabView.swift */,
+				A99604422E5A0E8F007CA460 /* MiniTerminalDelegate.swift */,
 			);
 			path = Terminal;
 			sourceTree = "<group>";
@@ -826,6 +829,7 @@
 				A9DA97732E0D40C100142DDC /* HostSymbolPreview.swift in Sources */,
 				A9CC786B2E4E681400FAEE58 /* RecentsView.swift in Sources */,
 				A9CC786D2E4F534600FAEE58 /* History.swift in Sources */,
+				A99604432E5A0E8F007CA460 /* MiniTerminalDelegate.swift in Sources */,
 				A90B38342E3EA046002B56FC /* Bundle.swift in Sources */,
 				A9FD376B2E16DABF005319A8 /* AnsiPickerView.swift in Sources */,
 				A9C060ED2E3FBCD000CA9374 /* SnippetPicker.swift in Sources */,
