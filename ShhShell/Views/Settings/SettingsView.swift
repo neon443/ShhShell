@@ -48,8 +48,8 @@ struct SettingsView: View {
 						}
 						Slider(
 							value: $hostsManager.settings.scrollback,
-							in: 100...10_000,
-							step: 100
+							in: 250...10_000,
+							step: 250
 						)
 					}
 				}
@@ -77,7 +77,7 @@ struct SettingsView: View {
 									.frame(width: 4, height: 40)
 							case .underline:
 								Rectangle()
-									.frame(width: 25, height: 4)
+									.frame(width: 20, height: 4)
 									.padding(.top, 36)
 							}
 						}
@@ -111,6 +111,11 @@ struct SettingsView: View {
 				}
 				
 				Toggle("location persistence", systemImage: "location.fill", isOn: $hostsManager.settings.locationPersist)
+					.onChange(of: hostsManager.settings.locationPersist) { _ in
+						if hostsManager.settings.locationPersist && !Backgrounder.shared.checkPermsStatus() {
+							Backgrounder.shared.requestPerms()
+						}
+					}
 				
 				Toggle("bell sound", systemImage: "bell.and.waves.left.and.right", isOn: $hostsManager.settings.bellSound)
 				Toggle("bell haptic",systemImage: "iphone.radiowaves.left.and.right", isOn: $hostsManager.settings.bellHaptic)

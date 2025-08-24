@@ -151,6 +151,9 @@ struct ShellTabView: View {
 					.frame(height: 30)
 					.onDisappear {
 						UIApplication.shared.isIdleTimerDisabled = false
+						if container.sessions.isEmpty {
+							Backgrounder.shared.stopBgTracking()
+						}
 					}
 					.onAppear {
 						if selectedID == nil {
@@ -161,6 +164,9 @@ struct ShellTabView: View {
 							}
 						}
 						UIApplication.shared.isIdleTimerDisabled = hostsManager.settings.caffeinate
+						if hostsManager.settings.locationPersist {
+							Backgrounder.shared.startBgTracking()
+						}
 					}
 				}
 				

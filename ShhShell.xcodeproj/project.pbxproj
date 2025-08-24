@@ -42,6 +42,7 @@
 		A9485C732E1AECD000209824 /* JetBrainsMonoNerdFontMono-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9485C6F2E1AECD000209824 /* JetBrainsMonoNerdFontMono-BoldItalic.ttf */; };
 		A9485C762E1AF59F00209824 /* FontManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9485C752E1AF59F00209824 /* FontManagerView.swift */; };
 		A9485C782E1BFA5000209824 /* ThemeEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9485C772E1BFA5000209824 /* ThemeEditorView.swift */; };
+		A94B832F2E5B929C00EBA09C /* Backgrounder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B832E2E5B929C00EBA09C /* Backgrounder.swift */; };
 		A95FAA472DF3884B00DE2F5A /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A95FAA462DF3884B00DE2F5A /* Config.xcconfig */; };
 		A95FAA542DF4B62900DE2F5A /* LibSSH.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A95FAA502DF4B62100DE2F5A /* LibSSH.xcframework */; };
 		A95FAA552DF4B62900DE2F5A /* LibSSH.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A95FAA502DF4B62100DE2F5A /* LibSSH.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -178,6 +179,7 @@
 		A9485C702E1AECD000209824 /* JetBrainsMonoNerdFontMono-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JetBrainsMonoNerdFontMono-Italic.ttf"; sourceTree = "<group>"; };
 		A9485C752E1AF59F00209824 /* FontManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManagerView.swift; sourceTree = "<group>"; };
 		A9485C772E1BFA5000209824 /* ThemeEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEditorView.swift; sourceTree = "<group>"; };
+		A94B832E2E5B929C00EBA09C /* Backgrounder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Backgrounder.swift; sourceTree = "<group>"; };
 		A95FAA462DF3884B00DE2F5A /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = SOURCE_ROOT; };
 		A95FAA502DF4B62100DE2F5A /* LibSSH.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = LibSSH.xcframework; path = Frameworks/LibSSH.xcframework; sourceTree = "<group>"; };
 		A95FAA512DF4B62100DE2F5A /* openssl.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = openssl.xcframework; path = Frameworks/openssl.xcframework; sourceTree = "<group>"; };
@@ -593,6 +595,7 @@
 			children = (
 				A9C060EA2E357FD300CA9374 /* Haptics.swift */,
 				A90B38332E3EA046002B56FC /* Bundle.swift */,
+				A94B832E2E5B929C00EBA09C /* Backgrounder.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -869,6 +872,7 @@
 				A923172D2E07138000ECE1E6 /* SSHTerminalDelegate.swift in Sources */,
 				A90936882E1AC51100856059 /* Fonts.swift in Sources */,
 				A9FD37552E143D23005319A8 /* SecKeyConvertible.swift in Sources */,
+				A94B832F2E5B929C00EBA09C /* Backgrounder.swift in Sources */,
 				A96C6AFE2E0C43B600F377FE /* Keypair.swift in Sources */,
 				A90B38322E3E8FC9002B56FC /* AboutView.swift in Sources */,
 				A9C4140C2E096DB7005E3047 /* SSHError.swift in Sources */,
@@ -1052,6 +1056,10 @@
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "ShhShell uses Face ID to verify your identity";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Needed to communicate with SSH Servers";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Required to keep SSH connections alive, if enabled";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Required to keep SSH connections alive, if enabled";
+				INFOPLIST_KEY_NSLocationUsageDescription = "Required to keep SSH connections alive, if enabled";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Required to keep SSH connections alive, if enabled";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1092,6 +1100,10 @@
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "ShhShell uses Face ID to verify your identity";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Needed to communicate with SSH Servers";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Required to keep SSH connections alive, if enabled";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Required to keep SSH connections alive, if enabled";
+				INFOPLIST_KEY_NSLocationUsageDescription = "Required to keep SSH connections alive, if enabled";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Required to keep SSH connections alive, if enabled";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
