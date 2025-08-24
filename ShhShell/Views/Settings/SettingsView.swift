@@ -39,7 +39,8 @@ struct SettingsView: View {
 					.pickerStyle(.segmented)
 					
 					ForEach(CursorShape.allCases, id: \.self) { type in
-						
+						MiniTerminalController()
+
 					}
 					Picker("Cursor", selection: $hostsManager.settings.cursorType.cursorShape) {
 						ForEach(CursorShape.allCases, id: \.self) { type in

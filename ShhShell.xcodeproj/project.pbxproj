@@ -78,6 +78,7 @@
 		A98554632E0587DF009051BD /* HostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554622E0587DF009051BD /* HostsView.swift */; };
 		A98CAB442E4229F7005E4C42 /* HostSymbolPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98CAB432E4229F7005E4C42 /* HostSymbolPicker.swift */; };
 		A99604432E5A0E8F007CA460 /* MiniTerminalDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99604422E5A0E8F007CA460 /* MiniTerminalDelegate.swift */; };
+		A99604462E5A257B007CA460 /* MiniTerminalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99604452E5A257B007CA460 /* MiniTerminalController.swift */; };
 		A9A2F4F62E3001D300D0AE9B /* AddSnippetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A2F4F52E3001D300D0AE9B /* AddSnippetView.swift */; };
 		A9BA1D192E1D9AE1005BDCEF /* SwiftTerm.Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BA1D182E1D9AE1005BDCEF /* SwiftTerm.Color.swift */; };
 		A9BA1D1E2E1EAD51005BDCEF /* SF-Mono-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A9BA1D1C2E1EAD51005BDCEF /* SF-Mono-Bold.otf */; };
@@ -216,6 +217,7 @@
 		A98554622E0587DF009051BD /* HostsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostsView.swift; sourceTree = "<group>"; };
 		A98CAB432E4229F7005E4C42 /* HostSymbolPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostSymbolPicker.swift; sourceTree = "<group>"; };
 		A99604422E5A0E8F007CA460 /* MiniTerminalDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniTerminalDelegate.swift; sourceTree = "<group>"; };
+		A99604452E5A257B007CA460 /* MiniTerminalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniTerminalController.swift; sourceTree = "<group>"; };
 		A9A2F4F52E3001D300D0AE9B /* AddSnippetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSnippetView.swift; sourceTree = "<group>"; };
 		A9BA1D182E1D9AE1005BDCEF /* SwiftTerm.Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftTerm.Color.swift; sourceTree = "<group>"; };
 		A9BA1D1C2E1EAD51005BDCEF /* SF-Mono-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Mono-Bold.otf"; sourceTree = "<group>"; };
@@ -352,12 +354,8 @@
 		A923172B2E0712F200ECE1E6 /* Terminal */ = {
 			isa = PBXGroup;
 			children = (
-				A92317292E07113100ECE1E6 /* TerminalController.swift */,
 				A923172E2E08851200ECE1E6 /* ShellView.swift */,
-				A923172C2E07138000ECE1E6 /* SSHTerminalDelegate.swift */,
-				A96BE6A92E116EC000C0FEE9 /* TerminalViewContainer.swift */,
 				A9FD37682E16A6BF005319A8 /* ShellTabView.swift */,
-				A99604422E5A0E8F007CA460 /* MiniTerminalDelegate.swift */,
 			);
 			path = Terminal;
 			sourceTree = "<group>";
@@ -391,6 +389,7 @@
 			children = (
 				A92538C62DEE0742007E0A18 /* ShhShellApp.swift */,
 				A93143C12DF61E8500FCD5DB /* SSH */,
+				A99604442E5A255E007CA460 /* Terminal */,
 				A98554562E055394009051BD /* Host */,
 				A98554572E055398009051BD /* Keys */,
 				A9D8192A2E0E904900442D38 /* Themes */,
@@ -581,6 +580,18 @@
 				A96C6AFD2E0C43B600F377FE /* Keypair.swift */,
 			);
 			path = Keys;
+			sourceTree = "<group>";
+		};
+		A99604442E5A255E007CA460 /* Terminal */ = {
+			isa = PBXGroup;
+			children = (
+				A923172C2E07138000ECE1E6 /* SSHTerminalDelegate.swift */,
+				A99604422E5A0E8F007CA460 /* MiniTerminalDelegate.swift */,
+				A96BE6A92E116EC000C0FEE9 /* TerminalViewContainer.swift */,
+				A92317292E07113100ECE1E6 /* TerminalController.swift */,
+				A99604452E5A257B007CA460 /* MiniTerminalController.swift */,
+			);
+			path = Terminal;
 			sourceTree = "<group>";
 		};
 		A9C060E92E357FC400CA9374 /* Misc */ = {
@@ -854,6 +865,7 @@
 				A98554612E058433009051BD /* HostsManager.swift in Sources */,
 				A985545D2E055D4D009051BD /* ConnectionView.swift in Sources */,
 				A9FD37592E143D74005319A8 /* GenericPasswordConvertible.swift in Sources */,
+				A99604462E5A257B007CA460 /* MiniTerminalController.swift in Sources */,
 				A9485C762E1AF59F00209824 /* FontManagerView.swift in Sources */,
 				A98554592E0553AA009051BD /* KeyManager.swift in Sources */,
 				A93F283D2E2A5DCB0092B8D5 /* SnippetManagerView.swift in Sources */,
