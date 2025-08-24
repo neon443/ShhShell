@@ -19,7 +19,7 @@ struct SettingsView: View {
 		if hostsManager.settings.cursorType.blink {
 			blinkTimer?.invalidate()
 			blinkTimer = nil
-			blinkTimer = Timer(timeInterval: 0.75, repeats: true) { timer in
+			blinkTimer = Timer(timeInterval: 1, repeats: true) { timer in
 				Task { @MainActor in
 					blinkCursor.toggle()
 				}
@@ -85,7 +85,7 @@ struct SettingsView: View {
 						.onAppear() {
 							startBlinkingIfNeeded()
 						}
-						.opacity(blinkCursor ? 0.5 : 1)
+						.opacity(blinkCursor ? 0 : 1)
 						.animation(
 							Animation.easeInOut(duration: 1),
 							value: blinkCursor
