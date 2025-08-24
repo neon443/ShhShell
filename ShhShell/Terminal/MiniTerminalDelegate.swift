@@ -12,8 +12,21 @@ import SwiftTerm
 
 @MainActor
 class MiniTerminalDelegate: TerminalView, TerminalViewDelegate {
-	func setCursorType(_ style: CursorType) {
-		getTerminal().setCursorStyle(style.stCursorStyle)
+	var text: String = ""
+	var cursorType = CursorType()
+	var hasConfigured: Bool = false
+	
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		
+		if !hasConfigured && bounds.width > 0 && bounds.height > 0 {
+			self.getTerminal().resetNormalBuffer()
+			self.getTerminal().resetToInitialState()
+			self.getTerminal().softReset()
+			self.feed(text: "")
+			self.getTerminal().setCursorStyle(CursorStyle.blinkBar)
+			hasConfigured = true
+		}
 	}
 	
 	nonisolated public func sizeChanged(source: TerminalView, newCols: Int, newRows: Int) {}
@@ -27,8 +40,8 @@ class MiniTerminalDelegate: TerminalView, TerminalViewDelegate {
 	nonisolated public func iTermContent (source: TerminalView, content: ArraySlice<UInt8>) {}
 	nonisolated public func rangeChanged(source: SwiftTerm.TerminalView, startY: Int, endY: Int) {}
 	
-	public convenience required override init(frame: CGRect) {
-		self.init(frame: .zero)
+	public override init(frame: CGRect) {
+		super.init(frame: frame)
 		terminalDelegate = self
 	}
 	

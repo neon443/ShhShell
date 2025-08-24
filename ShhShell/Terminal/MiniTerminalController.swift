@@ -11,9 +11,8 @@ import SwiftUI
 import SwiftTerm
 
 struct MiniTerminalController: UIViewRepresentable {
-	func feed() {
-		
-	}
+	@Binding var text: String
+	@Binding var cursorType: CursorType
 	
 	func makeUIView(context: Context) -> TerminalView {
 		let tv = MiniTerminalDelegate(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: .zero))
@@ -23,7 +22,11 @@ struct MiniTerminalController: UIViewRepresentable {
 	}
 	
 	func updateUIView(_ tv: TerminalView, context: Context) {
+		guard let tdelegate = tv as? MiniTerminalDelegate else { return }
+		tdelegate.text = text
+		tdelegate.cursorType = cursorType
 		tv.setNeedsLayout()
 		tv.layoutIfNeeded()
+		tv.layoutSubviews()
 	}
 }

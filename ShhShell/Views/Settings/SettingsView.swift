@@ -38,10 +38,13 @@ struct SettingsView: View {
 					}
 					.pickerStyle(.segmented)
 					
-					ForEach(CursorShape.allCases, id: \.self) { type in
-						MiniTerminalController()
-
+					HStack {
+						ForEach(CursorShape.allCases, id: \.self) { type in
+							MiniTerminalController(text: .constant("asdjf"), cursorType: $hostsManager.settings.cursorType)
+								.frame(width: 100, height: 100)
+						}
 					}
+					
 					Picker("Cursor", selection: $hostsManager.settings.cursorType.cursorShape) {
 						ForEach(CursorShape.allCases, id: \.self) { type in
 							Text(type.description).tag(type)

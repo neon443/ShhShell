@@ -39,7 +39,6 @@ struct TerminalController: UIViewRepresentable {
 				)
 			}
 		}
-		
 		return tv
 	}
 	
