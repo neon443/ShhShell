@@ -11,6 +11,7 @@ import UIKit
 
 enum Haptic {
 	case success
+	case warning
 	case error
 	case light
 	case medium
@@ -22,7 +23,7 @@ enum Haptic {
 		switch self {
 		case .light, .medium, .heavy, .soft, .rigid:
 			return true
-		case .success, .error:
+		case .success, .warning, .error:
 			return false
 		}
 	}
@@ -57,6 +58,8 @@ enum Haptic {
 				switch self {
 				case .success:
 					UINotificationFeedbackGenerator().notificationOccurred(.success)
+				case .warning:
+					UINotificationFeedbackGenerator().notificationOccurred(.warning)
 				case .error:
 					UINotificationFeedbackGenerator().notificationOccurred(.error)
 				default: print("idk atp")

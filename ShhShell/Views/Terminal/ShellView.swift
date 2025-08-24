@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AudioToolbox
 
 struct ShellView: View {
 	@ObservedObject var handler: SSHHandler
@@ -26,10 +27,23 @@ struct ShellView: View {
 					Color.gray.opacity(0.2)
 						.transition(.opacity)
 					Image(systemName: "bell.fill")
+						.foregroundStyle(
+							hostsManager.selectedTheme.background.luminance > 0.5 ?
+								.black : .white
+						)
 						.font(.largeTitle)
 						.shadow(color: .black, radius: 5)
 				}
 				.opacity(handler.bell ? 1 : 0)
+				.onChange(of: handler.bell) { _ in
+					guard handler.bell else { return }
+					if hostsManager.settings.bellHaptic {
+						Haptic.warning.trigger()
+					}
+					if hostsManager.settings.bellSound {
+						AudioServicesPlaySystemSound(1103)
+					}
+				}
 			}
 		}
 	}
