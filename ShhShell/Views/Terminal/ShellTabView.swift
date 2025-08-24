@@ -149,6 +149,9 @@ struct ShellTabView: View {
 						}
 					}
 					.frame(height: 30)
+					.onDisappear {
+						UIApplication.shared.isIdleTimerDisabled = false
+					}
 					.onAppear {
 						if selectedID == nil {
 							if let handler {
@@ -157,6 +160,7 @@ struct ShellTabView: View {
 								dismiss()
 							}
 						}
+						UIApplication.shared.isIdleTimerDisabled = hostsManager.settings.caffeinate
 					}
 				}
 				
