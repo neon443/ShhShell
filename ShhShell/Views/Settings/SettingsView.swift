@@ -12,7 +12,7 @@ struct SettingsView: View {
 	@ObservedObject var hostsManager: HostsManager
 	@ObservedObject var keyManager: KeyManager
 	
-	@State private var blinkCursor: Bool = false
+	@State private var blinkCursor: Int = 0
 	@State var blinkTimer: Timer?
 	
 	func startBlinkingIfNeeded() {
@@ -21,12 +21,15 @@ struct SettingsView: View {
 			blinkTimer = nil
 			blinkTimer = Timer(timeInterval: 1, repeats: true) { timer in
 				Task { @MainActor in
-					blinkCursor.toggle()
+					blinkCursor += 1
 				}
 			}
 			RunLoop.main.add(blinkTimer!, forMode: .common)
 		} else {
 			blinkTimer?.invalidate()
+			if blinkCursor % 2 != 0 {
+				blinkCursor += 1
+			}
 		}
 	}
 	
@@ -85,9 +88,9 @@ struct SettingsView: View {
 						.onAppear() {
 							startBlinkingIfNeeded()
 						}
-						.opacity(blinkCursor ? 0 : 1)
+						.opacity(blinkCursor % 2 == 0 ? 1 : 0)
 						.animation(
-							Animation.easeInOut(duration: 1),
+							Animation.spring(duration: 1),
 							value: blinkCursor
 						)
 					}
