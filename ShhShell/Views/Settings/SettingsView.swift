@@ -12,7 +12,25 @@ struct SettingsView: View {
 	@ObservedObject var hostsManager: HostsManager
 	@ObservedObject var keyManager: KeyManager
 	
-    var body: some View {
+	@State private var blinkCursor: Bool = false
+	@State var blinkTimer: Timer?
+	
+	func startBlinkingIfNeeded() {
+		if hostsManager.settings.cursorType.blink {
+			blinkTimer?.invalidate()
+			blinkTimer = nil
+			blinkTimer = Timer(timeInterval: 0.75, repeats: true) { timer in
+				Task { @MainActor in
+					blinkCursor.toggle()
+				}
+			}
+			RunLoop.main.add(blinkTimer!, forMode: .common)
+		} else {
+			blinkTimer?.invalidate()
+		}
+	}
+	
+	var body: some View {
 		ZStack {
 			hostsManager.selectedTheme.background.suiColor.opacity(0.7)
 				.ignoresSafeArea(.all)
@@ -31,6 +49,48 @@ struct SettingsView: View {
 							step: 100
 						)
 					}
+				}
+					
+				Section("Cursor") {
+					ZStack(alignment: .leading) {
+						HStack(spacing: 0) {
+							Text("neon443")
+								.font(.largeTitle).monospaced()
+								.foregroundStyle(.terminalGreen)
+							Text(" ~ ")
+								.font(.largeTitle).monospaced()
+								.foregroundStyle(.blue)
+							Text(">")
+								.font(.largeTitle).monospaced()
+								.foregroundStyle(.blue)
+						}
+						Group {
+							switch hostsManager.settings.cursorType.cursorShape {
+							case .block:
+								Rectangle()
+									.frame(width: 20, height: 40)
+							case .bar:
+								Rectangle()
+									.frame(width: 4, height: 40)
+							case .underline:
+								Rectangle()
+									.frame(width: 25, height: 4)
+									.padding(.top, 36)
+							}
+						}
+						.padding(.leading, 248)
+						.onChange(of: hostsManager.settings.cursorType.blink) { _ in
+							startBlinkingIfNeeded()
+						}
+						.onAppear() {
+							startBlinkingIfNeeded()
+						}
+						.opacity(blinkCursor ? 0.5 : 1)
+						.animation(
+							Animation.easeInOut(duration: 1),
+							value: blinkCursor
+						)
+					}
 					
 					Picker("Blink", selection: $hostsManager.settings.cursorType.blink) {
 						Text("Blink").tag(true)
@@ -38,19 +98,13 @@ struct SettingsView: View {
 					}
 					.pickerStyle(.segmented)
 					
-					HStack {
-						ForEach(CursorShape.allCases, id: \.self) { type in
-							MiniTerminalController(text: .constant("asdjf"), cursorType: $hostsManager.settings.cursorType)
-								.frame(width: 100, height: 100)
-						}
-					}
-					
-					Picker("Cursor", selection: $hostsManager.settings.cursorType.cursorShape) {
+					Picker("", selection: $hostsManager.settings.cursorType.cursorShape) {
 						ForEach(CursorShape.allCases, id: \.self) { type in
 							Text(type.description).tag(type)
 						}
 					}
 					.pickerStyle(.inline)
+					.labelsHidden()
 				}
 				
 				Toggle("location persistence", systemImage: "location.fill", isOn: $hostsManager.settings.locationPersist)
