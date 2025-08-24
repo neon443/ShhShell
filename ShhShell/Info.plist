@@ -22,5 +22,9 @@
 		<string>JetBrainsMonoNerdFontMono-Italic.ttf</string>
 		<string>JetBrainsMonoNerdFontMono-BoldItalic.ttf</string>
 	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+	</array>
 </dict>
 </plist>

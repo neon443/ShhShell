@@ -149,12 +149,6 @@ struct ShellTabView: View {
 						}
 					}
 					.frame(height: 30)
-					.onDisappear {
-						UIApplication.shared.isIdleTimerDisabled = false
-						if container.sessions.isEmpty {
-							Backgrounder.shared.stopBgTracking()
-						}
-					}
 					.onAppear {
 						if selectedID == nil {
 							if let handler {
@@ -162,10 +156,6 @@ struct ShellTabView: View {
 							} else {
 								dismiss()
 							}
-						}
-						UIApplication.shared.isIdleTimerDisabled = hostsManager.settings.caffeinate
-						if hostsManager.settings.locationPersist {
-							Backgrounder.shared.startBgTracking()
 						}
 					}
 				}
@@ -177,6 +167,12 @@ struct ShellTabView: View {
 						handler: session.handler,
 						hostsManager: hostsManager
 					)
+					.onAppear {
+						UIApplication.shared.isIdleTimerDisabled = hostsManager.settings.caffeinate
+						if hostsManager.settings.locationPersist {
+							Backgrounder.shared.startBgTracking()
+						}
+					}
 					.onDisappear {
 						if !checkShell(session.handler.state) {
 							if let lastSession = container.sessionIDs.last {
@@ -184,6 +180,10 @@ struct ShellTabView: View {
 							} else {
 								dismiss()
 							}
+						}
+						UIApplication.shared.isIdleTimerDisabled = false
+						if container.sessions.isEmpty {
+							Backgrounder.shared.stopBgTracking()
 						}
 					}
 					.id(selectedID)

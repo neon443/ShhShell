@@ -23,6 +23,7 @@ class Backgrounder: NSObject, CLLocationManagerDelegate, ObservableObject {
 	}
 	
 	func startBgTracking() {
+//		guard mana
 		manager.allowsBackgroundLocationUpdates = true
 		manager.pausesLocationUpdatesAutomatically = false
 		manager.startMonitoringSignificantLocationChanges()
@@ -53,6 +54,6 @@ class Backgrounder: NSObject, CLLocationManagerDelegate, ObservableObject {
 	}
 	
 	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-		print("tracking started yay")
+		print("tracking started fr")
 	}
 }
