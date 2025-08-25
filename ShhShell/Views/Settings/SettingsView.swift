@@ -55,18 +55,16 @@ struct SettingsView: View {
 				}
 					
 				Section("Cursor") {
-					ZStack(alignment: .leading) {
-						HStack(spacing: 0) {
-							Text("neon443")
-								.font(.largeTitle).monospaced()
-								.foregroundStyle(.terminalGreen)
-							Text(" ~ ")
-								.font(.largeTitle).monospaced()
-								.foregroundStyle(.blue)
-							Text(">")
-								.font(.largeTitle).monospaced()
-								.foregroundStyle(.blue)
-						}
+					HStack(spacing: 20) {
+						Text("neon443")
+							.font(.largeTitle).monospaced()
+							.foregroundStyle(.terminalGreen)
+						Text("~")
+							.font(.largeTitle).monospaced()
+							.foregroundStyle(.blue)
+						Text(">")
+							.font(.largeTitle).monospaced()
+							.foregroundStyle(.blue)
 						Group {
 							switch hostsManager.settings.cursorType.cursorShape {
 							case .block:
@@ -81,7 +79,7 @@ struct SettingsView: View {
 									.padding(.top, 36)
 							}
 						}
-						.padding(.leading, 248)
+//						.padding(.leading, 248)
 						.onChange(of: hostsManager.settings.cursorType.blink) { _ in
 							startBlinkingIfNeeded()
 						}
