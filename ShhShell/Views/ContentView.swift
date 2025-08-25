@@ -12,102 +12,90 @@ struct ContentView: View {
 	@ObservedObject var hostsManager: HostsManager
 	@ObservedObject var keyManager: KeyManager
 	
-	@State private var spawnTime: Date = .now
-	
 	var body: some View {
-		TimelineView(.animation) { tl in
-			let time = tl.date.distance(to: spawnTime)
-			NavigationStack {
-				ZStack {
-					hostsManager.selectedTheme.background.suiColor.opacity(0.7)
-						.ignoresSafeArea(.all)
-					List {
-						SessionsListView(
-							handler: handler,
-							hostsManager: hostsManager,
-							keyManager: keyManager
-						)
-						
-						RecentsView(
-							hostsManager: hostsManager,
-							keyManager: keyManager
-						)
-						
-						HostsView(
-							handler: handler,
-							hostsManager: hostsManager,
-							keyManager: keyManager
-						)
-						
-						Section() {
-							NavigationLink {
-								ThemeManagerView(hostsManager: hostsManager)
-							} label: {
-								Label("Themes", systemImage: "swatchpalette")
-							}
-							NavigationLink {
-								FontManagerView(hostsManager: hostsManager)
-							} label: {
-								Label("Fonts", systemImage: "textformat")
-							}
-						}
-						
-						Section {
-							NavigationLink {
-								SnippetManagerView(hostsManager: hostsManager)
-							} label: {
-								Label("Snippets", systemImage: "paperclip")
-							}
-							
-							NavigationLink {
-								KeyManagerView(hostsManager: hostsManager, keyManager: keyManager)
-							} label: {
-								Label("Keys", systemImage: "key.fill")
-							}
-							
-							NavigationLink {
-								HostkeysView(hostsManager: hostsManager)
-							} label: {
-								Label("Hostkey Fingerprints", systemImage: "lock.display")
-							}
-						}
-						
-						Section {
-							NavigationLink {
-								SettingsView(hostsManager: hostsManager, keyManager: keyManager)
-							} label: {
-								Label("Settings", systemImage: "gear")
-							}
-							NavigationLink {
-								AboutView(hostsManager: hostsManager)
-							} label: {
-								Label("About", systemImage: "info.square")
-							}
-						}
-					}
-					.scrollContentBackground(.hidden)
-				}
-				.navigationTitle("ShhShell")
-				.toolbar {
-					ToolbarItem(placement: .confirmationAction) {
+		NavigationStack {
+			ZStack {
+				hostsManager.selectedTheme.background.suiColor.opacity(0.7)
+					.ignoresSafeArea(.all)
+				List {
+					SessionsListView(
+						handler: handler,
+						hostsManager: hostsManager,
+						keyManager: keyManager
+					)
+					
+					RecentsView(
+						hostsManager: hostsManager,
+						keyManager: keyManager
+					)
+					
+					HostsView(
+						handler: handler,
+						hostsManager: hostsManager,
+						keyManager: keyManager
+					)
+					
+					Section() {
 						NavigationLink {
-							ConnectionView(
-								handler: SSHHandler(host: Host.blank, keyManager: keyManager),
-								hostsManager: hostsManager,
-								keyManager: keyManager
-							)
+							ThemeManagerView(hostsManager: hostsManager)
 						} label: {
-							Label("Add", systemImage: "plus")
+							Label("Themes", systemImage: "swatchpalette")
+						}
+						NavigationLink {
+							FontManagerView(hostsManager: hostsManager)
+						} label: {
+							Label("Fonts", systemImage: "textformat")
+						}
+					}
+					
+					Section {
+						NavigationLink {
+							SnippetManagerView(hostsManager: hostsManager)
+						} label: {
+							Label("Snippets", systemImage: "paperclip")
+						}
+						
+						NavigationLink {
+							KeyManagerView(hostsManager: hostsManager, keyManager: keyManager)
+						} label: {
+							Label("Keys", systemImage: "key.fill")
+						}
+						
+						NavigationLink {
+							HostkeysView(hostsManager: hostsManager)
+						} label: {
+							Label("Hostkey Fingerprints", systemImage: "lock.display")
+						}
+					}
+					
+					Section {
+						NavigationLink {
+							SettingsView(hostsManager: hostsManager, keyManager: keyManager)
+						} label: {
+							Label("Settings", systemImage: "gear")
+						}
+						NavigationLink {
+							AboutView(hostsManager: hostsManager)
+						} label: {
+							Label("About", systemImage: "info.square")
 						}
 					}
 				}
+				.scrollContentBackground(.hidden)
 			}
-			.visualEffect { content, proxy in
-				content
-					.colorEffect(ShaderLibrary.crt(
-						.float2(proxy.size),
-						.float(time)
-					))
+			.navigationTitle("ShhShell")
+			.toolbar {
+				ToolbarItem(placement: .confirmationAction) {
+					NavigationLink {
+						ConnectionView(
+							handler: SSHHandler(host: Host.blank, keyManager: keyManager),
+							hostsManager: hostsManager,
+							keyManager: keyManager
+						)
+					} label: {
+						Label("Add", systemImage: "plus")
+					}
+				}
 			}
 		}
 	}
@@ -115,7 +103,7 @@ struct ContentView: View {
 
 #Preview {
 	let keymanager = KeyManager()
-    ContentView(
+	ContentView(
 		handler: SSHHandler(host: Host.debug, keyManager: keymanager),
 		hostsManager: HostsManager(),
 		keyManager: keymanager
