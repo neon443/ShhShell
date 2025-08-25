@@ -39,6 +39,11 @@ struct SettingsView: View {
 				.ignoresSafeArea(.all)
 			List {
 				Section("Terminal") {
+					Image(systemName: "figure.walk.circle")
+						.font(.system(size: 300))
+						.foregroundStyle(.blue)
+						.colorEffect(ShaderLibrary.redify())
+					
 					VStack(alignment: .leading) {
 						HStack {
 							Label("Scrollback", systemImage: "scroll")
