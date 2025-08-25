@@ -119,21 +119,25 @@ struct SettingsView: View {
 						Text(">")
 							.font(.largeTitle).monospaced()
 							.foregroundStyle(.blue)
-						Group {
-							switch hostsManager.settings.cursorType.cursorShape {
-							case .block:
-								Rectangle()
-									.frame(width: 20, height: 40)
-							case .bar:
-								Rectangle()
-									.frame(width: 4, height: 40)
-							case .underline:
-								Rectangle()
-									.frame(width: 20, height: 4)
-									.padding(.top, 36)
-							}
+						ZStack {
+//							switch hostsManager.settings.cursorType.cursorShape {
+								if hostsManager.settings.cursorType.cursorShape == .block {
+									Rectangle()
+										.frame(width: 20, height: 40)
+								} else if hostsManager.settings.cursorType.cursorShape == .bar {
+									Rectangle()
+										.frame(width: 4, height: 40)
+								} else if hostsManager.settings.cursorType.cursorShape == .underline {
+									Rectangle()
+										.frame(width: 20, height: 4)
+										.padding(.top, 36)
+								}
+//							}
 						}
 						//						.padding(.leading, 248)
+						.id(hostsManager.settings.cursorType.cursorShape)
+						.animation(.default, value: hostsManager.settings.cursorType.cursorShape)
+						.transition(.opacity)
 						.onChange(of: hostsManager.settings.cursorType.blink) { _ in
 							startBlinkingIfNeeded()
 						}
