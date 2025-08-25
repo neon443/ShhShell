@@ -13,8 +13,11 @@ using namespace metal;
 	return half4(1, 0, 0, color.a);
 }
 
-[[ stitchable ]] half4 redify(float2 pos, half4 color) {
-	return half4(1, 0, 0, 0.1);
+[[ stitchable ]] half4 redify(float2 position, half4 color) {
+	if (color.a == 0) {
+		return half4(0,0,0,0);
+	}
+	return half4(1 * color.a, 0, 0, color.a);
 }
 
 [[ stitchable ]] half4 passthrough(float2 position, half4 color) {

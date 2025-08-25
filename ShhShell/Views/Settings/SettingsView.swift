@@ -42,7 +42,7 @@ struct SettingsView: View {
 					Image(systemName: "figure.walk.circle")
 						.font(.system(size: 300))
 						.foregroundStyle(.blue)
-						.colorEffect(ShaderLibrary.redify())
+						.colorEffect(ShaderLibrary.scanlines())
 					
 					VStack(alignment: .leading) {
 						HStack {
