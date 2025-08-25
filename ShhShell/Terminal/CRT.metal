@@ -9,6 +9,18 @@
 #include <SwiftUI/SwiftUI_Metal.h>
 using namespace metal;
 
+[[ stitchable ]] half4 crt(float2 pos, half4 color, float2 size, float time) {
+	float2 uv = pos/size;
+	
+	// scanwave
+	half3 newCol = 0.75 + 0.5 + 0.5 * sin(time + uv.y*10 + half3(0));
+	
+	//scanlines
+	newCol *= 0.5 + 0.5 * sin(uv.y * 1000.0 + half3(0));
+	half4 output = half4(color.xyz*newCol, 1);
+	return output;
+}
+
 //learning shaders stuff here
 [[ stitchable ]] half4 sinebow(float2 pos, half4 color, float2 size, float time) {
 	float2 uv = (pos/size.x) * 2.0 - 1.0;
