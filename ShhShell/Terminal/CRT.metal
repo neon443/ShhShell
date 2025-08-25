@@ -13,10 +13,10 @@ using namespace metal;
 	float2 uv = pos/size;
 	
 	// scanwave
-	half3 newCol = 0.75 + 0.5 + 0.5 * sin(time + uv.y*10 + half3(0));
+	half3 newCol = 0.75 + 0.5 + 0.5 * sin(time + uv.y*10);
 	
 	//scanlines
-	newCol *= 0.5 + 0.5 * sin(uv.y * 1000.0 + half3(0));
+	newCol *= 0.5 + 0.5 * sin(uv.y * 1000.0);
 	half4 output = half4(color.xyz*newCol, 1);
 	return output;
 }
