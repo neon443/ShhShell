@@ -10,6 +10,25 @@
 using namespace metal;
 
 //learning shaders stuff here
+[[ stitchable ]] half4 sinebow(float2 pos, half4 color, float2 size, float time) {
+	float2 uv = (pos/size.x) * 2 - 1;
+	uv.y += 0.15;
+	float wave = sin(uv.x + time);
+	wave *= wave * 25;
+	float luma = abs(1 / (100 * uv.y + wave));
+	
+	half3 waveColor = half3(0);
+	for (float i = 0; i < 10; i++) {
+		half3 rainbow = half3(
+			  sin(0.3 + time) * 0.5 + 0.5,
+			  sin(0.3 + 2 + sin(time * 0.3)) * 0.5 + 0.5,
+			  sin(0.3 + 4 + time) * 0.5 + 0.5
+							  );
+		waveColor += rainbow * luma;
+	}
+	return half4(waveColor, 1);
+}
+
 [[ stitchable ]] half4 loupe(float2 pos, SwiftUI::Layer layer, float2 size, float2 touch) {
 	float maxDist = 0.1;
 	float2 uv = pos/size;

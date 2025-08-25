@@ -43,47 +43,55 @@ struct SettingsView: View {
 				Section("Shaded") {
 					TimelineView(.animation) { tl in
 						let time = start.distance(to: tl.date)
-						//						Image(systemName: "figure.walk.circle")
-						//							.font(.system(size: 300))
-						//							.foregroundStyle(.blue)
-						//							.distortionEffect(
-						//								ShaderLibrary.wave(
-						//									.float(time)
-						//								),
-						//								maxSampleOffset: .zero
-						//							)
-						Rectangle()
-							.frame(width: 200, height: 100)
-							.padding(.vertical, 20)
-							.foregroundStyle(.red)
-							.compositingGroup()
-							.visualEffect {
-								content,
-								proxy in
-								content.distortionEffect(
-									ShaderLibrary.waveFlag(
-										.float(time),
-										.float2(proxy.size)
-									),
-									maxSampleOffset: CGSize(width: 0, height: 40)
-								)
-							}
-							.gesture(
-								DragGesture(minimumDistance: 0)
-									.onChanged { touch = $0.location}
-							)
+//						Image(systemName: "figure.walk.circle")
+//							.font(.system(size: 300))
+//							.foregroundStyle(.blue)
+//							.distortionEffect(
+//								ShaderLibrary.wave(
+//									.float(time)
+//								),
+//								maxSampleOffset: .zero
+//							)
+//						Rectangle()
+//							.frame(width: 200, height: 100)
+//							.padding(.vertical, 20)
+//							.foregroundStyle(.red)
+//							.compositingGroup()
+//							.visualEffect {
+//								content,
+//								proxy in
+//								content.distortionEffect(
+//									ShaderLibrary.waveFlag(
+//										.float(time),
+//										.float2(proxy.size)
+//									),
+//									maxSampleOffset: CGSize(width: 0, height: 40)
+//								)
+//							}
+//							.gesture(
+//								DragGesture(minimumDistance: 0)
+//									.onChanged { touch = $0.location}
+//							)
 					}
 				}
 				
 				Section("Shaded") {
 					TimelineView(.animation) { tl in
 						let time = start.distance(to: tl.date)
-						//					Image(systemName: "figure.walk.circle")
-						//						.font(.system(size: 300))
-						//						.foregroundStyle(.blue)
-						//						.colorEffect(ShaderLibrary.rainbow(
-						//							.float(time)
-						//						))
+						Rectangle()
+							.frame(width: 300, height: 200)
+							.colorEffect(
+								ShaderLibrary.sinebow(
+									.float2(300, 200),
+									.float(time)
+								)
+							)
+//						Image(systemName: "figure.walk.circle")
+//							.font(.system(size: 300))
+//							.foregroundStyle(.blue)
+//							.colorEffect(ShaderLibrary.rainbow(
+//								.float(time)
+//							))
 					}
 				}
 				Section("Original") {
@@ -120,19 +128,17 @@ struct SettingsView: View {
 							.font(.largeTitle).monospaced()
 							.foregroundStyle(.blue)
 						ZStack {
-//							switch hostsManager.settings.cursorType.cursorShape {
-								if hostsManager.settings.cursorType.cursorShape == .block {
-									Rectangle()
-										.frame(width: 20, height: 40)
-								} else if hostsManager.settings.cursorType.cursorShape == .bar {
-									Rectangle()
-										.frame(width: 4, height: 40)
-								} else if hostsManager.settings.cursorType.cursorShape == .underline {
-									Rectangle()
-										.frame(width: 20, height: 4)
-										.padding(.top, 36)
-								}
-//							}
+							if hostsManager.settings.cursorType.cursorShape == .block {
+								Rectangle()
+									.frame(width: 20, height: 40)
+							} else if hostsManager.settings.cursorType.cursorShape == .bar {
+								Rectangle()
+									.frame(width: 4, height: 40)
+							} else if hostsManager.settings.cursorType.cursorShape == .underline {
+								Rectangle()
+									.frame(width: 20, height: 4)
+									.padding(.top, 36)
+							}
 						}
 						//						.padding(.leading, 248)
 						.id(hostsManager.settings.cursorType.cursorShape)
