@@ -14,6 +14,7 @@ struct SettingsView: View {
 	
 	@State private var blinkCursor: Int = 0
 	@State var blinkTimer: Timer?
+	@State private var start = Date.now
 	
 	func startBlinkingIfNeeded() {
 		if hostsManager.settings.cursorType.blink {
@@ -38,12 +39,55 @@ struct SettingsView: View {
 			hostsManager.selectedTheme.background.suiColor.opacity(0.7)
 				.ignoresSafeArea(.all)
 			List {
-				Section("Terminal") {
+				Section("Shaded") {
+					TimelineView(.animation) { tl in
+						let time = start.distance(to: tl.date)
+//						Image(systemName: "figure.walk.circle")
+//							.font(.system(size: 300))
+//							.foregroundStyle(.blue)
+//							.distortionEffect(
+//								ShaderLibrary.wave(
+//									.float(time)
+//								),
+//								maxSampleOffset: .zero
+//							)
+						Image(systemName: "square.and.arrow.up")
+							.font(.system(size: 300))
+							.foregroundStyle(.red)
+							.drawingGroup()
+							.visualEffect {
+								content,
+								proxy in
+								content.distortionEffect(
+									ShaderLibrary.waveFlag(
+										.float(time),
+										.float2(proxy.size)
+									),
+									maxSampleOffset: .zero
+								)
+							}
+							.border(.red)
+					}
+				}
+
+				Section("Shaded") {
+					TimelineView(.animation) { tl in
+						let time = start.distance(to: tl.date)
+//					Image(systemName: "figure.walk.circle")
+//						.font(.system(size: 300))
+//						.foregroundStyle(.blue)
+//						.colorEffect(ShaderLibrary.rainbow(
+//							.float(time)
+//						))
+					}
+				}
+				Section("Original") {
 					Image(systemName: "figure.walk.circle")
 						.font(.system(size: 300))
 						.foregroundStyle(.blue)
-						.colorEffect(ShaderLibrary.scanlines())
-					
+				}
+				
+				Section("Terminal") {
 					VStack(alignment: .leading) {
 						HStack {
 							Label("Scrollback", systemImage: "scroll")
