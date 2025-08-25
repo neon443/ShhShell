@@ -15,6 +15,7 @@ struct SettingsView: View {
 	@State private var blinkCursor: Int = 0
 	@State var blinkTimer: Timer?
 	@State private var start = Date.now
+	@State private var touch = CGPoint.zero
 	
 	func startBlinkingIfNeeded() {
 		if hostsManager.settings.cursorType.blink {
@@ -42,19 +43,20 @@ struct SettingsView: View {
 				Section("Shaded") {
 					TimelineView(.animation) { tl in
 						let time = start.distance(to: tl.date)
-//						Image(systemName: "figure.walk.circle")
-//							.font(.system(size: 300))
-//							.foregroundStyle(.blue)
-//							.distortionEffect(
-//								ShaderLibrary.wave(
-//									.float(time)
-//								),
-//								maxSampleOffset: .zero
-//							)
-						Image(systemName: "square.and.arrow.up")
-							.font(.system(size: 300))
+						//						Image(systemName: "figure.walk.circle")
+						//							.font(.system(size: 300))
+						//							.foregroundStyle(.blue)
+						//							.distortionEffect(
+						//								ShaderLibrary.wave(
+						//									.float(time)
+						//								),
+						//								maxSampleOffset: .zero
+						//							)
+						Rectangle()
+							.frame(width: 200, height: 100)
+							.padding(.vertical, 20)
 							.foregroundStyle(.red)
-							.drawingGroup()
+							.compositingGroup()
 							.visualEffect {
 								content,
 								proxy in
@@ -63,22 +65,25 @@ struct SettingsView: View {
 										.float(time),
 										.float2(proxy.size)
 									),
-									maxSampleOffset: .zero
+									maxSampleOffset: CGSize(width: 0, height: 40)
 								)
 							}
-							.border(.red)
+							.gesture(
+								DragGesture(minimumDistance: 0)
+									.onChanged { touch = $0.location}
+							)
 					}
 				}
-
+				
 				Section("Shaded") {
 					TimelineView(.animation) { tl in
 						let time = start.distance(to: tl.date)
-//					Image(systemName: "figure.walk.circle")
-//						.font(.system(size: 300))
-//						.foregroundStyle(.blue)
-//						.colorEffect(ShaderLibrary.rainbow(
-//							.float(time)
-//						))
+						//					Image(systemName: "figure.walk.circle")
+						//						.font(.system(size: 300))
+						//						.foregroundStyle(.blue)
+						//						.colorEffect(ShaderLibrary.rainbow(
+						//							.float(time)
+						//						))
 					}
 				}
 				Section("Original") {
@@ -102,7 +107,7 @@ struct SettingsView: View {
 						)
 					}
 				}
-					
+				
 				Section("Cursor") {
 					HStack(spacing: 20) {
 						Text("neon443")
@@ -128,7 +133,7 @@ struct SettingsView: View {
 									.padding(.top, 36)
 							}
 						}
-//						.padding(.leading, 248)
+						//						.padding(.leading, 248)
 						.onChange(of: hostsManager.settings.cursorType.blink) { _ in
 							startBlinkingIfNeeded()
 						}
@@ -215,7 +220,7 @@ struct SettingsView: View {
 				hostsManager.saveSettings()
 			}
 		}
-    }
+	}
 }
 
 #Preview {
