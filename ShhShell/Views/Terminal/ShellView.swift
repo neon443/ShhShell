@@ -36,9 +36,12 @@ struct ShellView: View {
 //							maxSampleOffset: .zero
 //						)
 //					}
+//					.blendMode(.screen)
 					.overlay {
 						if hostsManager.settings.filter == .crt {
 							CRTView()
+								.opacity(0.75)
+								.allowsHitTesting(false)
 						}
 					}
 				
