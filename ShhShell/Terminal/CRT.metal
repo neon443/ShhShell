@@ -11,9 +11,14 @@ using namespace metal;
 
 [[ stitchable ]] half4 crt(float2 pos, half4 color, float2 size, float time) {
 	float2 uv = pos/size;
+	float2 topLeading = float2(0, 0);
+	float2 topTrailing = float2(0, size.x);
+	float2 bottomLeading = float2(size.y, 0);
+	float2 bottomTrailing = size;
 	
 	// scanwave
-	half3 scanwave = 0.75 + 0.5 + 0.5 * sin(time*0.5 + uv.y*10);
+	half3 scanwave = 0.5 + 0.5 * sin(time + uv.y*10);
+	scanwave*=2;
 	
 	//scanlines
 	half scanline = 0.5 + 0.5 * sin(uv.y * 1250.0);
@@ -22,7 +27,7 @@ using namespace metal;
 	half3 newColor = scanwave*scanline;
 	
 	half alpha = 1 - scanline;
-	alpha *= 0.75;
+	alpha *= 0.5;
 	
 //	half4 output = half4(layer.sample(pos).xyz*newCol, 1);
 	half4 output = half4(color.xyz*newColor*alpha, alpha);
