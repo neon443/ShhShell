@@ -18,7 +18,7 @@ using namespace metal;
 	//scanlines
 	newCol *= 0.5 + 0.5 * sin(uv.y * 1250.0);
 //	half4 output = half4(layer.sample(pos).xyz*newCol, 1);
-	half4 output = half4(color.xyz*newCol*0.24, 0.25);
+	half4 output = half4(color.xyz*newCol*0.5, 0.5);
 	return output;
 }
 
