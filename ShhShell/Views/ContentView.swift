@@ -18,6 +18,13 @@ struct ContentView: View {
 				hostsManager.selectedTheme.background.suiColor.opacity(0.7)
 					.ignoresSafeArea(.all)
 				List {
+					ForEach(0..<6) {
+						Color.red.frame(width: 60, height: 60, alignment: .center)
+							.brightness(Double($0) * 0.2)
+							.overlay(Text("\(Double($0) * 0.2 * 100, specifier: "%.0f")%"),
+									 alignment: .bottom)
+							.border(Color.gray)
+					}
 					SessionsListView(
 						handler: handler,
 						hostsManager: hostsManager,

@@ -72,6 +72,7 @@
 		A96C6B022E0C49E800F377FE /* CenteredLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96C6B012E0C49E800F377FE /* CenteredLabel.swift */; };
 		A96C90A12E12B87A00724253 /* TextBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96C90A02E12B87900724253 /* TextBox.swift */; };
 		A96C90A32E12D53B00724253 /* KeyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96C90A22E12D53900724253 /* KeyType.swift */; };
+		A97AF1802E5D07BE00829443 /* CRTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97AF17F2E5D07BE00829443 /* CRTView.swift */; };
 		A9835C3C2E17CCA500969508 /* TrafficLights.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9835C3B2E17CCA500969508 /* TrafficLights.swift */; };
 		A98554552E05535F009051BD /* KeyManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554542E05535F009051BD /* KeyManagerView.swift */; };
 		A98554592E0553AA009051BD /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554582E0553AA009051BD /* KeyManager.swift */; };
@@ -212,6 +213,7 @@
 		A96C6B012E0C49E800F377FE /* CenteredLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenteredLabel.swift; sourceTree = "<group>"; };
 		A96C90A02E12B87900724253 /* TextBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBox.swift; sourceTree = "<group>"; };
 		A96C90A22E12D53900724253 /* KeyType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyType.swift; sourceTree = "<group>"; };
+		A97AF17F2E5D07BE00829443 /* CRTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRTView.swift; sourceTree = "<group>"; };
 		A9835C3B2E17CCA500969508 /* TrafficLights.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrafficLights.swift; sourceTree = "<group>"; };
 		A98554542E05535F009051BD /* KeyManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyManagerView.swift; sourceTree = "<group>"; };
 		A98554582E0553AA009051BD /* KeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
@@ -358,6 +360,7 @@
 			children = (
 				A923172E2E08851200ECE1E6 /* ShellView.swift */,
 				A9FD37682E16A6BF005319A8 /* ShellTabView.swift */,
+				A97AF17F2E5D07BE00829443 /* CRTView.swift */,
 			);
 			path = Terminal;
 			sourceTree = "<group>";
@@ -873,6 +876,7 @@
 				A98554592E0553AA009051BD /* KeyManager.swift in Sources */,
 				A93F283D2E2A5DCB0092B8D5 /* SnippetManagerView.swift in Sources */,
 				A9C060EB2E357FD300CA9374 /* Haptics.swift in Sources */,
+				A97AF1802E5D07BE00829443 /* CRTView.swift in Sources */,
 				A9C897EF2DF1A9A400EF9A5F /* SSHHandler.swift in Sources */,
 				A9D819312E102D8700442D38 /* HostkeysView.swift in Sources */,
 				A98554552E05535F009051BD /* KeyManagerView.swift in Sources */,
