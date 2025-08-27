@@ -22,15 +22,15 @@ using namespace metal;
 	
 	//scanlines
 	half scanline = 0.5 + 0.5 * sin(uv.y * 1250.0);
-//	scanline *= 0.5;
+	scanline *= 0.5;
 	
 	half3 newColor = scanwave*scanline;
 	
-	half alpha = 1 - scanline;
-	alpha *= 1;
+//	half alpha = 1 - scanline;
+//	half alpha = 0.5;
 	
 //	half4 output = half4(layer.sample(pos).xyz*newCol, 1);
-	half4 output = half4(color.xyz*newColor*alpha, alpha);
+	half4 output = half4(color.xyz*newColor, 1);
 	return output;
 }
 
