@@ -14,7 +14,7 @@ struct CRTView: View {
 		TimelineView(.animation) { tl in
 			let time = tl.date.distance(to: startTime)
 			Rectangle()
-				.foregroundStyle(.white.opacity(0.1))
+				.foregroundStyle(.black.opacity(0.1))
 				.visualEffect { content, proxy in
 					content
 						.colorEffect(

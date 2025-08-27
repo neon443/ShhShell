@@ -53,6 +53,7 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 	}
 	
 	override func cursorStyleChanged(source: Terminal, newStyle: CursorStyle) {
+		super.cursorStyleChanged(source: source, newStyle: newStyle)
 		
 	}
 	

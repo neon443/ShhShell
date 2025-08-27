@@ -25,7 +25,7 @@ struct ShellView: View {
 				ZStack {
 					TerminalController(handler: handler, hostsManager: hostsManager)
 //						.colorMultiply(Color(red: 0.95, green: 1, blue: 0.95, opacity: 1))
-						.brightness(0.2)
+						.brightness(hostsManager.settings.filter == .crt ? 0.2 : 0.0)
 					if hostsManager.settings.filter == .crt {
 						CRTView()
 							.opacity(0.75)

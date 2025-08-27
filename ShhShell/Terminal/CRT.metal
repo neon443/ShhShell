@@ -16,22 +16,13 @@ using namespace metal;
 	float2 bottomLeading = float2(size.y, 0);
 	float2 bottomTrailing = size;
 	
-	// scanwave
-//	half3 scanwave = 0.5 + 0.5 * sin(time + uv.y*10);
-//	scanwave*=2;
-	
 	//scanlines
-	half scanline = 0.5 + 0.5 * sin(uv.y * 1250.0);
-//	scanline *= 0.5;
-	
-	half3 newColor = /*scanwave**/scanline;
+	half scanline = 0.5 + 0.5 * sin(uv.y * size.y*2);
 	
 	half alpha = 1 - scanline;
 	alpha *= 2;
 	
-//	half4 output = half4(layer.sample(pos).xyz*newCol, 1);
-	half4 output = half4(color.xyz*newColor*alpha, alpha);
-	return output;
+	return half4(color.xyz*scanline*alpha, alpha);
 }
 
 //learning shaders stuff here
