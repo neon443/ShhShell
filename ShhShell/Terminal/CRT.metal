@@ -27,7 +27,7 @@ using namespace metal;
 	half3 newColor = /*scanwave**/scanline;
 	
 	half alpha = 1 - scanline;
-	alpha *= 0.5;
+	alpha *= 2;
 	
 //	half4 output = half4(layer.sample(pos).xyz*newCol, 1);
 	half4 output = half4(color.xyz*newColor*alpha, alpha);
