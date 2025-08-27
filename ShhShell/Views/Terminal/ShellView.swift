@@ -25,15 +25,14 @@ struct ShellView: View {
 				ZStack {
 					TerminalController(handler: handler, hostsManager: hostsManager)
 //						.colorMultiply(Color(red: 0.95, green: 1, blue: 0.95, opacity: 1))
-//						.colorMultiply(.white)
-						.overlay {
-							if hostsManager.settings.filter == .crt {
-								CRTView()
-									.opacity(0.75)
-//									.blendMode(.overlay)
-									.allowsHitTesting(false)
-							}
-						}
+						.brightness(0.2)
+					if hostsManager.settings.filter == .crt {
+						CRTView()
+							.opacity(0.75)
+							.brightness(-0.2)
+							.blendMode(.overlay)
+							.allowsHitTesting(false)
+					}
 				}
 				
 				Group {
