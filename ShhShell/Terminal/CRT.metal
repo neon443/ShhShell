@@ -17,14 +17,14 @@ using namespace metal;
 	float2 bottomTrailing = size;
 	
 	// scanwave
-	half3 scanwave = 0.5 + 0.5 * sin(time + uv.y*10);
-	scanwave*=2;
+//	half3 scanwave = 0.5 + 0.5 * sin(time + uv.y*10);
+//	scanwave*=2;
 	
 	//scanlines
 	half scanline = 0.5 + 0.5 * sin(uv.y * 1250.0);
 //	scanline *= 0.5;
 	
-	half3 newColor = scanwave*scanline;
+	half3 newColor = /*scanwave**/scanline;
 	
 	half alpha = 1 - scanline;
 	alpha *= 1;
