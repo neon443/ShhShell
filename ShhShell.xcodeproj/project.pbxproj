@@ -83,6 +83,7 @@
 		A9921DE12E5F5710009F72A8 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9921DE02E5F5710009F72A8 /* WelcomeView.swift */; };
 		A994D64A2E5C94E200672395 /* ShaderTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A994D6492E5C94E200672395 /* ShaderTestingView.swift */; };
 		A9A2F4F62E3001D300D0AE9B /* AddSnippetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A2F4F52E3001D300D0AE9B /* AddSnippetView.swift */; };
+		A9B1E5852E5F8E86009309E5 /* WelcomeChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B1E5842E5F8E86009309E5 /* WelcomeChunk.swift */; };
 		A9BA1D192E1D9AE1005BDCEF /* SwiftTerm.Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BA1D182E1D9AE1005BDCEF /* SwiftTerm.Color.swift */; };
 		A9BA1D1E2E1EAD51005BDCEF /* SF-Mono-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A9BA1D1C2E1EAD51005BDCEF /* SF-Mono-Bold.otf */; };
 		A9BA1D1F2E1EAD51005BDCEF /* SF-Mono-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = A9BA1D1D2E1EAD51005BDCEF /* SF-Mono-BoldItalic.otf */; };
@@ -225,6 +226,7 @@
 		A9921DE02E5F5710009F72A8 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		A994D6492E5C94E200672395 /* ShaderTestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderTestingView.swift; sourceTree = "<group>"; };
 		A9A2F4F52E3001D300D0AE9B /* AddSnippetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSnippetView.swift; sourceTree = "<group>"; };
+		A9B1E5842E5F8E86009309E5 /* WelcomeChunk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeChunk.swift; sourceTree = "<group>"; };
 		A9BA1D182E1D9AE1005BDCEF /* SwiftTerm.Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftTerm.Color.swift; sourceTree = "<group>"; };
 		A9BA1D1C2E1EAD51005BDCEF /* SF-Mono-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Mono-Bold.otf"; sourceTree = "<group>"; };
 		A9BA1D1D2E1EAD51005BDCEF /* SF-Mono-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Mono-BoldItalic.otf"; sourceTree = "<group>"; };
@@ -594,6 +596,7 @@
 			isa = PBXGroup;
 			children = (
 				A9921DE02E5F5710009F72A8 /* WelcomeView.swift */,
+				A9B1E5842E5F8E86009309E5 /* WelcomeChunk.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -891,6 +894,7 @@
 				A97AF1802E5D07BE00829443 /* CRTView.swift in Sources */,
 				A9C897EF2DF1A9A400EF9A5F /* SSHHandler.swift in Sources */,
 				A9D819312E102D8700442D38 /* HostkeysView.swift in Sources */,
+				A9B1E5852E5F8E86009309E5 /* WelcomeChunk.swift in Sources */,
 				A98554552E05535F009051BD /* KeyManagerView.swift in Sources */,
 				A9A2F4F62E3001D300D0AE9B /* AddSnippetView.swift in Sources */,
 				A923172D2E07138000ECE1E6 /* SSHTerminalDelegate.swift in Sources */,
