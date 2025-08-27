@@ -52,6 +52,10 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 		}
 	}
 	
+	override func cursorStyleChanged(source: Terminal, newStyle: CursorStyle) {
+		
+	}
+	
 	func startFeedLoop() {
 		Task {
 			guard let handler else { return }
@@ -59,6 +63,7 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 				if let read = handler.readFromChannel() {
 					await MainActor.run {
 						self.feed(text: read)
+						print(getTerminal().getCursorLocation())
 					}
 				} else {
 					try? await Task.sleep(nanoseconds: 10_000_000) //10ms
