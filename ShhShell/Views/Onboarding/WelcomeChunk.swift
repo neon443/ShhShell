@@ -11,34 +11,44 @@ struct WelcomeChunk: View {
 	@State var symbol: String
 	@State var title: String
 	@State var para: String
-	@State var timeTarget: TimeInterval = 0
+	@State var delay: TimeInterval = 0
 	
 	@State private var spawnDate: Date = .now
 	
 	var body: some View {
 		TimelineView(.animation) { tl in
 			let time = tl.date.timeIntervalSince(spawnDate)
-			HStack {
-				if time > timeTarget {
+			HStack(spacing: 25) {
+				if time > delay {
 					Image(systemName: symbol)
 						.resizable().scaledToFit()
-						.frame(width: 50)
+						.symbolRenderingMode(.hierarchical)
+						.frame(width: 50, height: 50)
+						.transition(.scale)
 				}
 				VStack(alignment: .leading) {
-					if time > timeTarget+1 {
+					if time > delay+0.25 {
 						Text(title)
 							.bold()
 							.font(.headline)
+							.transition(.blurReplace)
+					}
+					if time > delay+0.75 && !para.isEmpty {
 						Text(para)
 							.foregroundStyle(.gray)
+							.font(.footnote)
+							.transition(.blurReplace)
 							.multilineTextAlignment(.leading)
 					}
 				}
+				.shadow(color: .white, radius: time > delay+0.75 ? 0 : 5)
+				
 				Spacer()
 			}
 			.animation(.spring, value: time)
 			.frame(maxWidth: .infinity)
-			.padding(.horizontal, 50)
+			.padding(.horizontal, 30)
+			.padding(10)
 		}
 	}
 }
