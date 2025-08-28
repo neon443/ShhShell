@@ -54,9 +54,12 @@ struct AboutView: View {
 				NavigationLink {
 					ShaderTestingView()
 				} label: {
-					Text("Shader Playground")
-						.bold()
-					Text("This is a collection of all the shaders I made while learning!")
+					VStack {
+						Text("Shader Playground")
+							.bold()
+						Text("This is a collection of all the shaders I made while learning!")
+							.font(.caption2)
+					}
 				}
 			}
 			.transition(.scale)
