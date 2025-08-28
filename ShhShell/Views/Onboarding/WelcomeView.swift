@@ -32,7 +32,7 @@ struct WelcomeView: View {
 							.transition(.blurReplace)
 					}
 				}
-				.padding(.top, time > 3 ? 50 : 0)
+//				.padding(.top, time > 3 ? 25 : 0)
 				
 				if time > 3 {
 					Spacer()
@@ -90,13 +90,13 @@ struct WelcomeView: View {
 						.clipShape(RoundedRectangle(cornerRadius: 50))
 					}
 					.buttonStyle(.plain)
-					.frame(width: .infinity, height: 50)
+					.frame(width: 300, height: 50)
 					.padding(.horizontal, 75)
 #endif
 				}
 			}
 			.onDisappear {
-				
+				NSUbiquitousKeyValueStore.default.set(true, forKey: "shownOnboarding")
 			}
 			.animation(.spring, value: time)
 			.preferredColorScheme(.dark)

@@ -22,13 +22,18 @@ struct ShhShellApp: App {
 	
 	var body: some Scene {
 		WindowGroup {
-			ContentView(
-				handler: sshHandler,
-				hostsManager: hostsManager,
-				keyManager: keyManager
-			)
-			.colorScheme(hostsManager.selectedTheme.background.luminance > 0.5 ? .light : .dark)
-			.tint(hostsManager.tint)
+			if !NSUbiquitousKeyValueStore.default.bool(forKey: "shownOnboarding") {
+				WelcomeView()
+			} else {
+				ContentView(
+					handler: sshHandler,
+					hostsManager: hostsManager,
+					keyManager: keyManager
+				)
+				.transition(.opacity)
+				.colorScheme(hostsManager.selectedTheme.background.luminance > 0.5 ? .light : .dark)
+				.tint(hostsManager.tint)
+			}
 		}
 	}
 }

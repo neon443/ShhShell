@@ -38,6 +38,7 @@ struct WelcomeChunk: View {
 							.foregroundStyle(.gray)
 							.font(.footnote)
 							.transition(.blurReplace)
+							.lineLimit(nil)
 							.multilineTextAlignment(.leading)
 					}
 				}

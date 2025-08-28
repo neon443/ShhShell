@@ -11,7 +11,6 @@ struct AboutView: View {
 	@ObservedObject var hostsManager: HostsManager
 	
     var body: some View {
-		
 		ZStack {
 			hostsManager.selectedTheme.background.suiColor.opacity(0.7)
 							.ignoresSafeArea(.all)
