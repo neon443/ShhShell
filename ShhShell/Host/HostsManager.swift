@@ -47,7 +47,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		loadFonts()
 		loadSnippets()
 		loadHistory()
-//		self.shownOnboarding = UserDefaults.standard.bool(forKey: "shownOnboarding")
+		self.shownOnboarding = UserDefaults.standard.bool(forKey: "shownOnboarding")
 	}
 	
 	func setOnboarding(to newValue: Bool) {

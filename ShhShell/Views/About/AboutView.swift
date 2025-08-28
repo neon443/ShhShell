@@ -50,6 +50,14 @@ struct AboutView: View {
 							.shadow(radius: 2)
 					}
 				}
+				
+				NavigationLink {
+					ShaderTestingView()
+				} label: {
+					Text("Shader Playground")
+						.bold()
+					Text("This is a collection of all the shaders I made while learning!")
+				}
 			}
 			.transition(.scale)
 			.frame(maxWidth: .infinity)
