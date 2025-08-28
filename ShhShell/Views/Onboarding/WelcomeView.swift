@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct WelcomeView: View {
+	@ObservedObject var hostsManager: HostsManager
 	@State private var spawnDate: Date = .now
-	@Environment(\.dismiss) var dismiss
 	
 	var body: some View {
 		TimelineView(.animation) { tl in
@@ -74,11 +74,13 @@ struct WelcomeView: View {
 				}
 				if time > 9 {
 #if swift(>=6.2)
-					Button("Continue") { dismiss() }
+					Button("Continue") {
+						hostsManager.setOnboarding(to: true)
+					}
 						.buttonStyle(.glassProminent)
 #else
 					Button {
-						dismiss()
+						hostsManager.setOnboarding(to: true)
 					} label: {
 						ZStack {
 							Color.terminalGreen
@@ -95,9 +97,6 @@ struct WelcomeView: View {
 #endif
 				}
 			}
-			.onDisappear {
-				NSUbiquitousKeyValueStore.default.set(true, forKey: "shownOnboarding")
-			}
 			.animation(.spring, value: time)
 			.preferredColorScheme(.dark)
 		}
@@ -105,5 +104,5 @@ struct WelcomeView: View {
 }
 
 #Preview {
-	WelcomeView()
+	WelcomeView(hostsManager: HostsManager(previews: true))
 }

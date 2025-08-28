@@ -26,6 +26,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	
 	@Published var history: [History] = []
 	@Published var settings: AppSettings = AppSettings()
+	@Published var shownOnboarding: Bool = false
 	
 	var tint: SwiftUI.Color {
 		selectedTheme.ansi[selectedAnsi].suiColor
@@ -46,6 +47,12 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 		loadFonts()
 		loadSnippets()
 		loadHistory()
+//		self.shownOnboarding = UserDefaults.standard.bool(forKey: "shownOnboarding")
+	}
+	
+	func setOnboarding(to newValue: Bool) {
+		self.shownOnboarding = newValue
+		UserDefaults.standard.set(newValue, forKey: "shownOnboarding")
 	}
 	
 	func setAppIcon() {
