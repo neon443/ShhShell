@@ -52,9 +52,18 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 		}
 	}
 	
+	override func showCursor(source: Terminal) {
+		super.showCursor(source: source)
+		print("showcursor called")
+	}
+	
+	override func hideCursor(source: Terminal) {
+		super.hideCursor(source: source)
+		print("hide cursor called")
+	}
+	
 	override func cursorStyleChanged(source: Terminal, newStyle: CursorStyle) {
 		super.cursorStyleChanged(source: source, newStyle: newStyle)
-		
 	}
 	
 	func startFeedLoop() {

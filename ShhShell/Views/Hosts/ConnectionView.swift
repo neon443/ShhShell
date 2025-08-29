@@ -148,10 +148,7 @@ Hostkey fingerprint is \(handler.getHostkey() ?? "nil")
 							handler.writeToChannel(hostsManager.snippets.first(where: { $0.id == handler.host.startupSnippetID })?.content)
 						}
 					} label: {
-						Label(
-							handler.connected ? "Disconnect" : "Connect",
-							systemImage: handler.connected ? "xmark.app.fill" : "power"
-						)
+						Label("Connect", systemImage: "power")
 					}
 					.disabled(handler.hostInvalid())
 				}

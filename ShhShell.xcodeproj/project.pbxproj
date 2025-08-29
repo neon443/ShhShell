@@ -81,6 +81,7 @@
 		A98554632E0587DF009051BD /* HostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98554622E0587DF009051BD /* HostsView.swift */; };
 		A98CAB442E4229F7005E4C42 /* HostSymbolPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98CAB432E4229F7005E4C42 /* HostSymbolPicker.swift */; };
 		A9921DE12E5F5710009F72A8 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9921DE02E5F5710009F72A8 /* WelcomeView.swift */; };
+		A9921FFF2E61D537009F72A8 /* libssh2.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9921FFE2E61D537009F72A8 /* libssh2.xcframework */; };
 		A994D64A2E5C94E200672395 /* ShaderTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A994D6492E5C94E200672395 /* ShaderTestingView.swift */; };
 		A9A2F4F62E3001D300D0AE9B /* AddSnippetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A2F4F52E3001D300D0AE9B /* AddSnippetView.swift */; };
 		A9B1E5852E5F8E86009309E5 /* WelcomeChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B1E5842E5F8E86009309E5 /* WelcomeChunk.swift */; };
@@ -224,6 +225,7 @@
 		A98554622E0587DF009051BD /* HostsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostsView.swift; sourceTree = "<group>"; };
 		A98CAB432E4229F7005E4C42 /* HostSymbolPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostSymbolPicker.swift; sourceTree = "<group>"; };
 		A9921DE02E5F5710009F72A8 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		A9921FFE2E61D537009F72A8 /* libssh2.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libssh2.xcframework; path = ../blink/xcfs/.build/artifacts/xcfs/libssh2/libssh2.xcframework; sourceTree = SOURCE_ROOT; };
 		A994D6492E5C94E200672395 /* ShaderTestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderTestingView.swift; sourceTree = "<group>"; };
 		A9A2F4F52E3001D300D0AE9B /* AddSnippetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSnippetView.swift; sourceTree = "<group>"; };
 		A9B1E5842E5F8E86009309E5 /* WelcomeChunk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeChunk.swift; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 				A95FAA542DF4B62900DE2F5A /* LibSSH.xcframework in Frameworks */,
 				A9E78F422E58BD770079F3CC /* SwiftTerm in Frameworks */,
 				A93143BE2DF4D0B300FCD5DB /* libpthread.tbd in Frameworks */,
+				A9921FFF2E61D537009F72A8 /* libssh2.xcframework in Frameworks */,
 				A9083E402DF2226F0042906E /* libz.tbd in Frameworks */,
 				A95FAA562DF4B62A00DE2F5A /* openssl.xcframework in Frameworks */,
 			);
@@ -630,6 +633,7 @@
 				A9083E3F2DF2225A0042906E /* libz.tbd */,
 				A95FAA502DF4B62100DE2F5A /* LibSSH.xcframework */,
 				A95FAA512DF4B62100DE2F5A /* openssl.xcframework */,
+				A9921FFE2E61D537009F72A8 /* libssh2.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
