@@ -14,6 +14,7 @@ struct ShellView: View {
 	@ObservedObject var container = TerminalViewContainer.shared
 	
 	@State var jellyLoc: (x: Int, y: Int) = (0, 0)
+	@State var jellySize: CGSize = CGSize(width: 0, height: 0)
 	@State var jellyShow: Bool = true
 	
 	@Environment(\.dismiss) var dismiss
@@ -31,19 +32,21 @@ struct ShellView: View {
 							let timer = Timer(timeInterval: 0.1, repeats: true) { timer in
 								DispatchQueue.main.async {
 									let terminalView = container.sessions[handler.sessionID ?? UUID()]?.terminalView
+									let delegate = terminalView?.terminalDelegate as? SSHTerminalDelegate
 									terminalView?.getTerminal().hideCursor()
-									jellyLoc = terminalView?.getTerminal().getCursorLocation() ?? (0,0)
-									jellyShow = terminalView?.getTerminal().buffer.isCursorInViewPort ?? true
+									jellyLoc = terminalView?.getTerminal().getCursorLocation() ?? jellyLoc
+									jellySize = delegate?.computeFontDimensions() ?? jellySize
+//									jellyShow = terminalView?.getTerminal().buffer.isCursorInViewPort ?? jellyShow
 								}
 							}
 							RunLoop.main.add(timer, forMode: .common)
 						}
 					
 					Rectangle()
-						.frame(width: 4.3, height: 12)
+						.frame(width: jellySize.width, height: jellySize.height)
 						.offset(
-							x: CGFloat(jellyLoc.x)*4.3,
-							y: CGFloat(jellyLoc.y)*8.66
+							x: CGFloat(jellyLoc.x)*jellySize.width,
+							y: CGFloat(jellyLoc.y)*jellySize.height
 						)
 						.opacity(jellyShow ? 1 : 0)
 						.animation(.spring, value: jellyLoc.x)
