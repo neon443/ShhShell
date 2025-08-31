@@ -83,6 +83,9 @@
 		A9921DE12E5F5710009F72A8 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9921DE02E5F5710009F72A8 /* WelcomeView.swift */; };
 		A9921FFF2E61D537009F72A8 /* libssh2.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9921FFE2E61D537009F72A8 /* libssh2.xcframework */; };
 		A994D64A2E5C94E200672395 /* ShaderTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A994D6492E5C94E200672395 /* ShaderTestingView.swift */; };
+		A99D9F7B2E63513E00259166 /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; productRef = A99D9F7A2E63513E00259166 /* SwiftTerm */; };
+		A99D9F7E2E6351D100259166 /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; productRef = A99D9F7D2E6351D100259166 /* SwiftTerm */; };
+		A99D9F812E64F45B00259166 /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; productRef = A99D9F802E64F45B00259166 /* SwiftTerm */; };
 		A9A2F4F62E3001D300D0AE9B /* AddSnippetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A2F4F52E3001D300D0AE9B /* AddSnippetView.swift */; };
 		A9B1E5852E5F8E86009309E5 /* WelcomeChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B1E5842E5F8E86009309E5 /* WelcomeChunk.swift */; };
 		A9BA1D192E1D9AE1005BDCEF /* SwiftTerm.Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BA1D182E1D9AE1005BDCEF /* SwiftTerm.Color.swift */; };
@@ -100,7 +103,6 @@
 		A9D819312E102D8700442D38 /* HostkeysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D819302E102D8700442D38 /* HostkeysView.swift */; };
 		A9DA97712E0D30ED00142DDC /* HostSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA97702E0D30ED00142DDC /* HostSymbol.swift */; };
 		A9DA97732E0D40C100142DDC /* HostSymbolPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA97722E0D40C100142DDC /* HostSymbolPreview.swift */; };
-		A9E78F422E58BD770079F3CC /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; productRef = A9E78F412E58BD770079F3CC /* SwiftTerm */; };
 		A9FD37552E143D23005319A8 /* SecKeyConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FD37542E143D23005319A8 /* SecKeyConvertible.swift */; };
 		A9FD37572E143D5A005319A8 /* SecKeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FD37562E143D5A005319A8 /* SecKeyStore.swift */; };
 		A9FD37592E143D74005319A8 /* GenericPasswordConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FD37582E143D74005319A8 /* GenericPasswordConvertible.swift */; };
@@ -260,11 +262,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A99D9F7E2E6351D100259166 /* SwiftTerm in Frameworks */,
+				A99D9F7B2E63513E00259166 /* SwiftTerm in Frameworks */,
 				A95FAA542DF4B62900DE2F5A /* LibSSH.xcframework in Frameworks */,
-				A9E78F422E58BD770079F3CC /* SwiftTerm in Frameworks */,
 				A93143BE2DF4D0B300FCD5DB /* libpthread.tbd in Frameworks */,
 				A9921FFF2E61D537009F72A8 /* libssh2.xcframework in Frameworks */,
 				A9083E402DF2226F0042906E /* libz.tbd in Frameworks */,
+				A99D9F812E64F45B00259166 /* SwiftTerm in Frameworks */,
 				A95FAA562DF4B62A00DE2F5A /* openssl.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -698,7 +702,9 @@
 			);
 			name = ShhShell;
 			packageProductDependencies = (
-				A9E78F412E58BD770079F3CC /* SwiftTerm */,
+				A99D9F7A2E63513E00259166 /* SwiftTerm */,
+				A99D9F7D2E6351D100259166 /* SwiftTerm */,
+				A99D9F802E64F45B00259166 /* SwiftTerm */,
 			);
 			productName = ShhShell;
 			productReference = A925389A2DEE06DC007E0A18 /* ShhShell.app */;
@@ -778,7 +784,7 @@
 			mainGroup = A92538912DEE06DC007E0A18;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				A9E78F402E58BD770079F3CC /* XCRemoteSwiftPackageReference "SwiftTerm" */,
+				A99D9F7F2E64F45B00259166 /* XCRemoteSwiftPackageReference "SwiftTerm" */,
 			);
 			productRefGroup = A925389B2DEE06DC007E0A18 /* Products */;
 			projectDirPath = "";
@@ -1273,20 +1279,28 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		A9E78F402E58BD770079F3CC /* XCRemoteSwiftPackageReference "SwiftTerm" */ = {
+		A99D9F7F2E64F45B00259166 /* XCRemoteSwiftPackageReference "SwiftTerm" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/migueldeicaza/SwiftTerm";
+			repositoryURL = "https://github.com/neon443/SwiftTerm";
 			requirement = {
-				kind = revision;
-				revision = b48ebbbffee544df3f5dc8f43258f44f95d75c6f;
+				branch = jelly;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A9E78F412E58BD770079F3CC /* SwiftTerm */ = {
+		A99D9F7A2E63513E00259166 /* SwiftTerm */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A9E78F402E58BD770079F3CC /* XCRemoteSwiftPackageReference "SwiftTerm" */;
+			productName = SwiftTerm;
+		};
+		A99D9F7D2E6351D100259166 /* SwiftTerm */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftTerm;
+		};
+		A99D9F802E64F45B00259166 /* SwiftTerm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A99D9F7F2E64F45B00259166 /* XCRemoteSwiftPackageReference "SwiftTerm" */;
 			productName = SwiftTerm;
 		};
 /* End XCSwiftPackageProductDependency section */

@@ -1,5 +1,5 @@
 {
-  "originHash" : "4d9d9af82f23f3c708bdd502fed3939413b4f2a95a79ae568364cc92bca1527e",
+  "originHash" : "702d8e7b18adc80c84aa168885ba00fbb7440c6e9f59acbbf93da8a625ebf380",
   "pins" : [
     {
       "identity" : "swift-argument-parser",
@@ -16,7 +16,7 @@
       "location" : "https://github.com/swiftlang/swift-subprocess",
       "state" : {
         "branch" : "main",
-        "revision" : "7dc6e548114db7d6b10fddf29bcd5215c3875891"
+        "revision" : "f0ba4f43931c4e0f6d15078421dee7cb1415ce5d"
       }
     },
     {
@@ -31,9 +31,10 @@
     {
       "identity" : "swiftterm",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/migueldeicaza/SwiftTerm",
+      "location" : "https://github.com/neon443/SwiftTerm",
       "state" : {
-        "revision" : "b48ebbbffee544df3f5dc8f43258f44f95d75c6f"
+        "branch" : "jelly",
+        "revision" : "a3eda5e08f019ce2b6f21b03e1e1e71e75ee0591"
       }
     }
   ],

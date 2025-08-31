@@ -13,8 +13,34 @@ struct ShellView: View {
 	@ObservedObject var hostsManager: HostsManager
 	@ObservedObject var container = TerminalViewContainer.shared
 	
-	@State var jellyLoc: (x: Int, y: Int) = (0, 0)
-	@State var jellySize: CGSize = CGSize(width: 0, height: 0)
+	@State var cursorPos: (x: Int, y: Int) = (0, 0)
+	var jellyLoc: CGSize {
+		var offset = CGSize(width: cursorPos.x, height: cursorPos.y)
+		offset.width *= cellDimension.width
+		offset.height *= cellDimension.height
+		switch hostsManager.settings.cursorType.cursorShape {
+		case .block, .bar:
+			fallthrough
+		case .underline:
+			offset.height += cellDimension.height * 0.8
+		}
+		return offset
+	}
+	
+	@State var cellDimension: CGSize = CGSize(width: 0, height: 0)
+	var jellySize: CGSize {
+		var cellDimension: CGSize = cellDimension
+		switch hostsManager.settings.cursorType.cursorShape {
+		case .block:
+			fallthrough
+		case .bar:
+			cellDimension.width *= 0.3
+		case .underline:
+			cellDimension.height *= 0.2
+		}
+		return cellDimension
+	}
+	
 	@State var jellyShow: Bool = true
 	
 	@Environment(\.dismiss) var dismiss
@@ -34,23 +60,27 @@ struct ShellView: View {
 									let terminalView = container.sessions[handler.sessionID ?? UUID()]?.terminalView
 									let delegate = terminalView?.terminalDelegate as? SSHTerminalDelegate
 									terminalView?.getTerminal().hideCursor()
-									jellyLoc = terminalView?.getTerminal().getCursorLocation() ?? jellyLoc
-									jellySize = delegate?.computeFontDimensions() ?? jellySize
+									cursorPos = terminalView?.getTerminal().getCursorLocation() ?? cursorPos
+									cellDimension = delegate?.computeFontDimensions() ?? cellDimension
 //									jellyShow = terminalView?.getTerminal().buffer.isCursorInViewPort ?? jellyShow
 								}
 							}
-							RunLoop.main.add(timer, forMode: .common)
+//							RunLoop.main.add(timer, forMode: .common)
 						}
 					
-					Rectangle()
-						.frame(width: jellySize.width, height: jellySize.height)
-						.offset(
-							x: CGFloat(jellyLoc.x)*jellySize.width,
-							y: CGFloat(jellyLoc.y)*jellySize.height
-						)
-						.opacity(jellyShow ? 1 : 0)
-						.animation(.spring, value: jellyLoc.x)
-						.animation(.spring, value: jellyLoc.y)
+//					Rectangle()
+//						.frame(width: jellySize.width, height: jellySize.height)
+//						.offset(
+//							x: jellyLoc.width,
+//							y: jellyLoc.height
+//						)
+//						.opacity(jellyShow ? 1 : 0)
+//						.animation(.spring(duration: 0.2, bounce: 0.6), value: cursorPos.x)
+//						.animation(.spring(duration: 0.2, bounce: 0.6), value: cursorPos.y)
+//						.animation(.spring(duration: 0.2, bounce: 0.6), value: jellyLoc.width)
+//						.animation(.spring(duration: 0.2, bounce: 0.6), value: jellyLoc.height)
+//						.animation(.spring(duration: 0.2, bounce: 0.6), value: jellySize.width)
+//						.animation(.spring(duration: 0.2, bounce: 0.6), value: jellySize.height)
 					
 					if hostsManager.settings.filter == .crt {
 						CRTView()
