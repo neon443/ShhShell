@@ -31,13 +31,13 @@ struct WelcomeChunk: View {
 						Text(title)
 							.bold()
 							.font(.headline)
-							.transition(.blurReplace)
+							.transition(.opacity)
 					}
 					if time > delay+0.75 && !para.isEmpty {
 						Text(para)
 							.foregroundStyle(.gray)
 							.font(.footnote)
-							.transition(.blurReplace)
+							.transition(.opacity)
 							.lineLimit(nil)
 							.multilineTextAlignment(.leading)
 					}

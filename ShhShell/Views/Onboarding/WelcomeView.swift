@@ -29,7 +29,8 @@ struct WelcomeView: View {
 							.monospaced()
 							.font(.largeTitle)
 							.bold()
-							.transition(.blurReplace)
+							.transition(.opacity)
+							.shadow(color: .white, radius: time > 2.25 ? 0 : 5)
 					}
 				}
 //				.padding(.top, time > 3 ? 25 : 0)

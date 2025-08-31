@@ -13,17 +13,19 @@ struct CRTView: View {
 	var body: some View {
 		TimelineView(.animation) { tl in
 			let time = tl.date.distance(to: startTime)
-			Rectangle()
-				.foregroundStyle(.black.opacity(1))
-				.visualEffect { content, proxy in
-					content
-						.colorEffect(
-							ShaderLibrary.crt(
-								.float2(proxy.size),
-								.float(time)
+			if #available(iOS 17, *) {
+				Rectangle()
+					.foregroundStyle(.black.opacity(1))
+					.visualEffect { content, proxy in
+						content
+							.colorEffect(
+								ShaderLibrary.crt(
+									.float2(proxy.size),
+									.float(time)
+								)
 							)
-						)
-				}
+					}
+			}
 		}
 	}
 }

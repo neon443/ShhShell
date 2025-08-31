@@ -7,7 +7,6 @@
 
 import Foundation
 import LibSSH
-import libssh2
 import OSLog
 import SwiftUI
 import SwiftTerm
