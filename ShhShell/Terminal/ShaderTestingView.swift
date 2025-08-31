@@ -77,6 +77,9 @@ struct ShaderTestingView: View {
 						.allowsHitTesting(false)
 				}
 			}
+		} else {
+			Label("iOS 17 Required", systemImage: "exclamationmark.triangle.fill")
+				.foregroundStyle(.yellow)
 		}
 	}
 }

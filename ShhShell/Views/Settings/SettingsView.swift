@@ -122,6 +122,10 @@ struct SettingsView: View {
 				
 				Toggle("keep screen awake", systemImage: "cup.and.saucer.fill", isOn: $hostsManager.settings.caffeinate)
 				
+				if #unavailable(iOS 17), hostsManager.settings.filter == .crt {
+					Label("iOS 17 Required", systemImage: "exclamationmark.triangle.fill")
+						.foregroundStyle(.yellow)
+				}
 				Picker("terminal filter", selection: $hostsManager.settings.filter) {
 					ForEach(TerminalFilter.allCases, id: \.self) { filter in
 						Text(filter.description).tag(filter)
