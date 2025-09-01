@@ -101,11 +101,17 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 	func startFeedLoop() {
 		guard readTimer == nil else { return }
 		readTimer = Timer(timeInterval: 0.01, repeats: true) { timer in
-			Task(priority: .high) {
-				guard let handler = await self.handler else { return }
+			Task(priority: .high) { @MainActor in
+				guard let handler = self.handler else { return }
+				guard let sessionID = handler.sessionID else { return }
 				if let read = handler.readFromChannel() {
 					Task { @MainActor in
 						self.feed(text: read)
+					}
+				}
+				if !TerminalViewContainer.shared.sessionIDs.contains(sessionID) {
+					Task(priority: .high) { @MainActor in
+						TerminalViewContainer.shared.sessions[sessionID] = TerminalContainer(handler: handler, terminalView: self)
 					}
 				}
 			}

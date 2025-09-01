@@ -50,12 +50,12 @@ struct ShellTabView: View {
 			background
 				.ignoresSafeArea(.all)
 			VStack(spacing: 0) {
-				let oneTabWidth = max(100, (UIScreen.main.bounds.width)/CGFloat(container.sessionIDs.count))
-				
+				//header
 				HStack(alignment: .center, spacing: 10) {
 					Button() {
 						for session in container.sessions.values {
 							session.handler.disconnect()
+							session.handler.cleanup()
 						}
 						dismiss()
 					} label: {
@@ -73,12 +73,14 @@ struct ShellTabView: View {
 							.foregroundStyle(foreground)
 							.monospaced()
 							.contentTransition(.numericText())
+							.strikethrough(selectedHandler.state != .shellOpen)
 						if container.sessionIDs.count == 1 {
 							Text(selectedHandler.host.description)
 								.bold()
 								.foregroundStyle(foreground)
 								.monospaced()
 								.font(.caption2)
+								.strikethrough(selectedHandler.state != .shellOpen)
 						}
 					}
 					Spacer()
@@ -116,11 +118,14 @@ struct ShellTabView: View {
 				.background(hostsManager.tint, ignoresSafeAreaEdges: .all)
 				.frame(height: 40)
 				
+				//tab strip
 				if container.sessionIDs.count > 1 {
 					ScrollView(.horizontal, showsIndicators: false) {
+						let oneTabWidth: CGFloat = max(100, (UIScreen.main.bounds.width)/CGFloat(container.sessionIDs.count))
 						HStack(spacing: 0) {
 							ForEach(container.sessionIDs, id: \.self) { id in
 								let selected: Bool = selectedID == id
+								let thisHandler: SSHHandler = container.sessions[id]!.handler
 								ZStack {
 									Rectangle()
 										.fill(selected ? hostsManager.tint : background)
@@ -133,6 +138,7 @@ struct ShellTabView: View {
 													.foregroundStyle(selected ? foreground : hostsManager.tint)
 													.opacity(0.7)
 													.font(.callout)
+													.strikethrough(thisHandler.state != .shellOpen)
 											}
 											Text(container.sessions[id]!.handler.host.description)
 												.foregroundStyle(selected ? foreground : hostsManager.tint)
@@ -140,6 +146,7 @@ struct ShellTabView: View {
 												.monospaced()
 												.bold(selected)
 												.font(.caption2)
+												.strikethrough(thisHandler.state != .shellOpen)
 										}
 										Spacer()
 									}
@@ -168,13 +175,6 @@ struct ShellTabView: View {
 						}
 					}
 					.onDisappear {
-						if !checkShell(session.handler.state) {
-							if let lastSession = container.sessionIDs.last {
-								withAnimation { self.selectedID = lastSession }
-							} else {
-								dismiss()
-							}
-						}
 						UIApplication.shared.isIdleTimerDisabled = false
 						if container.sessions.isEmpty {
 							Backgrounder.shared.stopBgTracking()

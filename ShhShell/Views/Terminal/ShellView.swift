@@ -13,6 +13,8 @@ struct ShellView: View {
 	@ObservedObject var hostsManager: HostsManager
 	@ObservedObject var container = TerminalViewContainer.shared
 	
+	@State private var forceDismissDisconnectAlert: Bool = false
+	
 	@Environment(\.dismiss) var dismiss
 	
 	var body: some View {
@@ -32,6 +34,9 @@ struct ShellView: View {
 							.blendMode(.overlay)
 							.allowsHitTesting(false)
 					}
+				}
+				.onAppear {
+					forceDismissDisconnectAlert = false
 				}
 				
 				Group {
@@ -56,7 +61,7 @@ struct ShellView: View {
 					}
 				}
 				
-				if !checkShell(handler.state) {
+				if handler.state != .shellOpen && !forceDismissDisconnectAlert {
 					ZStack {
 						RoundedRectangle(cornerRadius: 25)
 							.fill(hostsManager.selectedTheme.foreground.suiColor)
@@ -74,13 +79,23 @@ struct ShellView: View {
 									.font(.title)
 							}
 							Button {
-								handler.go()
+								try! handler.reconnect()
 							} label: {
 								Text("Connect")
 									.foregroundStyle(hostsManager.selectedTheme.background.suiColor)
 									.padding(5)
 									.frame(maxWidth: .infinity)
 									.background(.tint)
+									.clipShape(RoundedRectangle(cornerRadius: 15))
+							}
+							Button {
+								forceDismissDisconnectAlert = true
+							} label: {
+								Text("Cancel")
+									.foregroundStyle(hostsManager.selectedTheme.background.suiColor)
+									.padding(5)
+									.frame(maxWidth: .infinity)
+									.background(.tint.opacity(0.5))
 									.clipShape(RoundedRectangle(cornerRadius: 15))
 							}
 						}

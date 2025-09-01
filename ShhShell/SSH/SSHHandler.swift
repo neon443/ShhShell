@@ -59,7 +59,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		return String(cString: cString)
 	}
 	
-	func go(id: UUID = UUID()) {
+	func go(id: UUID? = nil) {
 		guard !connected else { disconnect(); return }
 		
 		do { try connect(id: id) } catch {
@@ -108,10 +108,15 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		setTitle("\(host.username)@\(host.address)")
 	}
 	
-	func connect(id: UUID) throws(SSHError) {
+	func connect(id: UUID?) throws(SSHError) {
 		guard !host.address.isEmpty else { throw .connectionFailed("No address to connect to.") }
 		withAnimation { state = .connecting }
-		sessionID = id
+		if let id {
+			sessionID = id
+		} else {
+			cleanup()
+			sessionID = UUID()
+		}
 		
 		var verbosity: Int = 0
 //		var verbosity: Int = SSH_LOG_FUNCTIONS
@@ -145,21 +150,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	}
 	
 	func disconnect() {
-//		Task {
-			self.hostkeyChanged = false
-			withAnimation { self.state = .idle }
-			withAnimation { self.testSuceeded = nil }
-//		}
-		
-		if let sessionID {
-			Task { @MainActor in
-				container.sessions.removeValue(forKey: sessionID)
-				self.sessionID = nil
-			}
-		}
-		scrollback = []
-//		scrollbackSize = 0
-		
+		withAnimation { self.state = .idle }
 		//send eof if open
 		if ssh_channel_is_open(channel) == 1 {
 			ssh_channel_send_eof(channel)
@@ -172,6 +163,20 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		}
 //		ssh_free(self.session)
 		self.session = nil
+	}
+	
+	func cleanup() {
+		self.hostkeyChanged = false
+		withAnimation { self.state = .idle }
+		withAnimation { self.testSuceeded = nil }
+		scrollback = []
+		
+		if let sessionID {
+			Task { @MainActor in
+				container.sessions.removeValue(forKey: sessionID)
+				self.sessionID = nil
+			}
+		}
 	}
 	
 	func checkHostkey(recieved: String?) {
