@@ -140,9 +140,11 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	}
 	
 	func disconnect() {
-		self.hostkeyChanged = false
-		withAnimation { self.state = .idle }
-		withAnimation { self.testSuceeded = nil }
+//		Task {
+			self.hostkeyChanged = false
+			withAnimation { self.state = .idle }
+			withAnimation { self.testSuceeded = nil }
+//		}
 		
 		if let sessionID {
 			Task { @MainActor in
@@ -303,21 +305,6 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		return
 	}
 	
-	//MARK: very wip
-//	func authWithKbint() {
-//		withAnimation { state = .authorizingKbint }
-//		
-//		let status = ssh_userauth_kbdint(session, nil, nil)
-//		if status == SSH_AUTH_INFO.rawValue {
-//			print(ssh_userauth_kbdint_getnprompts(session))
-//			print(ssh_userauth_kbdint_getname(session))
-//			print(ssh_userauth_kbdint_getinstruction(session))
-//			print(ssh_userauth_kbdint_getprompt(session, <#T##i: UInt32##UInt32#>, <#T##echo: UnsafeMutablePointer<CChar>!##UnsafeMutablePointer<CChar>!#>))
-//		}
-//		
-////		for prompt in
-//	}
-	
 	func getAuthMethods() -> [AuthType] {
 		var result: [AuthType] = []
 		let recievedMethod = UInt32(ssh_userauth_list(session, nil))
@@ -390,7 +377,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	func writeToChannel(_ string: String?) {
 		guard let string else { return }
 		guard ssh_channel_is_open(channel) == 1 && ssh_channel_is_eof(channel) == 0 else {
-			Task { disconnect() }
+			Task { @MainActor in disconnect() }
 			return
 		}
 		

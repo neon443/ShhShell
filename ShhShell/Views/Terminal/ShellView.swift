@@ -55,6 +55,38 @@ struct ShellView: View {
 						AudioServicesPlaySystemSound(1103)
 					}
 				}
+				
+				if !checkShell(handler.state) {
+					ZStack {
+						RoundedRectangle(cornerRadius: 25)
+							.fill(hostsManager.selectedTheme.foreground.suiColor.opacity(0.5))
+							.blur(radius: 5)
+							.shadow(color: hostsManager.selectedTheme.foreground.suiColor, radius: 5)
+						VStack {
+							HStack {
+								Image(systemName: "wifi.exclamationmark")
+									.resizable().scaledToFit()
+									.foregroundStyle(hostsManager.selectedTheme.background.suiColor)
+									.frame(width: 30)
+								Text("Disconnected")
+									.foregroundStyle(hostsManager.selectedTheme.background.suiColor)
+									.font(.title)
+							}
+							Button {
+								handler.go()
+							} label: {
+								Text("Connect")
+									.foregroundStyle(hostsManager.selectedTheme.background.suiColor)
+									.padding(5)
+									.frame(maxWidth: .infinity)
+									.background(.tint)
+									.clipShape(RoundedRectangle(cornerRadius: 15))
+							}
+						}
+						.padding(10)
+					}
+					.fixedSize()
+				}
 			}
 		}
 	}
