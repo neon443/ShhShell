@@ -57,6 +57,7 @@ struct KeyImporterView: View {
 			}
 			
 		}
+		.preferredColorScheme(.dark)
 		.overlay(alignment: .bottom) {
 			Button() {
 				keyManager.importKey(type: keyType, priv: privkeyStr, name: keyName)

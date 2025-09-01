@@ -14,10 +14,16 @@ struct ShellTabView: View {
 	@ObservedObject var container = TerminalViewContainer.shared
 	@State var selectedID: UUID?
 	var selectedHandler: SSHHandler {
-		container.sessions[selectedID ?? UUID()]?.handler ?? handler ?? SSHHandler(host: Host.blank, keyManager: nil)
+		guard let selectedID, let contained = container.sessions[selectedID] else {
+			guard let handler else {
+				fatalError("selectedHandler: selectedID and handler are nil")
+			}
+			return handler
+		}
+		return contained.handler
 	}
 	
-	@State var showSnippetPicker: Bool = false
+	@State private var showSnippetPicker: Bool = false
 	
 	@Environment(\.dismiss) var dismiss
 	
@@ -41,6 +47,18 @@ struct ShellTabView: View {
 		}
 	}
 	var background: Color { hostsManager.selectedTheme.background.suiColor }
+	
+	init(handler: SSHHandler? = nil, hostsManager: HostsManager, selectedID: UUID? = nil) {
+		self.selectedID = selectedID
+		self.handler = handler
+		if selectedID == nil, let handler {
+			self.selectedID = handler.sessionID
+		} else {
+			fatalError()
+		}
+		self.hostsManager = hostsManager
+		self.container = TerminalViewContainer.shared
+	}
 	
 	var body: some View {
 		ZStack {
@@ -149,15 +167,6 @@ struct ShellTabView: View {
 						}
 					}
 					.frame(height: 30)
-					.onAppear {
-						if selectedID == nil {
-							if let handler {
-								selectedID = handler.sessionID
-							} else {
-								dismiss()
-							}
-						}
-					}
 				}
 				
 				//the acc terminal lol
@@ -194,11 +203,6 @@ struct ShellTabView: View {
 							handler: handler,
 							hostsManager: hostsManager
 						)
-						.onAppear {
-							if selectedID == nil {
-								selectedID = handler.sessionID
-							}
-						}
 					} else {
 						Text("No Session")
 					}
