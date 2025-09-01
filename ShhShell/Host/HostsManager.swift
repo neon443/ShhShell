@@ -16,7 +16,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	
 	@Published var themes: [Theme] = []
 	@Published var selectedTheme: Theme = Theme.decodeLocalTheme(fileName: "xcodeDarkHC") ?? Theme.defaultTheme
-	@Published var selectedAnsi: Int = 1
+	@Published var selectedAnsi: Int = 4
 	
 	@Published var fonts: [UIFont] = []
 	@Published var selectedFont: String = "SF Mono"

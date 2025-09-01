@@ -40,31 +40,31 @@ struct WelcomeView: View {
 				}
 					
 				WelcomeChunk(
-					symbol: "bolt.fill",
+					systemImage: "bolt.fill",
 					title: "Blazing Fast",
 					para: "",
 					delay: 4
 				)
 				WelcomeChunk(
-					symbol: "apple.terminal.on.rectangle.fill",
+					image: "apple.terminal.on.rectangle.fill",
 					title: "Multiple Sessions",
 					para: "Connect to the same host again and again, or different ones",
 					delay: 5
 				)
 				WelcomeChunk(
-					symbol: "swatchpalette.fill",
+					systemImage: "swatchpalette.fill",
 					title: "Themes",
 					para: "Customise ShhShell by importing themes, or make your own!",
 					delay: 6
 				)
 				WelcomeChunk(
-					symbol: "lock.shield.fill",
+					systemImage: "lock.shield.fill",
 					title: "Secure",
 					para: "ShhShell uses secure Elliptic Curve keys, and keeps you safe by verifying hostkeys haven't changed",
 					delay: 7
 				)
 				WelcomeChunk(
-					symbol: "ellipsis.circle",
+					systemImage: "ellipsis.circle",
 					title: "And more...",
 					para: "Snippets, iCloud Sync, Fonts, Terminal Filters, Connection History",
 					delay: 8

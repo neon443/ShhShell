@@ -8,19 +8,30 @@
 import SwiftUI
 
 struct WelcomeChunk: View {
-	@State var symbol: String
+	@State var systemImage: String?
+	@State var image: String?
 	@State var title: String
 	@State var para: String
 	@State var delay: TimeInterval = 0
 	
 	@State private var spawnDate: Date = .now
 	
+	var imageUnwrapped: Image {
+		if let systemImage {
+			return Image(systemName: systemImage)
+		} else if let image {
+			return Image(image)
+		} else {
+			return Image(systemName: "questionmark")
+		}
+	}
+	
 	var body: some View {
 		TimelineView(.animation) { tl in
 			let time = tl.date.timeIntervalSince(spawnDate)
 			HStack(spacing: 25) {
 				if time > delay {
-					Image(systemName: symbol)
+					imageUnwrapped
 						.resizable().scaledToFit()
 						.symbolRenderingMode(.hierarchical)
 						.frame(width: 50, height: 50)
@@ -56,7 +67,7 @@ struct WelcomeChunk: View {
 
 #Preview {
 	WelcomeChunk(
-		symbol: "trash",
+		systemImage: "trash",
 		title: "The Trash",
 		para: "Here's to the crazy ones."
 	)

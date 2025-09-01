@@ -101,7 +101,7 @@ struct SettingsView: View {
 					}
 					.pickerStyle(.segmented)
 					
-					Picker("", selection: $hostsManager.settings.cursorType.cursorShape) {
+					Picker("Shape", selection: $hostsManager.settings.cursorType.cursorShape) {
 						ForEach(CursorShape.allCases, id: \.self) { type in
 							Text(type.description).tag(type)
 						}
@@ -110,28 +110,37 @@ struct SettingsView: View {
 					.labelsHidden()
 				}
 				
-				Toggle("location persistence", systemImage: "location.fill", isOn: $hostsManager.settings.locationPersist)
-					.onChange(of: hostsManager.settings.locationPersist) { _ in
-						if hostsManager.settings.locationPersist && !Backgrounder.shared.checkPermsStatus() {
-							Backgrounder.shared.requestPerms()
+				Section("Keepalive") {
+					Toggle("location persistence", systemImage: "location.fill", isOn: $hostsManager.settings.locationPersist)
+						.onChange(of: hostsManager.settings.locationPersist) { _ in
+							if hostsManager.settings.locationPersist && !Backgrounder.shared.checkPermsStatus() {
+								Backgrounder.shared.requestPerms()
+							}
+						}
+					Toggle("keep screen awake", systemImage: "cup.and.saucer.fill", isOn: $hostsManager.settings.caffeinate)
+				}
+				
+				Section("Bell") {
+					Toggle("bell sound", systemImage: "bell.and.waves.left.and.right", isOn: $hostsManager.settings.bellSound)
+					Toggle("bell haptic",systemImage: "iphone.radiowaves.left.and.right", isOn: $hostsManager.settings.bellHaptic)
+				}
+				
+				
+				Section("Terminal Filter") {
+					if #unavailable(iOS 17), hostsManager.settings.filter == .crt {
+						Label("iOS 17 Required", systemImage: "exclamationmark.triangle.fill")
+							.foregroundStyle(.yellow)
+							.transition(.opacity)
+					}
+					Picker("", selection: $hostsManager.settings.filter) {
+						ForEach(TerminalFilter.allCases, id: \.self) { filter in
+							Text(filter.description).tag(filter)
 						}
 					}
-				
-				Toggle("bell sound", systemImage: "bell.and.waves.left.and.right", isOn: $hostsManager.settings.bellSound)
-				Toggle("bell haptic",systemImage: "iphone.radiowaves.left.and.right", isOn: $hostsManager.settings.bellHaptic)
-				
-				Toggle("keep screen awake", systemImage: "cup.and.saucer.fill", isOn: $hostsManager.settings.caffeinate)
-				
-				if #unavailable(iOS 17), hostsManager.settings.filter == .crt {
-					Label("iOS 17 Required", systemImage: "exclamationmark.triangle.fill")
-						.foregroundStyle(.yellow)
+					.pickerStyle(.inline)
+					.labelsHidden()
 				}
-				Picker("terminal filter", selection: $hostsManager.settings.filter) {
-					ForEach(TerminalFilter.allCases, id: \.self) { filter in
-						Text(filter.description).tag(filter)
-					}
-				}
-				.pickerStyle(.inline)
+				.animation(.spring, value: hostsManager.settings.filter)
 				
 				Section("App Icon") {
 					ScrollView(.horizontal) {
@@ -166,7 +175,7 @@ struct SettingsView: View {
 					}
 				}
 			}
-			.listStyle(.sidebar)
+			.listStyle(.insetGrouped)
 			.scrollContentBackground(.hidden)
 			.onChange(of: hostsManager.settings) { _ in
 				hostsManager.saveSettings()
