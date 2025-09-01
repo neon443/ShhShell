@@ -25,3 +25,7 @@ enum KeyError: Error {
 	case pubkeyRejected
 	case privkeyRejected
 }
+
+enum ReconnectError: Error {
+	case alreadyConnected
+}

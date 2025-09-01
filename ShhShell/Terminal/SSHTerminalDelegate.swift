@@ -14,6 +14,8 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 	var handler: SSHHandler?
 	var hostsManager: HostsManager?
 	
+	var readTimer: Timer?
+	
 	public convenience init(frame: CGRect, handler: SSHHandler, hostsManager: HostsManager) {
 		self.init(frame: frame)
 		
@@ -97,19 +99,18 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 	}
 	
 	func startFeedLoop() {
-		Task {
-			guard let handler else { return }
-			while checkShell(handler.state) {
+		guard readTimer == nil else { return }
+		readTimer = Timer(timeInterval: 0.01, repeats: true) { timer in
+			Task(priority: .high) {
+				guard let handler = await self.handler else { return }
 				if let read = handler.readFromChannel() {
-					await MainActor.run {
+					Task { @MainActor in
 						self.feed(text: read)
 					}
-				} else {
-					try? await Task.sleep(nanoseconds: 10_000_000) //10ms
 				}
 			}
-			print("task end?")
 		}
+		RunLoop.main.add(readTimer!, forMode: .common)
 	}
 	
 	func applySelectedTheme() {

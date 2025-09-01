@@ -59,10 +59,10 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		return String(cString: cString)
 	}
 	
-	func go() {
+	func go(id: UUID = UUID()) {
 		guard !connected else { disconnect(); return }
 		
-		do { try connect() } catch {
+		do { try connect(id: id) } catch {
 			print("error when connecting \(error.localizedDescription)")
 			return
 		}
@@ -108,10 +108,10 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		setTitle("\(host.username)@\(host.address)")
 	}
 	
-	func connect() throws(SSHError) {
+	func connect(id: UUID) throws(SSHError) {
 		guard !host.address.isEmpty else { throw .connectionFailed("No address to connect to.") }
 		withAnimation { state = .connecting }
-		sessionID = UUID()
+		sessionID = id
 		
 		var verbosity: Int = 0
 //		var verbosity: Int = SSH_LOG_FUNCTIONS
@@ -137,6 +137,11 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 		}
 		withAnimation { state = .authorizing }
 		return
+	}
+	
+	func reconnect() throws(ReconnectError) {
+		guard !connected else { throw .alreadyConnected }
+		go(id: sessionID!)
 	}
 	
 	func disconnect() {
@@ -359,7 +364,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 			return nil
 		}
 		
-		var buffer: [CChar] = Array(repeating: 0, count: 1024)
+		var buffer: [CChar] = Array(repeating: 0, count: 4096)
 		let nbytes = ssh_channel_read_nonblocking(channel, &buffer, UInt32(buffer.count), 0)
 		
 		guard nbytes > 0 else { return nil }

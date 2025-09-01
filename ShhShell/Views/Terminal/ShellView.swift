@@ -59,8 +59,9 @@ struct ShellView: View {
 				if !checkShell(handler.state) {
 					ZStack {
 						RoundedRectangle(cornerRadius: 25)
-							.fill(hostsManager.selectedTheme.foreground.suiColor.opacity(0.5))
-							.blur(radius: 5)
+							.fill(hostsManager.selectedTheme.foreground.suiColor)
+							.opacity(0.5)
+							.blur(radius: 2)
 							.shadow(color: hostsManager.selectedTheme.foreground.suiColor, radius: 5)
 						VStack {
 							HStack {
@@ -86,6 +87,8 @@ struct ShellView: View {
 						.padding(10)
 					}
 					.fixedSize()
+					.transition(.opacity)
+					.animation(.spring, value: checkShell(handler.state))
 				}
 			}
 		}

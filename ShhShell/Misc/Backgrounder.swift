@@ -10,6 +10,7 @@ import CoreLocation
 
 class Backgrounder: NSObject, CLLocationManagerDelegate, ObservableObject {
 	private let manager = CLLocationManager()
+	var tracking: Bool = false
 	
 	@MainActor
 	static var shared: Backgrounder = Backgrounder()
@@ -23,17 +24,19 @@ class Backgrounder: NSObject, CLLocationManagerDelegate, ObservableObject {
 	}
 	
 	func startBgTracking() {
-//		guard mana
+		guard !tracking else { return }
+		guard checkPermsStatus() else { return }
 		manager.allowsBackgroundLocationUpdates = true
 		manager.pausesLocationUpdatesAutomatically = false
 		manager.startMonitoringSignificantLocationChanges()
-		print("started tgracking")
+		tracking = true
 	}
 	
 	func stopBgTracking() {
+		guard tracking else { return }
 		manager.stopUpdatingLocation()
 		manager.allowsBackgroundLocationUpdates = false
-		print("stopped tracking")
+		tracking = false
 	}
 	
 	func requestPerms() {
