@@ -124,7 +124,7 @@ struct ShellTabView: View {
 						let oneTabWidth: CGFloat = max(100, (UIScreen.main.bounds.width)/CGFloat(container.sessionIDs.count))
 						HStack(spacing: 0) {
 							ForEach(container.sessionIDs, id: \.self) { id in
-								let selected: Bool = selectedID == id
+								let selected: Bool = selectedID == id || (selectedID == nil && handler.sessionID == id)
 								let thisHandler: SSHHandler = container.sessions[id]!.handler
 								ZStack {
 									Rectangle()

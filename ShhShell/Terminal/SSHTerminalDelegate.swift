@@ -135,10 +135,9 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 		getTerminal().foregroundColor = theme.foreground
 		getTerminal().backgroundColor = theme.background
 		
-		caretColor = theme.cursor.uiColor
+		setCursorColor(source: getTerminal(), color: theme.cursor, textColor: theme.cursorText)
 		selectedTextBackgroundColor = theme.selection.uiColor
-		
-		// TODO: selectedtext and cursor colors
+		// TODO: selectedtext color
 	}
 	
 	func applyScrollbackLength() {
