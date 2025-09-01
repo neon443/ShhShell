@@ -8,16 +8,13 @@
 import SwiftUI
 
 struct ShellTabView: View {
-	@State var handler: SSHHandler?
+	@State var handler: SSHHandler
 	@ObservedObject var hostsManager: HostsManager
 	
 	@ObservedObject var container = TerminalViewContainer.shared
 	@State var selectedID: UUID?
 	var selectedHandler: SSHHandler {
 		guard let selectedID, let contained = container.sessions[selectedID] else {
-			guard let handler else {
-				fatalError("selectedHandler: selectedID and handler are nil")
-			}
 			return handler
 		}
 		return contained.handler
@@ -47,18 +44,6 @@ struct ShellTabView: View {
 		}
 	}
 	var background: Color { hostsManager.selectedTheme.background.suiColor }
-	
-	init(handler: SSHHandler? = nil, hostsManager: HostsManager, selectedID: UUID? = nil) {
-		self.selectedID = selectedID
-		self.handler = handler
-		if selectedID == nil, let handler {
-			self.selectedID = handler.sessionID
-		} else {
-			fatalError()
-		}
-		self.hostsManager = hostsManager
-		self.container = TerminalViewContainer.shared
-	}
 	
 	var body: some View {
 		ZStack {
@@ -198,14 +183,10 @@ struct ShellTabView: View {
 					.id(selectedID)
 					.transition(.opacity)
 				} else {
-					if let handler {
-						ShellView(
-							handler: handler,
-							hostsManager: hostsManager
-						)
-					} else {
-						Text("No Session")
-					}
+					ShellView(
+						handler: handler,
+						hostsManager: hostsManager
+					)
 				}
 			}
 		}

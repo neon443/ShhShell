@@ -34,7 +34,12 @@ struct SessionView: View {
 			}
 		}
 		.fullScreenCover(isPresented: $shellPresented) {
-			ShellTabView(handler: nil, hostsManager: hostsManager, selectedID: key)
+			//instancing handler here cos its non optional
+			ShellTabView(
+				handler: SSHHandler(host: Host.blank, keyManager: keyManager),
+				hostsManager: hostsManager,
+				selectedID: key
+			)
 		}
 	}
 }

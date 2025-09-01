@@ -143,10 +143,10 @@ Hostkey fingerprint is \(handler.getHostkey() ?? "nil")
 					Button() {
 						handler.go()
 						showTerminal = checkShell(handler.state)
-						if showTerminal {
-							hostsManager.addToHistory(handler.host)
-							handler.writeToChannel(hostsManager.snippets.first(where: { $0.id == handler.host.startupSnippetID })?.content)
-						}
+//						if showTerminal {
+//							hostsManager.addToHistory(handler.host)
+//							handler.writeToChannel(hostsManager.snippets.first(where: { $0.id == handler.host.startupSnippetID })?.content)
+//						}
 					} label: {
 						Label("Connect", systemImage: "power")
 					}
