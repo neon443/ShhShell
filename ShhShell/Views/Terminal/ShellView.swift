@@ -25,7 +25,7 @@ struct ShellView: View {
 					TerminalController(handler: handler, hostsManager: hostsManager)
 						.brightness(hostsManager.settings.filter == .crt ? 0.2 : 0.0)
 					
-					if hostsManager.settings.filter == .crt {
+					if #available(iOS 17, *), hostsManager.settings.filter == .crt {
 						CRTView()
 							.opacity(0.75)
 							.brightness(-0.2)
