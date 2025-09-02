@@ -29,16 +29,14 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 			restoreScrollback()
 			if let hostsManager {
 				font = UIFont(name: hostsManager.selectedFont, size: hostsManager.fontSize)!
-				print(computeFontDimensions())
 			}
 			applySelectedTheme()
 			applyScrollbackLength()
 			applyCursorType()
 			getTerminal().registerOscHandler(code: 133, handler: { _ in })
-//			DispatchQueue.main.asyncAfter(deadline: .now()+0.01) {
-				self.startFeedLoop()
-				let _ = self.becomeFirstResponder()
-//			}
+			getTerminal().setCursorAnimations(CursorAnimations(type: .stretchAndMove))
+			self.startFeedLoop()
+			let _ = self.becomeFirstResponder()
 		}
 	}
 	
@@ -65,38 +63,6 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 	override func hideCursor(source: Terminal) {
 		super.hideCursor(source: source)
 		print("hide cursor called")
-	}
-	
-	override func cursorStyleChanged(source: Terminal, newStyle: CursorStyle) {
-		super.cursorStyleChanged(source: source, newStyle: newStyle)
-	}
-	
-	//excerpt from SwiftTerm, modified to get around private properties
-	func computeFontDimensions () -> CGSize
-	{
-		let lineAscent = CTFontGetAscent (font)
-		let lineDescent = CTFontGetDescent (font)
-		let lineLeading = CTFontGetLeading (font)
-		let cellHeight = ceil(lineAscent + lineDescent + lineLeading)
-#if os(macOS)
-		// The following is a more robust way of getting the largest ascii character width, but comes with a performance hit.
-		// See: https://github.com/migueldeicaza/SwiftTerm/issues/286
-		// var sizes = UnsafeMutablePointer<NSSize>.allocate(capacity: 95)
-		// let ctFont = (font as CTFont)
-		// var glyphs = (32..<127).map { CTFontGetGlyphWithName(ctFont, String(Unicode.Scalar($0)) as CFString) }
-		// withUnsafePointer(to: glyphs[0]) { glyphsPtr in
-		//     fontSet.normal.getAdvancements(NSSizeArray(sizes), forCGGlyphs: glyphsPtr, count: 95)
-		// }
-		// let cellWidth = (0..<95).reduce(into: 0) { partialResult, idx in
-		//     partialResult = max(partialResult, sizes[idx].width)
-		// }
-		let glyph = font.glyph(withName: "W")
-		let cellWidth = font.advancement(forGlyph: glyph).width
-#else
-		let fontAttributes = [NSAttributedString.Key.font: font]
-		let cellWidth = "W".size(withAttributes: fontAttributes).width
-#endif
-		return CGSize(width: max (1, cellWidth), height: max (min (cellHeight, 8192), 1))
 	}
 	
 	func startFeedLoop() {
