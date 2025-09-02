@@ -8,6 +8,7 @@
 
 #working dir starts at /Volumes/workspace/repository/ci_scripts
 cd ..
+git submodule init
 mkdir Frameworks; cd Frameworks
 curl -o frameworks.tar.xz https://files.catbox.moe/hd2s6n.xz
 tar xzf frameworks.tar.xz

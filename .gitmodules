@@ -1,3 +1,4 @@
 [submodule "SwiftTerm"]
 	path = SwiftTerm
 	url = https://github.com/neon443/SwiftTerm
+	branch = jelly

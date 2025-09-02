@@ -21,6 +21,7 @@
 		A90B38342E3EA046002B56FC /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90B38332E3EA046002B56FC /* Bundle.swift */; };
 		A91D27C72E54B97E00620B29 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91D27C62E54B97E00620B29 /* SettingsView.swift */; };
 		A91D27CA2E54BED300620B29 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91D27C92E54BED300620B29 /* AppSettings.swift */; };
+		A91F9E762E674928009FCB3A /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; productRef = A91F9E752E674928009FCB3A /* SwiftTerm */; };
 		A923172A2E07113100ECE1E6 /* TerminalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92317292E07113100ECE1E6 /* TerminalController.swift */; };
 		A923172D2E07138000ECE1E6 /* SSHTerminalDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A923172C2E07138000ECE1E6 /* SSHTerminalDelegate.swift */; };
 		A923172F2E08851200ECE1E6 /* ShellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A923172E2E08851200ECE1E6 /* ShellView.swift */; };
@@ -259,6 +260,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A91F9E762E674928009FCB3A /* SwiftTerm in Frameworks */,
 				A99D9F7E2E6351D100259166 /* SwiftTerm in Frameworks */,
 				A99D9F7B2E63513E00259166 /* SwiftTerm in Frameworks */,
 				A95FAA542DF4B62900DE2F5A /* LibSSH.xcframework in Frameworks */,
@@ -698,6 +700,7 @@
 			packageProductDependencies = (
 				A99D9F7A2E63513E00259166 /* SwiftTerm */,
 				A99D9F7D2E6351D100259166 /* SwiftTerm */,
+				A91F9E752E674928009FCB3A /* SwiftTerm */,
 			);
 			productName = ShhShell;
 			productReference = A925389A2DEE06DC007E0A18 /* ShhShell.app */;
@@ -777,6 +780,7 @@
 			mainGroup = A92538912DEE06DC007E0A18;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				A91F9E742E674928009FCB3A /* XCLocalSwiftPackageReference "SwiftTerm" */,
 			);
 			productRefGroup = A925389B2DEE06DC007E0A18 /* Products */;
 			projectDirPath = "";
@@ -1270,7 +1274,18 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		A91F9E742E674928009FCB3A /* XCLocalSwiftPackageReference "SwiftTerm" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = SwiftTerm;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		A91F9E752E674928009FCB3A /* SwiftTerm */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftTerm;
+		};
 		A99D9F7A2E63513E00259166 /* SwiftTerm */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftTerm;
