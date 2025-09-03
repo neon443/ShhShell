@@ -6,16 +6,17 @@
 //
 
 import SwiftUI
+import SwiftTerm
 
 struct ShellTabView: View {
-	@State var handler: SSHHandler
+	@State var handler: SSHHandler?
 	@ObservedObject var hostsManager: HostsManager
 	
 	@ObservedObject var container = TerminalViewContainer.shared
 	@State var selectedID: UUID?
 	var selectedHandler: SSHHandler {
 		guard let selectedID, let contained = container.sessions[selectedID] else {
-			return handler
+			return handler!
 		}
 		return contained.handler
 	}
@@ -24,26 +25,25 @@ struct ShellTabView: View {
 	
 	@Environment(\.dismiss) var dismiss
 	
-	var foreground: Color {
+	var foreground: SwiftUI.Color {
 		let selectedTheme = hostsManager.selectedTheme
-		let foreground = selectedTheme.foreground
-		let background = selectedTheme.background
+		let fg = selectedTheme.foreground
+		let bg = selectedTheme.background
+		let ansi = selectedTheme.ansi[hostsManager.selectedAnsi]
+		var result: SwiftTerm.Color
 		
-		if selectedTheme.ansi[hostsManager.selectedAnsi].luminance > 0.5 {
-			if foreground.luminance > 0.5 {
-				return background.suiColor
-			} else {
-				return foreground.suiColor
-			}
+		if fg.luminanceRatio(with: ansi) > bg.luminanceRatio(with: ansi) {
+			result = fg
 		} else {
-			if foreground.luminance > 0.5 {
-				return foreground.suiColor
-			} else {
-				return background.suiColor
-			}
+			result = bg
 		}
+		
+		guard result.luminanceRatio(with: ansi) > 4.5 else {
+			return ansi.luminance > 0.5 ? .black : .white
+		}
+		return result.suiColor
 	}
-	var background: Color { hostsManager.selectedTheme.background.suiColor }
+	var background: SwiftUI.Color { hostsManager.selectedTheme.background.suiColor }
 	
 	var body: some View {
 		ZStack {
@@ -84,6 +84,19 @@ struct ShellTabView: View {
 						}
 					}
 					Spacer()
+					
+					if selectedHandler.state != .shellOpen {
+						Button() {
+							withAnimation { selectedHandler.forceDismissDisconnectedAlert = false }
+						} label: {
+							Image(systemName: "wifi.exclamationmark")
+								.resizable().scaledToFit()
+								.frame(width: 20, height: 20)
+						}
+						.foregroundStyle(foreground)
+						.id(selectedID)
+					}
+					
 					Button() {
 						showSnippetPicker.toggle()
 					} label: {
@@ -124,7 +137,7 @@ struct ShellTabView: View {
 						let oneTabWidth: CGFloat = max(100, (UIScreen.main.bounds.width)/CGFloat(container.sessionIDs.count))
 						HStack(spacing: 0) {
 							ForEach(container.sessionIDs, id: \.self) { id in
-								let selected: Bool = selectedID == id || (selectedID == nil && handler.sessionID == id)
+								let selected: Bool = id == selectedHandler.sessionID ?? UUID()
 								let thisHandler: SSHHandler = container.sessions[id]!.handler
 								ZStack {
 									Rectangle()
@@ -162,32 +175,28 @@ struct ShellTabView: View {
 				}
 				
 				//the acc terminal lol
-				if let selectedID,
-				   let session = container.sessions[selectedID] {
-					ShellView(
-						handler: session.handler,
-						hostsManager: hostsManager
-					)
-					.onAppear {
-						UIApplication.shared.isIdleTimerDisabled = hostsManager.settings.caffeinate
-						if hostsManager.settings.locationPersist {
-							Backgrounder.shared.startBgTracking()
-						}
+//				Group {
+//					if selectedID != nil {
+						ShellView(
+							handler: selectedHandler,
+							hostsManager: hostsManager
+						)
+//					}
+//				}
+				.onAppear {
+					UIApplication.shared.isIdleTimerDisabled = hostsManager.settings.caffeinate
+					if hostsManager.settings.locationPersist {
+						Backgrounder.shared.startBgTracking()
 					}
-					.onDisappear {
-						UIApplication.shared.isIdleTimerDisabled = false
-						if container.sessions.isEmpty {
-							Backgrounder.shared.stopBgTracking()
-						}
-					}
-					.id(selectedID)
-					.transition(.opacity)
-				} else {
-					ShellView(
-						handler: handler,
-						hostsManager: hostsManager
-					)
 				}
+				.onDisappear {
+					UIApplication.shared.isIdleTimerDisabled = false
+					if container.sessions.isEmpty {
+						Backgrounder.shared.stopBgTracking()
+					}
+				}
+				.id(selectedID)
+				.transition(.opacity)
 			}
 		}
 	}

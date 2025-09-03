@@ -34,7 +34,7 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 			applyScrollbackLength()
 			applyCursorType()
 			getTerminal().registerOscHandler(code: 133, handler: { _ in })
-			getTerminal().setCursorAnimations(CursorAnimations(type: .stretchAndMove))
+			getTerminal().setCursorAnimations(CursorAnimations(type: .stretchAndMove, length: 0.2))
 			self.startFeedLoop()
 			let _ = self.becomeFirstResponder()
 		}

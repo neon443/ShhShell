@@ -80,4 +80,12 @@ extension SwiftTerm.Color {
 		let b = Double(blue)/65535
 		return (0.2126*r + 0.7152*g + 0.0722*b)
 	}
+	
+	func luminanceRatio(with other: SwiftTerm.Color) -> Double {
+		if self.luminance > other.luminance {
+			return (self.luminance + 0.05) / (other.luminance + 0.05)
+		} else {
+			return (other.luminance + 0.05) / (self.luminance + 0.05)
+		}
+	}
 }
