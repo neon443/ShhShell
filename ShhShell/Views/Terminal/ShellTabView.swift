@@ -53,11 +53,11 @@ struct ShellTabView: View {
 				//header
 				HStack(alignment: .center, spacing: 10) {
 					Button() {
+						dismiss()
 						for session in container.sessions.values {
 							session.handler.disconnect()
 							session.handler.cleanup()
 						}
-						dismiss()
 					} label: {
 						TrafficLightRed()
 					}
