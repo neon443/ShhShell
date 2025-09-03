@@ -34,7 +34,7 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 			applyScrollbackLength()
 			applyCursorType()
 			getTerminal().registerOscHandler(code: 133, handler: { _ in })
-			getTerminal().setCursorAnimations(CursorAnimations(type: .stretchAndMove))
+			getTerminal().setCursorAnimations(CursorAnimations(type: .stretchAndMove, length: 0.2))
 			self.startFeedLoop()
 			let _ = self.becomeFirstResponder()
 		}
@@ -54,11 +54,11 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 		}
 	}
 	
-	override func showCursor(source: Terminal) {
-		super.showCursor(source: source)
-		super.cursorStyleChanged(source: getTerminal(), newStyle: getTerminal().options.cursorStyle)
-		print("showcursor called")
-	}
+//	override func showCursor(source: Terminal) {
+//		super.showCursor(source: source)
+//		super.cursorStyleChanged(source: getTerminal(), newStyle: getTerminal().options.cursorStyle)
+//		print("showcursor called")
+//	}
 	
 	override func hideCursor(source: Terminal) {
 		super.hideCursor(source: source)

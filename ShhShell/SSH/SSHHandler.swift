@@ -23,7 +23,6 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	var sessionID: UUID?
 	
 	var scrollback: [String] = []
-//	var scrollbackSize = 0.0
 	
 	@Published var title: String = ""
 	@Published var state: SSHState = .idle
@@ -32,6 +31,7 @@ class SSHHandler: @unchecked Sendable, ObservableObject {
 	}
 	
 	@Published var testSuceeded: Bool? = nil
+	@Published var forceDismissDisconnectedAlert: Bool = false
 	
 	@Published var bell: Bool = false
 	
