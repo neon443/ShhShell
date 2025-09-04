@@ -29,12 +29,12 @@ final class SSHTerminalDelegate: TerminalView, Sendable, @preconcurrency Termina
 			restoreScrollback()
 			if let hostsManager {
 				font = UIFont(name: hostsManager.selectedFont, size: hostsManager.fontSize)!
+				getTerminal().setCursorAnimations(hostsManager.settings.cursorAnimations)
 			}
 			applySelectedTheme()
 			applyScrollbackLength()
 			applyCursorType()
 			getTerminal().registerOscHandler(code: 133, handler: { _ in })
-			getTerminal().setCursorAnimations(CursorAnimations(type: .stretchAndMove, length: 0.2))
 			self.startFeedLoop()
 			let _ = self.becomeFirstResponder()
 		}

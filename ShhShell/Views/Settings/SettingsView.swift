@@ -108,6 +108,22 @@ struct SettingsView: View {
 					}
 					.pickerStyle(.inline)
 					.labelsHidden()
+					
+					Picker("Animation Type", selection: $hostsManager.settings.cursorAnimations.type) {
+						ForEach(CursorAnimationType.allCases, id: \.self) { animType in
+							Text(animType.description).tag(animType)
+						}
+					}
+					
+					Slider(value: $hostsManager.settings.cursorAnimations.length, in: 0.05...0.5, step: 0.05) {
+						Label("Speed", systemImage: "gauge.with.dots.needle.67percent")
+					}
+					.disabled(hostsManager.settings.cursorAnimations.type == .none)
+					
+					Slider(value: $hostsManager.settings.cursorAnimations.stretchMultiplier, in: 0.25...2, step: 0.25) {
+						Label("Stretch Multiplier", systemImage: "multiply")
+					}
+					.disabled(hostsManager.settings.cursorAnimations.type != .stretchAndMove)
 				}
 				
 				Section("Keepalive") {

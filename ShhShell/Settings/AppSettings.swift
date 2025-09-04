@@ -7,11 +7,12 @@
 
 import Foundation
 import SwiftUI
-import SwiftTerm
+@preconcurrency import SwiftTerm
 
 struct AppSettings: Codable, Sendable, Equatable {
 	var scrollback: CGFloat = 10_000
 	var cursorType: CursorType = CursorType()
+	var cursorAnimations: CursorAnimations = CursorAnimations()
 	var locationPersist: Bool = false
 	var bellSound: Bool = false
 	var bellHaptic: Bool = true
