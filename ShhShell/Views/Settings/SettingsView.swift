@@ -115,15 +115,41 @@ struct SettingsView: View {
 						}
 					}
 					
-					Slider(value: $hostsManager.settings.cursorAnimations.length, in: 0.05...0.5, step: 0.05) {
-						Label("Speed", systemImage: "gauge.with.dots.needle.67percent")
+					VStack {
+						HStack {
+							Text("Animation length")
+							Spacer()
+							Text("\(hostsManager.settings.cursorAnimations.length)s")
+								.monospaced()
+								.contentTransition(.numericText())
+						}
+						Slider(value: $hostsManager.settings.cursorAnimations.length, in: 0.05...0.5, label: {
+							EmptyView()
+						}, minimumValueLabel: {
+							Text("0.05")
+						}, maximumValueLabel: {
+							Text("0.5")
+						})
+						.disabled(hostsManager.settings.cursorAnimations.type == .none)
 					}
-					.disabled(hostsManager.settings.cursorAnimations.type == .none)
 					
-					Slider(value: $hostsManager.settings.cursorAnimations.stretchMultiplier, in: 0.25...2, step: 0.25) {
-						Label("Stretch Multiplier", systemImage: "multiply")
+					VStack {
+						HStack {
+							Text("Stretch Multiplier")
+							Spacer()
+							Text("\(hostsManager.settings.cursorAnimations.length)s")
+								.monospaced()
+								.contentTransition(.numericText())
+						}
+						Slider(value: $hostsManager.settings.cursorAnimations.stretchMultiplier, in: 0.25...2, label: {
+							EmptyView()
+						}, minimumValueLabel: {
+							Text("0.25")
+						}, maximumValueLabel: {
+							Text("2")
+						})
+						.disabled(hostsManager.settings.cursorAnimations.type != .stretchAndMove)
 					}
-					.disabled(hostsManager.settings.cursorAnimations.type != .stretchAndMove)
 				}
 				
 				Section("Keepalive") {
