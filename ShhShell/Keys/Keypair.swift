@@ -52,7 +52,12 @@ struct Keypair: KeypairProtocol {
 	}
 	
 	var base64Pubkey: String {
-		String(openSshPubkey.split(separator: " ")[1])
+		let split = openSshPubkey.split(separator: " ")
+		if split.count >= 2 {
+			return String(split[1])
+		} else {
+			return "Error creating OpenSSH Publickey"
+		}
 	}
 	
 	var base64Privkey: String {

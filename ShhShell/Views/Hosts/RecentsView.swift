@@ -98,7 +98,7 @@ struct RecentsView: View {
 							.foregroundStyle(hostsManager.tint)
 					}
 					.buttonStyle(.plain)
-					.disabled(historyLimit != 0)
+					.disabled(historyLimit >= hostsManager.history.count)
 					.padding(.trailing, 10)
 					
 					Button {
