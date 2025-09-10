@@ -16,7 +16,7 @@ struct glassButton: ViewModifier {
 	}
 	
 	func body(content: Content) -> some View {
-		if #available(iOS 26, *) {
+		if #available(iOS 19, *) {
 			if prominent {
 				content.buttonStyle(.glassProminent)
 			} else {

@@ -128,7 +128,7 @@ struct ThemeManagerView: View {
 							}
 						}
 						
-						if #available(iOS 26, *) {
+						if #available(iOS 19, *) {
 							ToolbarSpacer()
 						}
 						

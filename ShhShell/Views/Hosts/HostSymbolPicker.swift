@@ -14,7 +14,7 @@ struct HostSymbolPicker: View {
 	
 	var innerR: CGFloat {
 		if #available(iOS 19, *) {
-			return 16
+			return 20
 		} else {
 			return 3
 		}
@@ -54,6 +54,7 @@ struct HostSymbolPicker: View {
 				Spacer()
 				
 				TextBox(label: host.label.isEmpty ? "" : "Icon Label", text: $host.label, prompt: "Icon label")
+					.padding(5)
 			}
 			.padding(10)
 		}

@@ -139,7 +139,7 @@ Hostkey fingerprint is \(handler.getHostkey() ?? "nil")
 					}
 				}
 				
-				if #available(iOS 26, *) {
+				if #available(iOS 19, *) {
 					ToolbarSpacer()
 				}
 				
