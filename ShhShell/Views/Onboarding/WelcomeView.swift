@@ -17,12 +17,12 @@ struct WelcomeView: View {
 			VStack {
 				VStack(spacing: 20) {
 					if time > 0.1 {
-							Image("regular")
-								.resizable().scaledToFit()
-								.frame(width: 100)
-								.clipShape(RoundedRectangle(cornerRadius: 22))
-								.shadow(color: .white, radius: time > 0.25 ? 5 : 0)
-								.transition(.scale)
+						Image("regular")
+							.resizable().scaledToFit()
+							.frame(width: 100)
+							.clipShape(RoundedRectangle(cornerRadius: 22))
+							.shadow(color: .white, radius: time > 0.25 ? 5 : 0)
+							.transition(.scale)
 					}
 					if time > 2 {
 						Text("Welcome")
@@ -33,12 +33,12 @@ struct WelcomeView: View {
 							.shadow(color: .white, radius: time > 2.25 ? 0 : 5)
 					}
 				}
-//				.padding(.top, time > 3 ? 25 : 0)
+				//				.padding(.top, time > 3 ? 25 : 0)
 				
 				if time > 3 {
 					Spacer()
 				}
-					
+				
 				WelcomeChunk(
 					systemImage: "bolt.fill",
 					title: "Blazing Fast",
@@ -74,28 +74,27 @@ struct WelcomeView: View {
 					Spacer()
 				}
 				if time > 9 {
-#if swift(>=6.2)
-					Button("Continue") {
-						hostsManager.setOnboarding(to: true)
-					}
-					.modifier(glassButton(prominent: true))
-#else
 					Button {
 						hostsManager.setOnboarding(to: true)
 					} label: {
-						ZStack {
-							Color.terminalGreen
+						if #available(iOS 19, *) {
 							Text("Continue")
 								.monospaced()
-								.bold()
+								.font(.title)
 								.foregroundStyle(.black)
+						} else {
+							ZStack {
+								Color.terminalGreen
+								Text("Continue")
+									.monospaced()
+									.bold()
+									.foregroundStyle(.black)
+							}
+							.clipShape(RoundedRectangle(cornerRadius: 50))
 						}
-						.clipShape(RoundedRectangle(cornerRadius: 50))
 					}
-					.buttonStyle(.plain)
-					.frame(width: 300, height: 50)
-					.padding(.horizontal, 75)
-#endif
+					.tint(.terminalGreen)
+					.modifier(glassButton(prominent: true))
 				}
 			}
 			.animation(.spring, value: time)

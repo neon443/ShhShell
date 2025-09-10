@@ -23,7 +23,11 @@ struct glassButton: ViewModifier {
 				content.buttonStyle(.glass)
 			}
 		} else {
-			content
+			if prominent {
+				content.buttonStyle(.borderedProminent)
+			} else {
+				content
+			}
 		}
 	}
 }

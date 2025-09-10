@@ -59,28 +59,17 @@ struct KeyImporterView: View {
 		}
 		.preferredColorScheme(.dark)
 		.overlay(alignment: .bottom) {
-			if #available(iOS 26, *) {
-				Button {
-					
-				} label: {
-					Text("Import")
+			Button {
+				keyManager.importKey(type: keyType, priv: privkeyStr, name: keyName)
+				UINotificationFeedbackGenerator().notificationOccurred(.success)
+				dismiss()
+			} label: {
+				Text("Import")
 					.font(.title)
 					.bold()
-				}
-				.modifier(glassButton(prominent: true))
-			} else {
-				Button() {
-					keyManager.importKey(type: keyType, priv: privkeyStr, name: keyName)
-					UINotificationFeedbackGenerator().notificationOccurred(.success)
-					dismiss()
-				} label: {
-					Text("Import")
-						.font(.title)
-						.bold()
-				}
-				.buttonStyle(.borderedProminent)
-				.padding(.bottom, 15)
 			}
+			.modifier(glassButton(prominent: true))
+			.padding(.bottom, 15)
 		}
     }
 }
