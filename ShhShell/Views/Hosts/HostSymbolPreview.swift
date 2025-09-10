@@ -18,7 +18,9 @@ struct HostSymbolPreview: View {
 				symbol.image
 					.resizable().scaledToFit()
 					.symbolRenderingMode(.monochrome)
-				Text(label)
+				if !label.isEmpty {
+					Text(label)
+				}
 			}
 		} else {
 			ZStack(alignment: .center) {
