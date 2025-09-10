@@ -8,6 +8,26 @@
 import Foundation
 import SwiftUI
 
+struct glassButton: ViewModifier {
+	var prominent: Bool
+	
+	init(prominent: Bool = false) {
+		self.prominent = prominent
+	}
+	
+	func body(content: Content) -> some View {
+		if #available(iOS 26, *) {
+			if prominent {
+				content.buttonStyle(.glassProminent)
+			} else {
+				content.buttonStyle(.glass)
+			}
+		} else {
+			content
+		}
+	}
+}
+
 struct foregroundColorStyle: ViewModifier {
 	var color: Color
 	

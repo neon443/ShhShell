@@ -29,9 +29,9 @@ struct FontManagerView: View {
 					Slider(value: $hostsManager.fontSize, in: 1...20, step: 1) {
 						
 					} minimumValueLabel: {
-						Label("", systemImage: "textformat.size.smaller")
+						Image(systemName: "textformat.size.smaller")
 					} maximumValueLabel: {
-						Label("", systemImage: "textformat.size.larger")
+						Image(systemName: "textformat.size.larger")
 					} onEditingChanged: { bool in
 						hostsManager.saveFonts()
 					}

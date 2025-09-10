@@ -115,21 +115,23 @@ struct ThemeManagerView: View {
 						}
 					}
 					.toolbar {
-						ToolbarItem() {
+						ToolbarItemGroup {
 							Button() {
 								UIApplication.shared.open(URL(string: "https://iterm2colorschemes.com")!)
 							} label: {
-								Label("Open themes site", systemImage: "safari")
+								Label("Browse", systemImage: "safari")
 							}
-						}
-						ToolbarItem() {
 							Button() {
 								showAlert.toggle()
 							} label: {
-								Label("From URL", systemImage: "link")
+								Label("URL", systemImage: "link")
 							}
-							
 						}
+						
+						if #available(iOS 26, *) {
+							ToolbarSpacer()
+						}
+						
 						ToolbarItem() {
 							Button() {
 								newTheme = Theme.defaultTheme

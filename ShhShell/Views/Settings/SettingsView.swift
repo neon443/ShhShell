@@ -108,7 +108,9 @@ struct SettingsView: View {
 					}
 					.pickerStyle(.inline)
 					.labelsHidden()
-					
+				}
+				
+				Section("Cursor Animations") {
 					Picker("Animation Type", selection: $hostsManager.settings.cursorAnimations.type) {
 						ForEach(CursorAnimationType.allCases, id: \.self) { animType in
 							Text(animType.description).tag(animType)
@@ -137,7 +139,7 @@ struct SettingsView: View {
 						HStack {
 							Text("Stretch Multiplier")
 							Spacer()
-							Text("\(hostsManager.settings.cursorAnimations.length)s")
+							Text("\(hostsManager.settings.cursorAnimations.stretchMultiplier)x")
 								.monospaced()
 								.contentTransition(.numericText())
 						}
@@ -153,18 +155,18 @@ struct SettingsView: View {
 				}
 				
 				Section("Keepalive") {
-					Toggle("location persistence", systemImage: "location.fill", isOn: $hostsManager.settings.locationPersist)
+					Toggle("Location Persistence", systemImage: "location.fill", isOn: $hostsManager.settings.locationPersist)
 						.onChange(of: hostsManager.settings.locationPersist) { _ in
 							if hostsManager.settings.locationPersist && !Backgrounder.shared.checkPermsStatus() {
 								Backgrounder.shared.requestPerms()
 							}
 						}
-					Toggle("keep screen awake", systemImage: "cup.and.saucer.fill", isOn: $hostsManager.settings.caffeinate)
+					Toggle("Keep Display Awake", systemImage: "cup.and.saucer.fill", isOn: $hostsManager.settings.caffeinate)
 				}
 				
-				Section("Bell") {
-					Toggle("bell sound", systemImage: "bell.and.waves.left.and.right", isOn: $hostsManager.settings.bellSound)
-					Toggle("bell haptic",systemImage: "iphone.radiowaves.left.and.right", isOn: $hostsManager.settings.bellHaptic)
+				Section("Bell Feedback") {
+					Toggle("Sound", systemImage: "bell.and.waves.left.and.right", isOn: $hostsManager.settings.bellSound)
+					Toggle("Haptic",systemImage: "iphone.radiowaves.left.and.right", isOn: $hostsManager.settings.bellHaptic)
 				}
 				
 				

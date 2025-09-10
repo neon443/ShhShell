@@ -78,7 +78,7 @@ struct WelcomeView: View {
 					Button("Continue") {
 						hostsManager.setOnboarding(to: true)
 					}
-						.buttonStyle(.glassProminent)
+					.modifier(glassButton(prominent: true))
 #else
 					Button {
 						hostsManager.setOnboarding(to: true)

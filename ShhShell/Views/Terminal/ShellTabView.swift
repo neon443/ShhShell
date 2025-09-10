@@ -16,7 +16,8 @@ struct ShellTabView: View {
 	@State var selectedID: UUID?
 	var selectedHandler: SSHHandler {
 		guard let selectedID, let contained = container.sessions[selectedID] else {
-			return handler!
+			guard let handler else { fatalError("no handler in shelltabview") }
+			return handler
 		}
 		return contained.handler
 	}

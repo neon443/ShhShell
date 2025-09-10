@@ -139,6 +139,10 @@ Hostkey fingerprint is \(handler.getHostkey() ?? "nil")
 					}
 				}
 				
+				if #available(iOS 26, *) {
+					ToolbarSpacer()
+				}
+				
 				ToolbarItem() {
 					Button() {
 						handler.go()

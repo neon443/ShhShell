@@ -96,6 +96,7 @@
 		A9C897EF2DF1A9A400EF9A5F /* SSHHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */; };
 		A9CC786B2E4E681400FAEE58 /* RecentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CC786A2E4E681400FAEE58 /* RecentsView.swift */; };
 		A9CC786D2E4F534600FAEE58 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CC786C2E4F534600FAEE58 /* History.swift */; };
+		A9D45DD92E7204FF00BA9E4A /* GlassButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D45DD82E7204FF00BA9E4A /* GlassButton.swift */; };
 		A9D819292E0E904200442D38 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D819282E0E904200442D38 /* Theme.swift */; };
 		A9D8192D2E0E9EB500442D38 /* ThemeManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D8192C2E0E9EB500442D38 /* ThemeManagerView.swift */; };
 		A9D8192F2E0F1BEE00442D38 /* ThemeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D8192E2E0F1BEE00442D38 /* ThemeButton.swift */; };
@@ -238,6 +239,7 @@
 		A9C897EE2DF1A9A400EF9A5F /* SSHHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHHandler.swift; sourceTree = "<group>"; };
 		A9CC786A2E4E681400FAEE58 /* RecentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentsView.swift; sourceTree = "<group>"; };
 		A9CC786C2E4F534600FAEE58 /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
+		A9D45DD82E7204FF00BA9E4A /* GlassButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassButton.swift; sourceTree = "<group>"; };
 		A9D819282E0E904200442D38 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		A9D8192C2E0E9EB500442D38 /* ThemeManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManagerView.swift; sourceTree = "<group>"; };
 		A9D8192E2E0F1BEE00442D38 /* ThemeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeButton.swift; sourceTree = "<group>"; };
@@ -546,6 +548,7 @@
 				A93143C52DF61FE300FCD5DB /* ViewModifiers.swift */,
 				A96C90A02E12B87900724253 /* TextBox.swift */,
 				A9835C3B2E17CCA500969508 /* TrafficLights.swift */,
+				A9D45DD82E7204FF00BA9E4A /* GlassButton.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -908,6 +911,7 @@
 				A9FD37552E143D23005319A8 /* SecKeyConvertible.swift in Sources */,
 				A94B832F2E5B929C00EBA09C /* Backgrounder.swift in Sources */,
 				A96C6AFE2E0C43B600F377FE /* Keypair.swift in Sources */,
+				A9D45DD92E7204FF00BA9E4A /* GlassButton.swift in Sources */,
 				A90B38322E3E8FC9002B56FC /* AboutView.swift in Sources */,
 				A9C4140C2E096DB7005E3047 /* SSHError.swift in Sources */,
 				A96BE6AA2E116EC000C0FEE9 /* TerminalViewContainer.swift in Sources */,

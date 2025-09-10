@@ -14,8 +14,7 @@ struct AboutView: View {
 		ZStack {
 			hostsManager.selectedTheme.background.suiColor.opacity(0.7)
 							.ignoresSafeArea(.all)
-//			List {
-			VStack(alignment: .leading) {
+			VStack {
 				hostsManager.settings.appIcon.image
 					.resizable().scaledToFit()
 					.frame(width: 100)
@@ -32,7 +31,7 @@ struct AboutView: View {
 				}
 				.padding(.bottom)
 				
-				Section("Thanks to") {
+				HStack(spacing: 10) {
 					Link(destination: URL(string: "https://libssh.org")!) {
 						Text("LibSSH")
 							.padding(10)
@@ -57,7 +56,7 @@ struct AboutView: View {
 					VStack {
 						Text("Shader Playground")
 							.bold()
-						Text("This is a collection of all the shaders I made while learning!")
+						Text("A collection of shaders I made while learning!")
 							.font(.caption2)
 					}
 				}
@@ -65,8 +64,6 @@ struct AboutView: View {
 			.transition(.scale)
 			.frame(maxWidth: .infinity)
 			.padding()
-//			}
-//			.scrollContentBackground(.hidden)
 		}
     }
 }
