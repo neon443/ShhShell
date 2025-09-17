@@ -58,7 +58,7 @@ class HostsManager: ObservableObject, @unchecked Sendable {
 	func setAppIcon() {
 		Task { @MainActor in
 			guard UIApplication.shared.supportsAlternateIcons else { return }
-			guard settings.appIcon.name != "regular" else {
+			guard settings.appIcon.name != "ShhShell" else {
 				UIApplication.shared.setAlternateIconName(nil)
 				return
 			}

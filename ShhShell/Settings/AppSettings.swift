@@ -84,7 +84,7 @@ enum AppIcon: Codable, CaseIterable, Equatable, CustomStringConvertible {
 	var name: String {
 		switch self {
 		case .regular:
-			return "regular"
+			return "ShhShell"
 		case .beta:
 			return "beta"
 		case .betaBlueprint:

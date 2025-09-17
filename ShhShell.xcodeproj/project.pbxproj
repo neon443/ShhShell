@@ -85,6 +85,7 @@
 		A994D64A2E5C94E200672395 /* ShaderTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A994D6492E5C94E200672395 /* ShaderTestingView.swift */; };
 		A99D9F7B2E63513E00259166 /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; productRef = A99D9F7A2E63513E00259166 /* SwiftTerm */; };
 		A99D9F7E2E6351D100259166 /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; productRef = A99D9F7D2E6351D100259166 /* SwiftTerm */; };
+		A99E76202E7AD4BD00720621 /* ShhShell.icon in Resources */ = {isa = PBXBuildFile; fileRef = A99E761F2E7AD4BD00720621 /* ShhShell.icon */; };
 		A9A2F4F62E3001D300D0AE9B /* AddSnippetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A2F4F52E3001D300D0AE9B /* AddSnippetView.swift */; };
 		A9B1E5852E5F8E86009309E5 /* WelcomeChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B1E5842E5F8E86009309E5 /* WelcomeChunk.swift */; };
 		A9BA1D192E1D9AE1005BDCEF /* SwiftTerm.Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BA1D182E1D9AE1005BDCEF /* SwiftTerm.Color.swift */; };
@@ -227,6 +228,7 @@
 		A98CAB432E4229F7005E4C42 /* HostSymbolPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostSymbolPicker.swift; sourceTree = "<group>"; };
 		A9921DE02E5F5710009F72A8 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		A994D6492E5C94E200672395 /* ShaderTestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderTestingView.swift; sourceTree = "<group>"; };
+		A99E761F2E7AD4BD00720621 /* ShhShell.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = ShhShell.icon; sourceTree = "<group>"; };
 		A9A2F4F52E3001D300D0AE9B /* AddSnippetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSnippetView.swift; sourceTree = "<group>"; };
 		A9B1E5842E5F8E86009309E5 /* WelcomeChunk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeChunk.swift; sourceTree = "<group>"; };
 		A9BA1D182E1D9AE1005BDCEF /* SwiftTerm.Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftTerm.Color.swift; sourceTree = "<group>"; };
@@ -459,6 +461,7 @@
 				A90936822E1AC31100856059 /* fonts */,
 				A92DDDE02E104CA400A87DB2 /* themes */,
 				A92538C42DEE0742007E0A18 /* Assets.xcassets */,
+				A99E761F2E7AD4BD00720621 /* ShhShell.icon */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -813,6 +816,7 @@
 				A96BE6A12E10846B00C0FEE9 /* catppuccinFrappe.plist in Resources */,
 				A90936A72E1AE9AB00856059 /* CascadiaMono.ttf in Resources */,
 				A90936A92E1AE9AB00856059 /* SF-Mono-Regular.otf in Resources */,
+				A99E76202E7AD4BD00720621 /* ShhShell.icon in Resources */,
 				A90936AA2E1AE9AB00856059 /* SF-Mono-RegularItalic.otf in Resources */,
 				A90936AB2E1AE9AB00856059 /* MesloLGS NF Regular.ttf in Resources */,
 				A90936AC2E1AE9AB00856059 /* MesloLGS NF Bold Italic.ttf in Resources */,
@@ -1077,7 +1081,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "beta betaBlueprint";
-				ASSETCATALOG_COMPILER_APPICON_NAME = regular;
+				ASSETCATALOG_COMPILER_APPICON_NAME = ShhShell;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = ShhShell/ShhShell.entitlements;
@@ -1121,7 +1125,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "beta betaBlueprint";
-				ASSETCATALOG_COMPILER_APPICON_NAME = regular;
+				ASSETCATALOG_COMPILER_APPICON_NAME = ShhShell;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = ShhShell/ShhShell.entitlements;
