@@ -38,6 +38,7 @@
 		A93143C62DF61FE300FCD5DB /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93143C52DF61FE300FCD5DB /* ViewModifiers.swift */; };
 		A93F283D2E2A5DCB0092B8D5 /* SnippetManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93F283C2E2A5DCB0092B8D5 /* SnippetManagerView.swift */; };
 		A93F28412E2A5EEA0092B8D5 /* Snippet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93F28402E2A5EEA0092B8D5 /* Snippet.swift */; };
+		A943305A2E7DE2A800244CFD /* openssl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A95FAA512DF4B62100DE2F5A /* openssl.xcframework */; settings = {ATTRIBUTES = (Required, ); }; };
 		A9485C712E1AECD000209824 /* JetBrainsMonoNerdFontMono-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9485C702E1AECD000209824 /* JetBrainsMonoNerdFontMono-Italic.ttf */; };
 		A9485C722E1AECD000209824 /* JetBrainsMonoNerdFontMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9485C6E2E1AECD000209824 /* JetBrainsMonoNerdFontMono-Bold.ttf */; };
 		A9485C732E1AECD000209824 /* JetBrainsMonoNerdFontMono-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9485C6F2E1AECD000209824 /* JetBrainsMonoNerdFontMono-BoldItalic.ttf */; };
@@ -48,8 +49,6 @@
 		A95FAA472DF3884B00DE2F5A /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A95FAA462DF3884B00DE2F5A /* Config.xcconfig */; };
 		A95FAA542DF4B62900DE2F5A /* LibSSH.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A95FAA502DF4B62100DE2F5A /* LibSSH.xcframework */; };
 		A95FAA552DF4B62900DE2F5A /* LibSSH.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A95FAA502DF4B62100DE2F5A /* LibSSH.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		A95FAA562DF4B62A00DE2F5A /* openssl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A95FAA512DF4B62100DE2F5A /* openssl.xcframework */; };
-		A95FAA572DF4B62A00DE2F5A /* openssl.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A95FAA512DF4B62100DE2F5A /* openssl.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A96BE6972E10846B00C0FEE9 /* catppuccinMocha.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE68D2E10846B00C0FEE9 /* catppuccinMocha.plist */; };
 		A96BE6982E10846B00C0FEE9 /* ubuntu.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE6932E10846B00C0FEE9 /* ubuntu.plist */; };
 		A96BE6992E10846B00C0FEE9 /* iTerm2SolarizedDark.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96BE6902E10846B00C0FEE9 /* iTerm2SolarizedDark.plist */; };
@@ -138,7 +137,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A95FAA572DF4B62A00DE2F5A /* openssl.xcframework in Embed Frameworks */,
 				A95FAA552DF4B62900DE2F5A /* LibSSH.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -265,10 +263,10 @@
 				A91F9E762E674928009FCB3A /* SwiftTerm in Frameworks */,
 				A99D9F7E2E6351D100259166 /* SwiftTerm in Frameworks */,
 				A99D9F7B2E63513E00259166 /* SwiftTerm in Frameworks */,
+				A943305A2E7DE2A800244CFD /* openssl.xcframework in Frameworks */,
 				A95FAA542DF4B62900DE2F5A /* LibSSH.xcframework in Frameworks */,
 				A93143BE2DF4D0B300FCD5DB /* libpthread.tbd in Frameworks */,
 				A9083E402DF2226F0042906E /* libz.tbd in Frameworks */,
-				A95FAA562DF4B62A00DE2F5A /* openssl.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
