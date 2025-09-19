@@ -1,13 +1,13 @@
 {
-  "originHash" : "807dd6641a75807af36f6cce4ade2b3a6e5620dde706a944b733556e49cc3c3a",
+  "originHash" : "f4ad8e58bb8b53ab8aa996385b70be78cf2053720383c9626b005909c993d418",
   "pins" : [
     {
-      "identity" : "openssl",
+      "identity" : "openssl-apple",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/OuterCorner/OpenSSL",
+      "location" : "https://github.com/neon443/OpenSSL-apple",
       "state" : {
-        "revision" : "331ee7092308d5a22163c176e682201b6e0eb9b4",
-        "version" : "1.2.1"
+        "branch" : "master",
+        "revision" : "89e3523483b5b0a0724f8e09df752980e5e12a13"
       }
     },
     {

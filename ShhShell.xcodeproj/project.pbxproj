@@ -38,7 +38,7 @@
 		A93143C62DF61FE300FCD5DB /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93143C52DF61FE300FCD5DB /* ViewModifiers.swift */; };
 		A93F283D2E2A5DCB0092B8D5 /* SnippetManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93F283C2E2A5DCB0092B8D5 /* SnippetManagerView.swift */; };
 		A93F28412E2A5EEA0092B8D5 /* Snippet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93F28402E2A5EEA0092B8D5 /* Snippet.swift */; };
-		A94330602E7DE55900244CFD /* OpenSSL in Frameworks */ = {isa = PBXBuildFile; productRef = A943305F2E7DE55900244CFD /* OpenSSL */; };
+		A94330632E7DEEB200244CFD /* OpenSSL in Frameworks */ = {isa = PBXBuildFile; productRef = A94330622E7DEEB200244CFD /* OpenSSL */; };
 		A9485C712E1AECD000209824 /* JetBrainsMonoNerdFontMono-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9485C702E1AECD000209824 /* JetBrainsMonoNerdFontMono-Italic.ttf */; };
 		A9485C722E1AECD000209824 /* JetBrainsMonoNerdFontMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9485C6E2E1AECD000209824 /* JetBrainsMonoNerdFontMono-Bold.ttf */; };
 		A9485C732E1AECD000209824 /* JetBrainsMonoNerdFontMono-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9485C6F2E1AECD000209824 /* JetBrainsMonoNerdFontMono-BoldItalic.ttf */; };
@@ -259,7 +259,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A94330602E7DE55900244CFD /* OpenSSL in Frameworks */,
+				A94330632E7DEEB200244CFD /* OpenSSL in Frameworks */,
 				A91F9E762E674928009FCB3A /* SwiftTerm in Frameworks */,
 				A99D9F7E2E6351D100259166 /* SwiftTerm in Frameworks */,
 				A99D9F7B2E63513E00259166 /* SwiftTerm in Frameworks */,
@@ -700,7 +700,7 @@
 				A99D9F7A2E63513E00259166 /* SwiftTerm */,
 				A99D9F7D2E6351D100259166 /* SwiftTerm */,
 				A91F9E752E674928009FCB3A /* SwiftTerm */,
-				A943305F2E7DE55900244CFD /* OpenSSL */,
+				A94330622E7DEEB200244CFD /* OpenSSL */,
 			);
 			productName = ShhShell;
 			productReference = A925389A2DEE06DC007E0A18 /* ShhShell.app */;
@@ -781,7 +781,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				A91F9E742E674928009FCB3A /* XCLocalSwiftPackageReference "SwiftTerm" */,
-				A943305E2E7DE55000244CFD /* XCRemoteSwiftPackageReference "OpenSSL" */,
+				A94330612E7DEEB200244CFD /* XCRemoteSwiftPackageReference "OpenSSL-apple" */,
 			);
 			productRefGroup = A925389B2DEE06DC007E0A18 /* Products */;
 			projectDirPath = "";
@@ -1284,12 +1284,12 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		A943305E2E7DE55000244CFD /* XCRemoteSwiftPackageReference "OpenSSL" */ = {
+		A94330612E7DEEB200244CFD /* XCRemoteSwiftPackageReference "OpenSSL-apple" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/OuterCorner/OpenSSL";
+			repositoryURL = "https://github.com/neon443/OpenSSL-apple";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.1;
+				branch = master;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1299,9 +1299,9 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftTerm;
 		};
-		A943305F2E7DE55900244CFD /* OpenSSL */ = {
+		A94330622E7DEEB200244CFD /* OpenSSL */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A943305E2E7DE55000244CFD /* XCRemoteSwiftPackageReference "OpenSSL" */;
+			package = A94330612E7DEEB200244CFD /* XCRemoteSwiftPackageReference "OpenSSL-apple" */;
 			productName = OpenSSL;
 		};
 		A99D9F7A2E63513E00259166 /* SwiftTerm */ = {
