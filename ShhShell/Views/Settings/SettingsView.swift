@@ -219,6 +219,7 @@ struct SettingsView: View {
 					}
 				}
 			}
+			.navigationTitle("Settings")
 			.listStyle(.insetGrouped)
 			.scrollContentBackground(.hidden)
 			.onChange(of: hostsManager.settings) { _ in
