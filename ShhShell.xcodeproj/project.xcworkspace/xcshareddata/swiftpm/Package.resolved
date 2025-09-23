@@ -1,15 +1,6 @@
 {
-  "originHash" : "f4ad8e58bb8b53ab8aa996385b70be78cf2053720383c9626b005909c993d418",
+  "originHash" : "d415ccafb2cea88d848a27f2d46c96a1d9161addf9f04c1f3c88326f5d33b325",
   "pins" : [
-    {
-      "identity" : "openssl-apple",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/neon443/OpenSSL-apple",
-      "state" : {
-        "branch" : "master",
-        "revision" : "89e3523483b5b0a0724f8e09df752980e5e12a13"
-      }
-    },
     {
       "identity" : "swift-argument-parser",
       "kind" : "remoteSourceControl",
