@@ -12,7 +12,7 @@
           "opacity" : 0.4
         },
         {
-          "glass" : false,
+          "glass" : true,
           "image-name" : "$.png",
           "name" : "$",
           "position" : {
@@ -24,7 +24,7 @@
           }
         },
         {
-          "glass" : false,
+          "glass" : true,
           "image-name" : ">.png",
           "name" : ">",
           "position" : {
@@ -36,7 +36,7 @@
           }
         },
         {
-          "glass" : false,
+          "glass" : true,
           "image-name" : "▮.png",
           "name" : "▮",
           "position" : {
