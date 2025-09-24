@@ -50,6 +50,12 @@ struct AboutView: View {
 					}
 				}
 				
+				Button {
+					hostsManager.setOnboarding(to: false)
+				} label: {
+					Text("Show Welcome")
+				}
+				
 				NavigationLink {
 					ShaderTestingView()
 				} label: {

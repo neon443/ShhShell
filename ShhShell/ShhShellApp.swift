@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct ShhShellApp: App {
 	@StateObject var sshHandler: SSHHandler
-
+	
 	@StateObject var hostsManager: HostsManager = HostsManager()
 	@StateObject var keyManager: KeyManager
 	
@@ -22,18 +22,22 @@ struct ShhShellApp: App {
 	
 	var body: some Scene {
 		WindowGroup {
-			Group {
+			ZStack {
+				hostsManager.selectedTheme.background.suiColor.opacity(0.7)
+					.ignoresSafeArea(.all)
+				ContentView(
+					handler: sshHandler,
+					hostsManager: hostsManager,
+					keyManager: keyManager
+				)
+				.colorScheme(hostsManager.selectedTheme.background.luminance > 0.5 ? .light : .dark)
+				.tint(hostsManager.tint)
 				if !hostsManager.shownOnboarding {
 					WelcomeView(hostsManager: hostsManager)
-					
-				} else {
-					ContentView(
-						handler: sshHandler,
-						hostsManager: hostsManager,
-						keyManager: keyManager
-					)
-					.colorScheme(hostsManager.selectedTheme.background.luminance > 0.5 ? .light : .dark)
-					.tint(hostsManager.tint)
+						.animation(.default, value: hostsManager.shownOnboarding)
+						.transition(.opacity)
+						.frame(maxWidth: .infinity, maxHeight: .infinity)
+						.background(.black)
 				}
 			}
 			.transition(.opacity)

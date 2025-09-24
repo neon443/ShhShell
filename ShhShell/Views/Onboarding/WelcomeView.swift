@@ -17,7 +17,7 @@ struct WelcomeView: View {
 			VStack {
 				VStack(spacing: 20) {
 					if time > 0.1 {
-						Image("regular")
+						AppIcon.regular.image
 							.resizable().scaledToFit()
 							.frame(width: 100)
 							.clipShape(RoundedRectangle(cornerRadius: 22))
