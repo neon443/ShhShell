@@ -11,10 +11,6 @@ using namespace metal;
 
 [[ stitchable ]] half4 crt(float2 pos, half4 color, float2 size, float time) {
 	float2 uv = pos/size;
-	float2 topLeading = float2(0, 0);
-	float2 topTrailing = float2(0, size.x);
-	float2 bottomLeading = float2(size.y, 0);
-	float2 bottomTrailing = size;
 	
 	//scanlines
 	half scanline = 0.5 + 0.5 * sin(uv.y * size.y*2);

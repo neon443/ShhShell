@@ -23,7 +23,8 @@ struct HostSymbolPicker: View {
     var body: some View {
 		ZStack {
 			Rectangle()
-				.foregroundStyle(cScheme == .dark ? .black : .gray)
+				.modifier(glassEffectCompat())
+//				.foregroundStyle(cScheme == .dark ? .black : .gray)
 			VStack(alignment: .center, spacing: 0) {
 				ScrollView(.horizontal) {
 					HStack {

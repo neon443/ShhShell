@@ -8,6 +8,16 @@
 import Foundation
 import SwiftUI
 
+struct glassEffectCompat: ViewModifier {
+	func body(content: Content) -> some View {
+		if #available(iOS 19, *) {
+			content.glassEffect()
+		} else {
+			content
+		}
+	}
+}
+
 struct glassButton: ViewModifier {
 	var prominent: Bool
 	
