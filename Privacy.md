@@ -1,1 +1,1 @@
-We do not collect any data from your usage of this app. This means we cannot sell, use or leak any usage data as we simply do not have any. Feel free to inspect source code.
+We do not collect any data from your usage of this app. This means we cannot sell, use or leak any usage data as we simply do not have any. I am not responsible for any data loss. Feel free to inspect source code.
