@@ -13,7 +13,7 @@ struct ContentView: View {
 	@ObservedObject var keyManager: KeyManager
 	
 	var body: some View {
-		NavigationStack {
+		NavigationSplitView {
 			ZStack {
 				hostsManager.selectedTheme.background.suiColor.opacity(0.7)
 					.ignoresSafeArea(.all)
@@ -97,6 +97,8 @@ struct ContentView: View {
 					}
 				}
 			}
+		} detail: {
+			Text("Detail?")
 		}
 	}
 }

@@ -69,6 +69,7 @@ struct FontManagerView: View {
 				}
 			}
 		}
+		.navigationTitle("Fonts")
 		.scrollContentBackground(.hidden)
 	}
 }

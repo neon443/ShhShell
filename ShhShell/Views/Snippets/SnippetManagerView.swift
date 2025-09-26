@@ -78,6 +78,7 @@ struct SnippetManagerView: View {
 					}
 				}
 			}
+			.navigationTitle("Snippets")
 		}
     }
 }
