@@ -98,7 +98,7 @@ struct ContentView: View {
 				}
 			}
 		} detail: {
-			Text("Detail?")
+			EmptyView()
 		}
 	}
 }
