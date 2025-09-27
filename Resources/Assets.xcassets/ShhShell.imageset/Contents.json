@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "ShhShell-iOS-Default-1024x1024@1x.png",
+      "filename" : "ShhShell-light.png",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "ShhShell-iOS-Dark-1024x1024@1x.png",
+      "filename" : "ShhShell.png",
       "idiom" : "universal"
     }
   ],
