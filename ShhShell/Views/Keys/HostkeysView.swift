@@ -14,58 +14,56 @@ struct HostkeysView: View {
 		ZStack {
 			hostsManager.selectedTheme.background.suiColor.opacity(0.7)
 				.ignoresSafeArea(.all)
-			NavigationStack {
-				List {
-					if hostsManager.hosts.isEmpty {
+			List {
+				if hostsManager.hosts.isEmpty {
+					VStack(alignment: .leading) {
+						Text("Looking empty 'round here...")
+							.font(.title3)
+							.bold()
+							.padding(.bottom)
 						VStack(alignment: .leading) {
-							Text("Looking empty 'round here...")
-								.font(.title3)
-								.bold()
+							Text("Connect to some hosts to collect more hostkeys!")
 								.padding(.bottom)
-							VStack(alignment: .leading) {
-								Text("Connect to some hosts to collect more hostkeys!")
-									.padding(.bottom)
-								Text("ShhShell remembers hostkey fingerprints for you, and will alert you if they change.")
-									.font(.subheadline)
-								Text("This could be due a man in the middle attack, where a bad actor tries to impersonate your server.")
-									.font(.subheadline)
-							}
-						}
-					}
-					
-					ForEach($hostsManager.hosts) { $host in
-						VStack(alignment: .leading) {
-							if !host.name.isEmpty {
-								Text("name")
-									.foregroundStyle(.gray)
-									.font(.caption)
-								Text(host.name)
-									.bold()
-							}
-							Text("address")
-								.foregroundStyle(.gray)
-								.font(.caption)
-							Text(host.address)
-								.bold()
-							Text(host.key ?? "nil")
-						}
-						.swipeActions(edge: .trailing, allowsFullSwipe: true) {
-							Button(/*role: .destructive*/) {
-								host.key = nil
-								hostsManager.updateHost(host)
-							} label: {
-								Label("Forget", systemImage: "trash")
-							}
+							Text("ShhShell remembers hostkey fingerprints for you, and will alert you if they change.")
+								.font(.subheadline)
+							Text("This could be due a man in the middle attack, where a bad actor tries to impersonate your server.")
+								.font(.subheadline)
 						}
 					}
 				}
-				.scrollContentBackground(.hidden)
-				.navigationTitle("Hostkeys")
+				
+				ForEach($hostsManager.hosts) { $host in
+					VStack(alignment: .leading) {
+						if !host.name.isEmpty {
+							Text("name")
+								.foregroundStyle(.gray)
+								.font(.caption)
+							Text(host.name)
+								.bold()
+						}
+						Text("address")
+							.foregroundStyle(.gray)
+							.font(.caption)
+						Text(host.address)
+							.bold()
+						Text(host.key ?? "nil")
+					}
+					.swipeActions(edge: .trailing, allowsFullSwipe: true) {
+						Button(/*role: .destructive*/) {
+							host.key = nil
+							hostsManager.updateHost(host)
+						} label: {
+							Label("Forget", systemImage: "trash")
+						}
+					}
+				}
 			}
+			.scrollContentBackground(.hidden)
+			.navigationTitle("Hostkeys")
 		}
 	}
 }
 
 #Preview {
-    HostkeysView(hostsManager: HostsManager())
+	HostkeysView(hostsManager: HostsManager())
 }
