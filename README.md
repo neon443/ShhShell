@@ -1,7 +1,7 @@
 <div align="center">
     <br/>
     <p>
-        <img src="https://github.com/neon443/ShhShell/blob/main/Resources/Assets.xcassets/AppIcon.appiconset/ShhShell.png?raw=true" title="icon" alt="icon" width="100" />
+        <img src="https://files.catbox.moe/r55fjl.png" title="icon" alt="icon" width="100" />
     </p>
     <p>
         an ssh client for ios
