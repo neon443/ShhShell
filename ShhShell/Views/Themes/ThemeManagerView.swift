@@ -79,7 +79,13 @@ struct ThemeManagerView: View {
 						} else {
 							LazyVGrid(columns: layout, alignment: .center, spacing: 8) {
 								ForEach($hostsManager.themes) { $theme in
-									ThemeButton(hostsManager: hostsManager, theme: $theme, canModify: true)
+									ThemeButton(
+										hostsManager: hostsManager,
+										theme: $theme,
+										canModify: true,
+										themeToEdit: $newTheme,
+										showThemeEditor: $showNewThemeEditor
+									)
 								}
 							}
 							.padding(.horizontal)
@@ -95,7 +101,13 @@ struct ThemeManagerView: View {
 						}
 						LazyVGrid(columns: layout, alignment: .center, spacing: 8) {
 							ForEach(Theme.builtinThemes) { theme in
-								ThemeButton(hostsManager: hostsManager, theme: .constant(theme), canModify: false)
+								ThemeButton(
+									hostsManager: hostsManager,
+									theme: .constant(theme),
+									canModify: false,
+									themeToEdit: .constant(Theme.defaultTheme),
+									showThemeEditor: .constant(false)
+								)
 							}
 						}
 						.padding(.horizontal)
@@ -134,14 +146,18 @@ struct ThemeManagerView: View {
 						
 						ToolbarItem() {
 							Button() {
-								newTheme = Theme.defaultTheme
+								let createdTheme = Theme.newTheme
+								hostsManager.themes.append(createdTheme)
+								newTheme = createdTheme
 								showNewThemeEditor = true
 							} label: {
 								Label("New", systemImage: "plus")
 							}
 						}
 					}
-					.navigationDestination(isPresented: $showNewThemeEditor) {
+					.sheet(isPresented: $showNewThemeEditor) {
+						hostsManager.updateTheme(newTheme)
+					} content: {
 						ThemeEditorView(hostsManager: hostsManager, theme: $newTheme)
 					}
 				}

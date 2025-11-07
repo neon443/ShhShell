@@ -20,15 +20,36 @@ struct ThemeEditorView: View {
 			hostsManager.selectedTheme.background.suiColor.opacity(0.7)
 				.ignoresSafeArea(.all)
 			NavigationStack {
-				ThemeButton(hostsManager: hostsManager, theme: $theme, canModify: false)
-					.id(theme)
-					.padding(.bottom)
-					.fixedSize(horizontal: false, vertical: true)
-					.onChange(of: theme) { _ in
-						print(theme)
+				ZStack {
+					RoundedRectangle(cornerRadius: 20)
+						.foregroundStyle(theme.background.suiColor)
+					VStack {
+						Text(theme.name)
+							.foregroundStyle(theme.foreground.suiColor)
+							.font(.headline)
+							.lineLimit(1)
+						Spacer()
+						VStack(spacing: 0) {
+							ForEach(0...1, id: \.self) { row in
+								HStack(spacing: 0) {
+									let range = row == 0 ? 0..<8 : 8..<16
+									ForEach(range, id: \.self) { col in
+										Rectangle()
+											.aspectRatio(1, contentMode: .fit)
+											.foregroundStyle(theme.ansi[col].suiColor)
+									}
+								}
+							}
+						}
+						.clipShape(RoundedRectangle(cornerRadius: 10))
 					}
+					.padding(10)
+				}
+				.fixedSize(horizontal: false, vertical: true)
+				.background(.black)
+				.padding(.horizontal)
 				
-				List {					
+				List {
 					Section("Main Colors") {
 						ColorPicker("Text", selection: $theme.foreground.suiColor, supportsOpacity: false)
 						ColorPicker("Background", selection: $theme.background.suiColor, supportsOpacity: false)

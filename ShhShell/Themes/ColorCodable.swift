@@ -46,7 +46,7 @@ extension ColorCodable {
 			let blue = CGFloat(self.blue)
 			return Color(UIColor(red: red, green: green, blue: blue, alpha: 1))
 		}
-		set {
+		mutating set {
 			let cc = ColorCodable(color: newValue)
 			self.red = cc.red
 			self.green = cc.green

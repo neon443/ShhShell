@@ -12,6 +12,9 @@ struct ThemeButton: View {
 	@Binding var theme: Theme
 	@State var canModify: Bool
 	
+	@Binding var themeToEdit: Theme
+	@Binding var showThemeEditor: Bool
+	
 	@State private var showRenameAlert: Bool = false
 	@State private var rename: String = ""
 	
@@ -79,8 +82,9 @@ struct ThemeButton: View {
 		.clipShape(RoundedRectangle(cornerRadius: outerR))
 		.contextMenu {
 			if canModify {
-				NavigationLink {
-					ThemeEditorView(hostsManager: hostsManager, theme: $theme)
+				Button {
+					themeToEdit = theme
+					showThemeEditor = true
 				} label: {
 					Label("Edit", systemImage: "pencil")
 				}
@@ -122,7 +126,9 @@ struct ThemeButton: View {
 	ThemeButton(
 		hostsManager: HostsManager(),
 		theme: .constant(Theme.defaultTheme),
-		canModify: true
+		canModify: true,
+		themeToEdit: .constant(Theme.defaultTheme),
+		showThemeEditor: .constant(false)
 	)
 	.border(Color.red)
 }

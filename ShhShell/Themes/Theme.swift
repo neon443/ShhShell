@@ -77,6 +77,12 @@ struct Theme: Hashable, Equatable, Identifiable {
 	static var builtinThemes: [Theme] {
 		return ThemesBuiltin.allCases.map({ decodeLocalTheme(fileName: $0.rawValue)! })
 	}
+	
+	static var newTheme: Theme {
+		var result = defaultTheme
+		result.id = UUID().uuidString
+		return result
+	}
 }
 
 enum ThemesBuiltin: String, CaseIterable, Hashable, Equatable {
