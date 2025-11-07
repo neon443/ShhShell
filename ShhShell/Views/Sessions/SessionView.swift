@@ -38,6 +38,7 @@ struct SessionView: View {
 			ShellTabView(
 				handler: nil,
 				hostsManager: hostsManager,
+				keyManager: keyManager,
 				selectedID: key
 			)
 		}

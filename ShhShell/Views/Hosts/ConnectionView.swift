@@ -159,7 +159,11 @@ Hostkey fingerprint is \(handler.getHostkey() ?? "nil")
 				}
 			}
 			.fullScreenCover(isPresented: $showTerminal) {
-				ShellTabView(handler: handler, hostsManager: hostsManager)
+				ShellTabView(
+					handler: handler,
+					hostsManager: hostsManager,
+					keyManager: keyManager
+				)
 			}
 		}
 	}

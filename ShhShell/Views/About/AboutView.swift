@@ -55,6 +55,7 @@ struct AboutView: View {
 				} label: {
 					Text("Show Welcome")
 				}
+				.padding()
 				
 				NavigationLink {
 					ShaderTestingView()

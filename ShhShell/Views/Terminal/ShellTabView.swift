@@ -11,12 +11,13 @@ import SwiftTerm
 struct ShellTabView: View {
 	@State var handler: SSHHandler?
 	@ObservedObject var hostsManager: HostsManager
+	@ObservedObject var keyManager: KeyManager
 	
 	@ObservedObject var container = TerminalViewContainer.shared
 	@State var selectedID: UUID?
 	var selectedHandler: SSHHandler {
 		guard let selectedID, let contained = container.sessions[selectedID] else {
-			guard let handler else { fatalError("no handler in shelltabview") }
+			guard let handler else { return SSHHandler(host: Host.blank, keyManager: nil) }
 			return handler
 		}
 		return contained.handler
@@ -206,6 +207,7 @@ struct ShellTabView: View {
 #Preview {
 	ShellTabView(
 		handler: SSHHandler(host: Host.blank, keyManager: nil),
-		hostsManager: HostsManager()
+		hostsManager: HostsManager(),
+		keyManager: KeyManager()
 	)
 }

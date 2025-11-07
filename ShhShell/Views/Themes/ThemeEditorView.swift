@@ -20,33 +20,33 @@ struct ThemeEditorView: View {
 			hostsManager.selectedTheme.background.suiColor.opacity(0.5)
 				.ignoresSafeArea(.all)
 			NavigationStack {
-				ZStack {
-					RoundedRectangle(cornerRadius: 20)
-						.foregroundStyle(theme.background.suiColor)
-					VStack {
-						Text(theme.name)
-							.foregroundStyle(theme.foreground.suiColor)
-							.font(.headline)
-							.lineLimit(1)
-						Spacer()
-						VStack(spacing: 0) {
-							ForEach(0...1, id: \.self) { row in
-								HStack(spacing: 0) {
-									let range = row == 0 ? 0..<8 : 8..<16
-									ForEach(range, id: \.self) { col in
-										Rectangle()
-											.aspectRatio(1, contentMode: .fit)
-											.foregroundStyle(theme.ansi[col].suiColor)
-									}
-								}
-							}
-						}
-						.clipShape(RoundedRectangle(cornerRadius: 10))
-					}
-					.padding(10)
-				}
-				.fixedSize(horizontal: false, vertical: true)
-				.padding(.horizontal)
+//				ZStack {
+//					RoundedRectangle(cornerRadius: 20)
+//						.foregroundStyle(theme.background.suiColor)
+//					VStack {
+//						Text(theme.name)
+//							.foregroundStyle(theme.foreground.suiColor)
+//							.font(.headline)
+//							.lineLimit(1)
+//						Spacer()
+//						VStack(spacing: 0) {
+//							ForEach(0...1, id: \.self) { row in
+//								HStack(spacing: 0) {
+//									let range = row == 0 ? 0..<8 : 8..<16
+//									ForEach(range, id: \.self) { col in
+//										Rectangle()
+//											.aspectRatio(1, contentMode: .fit)
+//											.foregroundStyle(theme.ansi[col].suiColor)
+//									}
+//								}
+//							}
+//						}
+//						.clipShape(RoundedRectangle(cornerRadius: 10))
+//					}
+//					.padding(10)
+//				}
+//				.fixedSize(horizontal: false, vertical: true)
+//				.padding(.horizontal)
 				
 				List {
 					Section("Main Colors") {
