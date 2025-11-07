@@ -17,7 +17,7 @@ struct ThemeEditorView: View {
 	
 	var body: some View {
 		ZStack {
-			hostsManager.selectedTheme.background.suiColor.opacity(0.7)
+			hostsManager.selectedTheme.background.suiColor.opacity(0.5)
 				.ignoresSafeArea(.all)
 			NavigationStack {
 				ZStack {
@@ -46,7 +46,6 @@ struct ThemeEditorView: View {
 					.padding(10)
 				}
 				.fixedSize(horizontal: false, vertical: true)
-				.background(.black)
 				.padding(.horizontal)
 				
 				List {
@@ -74,6 +73,7 @@ struct ThemeEditorView: View {
 						}
 					}
 				}
+				.scrollContentBackground(.hidden)
 				.navigationTitle("Edit Theme")
 				.navigationBarTitleDisplayMode(.inline)
 				.toolbar {
