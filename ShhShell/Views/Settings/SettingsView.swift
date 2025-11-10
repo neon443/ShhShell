@@ -38,7 +38,7 @@ struct SettingsView: View {
 			hostsManager.selectedTheme.background.suiColor.opacity(0.7)
 				.ignoresSafeArea(.all)
 			List {
-				Section("Terminal") {
+				Section("Display") {
 					VStack(alignment: .leading) {
 						HStack {
 							Label("Scrollback", systemImage: "scroll")
@@ -52,7 +52,21 @@ struct SettingsView: View {
 							step: 250
 						)
 					}
+					Toggle("Keep Display Awake", systemImage: "cup.and.saucer.fill", isOn: $hostsManager.settings.caffeinate)
+					if #unavailable(iOS 17), hostsManager.settings.filter == .crt {
+						Label("iOS 17 Required", systemImage: "exclamationmark.triangle.fill")
+							.foregroundStyle(.yellow)
+							.transition(.opacity)
+					}
+					Picker("", selection: $hostsManager.settings.filter) {
+						ForEach(TerminalFilter.allCases, id: \.self) { filter in
+							Text(filter.description).tag(filter)
+						}
+					}
+					.pickerStyle(.inline)
+					.labelsHidden()
 				}
+				.animation(.spring, value: hostsManager.settings.filter)
 				
 				Section("Cursor") {
 					HStack(spacing: 20) {
@@ -154,37 +168,19 @@ struct SettingsView: View {
 					}
 				}
 				
-				Section("Keepalive") {
-					Toggle("Location Persistence", systemImage: "location.fill", isOn: $hostsManager.settings.locationPersist)
-						.onChange(of: hostsManager.settings.locationPersist) { _ in
-							if hostsManager.settings.locationPersist && !Backgrounder.shared.checkPermsStatus() {
-								Backgrounder.shared.requestPerms()
-							}
-						}
-					Toggle("Keep Display Awake", systemImage: "cup.and.saucer.fill", isOn: $hostsManager.settings.caffeinate)
-				}
+//				Section("Keepalive") {
+//					Toggle("Location Persistence", systemImage: "location.fill", isOn: $hostsManager.settings.locationPersist)
+//						.onChange(of: hostsManager.settings.locationPersist) { _ in
+//							if hostsManager.settings.locationPersist && !Backgrounder.shared.checkPermsStatus() {
+//								Backgrounder.shared.requestPerms()
+//							}
+//						}
+//				}
 				
 				Section("Bell Feedback") {
 					Toggle("Sound", systemImage: "bell.and.waves.left.and.right", isOn: $hostsManager.settings.bellSound)
 					Toggle("Haptic",systemImage: "iphone.radiowaves.left.and.right", isOn: $hostsManager.settings.bellHaptic)
 				}
-				
-				
-				Section("Terminal Filter") {
-					if #unavailable(iOS 17), hostsManager.settings.filter == .crt {
-						Label("iOS 17 Required", systemImage: "exclamationmark.triangle.fill")
-							.foregroundStyle(.yellow)
-							.transition(.opacity)
-					}
-					Picker("", selection: $hostsManager.settings.filter) {
-						ForEach(TerminalFilter.allCases, id: \.self) { filter in
-							Text(filter.description).tag(filter)
-						}
-					}
-					.pickerStyle(.inline)
-					.labelsHidden()
-				}
-				.animation(.spring, value: hostsManager.settings.filter)
 				
 				Section("App Icon") {
 					ScrollView(.horizontal) {
@@ -192,13 +188,14 @@ struct SettingsView: View {
 							ForEach(AppIcon.allCases, id: \.self) { icon in
 								let isSelected = hostsManager.settings.appIcon == icon
 								ZStack(alignment: .top) {
-									RoundedRectangle(cornerRadius: 21.5)
+									RoundedRectangle(cornerRadius: icon.radius + 5)
 										.foregroundStyle(.gray.opacity(0.5))
 										.opacity(isSelected ? 1 : 0)
 									VStack(spacing: 0) {
 										icon.image
 											.resizable().scaledToFit()
-											.clipShape(RoundedRectangle(cornerRadius: 16.5))
+											.frame(width: 85, height: 85)
+											.clipShape(RoundedRectangle(cornerRadius: icon.radius))
 											.padding(5)
 										Text(icon.description).tag(icon)
 											.font(.caption)
@@ -207,7 +204,6 @@ struct SettingsView: View {
 											.multilineTextAlignment(.center)
 									}
 								}
-								.frame(maxWidth: 85, maxHeight: 110)
 								.onTapGesture {
 									withAnimation {
 										hostsManager.settings.appIcon = icon

@@ -102,4 +102,22 @@ enum AppIcon: Codable, CaseIterable, Equatable, CustomStringConvertible {
 			return "Blueprint"
 		}
 	}
+	
+	var isiOS26: Bool {
+		switch self {
+		case .regular:
+			return true
+		case .beta, .betaBlueprint:
+			return false
+		}
+	}
+	
+	var radius: CGFloat {
+		switch isiOS26 {
+		case true, false:
+			return 17.578125
+//		case false:
+//			return 16.5
+		}
+	}
 }

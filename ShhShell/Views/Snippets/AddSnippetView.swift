@@ -34,7 +34,7 @@ struct AddSnippetView: View {
 					TextEditor(text: $content)
 						.autocorrectionDisabled()
 						.textInputAutocapitalization(.never)
-						.background(.black)
+//						.background(.black)
 						.clipShape(RoundedRectangle(cornerRadius: 5))
 						.padding(.bottom)
 						.frame(minHeight: 50)

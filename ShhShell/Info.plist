@@ -23,8 +23,6 @@
 		<string>JetBrainsMonoNerdFontMono-BoldItalic.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
-	<array>
-		<string>location</string>
-	</array>
+	<array/>
 </dict>
 </plist>

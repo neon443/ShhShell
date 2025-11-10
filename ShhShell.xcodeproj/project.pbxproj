@@ -1092,10 +1092,8 @@
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "ShhShell uses Face ID to verify your identity";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Needed to communicate with SSH Servers";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Required to keep SSH connections alive, if enabled";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Required to keep SSH connections alive, if enabled";
 				INFOPLIST_KEY_NSLocationUsageDescription = "Required to keep SSH connections alive, if enabled";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Required to keep SSH connections alive, if enabled";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1136,10 +1134,8 @@
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "ShhShell uses Face ID to verify your identity";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Needed to communicate with SSH Servers";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Required to keep SSH connections alive, if enabled";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Required to keep SSH connections alive, if enabled";
 				INFOPLIST_KEY_NSLocationUsageDescription = "Required to keep SSH connections alive, if enabled";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Required to keep SSH connections alive, if enabled";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
