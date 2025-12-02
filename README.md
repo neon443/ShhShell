@@ -12,7 +12,7 @@
     </p>
     <p>
         <a href="https://apps.apple.com/app/id6746970159">
-            appstore
+            <img src="https://github.com/neon443/ShhShell/blob/main/Resources/Download_on_the_App_Store_Badge_US-UK_blk_092917.png?raw=true" title="icon" alt="icon" width="100" />
         </a>
     </p>
     <p>
