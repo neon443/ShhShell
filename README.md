@@ -11,6 +11,9 @@
         </a>
     </p>
     <p>
+        <a href="https://apps.apple.com/app/id6746970159">
+            appstore
+        </a>
         <a href="https://testflight.apple.com/join/uNKEAtSw">
             testflight
         </a>
